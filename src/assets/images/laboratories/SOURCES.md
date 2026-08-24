@@ -10,6 +10,7 @@ The assets in this directory were collected on 2026-08-24 from the official webs
 - Human-Centered Embodied Intelligence Lab: [homepage](https://heilaboratory.github.io/) and [Team page](https://heilaboratory.github.io/team/)
   - `hei-logo.png`, `hei-gicheon-kang.jpg`
 - iKnow Lab: [homepage](https://iknow.ajou.ac.kr/) and [Professor page](https://iknow.ajou.ac.kr/professor/)
-  - `iknow-logo.png`, `iknow-research.webp`, `iknow-hyunsouk-cho.jpg`
+  - `iknow-logo.png`, `iknow-research.webp`
+  - `iknow-hyunsouk-cho.jpg` was updated from [Ajou University's official Department of Software faculty profile](https://software.ajou.ac.kr/bbs/board.php?tbl=professor).
 
 Replace or remove these images if a source laboratory updates its site, branding, or image-use guidance.

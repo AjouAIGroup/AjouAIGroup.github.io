@@ -235,7 +235,7 @@
     transition: transform 700ms cubic-bezier(0.2, 0.72, 0.18, 1);
 }
 
-.home-research-index__card:nth-child(3) .home-research-index__media img {
+.home-research-index__card--hei .home-research-index__media img {
     object-position: center 32%;
 }
 
@@ -276,6 +276,168 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: clamp(0.95rem, 1.15vw, 1.08rem);
     line-height: 1.52;
+}
+
+.home-laboratories-index {
+    --home-laboratories-gutter: clamp(1.25rem, 3vw, 3.5rem);
+
+    width: 100%;
+    overflow: hidden;
+    padding: clamp(5rem, 10vw, 9rem) 0;
+    background: #f4f3ef;
+}
+
+.home-laboratories-index__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 0 var(--home-laboratories-gutter) clamp(2rem, 4vw, 3.75rem);
+}
+
+.home-laboratories-index__head h2 {
+    margin: 0;
+    color: #171717;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(3.1rem, 6vw, 5.7rem);
+    font-weight: 400;
+    letter-spacing: -0.07em;
+    line-height: 0.86;
+}
+
+.home-laboratories-index__actions,
+.home-laboratories-index__controls {
+    display: flex;
+    align-items: center;
+}
+
+.home-laboratories-index__actions {
+    gap: 1.2rem;
+}
+
+.home-laboratories-index__all {
+    color: #171717;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    white-space: nowrap;
+}
+
+.home-laboratories-index__controls {
+    gap: 0.35rem;
+}
+
+.home-laboratories-index__controls button {
+    display: inline-grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(23, 23, 23, 0.42);
+    border-radius: 50%;
+    color: #171717;
+    background: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 180ms ease, background-color 180ms ease;
+}
+
+.home-laboratories-index__controls button:hover {
+    color: #f4f3ef;
+    background: #171717;
+}
+
+.home-laboratories-index__rail {
+    display: flex;
+    gap: clamp(0.85rem, 1.75vw, 1.5rem);
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 0 var(--home-laboratories-gutter);
+    scroll-padding-inline: var(--home-laboratories-gutter);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.home-laboratories-index__rail::-webkit-scrollbar {
+    display: none;
+}
+
+.home-laboratories-index__card {
+    flex: 0 0 clamp(16.5rem, 28vw, 25rem);
+    display: flex;
+    min-height: 19rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    padding: clamp(1.4rem, 2.4vw, 2.25rem);
+    color: #171717;
+    background: #eae8e1;
+    scroll-snap-align: start;
+    text-decoration: none;
+    transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.home-laboratories-index__card:hover {
+    background: #dfddd4;
+    transform: translateY(-0.2rem);
+}
+
+.home-laboratories-index__identity {
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    margin-bottom: auto;
+}
+
+.home-laboratories-index__identity img {
+    display: block;
+    width: min(13rem, 80%);
+    max-height: 4rem;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.home-laboratories-index__identity p,
+.home-laboratories-index__lab {
+    margin: 0;
+    color: #67635b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+.home-laboratories-index__identity p {
+    color: #171717;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(2.1rem, 3vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    text-transform: none;
+}
+
+.home-laboratories-index__card h3 {
+    margin: 0;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(1.55rem, 2.4vw, 2.25rem);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+}
+
+.home-laboratories-index__card span {
+    margin: 0;
+    color: #54514b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.96rem;
+    line-height: 1.5;
 }
 
 @media (max-width: 42rem) {
@@ -327,6 +489,27 @@
     .home-research-index__copy {
         grid-template-rows: auto auto auto;
     }
+
+    .home-laboratories-index {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    .home-laboratories-index__head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .home-laboratories-index__actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .home-laboratories-index__card {
+        flex-basis: min(82vw, 23rem);
+        min-height: 17.5rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -339,6 +522,10 @@
     }
 
     .home-research-index__media img {
+        transition: none;
+    }
+
+    .home-laboratories-index__card {
         transition: none;
     }
 }

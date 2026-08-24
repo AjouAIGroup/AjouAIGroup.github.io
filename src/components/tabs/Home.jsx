@@ -10,10 +10,8 @@ import GpuImage from "../../assets/images/home/optimized/resource-gpu-nodes.webp
 import ResearchImage from "../../assets/images/research_concepts/optimized/multi-modal-wide.webp";
 import SeminarImage from "../../assets/images/photo/20241127.jpg";
 import WorkshopImage from "../../assets/images/photo/20240826_1.jpg";
-import VisionLearningImage from "../../assets/images/research_areas/aaig-vision-learning.webp";
-import SpeechGenerativeImage from "../../assets/images/research_areas/aaig-speech-generative.webp";
-import EmbodiedIntelligenceImage from "../../assets/images/research_areas/aaig-embodied-intelligence.webp";
-import KnowledgeAiImage from "../../assets/images/research_areas/aaig-knowledge-ai.webp";
+import { LABORATORIES } from "../../data/laboratories";
+import { shuffleItems } from "../../utils/collections";
 import "./Home.css";
 
 const NEWS_IMAGES = [
@@ -24,40 +22,12 @@ const NEWS_IMAGES = [
     WorkshopImage,
 ];
 
-const RESEARCH_AREAS = [
-    {
-        lab: "CVL Lab",
-        title: "Computer Vision & Learning",
-        summary:
-            "Robust visual recognition and representation learning for reliable perception in real-world settings.",
-        image: VisionLearningImage,
-    },
-    {
-        lab: "SAIL",
-        title: "Speech AI & Generative Models",
-        summary:
-            "Speech synthesis, speech language models, and generative approaches for audio and visual media.",
-        image: SpeechGenerativeImage,
-    },
-    {
-        lab: "HEI Lab",
-        title: "Embodied Intelligence",
-        summary:
-            "Foundation models and lifelong learning for robots that adapt and collaborate with people.",
-        image: EmbodiedIntelligenceImage,
-    },
-    {
-        lab: "iKnow Lab",
-        title: "Knowledge-Centered AI",
-        summary:
-            "Recommendation, multimodal understanding, large language models, and federated learning.",
-        image: KnowledgeAiImage,
-    },
-];
-
 function Home() {
     const railRef = useRef(null);
+    const laboratoriesRailRef = useRef(null);
     const newsItems = useMemo(() => getLatestNewsItems(5), []);
+    const orderedResearchAreas = useMemo(() => shuffleItems(LABORATORIES), []);
+    const orderedLaboratories = useMemo(() => shuffleItems(LABORATORIES), []);
 
     const moveRail = (targetRef, direction) => {
         const rail = targetRef.current;
@@ -148,25 +118,72 @@ function Home() {
                 <div>
                     <h2 id="home-research-title">Research Areas</h2>
                 </div>
-                <Link className="home-research-index__all" to="/lab">
-                    Explore laboratories ↗
+                <Link className="home-research-index__all" to="/research">
+                    Explore research ↗
                 </Link>
             </div>
 
             <div className="home-research-index__grid">
-                {RESEARCH_AREAS.map((area) => (
+                {orderedResearchAreas.map((area) => (
                     <Link
-                        key={area.lab}
-                        className="home-research-index__card"
-                        to="/lab">
+                        key={area.key}
+                        className={`home-research-index__card home-research-index__card--${area.key}`}
+                        to="/research">
                         <figure className="home-research-index__media">
-                            <img src={area.image} alt="" loading="lazy" decoding="async" />
+                            <img src={area.homeResearchImage} alt="" loading="lazy" decoding="async" />
                         </figure>
                         <div className="home-research-index__copy">
-                            <p>{area.lab}</p>
-                            <h3>{area.title}</h3>
-                            <span>{area.summary}</span>
+                            <p>{area.shortName}</p>
+                            <h3>{area.researchTitle}</h3>
+                            <span>{area.researchSummary}</span>
                         </div>
+                    </Link>
+                ))}
+            </div>
+        </section>
+        <section
+            data-reveal
+            data-reveal-load-delay="120"
+            className="home-laboratories-index"
+            aria-labelledby="home-laboratories-title">
+            <div className="home-laboratories-index__head">
+                <div>
+                    <h2 id="home-laboratories-title">Laboratories</h2>
+                </div>
+                <div className="home-laboratories-index__actions">
+                    <Link className="home-laboratories-index__all" to="/lab">
+                        Explore laboratories ↗
+                    </Link>
+                    <div className="home-laboratories-index__controls" aria-label="Laboratories carousel controls">
+                        <button type="button" onClick={() => moveRail(laboratoriesRailRef, -1)} aria-label="Previous laboratories">
+                            ←
+                        </button>
+                        <button type="button" onClick={() => moveRail(laboratoriesRailRef, 1)} aria-label="Next laboratories">
+                            →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                ref={laboratoriesRailRef}
+                className="home-laboratories-index__rail"
+                tabIndex="0"
+                role="region"
+                aria-label="AAIG laboratories. Scroll horizontally to browse."
+                onKeyDown={(event) => handleRailKeyDown(laboratoriesRailRef, event)}>
+                {orderedLaboratories.map((lab) => (
+                    <Link key={lab.key} className="home-laboratories-index__card" to="/lab">
+                        <div className="home-laboratories-index__identity">
+                            {lab.logo ? (
+                                <img src={lab.logo} alt={lab.logoAlt} />
+                            ) : (
+                                <p>{lab.shortName}</p>
+                            )}
+                        </div>
+                        <p className="home-laboratories-index__lab">{lab.shortName}</p>
+                        <h3>{lab.name}</h3>
+                        <span>{lab.summary}</span>
                     </Link>
                 ))}
             </div>

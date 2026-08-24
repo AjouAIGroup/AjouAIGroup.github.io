@@ -1,57 +1,11 @@
 import { useMemo } from "react";
-import CvlLogo from "../../assets/images/laboratories/cvl-logo.svg";
 import CvlPortrait from "../../assets/images/laboratories/cvl-jongbin-ryu.webp";
-import HeiLogo from "../../assets/images/laboratories/hei-logo.png";
 import HeiPortrait from "../../assets/images/laboratories/hei-gicheon-kang.jpg";
-import IknowLogo from "../../assets/images/laboratories/iknow-logo.png";
 import IknowPortrait from "../../assets/images/laboratories/iknow-hyunsouk-cho.jpg";
 import SailPortrait from "../../assets/images/laboratories/sail-sanghoon-lee.jpg";
+import { LABORATORIES } from "../../data/laboratories";
+import { shuffleItems } from "../../utils/collections";
 import "./Lab.css";
-
-const LABS = [
-    {
-        key: "cvl",
-        shortName: "CVL Lab",
-        name: "Computer Vision & Learning Lab",
-        summary:
-            "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
-        topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
-        href: "https://cvl-lab.github.io/",
-        logo: CvlLogo,
-        logoAlt: "CVL Lab logo",
-    },
-    {
-        key: "sail",
-        shortName: "SAIL",
-        name: "Speech Artificial Intelligence Lab",
-        summary:
-            "Research on speech synthesis, speech language models, and generative models for audio, talking-head, and video generation.",
-        topics: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
-        href: "https://sites.google.com/view/speechailab",
-    },
-    {
-        key: "hei",
-        shortName: "HEI Lab",
-        name: "Human-Centered Embodied Intelligence Lab",
-        summary:
-            "Building robots that learn, adapt, and interact with people through foundation models for robotics, human–robot interaction, and lifelong learning.",
-        topics: ["Robot Learning", "Human–Robot Interaction", "Lifelong Learning"],
-        href: "https://heilaboratory.github.io/",
-        logo: HeiLogo,
-        logoAlt: "HEI Lab logo",
-    },
-    {
-        key: "iknow",
-        shortName: "iKnow Lab",
-        name: "intelligence and Knowledge Lab",
-        summary:
-            "Research on recommendation systems, multimodal understanding, large language models, and federated learning.",
-        topics: ["Recommendation", "Multimodal AI", "Large Language Models"],
-        href: "https://iknow.ajou.ac.kr/",
-        logo: IknowLogo,
-        logoAlt: "iKnow Lab logo",
-    },
-];
 
 const FACULTY = [
     {
@@ -69,7 +23,7 @@ const FACULTY = [
         name: "Sanghoon Lee",
         koreanName: "이상훈",
         lab: "SAIL",
-        role: "Faculty",
+        role: "Assistant Professor",
         department: "Department of Software, Ajou University",
         email: "sanghoonlee@ajou.ac.kr",
         interests: "Artificial Intelligence · Speech Synthesis",
@@ -80,7 +34,7 @@ const FACULTY = [
         name: "Gicheon Kang",
         koreanName: "강기천",
         lab: "HEI Lab",
-        role: "Faculty",
+        role: "Assistant Professor",
         department: "Department of Software, Ajou University",
         email: "gckang@ajou.ac.kr",
         interests: "Physical AI · Robot Learning · Human–Robot Interaction",
@@ -102,20 +56,6 @@ const FACULTY = [
     },
 ];
 
-function shuffle(items) {
-    const shuffled = [...items];
-
-    for (let index = shuffled.length - 1; index > 0; index -= 1) {
-        const nextIndex = Math.floor(Math.random() * (index + 1));
-        [shuffled[index], shuffled[nextIndex]] = [
-            shuffled[nextIndex],
-            shuffled[index],
-        ];
-    }
-
-    return shuffled;
-}
-
 function ExternalLink({ href, children, className }) {
     return (
         <a className={className} href={href} target="_blank" rel="noreferrer">
@@ -126,7 +66,7 @@ function ExternalLink({ href, children, className }) {
 
 function Lab() {
     // A fresh page load creates a new lab order; faculty follows that same order.
-    const orderedLabs = useMemo(() => shuffle(LABS), []);
+    const orderedLabs = useMemo(() => shuffleItems(LABORATORIES), []);
     const orderedFaculty = useMemo(() => {
         const labOrder = new Map(
             orderedLabs.map((lab, index) => [lab.shortName, index]),

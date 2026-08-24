@@ -11,7 +11,7 @@ export const NAV_ITEMS = [
     { key: "home", label: "Home" },
     { key: "news", label: "News" },
     { key: "research", label: "Research" },
-    { key: "publication", label: "Publication" },
-    { key: "lab", label: "Lab" },
+    { key: "publication", label: "Publications" },
+    { key: "lab", label: "Labs" },
     { key: "gallery", label: "Gallery" },
 ];

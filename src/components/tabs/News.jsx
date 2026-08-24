@@ -95,22 +95,13 @@ function News() {
 
             <div
                 data-reveal
-                className="news-page__controls page-panel page-panel--compact page-panel--section-start page-controls">
-                <div className="news-page__controls-intro page-controls__intro">
-                    <h2 id="news-controls-title">Filter and browse updates</h2>
-                    <p>
-                        Select a type and jump year inside one control surface.
-                        Timeline rows update immediately.
-                    </p>
-                </div>
+                className="news-page__controls page-panel page-panel--compact page-panel--section-start page-controls"
+                aria-label="Browse news archive">
                 <div className="news-page__controls-grid page-controls__grid">
                     <section className="news-page__controls-group page-controls__group">
                         <div className="news-page__controls-head">
                             <p className="news-page__controls-label page-controls__label">
-                                Type filter
-                            </p>
-                            <p className="news-page__controls-caption page-controls__caption">
-                                Narrow the archive by update type.
+                                Filter by type
                             </p>
                         </div>
                         <div
@@ -138,10 +129,6 @@ function News() {
                                 <p className="news-page__controls-label page-controls__label">
                                     Jump to year
                                 </p>
-                                <p className="news-page__controls-caption page-controls__caption">
-                                    Move directly to a specific year in the
-                                    current filtered archive.
-                                </p>
                             </div>
                             <div className="news-page__year-nav-list page-controls__actions">
                                 {yearOptions.map((year) => (
@@ -162,10 +149,6 @@ function News() {
                             <div className="news-page__controls-head">
                                 <p className="news-page__controls-label page-controls__label">
                                     Jump to year
-                                </p>
-                                <p className="news-page__controls-caption page-controls__caption">
-                                    No year targets are available for this
-                                    filter.
                                 </p>
                             </div>
                         </section>
@@ -202,17 +185,12 @@ function News() {
                                     ? `/publication?q=${encodeURIComponent(publicationQuery)}&scope=title-authors-venue`
                                     : "/publication";
                                 const newsTypeMeta = getNewsTypeMeta(item.type);
-                                const statusLabel = isPaperAccepted
-                                    ? "Publication"
-                                    : hasExternalLink
-                                      ? "External"
-                                      : "Lab update";
                                 const details = [
                                     item.venue,
                                     item.related_person,
                                 ]
                                     .filter(Boolean)
-                                    .join(" · ");
+                                    .join(", ");
 
                                 return (
                                     <article
@@ -231,10 +209,6 @@ function News() {
                                             <div className="news-page__badges">
                                                 <p className="news-page__badge news-page__badge--type">
                                                     {newsTypeMeta.label}
-                                                </p>
-                                                <p
-                                                    className={`news-page__badge news-page__badge--status ${hasExternalLink ? "is-external" : ""}`}>
-                                                    {statusLabel}
                                                 </p>
                                             </div>
                                             <h3 className="news-page__title">

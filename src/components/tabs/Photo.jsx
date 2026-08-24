@@ -338,7 +338,7 @@ function Photo() {
       <div data-reveal className="tab-header page-head page-head--photo">
         <h1>Gallery</h1>
         <p className="page-head__summary">
-          Visual archive of lab activities, seminars, and research culture.
+          An archive of lab activities, seminars, and research culture.
         </p>
       </div>
 

@@ -104,7 +104,7 @@ function Publication() {
             <div
                 data-reveal
                 className="tab-header page-head page-head--publication">
-                <h1>Publication</h1>
+                <h1>Publications</h1>
                 <p className="page-head__summary">
                     Search and filter the publication archive by research area,
                     title, authors, and venue.
@@ -113,23 +113,13 @@ function Publication() {
 
             <div
                 data-reveal
-                className="publication__controls page-panel page-panel--compact page-panel--section-start page-controls">
-                <div className="publication__controls-intro page-controls__intro">
-                    <h2 id="publication-controls-title">Filter and search</h2>
-                    <p>
-                        Combine category filters and text search to quickly find
-                        relevant publications.
-                    </p>
-                </div>
+                className="publication__controls page-panel page-panel--compact page-panel--section-start page-controls"
+                aria-label="Filter publications">
                 <div className="publication__controls-grid page-controls__grid">
                     <section className="publication__controls-group page-controls__group">
                         <div className="publication__controls-head">
                             <p className="publication__controls-label page-controls__label">
                                 Filter by research area
-                            </p>
-                            <p className="publication__controls-caption page-controls__caption">
-                                Categorical filtering narrows the archive by
-                                major research theme.
                             </p>
                         </div>
                         <div
@@ -157,10 +147,6 @@ function Publication() {
                                 htmlFor="publication-search">
                                 Search publications
                             </label>
-                            <p className="publication__controls-caption page-controls__caption">
-                                Text search runs on title, authors, and venue
-                                based on the selected scope.
-                            </p>
                         </div>
                         <div className="publication__search-layout">
                             <div className="publication__search-input-wrap">
@@ -181,7 +167,7 @@ function Publication() {
                             </div>
                             <div className="publication__scope-wrap">
                                 <p className="publication__scope-label page-controls__label">
-                                    Search scope
+                                    Search in
                                 </p>
                                 <div
                                     className="publication__scope page-controls__actions"
@@ -215,7 +201,7 @@ function Publication() {
                 <div className="publication__section-head">
                     <div>
                         <h2 id="publication-archive-title">
-                            Publication Archive
+                            Publications Archive
                         </h2>
                         <p>
                             {filteredPublications.length} result

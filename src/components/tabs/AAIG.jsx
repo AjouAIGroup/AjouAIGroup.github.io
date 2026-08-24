@@ -1,6 +1,6 @@
 import "./AAIG.css";
 import AAIG_FULL_LOGO from "../../assets/brand/aaig-full-logo.png";
-import AAIG_HERO from "../../assets/brand/aaig-hero-v1.png";
+import AAIG_HERO from "../../assets/brand/aaig-hero-campus-v2.webp";
 import { SITE } from "../../config/site";
 
 function AAIG({ isHome }) {
@@ -11,7 +11,6 @@ function AAIG({ isHome }) {
                     className="aaig-hero__background"
                     src={AAIG_HERO}
                     alt=""
-                    fetchPriority="high"
                     decoding="async"
                 />
                 <div className="aaig-hero__veil" aria-hidden="true" />

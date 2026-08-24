@@ -1,4 +1,11 @@
 import { useMemo } from "react";
+import CvlLogo from "../../assets/images/laboratories/cvl-logo.svg";
+import CvlPortrait from "../../assets/images/laboratories/cvl-jongbin-ryu.webp";
+import HeiLogo from "../../assets/images/laboratories/hei-logo.png";
+import HeiPortrait from "../../assets/images/laboratories/hei-gicheon-kang.jpg";
+import IknowLogo from "../../assets/images/laboratories/iknow-logo.png";
+import IknowPortrait from "../../assets/images/laboratories/iknow-hyunsouk-cho.jpg";
+import SailPortrait from "../../assets/images/laboratories/sail-sanghoon-lee.jpg";
 import "./Lab.css";
 
 const LABS = [
@@ -10,6 +17,8 @@ const LABS = [
             "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
         topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
         href: "https://cvl-lab.github.io/",
+        logo: CvlLogo,
+        logoAlt: "CVL Lab logo",
     },
     {
         key: "sail",
@@ -28,6 +37,8 @@ const LABS = [
             "Building robots that learn, adapt, and interact with people through foundation models for robotics, human–robot interaction, and lifelong learning.",
         topics: ["Robot Learning", "Human–Robot Interaction", "Lifelong Learning"],
         href: "https://heilaboratory.github.io/",
+        logo: HeiLogo,
+        logoAlt: "HEI Lab logo",
     },
     {
         key: "iknow",
@@ -37,6 +48,8 @@ const LABS = [
             "Research on recommendation systems, multimodal understanding, large language models, and federated learning.",
         topics: ["Recommendation", "Multimodal AI", "Large Language Models"],
         href: "https://iknow.ajou.ac.kr/",
+        logo: IknowLogo,
+        logoAlt: "iKnow Lab logo",
     },
 ];
 
@@ -50,6 +63,7 @@ const FACULTY = [
         email: "jongbinryu@ajou.ac.kr",
         interests: "Deep Learning · Computer Vision · Machine Learning",
         href: "https://cvl-lab.github.io/",
+        portrait: CvlPortrait,
     },
     {
         name: "Sanghoon Lee",
@@ -60,6 +74,7 @@ const FACULTY = [
         email: "sanghoonlee@ajou.ac.kr",
         interests: "Artificial Intelligence · Speech Synthesis",
         href: "https://sites.google.com/view/speechailab",
+        portrait: SailPortrait,
     },
     {
         name: "Gicheon Kang",
@@ -70,6 +85,7 @@ const FACULTY = [
         email: "gckang@ajou.ac.kr",
         interests: "Physical AI · Robot Learning · Human–Robot Interaction",
         href: "https://heilaboratory.github.io/",
+        portrait: HeiPortrait,
     },
     {
         name: "Hyunsouk Cho",
@@ -82,6 +98,7 @@ const FACULTY = [
         interests:
             "Recommendation Systems · Multimodal Understanding · Large Language Models",
         href: "https://iknow.ajou.ac.kr/",
+        portrait: IknowPortrait,
     },
 ];
 
@@ -140,7 +157,17 @@ function Lab() {
                 <div className="lab-page__grid">
                     {orderedLabs.map((lab) => (
                         <article key={lab.key} className="lab-page__item">
-                            <p className="lab-page__number">{lab.shortName}</p>
+                            <div className="lab-page__identity">
+                                {lab.logo ? (
+                                    <img
+                                        className="lab-page__logo"
+                                        src={lab.logo}
+                                        alt={lab.logoAlt}
+                                    />
+                                ) : (
+                                    <p className="lab-page__wordmark">{lab.shortName}</p>
+                                )}
+                            </div>
                             <h3>{lab.name}</h3>
                             <p>{lab.summary}</p>
                             <ul className="lab-page__topics" aria-label={`${lab.name} research topics`}>
@@ -165,6 +192,9 @@ function Lab() {
                 <div className="lab-page__faculty-grid">
                     {orderedFaculty.map((member) => (
                         <article key={member.name} className="lab-page__faculty-card">
+                            <figure className="lab-page__portrait">
+                                <img src={member.portrait} alt={`${member.name} portrait`} />
+                            </figure>
                             <p className="lab-page__number">{member.lab}</p>
                             <h3>
                                 {member.name}

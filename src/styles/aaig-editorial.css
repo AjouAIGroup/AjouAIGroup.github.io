@@ -373,6 +373,115 @@
     border: 0 !important;
 }
 
+/* News and publication archives share one quiet, editorial control and row system. */
+.app:not(.app--home) :is(.news-page__controls, .publication__controls) {
+    padding: 1.35rem 0 0 !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
+}
+
+.app:not(.app--home) :is(
+    .news-page__controls-grid,
+    .publication__controls-grid
+) {
+    gap: clamp(1.5rem, 4vw, 4rem) !important;
+}
+
+.app:not(.app--home) :is(
+    .news-page__controls-label,
+    .publication__controls-label,
+    .publication__search-label,
+    .publication__scope-label
+) {
+    color: #67635b !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    line-height: 1.3 !important;
+    text-transform: uppercase !important;
+}
+
+.app:not(.app--home) :is(
+    .news-page__filter-btn,
+    .news-page__year-link,
+    .publication__button,
+    .publication__scope-btn
+) {
+    border-bottom: 1px solid transparent !important;
+    color: #54514b !important;
+    text-decoration: none !important;
+}
+
+.app:not(.app--home) :is(
+    .news-page__filter-btn,
+    .news-page__year-link,
+    .publication__button,
+    .publication__scope-btn
+).is-active {
+    border-bottom-color: #171717 !important;
+    color: #171717 !important;
+}
+
+.app:not(.app--home) .publication__search-input {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 0.3rem 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.3) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 0.92rem !important;
+}
+
+.app:not(.app--home) :is(.news-page__list, .publication__list) {
+    border-top: 1px solid rgba(23, 23, 23, 0.18);
+}
+
+.app:not(.app--home) :is(.news-page__item, .publication__card) {
+    padding: clamp(1.25rem, 2.2vw, 1.8rem) 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.18) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.app:not(.app--home) .publication__card-badges {
+    gap: 0.35rem !important;
+}
+
+.app:not(.app--home) .publication__card-media {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+}
+
+.app:not(.app--home) .publication__card-keywords {
+    display: none !important;
+}
+
+.app:not(.app--home) :is(.news-page__badge, .publication__card-badge) {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.app:not(.app--home) .publication__card-links {
+    gap: 0.55rem !important;
+}
+
+@media (max-width: 52rem) {
+    .app:not(.app--home) :is(.news-page__controls, .publication__controls) {
+        padding-top: 1.1rem !important;
+    }
+
+    .app:not(.app--home) .publication__card-links {
+        border-top: 0 !important;
+        padding-top: 0 !important;
+    }
+}
+
 @media (max-width: 57rem) {
     .app:not(.app--home) .tab-header h1 {
         font-size: clamp(2.7rem, 14vw, 4.5rem) !important;

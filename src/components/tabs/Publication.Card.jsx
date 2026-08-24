@@ -28,7 +28,6 @@ function PublicationCard({
     const authorText = meta.author?.trim() ?? "";
     const venueText = meta.published_place?.trim() ?? "";
     const dateText = meta.published_date?.trim() ?? "";
-    const keywordList = Array.isArray(meta.keywords) ? meta.keywords : [];
 
     return (
         <article
@@ -48,19 +47,6 @@ function PublicationCard({
                         {categoryLabel}
                     </p>
                 </div>
-                {keywordList.length ? (
-                    <div
-                        className="publication__card-keywords"
-                        aria-label={`${title} keywords`}>
-                        {keywordList.map((keywordItem, keywordIndex) => (
-                            <span
-                                key={`${title}-${keywordItem}-${keywordIndex}`}
-                                className="publication__card-keyword-chip">
-                                {keywordItem}
-                            </span>
-                        ))}
-                    </div>
-                ) : null}
                 <h3 className="publication__card-title">
                     {hasPaperLink ? (
                         <a

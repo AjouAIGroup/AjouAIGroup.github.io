@@ -57,7 +57,7 @@ function Research() {
             <section className="aaig-research__areas" aria-labelledby="research-area-details-title">
                 <div className="aaig-research__head">
                     <p>AAIG RESEARCH AREAS</p>
-                    <h2 id="research-area-details-title">Four perspectives on artificial intelligence</h2>
+                    <h2 id="research-area-details-title">Four Perspectives on Artificial Intelligence</h2>
                 </div>
 
                 <div className="aaig-research__grid">

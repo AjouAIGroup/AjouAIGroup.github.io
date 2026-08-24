@@ -7,12 +7,13 @@ import {
 } from "../../utils/newsData";
 import CampusImage from "../../assets/images/home/optimized/cvl-lab-home-bg.webp";
 import GpuImage from "../../assets/images/home/optimized/resource-gpu-nodes.webp";
-import RoboticsImage from "../../assets/images/home/optimized/resource-robotics-platform.webp";
-import SpeechImage from "../../assets/images/research_concepts/optimized/application-wide.webp";
 import ResearchImage from "../../assets/images/research_concepts/optimized/multi-modal-wide.webp";
-import KnowledgeImage from "../../assets/images/research_concepts/optimized/core-wide.webp";
 import SeminarImage from "../../assets/images/photo/20241127.jpg";
 import WorkshopImage from "../../assets/images/photo/20240826_1.jpg";
+import VisionLearningImage from "../../assets/images/research_areas/aaig-vision-learning.webp";
+import SpeechGenerativeImage from "../../assets/images/research_areas/aaig-speech-generative.webp";
+import EmbodiedIntelligenceImage from "../../assets/images/research_areas/aaig-embodied-intelligence.webp";
+import KnowledgeAiImage from "../../assets/images/research_areas/aaig-knowledge-ai.webp";
 import "./Home.css";
 
 const NEWS_IMAGES = [
@@ -29,34 +30,33 @@ const RESEARCH_AREAS = [
         title: "Computer Vision & Learning",
         summary:
             "Robust visual recognition and representation learning for reliable perception in real-world settings.",
-        image: ResearchImage,
+        image: VisionLearningImage,
     },
     {
         lab: "SAIL",
         title: "Speech AI & Generative Models",
         summary:
             "Speech synthesis, speech language models, and generative approaches for audio and visual media.",
-        image: SpeechImage,
+        image: SpeechGenerativeImage,
     },
     {
         lab: "HEI Lab",
         title: "Embodied Intelligence",
         summary:
             "Foundation models and lifelong learning for robots that adapt and collaborate with people.",
-        image: RoboticsImage,
+        image: EmbodiedIntelligenceImage,
     },
     {
         lab: "iKnow Lab",
         title: "Knowledge-Centered AI",
         summary:
             "Recommendation, multimodal understanding, large language models, and federated learning.",
-        image: KnowledgeImage,
+        image: KnowledgeAiImage,
     },
 ];
 
 function Home() {
     const railRef = useRef(null);
-    const researchRailRef = useRef(null);
     const newsItems = useMemo(() => getLatestNewsItems(5), []);
 
     const moveRail = (targetRef, direction) => {
@@ -138,56 +138,38 @@ function Home() {
                     </Link>
                 ))}
             </div>
-            <p className="home-news-carousel__hint">Scroll or drag to explore</p>
         </section>
         <section
             data-reveal
             data-reveal-load-delay="100"
-            className="home-news-carousel home-research-carousel"
+            className="home-research-index"
             aria-labelledby="home-research-title">
-            <div className="home-news-carousel__head">
+            <div className="home-research-index__head">
                 <div>
-                    <p className="home-news-carousel__eyebrow">AAIG RESEARCH AREAS</p>
                     <h2 id="home-research-title">Research Areas</h2>
                 </div>
-                <div className="home-news-carousel__actions">
-                    <Link className="home-news-carousel__all" to="/lab">
-                        Explore laboratories ↗
-                    </Link>
-                    <div className="home-news-carousel__controls" aria-label="Research area carousel controls">
-                        <button type="button" onClick={() => moveRail(researchRailRef, -1)} aria-label="Previous research area">
-                            ←
-                        </button>
-                        <button type="button" onClick={() => moveRail(researchRailRef, 1)} aria-label="Next research area">
-                            →
-                        </button>
-                    </div>
-                </div>
+                <Link className="home-research-index__all" to="/lab">
+                    Explore laboratories ↗
+                </Link>
             </div>
 
-            <div
-                ref={researchRailRef}
-                className="home-news-carousel__rail"
-                tabIndex="0"
-                role="region"
-                aria-label="AAIG research areas. Scroll horizontally to browse."
-                onKeyDown={(event) => handleRailKeyDown(researchRailRef, event)}>
+            <div className="home-research-index__grid">
                 {RESEARCH_AREAS.map((area) => (
                     <Link
                         key={area.lab}
-                        className="home-news-carousel__slide"
+                        className="home-research-index__card"
                         to="/lab">
-                        <img src={area.image} alt="" className="home-news-carousel__image" />
-                        <div className="home-news-carousel__shade" aria-hidden="true" />
-                        <div className="home-news-carousel__copy">
-                            <p className="home-news-carousel__meta">{area.lab}</p>
+                        <figure className="home-research-index__media">
+                            <img src={area.image} alt="" loading="lazy" decoding="async" />
+                        </figure>
+                        <div className="home-research-index__copy">
+                            <p>{area.lab}</p>
                             <h3>{area.title}</h3>
-                            <p>{area.summary}</p>
+                            <span>{area.summary}</span>
                         </div>
                     </Link>
                 ))}
             </div>
-            <p className="home-news-carousel__hint">Scroll or drag to explore</p>
         </section>
         </>
     );

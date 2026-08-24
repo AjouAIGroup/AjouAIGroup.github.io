@@ -3,7 +3,7 @@ import NEWS_DATA from "../generated/news.generated.json";
 const DEFAULT_NEWS_TYPE_META = {
     all: { label: "All" },
     paper_accepted: { label: "Paper accepted" },
-    new_member: { label: "New menbers" },
+    new_member: { label: "New Members" },
     graduation: { label: "Graduation" },
     award: { label: "Award" },
     notice: { label: "Notice" },
@@ -87,7 +87,7 @@ const normalizeLegacyNewsItems = (items) =>
             summary:
                 normalizeText(item.summary) ||
                 normalizeText(item.desc) ||
-                "Publication update from CVL-Lab.",
+                "Publication update from CVL Lab.",
             date: normalizeText(item.date) || "1970-01-01",
             year: extractYear(item.year, parsedDate),
             related_person: "",
@@ -116,7 +116,7 @@ const normalizeStructuredNewsItems = (items) =>
             id: normalizeText(item?.id) || `news-${index + 1}`,
             type: normalizeNewsType(item?.type),
             title: normalizeText(item?.title) || "Lab Update",
-            summary: normalizeText(item?.summary) || "Update from CVL-Lab.",
+            summary: normalizeText(item?.summary) || "Update from CVL Lab.",
             date: normalizeText(item?.date) || "1970-01-01",
             year: extractYear(item?.year, parsedDate),
             related_person: normalizeText(item?.related_person),

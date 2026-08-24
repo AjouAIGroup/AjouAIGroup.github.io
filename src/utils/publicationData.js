@@ -90,6 +90,24 @@ export const getPublicationCategories = () => {
     return ["all", ...categories];
 };
 
+export const getPublicationYear = (publication) => {
+    const publishedDate = normalizeText(
+        publication?.research_meta?.published_date,
+    );
+    const year = publishedDate.slice(0, 4);
+
+    return /^\d{4}$/.test(year) ? year : "Undated";
+};
+
+export const getPublicationYears = () =>
+    Array.from(new Set(getAllPublications().map(getPublicationYear))).sort(
+        (first, second) => {
+            if (first === "Undated") return 1;
+            if (second === "Undated") return -1;
+            return Number(second) - Number(first);
+        },
+    );
+
 export const getLatestPublications = (limit = 3) =>
     getAllPublications().slice(0, limit);
 

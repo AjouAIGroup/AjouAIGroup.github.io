@@ -5,6 +5,8 @@ import PublicationButton from "./Publication.Button";
 import {
     getAllPublications,
     getPublicationCategories,
+    getPublicationYear,
+    getPublicationYears,
 } from "../../utils/publicationData";
 import { useLocation } from "react-router-dom";
 import {
@@ -13,10 +15,12 @@ import {
 } from "../../utils/researchData";
 
 const areaCategory = getPublicationCategories();
+const publicationYears = getPublicationYears();
 const publications = getAllPublications();
 function Publication() {
     const location = useLocation();
     const [selectedArea, setSelectedArea] = useState("all");
+    const [selectedYear, setSelectedYear] = useState("all");
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSelectedArea = (area) => {
@@ -27,15 +31,18 @@ function Publication() {
         const params = new URLSearchParams(location.search);
         const queryFromParams = params.get("q")?.trim() ?? "";
         const areaFromParams = params.get("area")?.trim() ?? "";
+        const yearFromParams = params.get("year")?.trim() ?? "";
         const normalizedAreaFromParams =
             areaFromParams === "all"
                 ? "all"
                 : resolveResearchAreaKey(areaFromParams);
 
         const hasValidArea = areaCategory.includes(normalizedAreaFromParams);
+        const hasValidYear = publicationYears.includes(yearFromParams);
 
         setSearchQuery(queryFromParams);
         setSelectedArea(hasValidArea ? normalizedAreaFromParams : "all");
+        setSelectedYear(hasValidYear ? yearFromParams : "all");
     }, [location.search]);
 
     const filteredPublications = useMemo(() => {
@@ -47,6 +54,14 @@ function Publication() {
                 selectedArea === publicationItem.category;
 
             if (!areaMatch) {
+                return false;
+            }
+
+            const yearMatch =
+                selectedYear === "all" ||
+                selectedYear === getPublicationYear(publicationItem);
+
+            if (!yearMatch) {
                 return false;
             }
 
@@ -64,7 +79,20 @@ function Publication() {
 
             return searchTarget.includes(normalizedQuery);
         });
-    }, [searchQuery, selectedArea]);
+    }, [searchQuery, selectedArea, selectedYear]);
+
+    const groupedPublications = useMemo(() => {
+        const groups = new Map();
+
+        filteredPublications.forEach((publicationItem) => {
+            const year = getPublicationYear(publicationItem);
+            const items = groups.get(year) ?? [];
+            items.push(publicationItem);
+            groups.set(year, items);
+        });
+
+        return Array.from(groups, ([year, items]) => ({ year, items }));
+    }, [filteredPublications]);
 
     return (
         <div data-reveal data-reveal-load-delay="60" className="publication">
@@ -83,7 +111,7 @@ function Publication() {
                 className="publication__controls page-panel page-panel--compact page-panel--section-start page-controls"
                 aria-label="Filter publications">
                 <div className="publication__controls-grid page-controls__grid">
-                    <section className="publication__controls-group page-controls__group">
+                    <section className="publication__controls-group publication__controls-group--area page-controls__group">
                         <div className="publication__controls-head">
                             <p className="publication__controls-label page-controls__label">
                                 Filter by research area
@@ -102,6 +130,34 @@ function Publication() {
                                     {RESEARCH_CATEGORY_LABELS[area] ||
                                         area.charAt(0).toUpperCase() +
                                             area.slice(1)}
+                                </PublicationButton>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="publication__controls-group page-controls__group">
+                        <div className="publication__controls-head">
+                            <p className="publication__controls-label page-controls__label">
+                                Filter by year
+                            </p>
+                        </div>
+                        <div
+                            className="publication__filter publication__year-filter page-controls__actions"
+                            role="group"
+                            aria-label="Filter publications by year">
+                            <PublicationButton
+                                areaKey="all"
+                                isSelected={selectedYear === "all"}
+                                onSelect={() => setSelectedYear("all")}>
+                                All years
+                            </PublicationButton>
+                            {publicationYears.map((year) => (
+                                <PublicationButton
+                                    key={year}
+                                    areaKey={`year-${year}`}
+                                    isSelected={selectedYear === year}
+                                    onSelect={() => setSelectedYear(year)}>
+                                    {year}
                                 </PublicationButton>
                             ))}
                         </div>
@@ -149,21 +205,35 @@ function Publication() {
                         </p>
                     </div>
                 </div>
-                <div className="publication__list">
-                    {filteredPublications.map((tpub, index) => (
-                        <PublicationCard
-                            key={`${tpub.key}-${index}`}
-                            publicationId={tpub.id}
-                            category={tpub.category}
-                            meta={tpub.research_meta}
-                            title={tpub.title}
-                            revealDelay={`${Math.min(index, 5) * 60}ms`}
-                            revealLoadDelay={`${120 + Math.min(index, 5) * 60}`}
-                        />
+                <div className="publication__archive-groups">
+                    {groupedPublications.map((group, groupIndex) => (
+                        <section
+                            key={group.year}
+                            className="publication__year-group"
+                            aria-labelledby={`publication-year-${group.year}`}>
+                            <h3
+                                id={`publication-year-${group.year}`}
+                                className="publication__year-heading">
+                                {group.year}
+                            </h3>
+                            <div className="publication__list">
+                                {group.items.map((tpub, index) => (
+                                    <PublicationCard
+                                        key={`${tpub.key}-${index}`}
+                                        publicationId={tpub.id}
+                                        category={tpub.category}
+                                        meta={tpub.research_meta}
+                                        title={tpub.title}
+                                        revealDelay={`${Math.min(index, 5) * 60}ms`}
+                                        revealLoadDelay={`${120 + Math.min(groupIndex + index, 5) * 60}`}
+                                    />
+                                ))}
+                            </div>
+                        </section>
                     ))}
-                    {filteredPublications.length === 0 && (
+                    {groupedPublications.length === 0 && (
                         <p className="publication__empty">
-                            No publications match your selected category and
+                            No publications match your selected filters and
                             search query.
                         </p>
                     )}

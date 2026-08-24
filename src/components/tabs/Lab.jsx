@@ -77,6 +77,15 @@ function Lab() {
             (first, second) => labOrder.get(first.lab) - labOrder.get(second.lab),
         );
     }, [orderedLabs]);
+    const orderedRepresentatives = useMemo(() => {
+        const labOrder = new Map(
+            orderedLabs.map((lab, index) => [lab.shortName, index]),
+        );
+
+        return [...STUDENT_REPRESENTATIVES].sort(
+            (first, second) => labOrder.get(first.lab) - labOrder.get(second.lab),
+        );
+    }, [orderedLabs]);
 
     return (
         <div data-reveal data-reveal-load-delay="60" className="lab-page">
@@ -160,7 +169,7 @@ function Lab() {
                     <h2 id="representatives-title">Student Representatives</h2>
                 </div>
                 <div className="lab-page__representative-grid">
-                    {STUDENT_REPRESENTATIVES.map((member) => (
+                    {orderedRepresentatives.map((member) => (
                         <article key={member.lab} className="lab-page__representative">
                             <p className="lab-page__number">{member.lab}</p>
                             <h3>

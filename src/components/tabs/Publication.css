@@ -16,7 +16,7 @@
 }
 
 .publication__controls-grid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(11rem, 0.7fr) minmax(0, 1fr);
     align-items: start;
 }
 
@@ -44,6 +44,10 @@
     width: 100%;
     min-width: 0;
     padding-top: 0;
+}
+
+.publication__year-filter .publication__button {
+    min-width: auto;
 }
 
 .publication__button {
@@ -155,6 +159,30 @@
     gap: var(--list-gap);
 }
 
+.publication__archive-groups {
+    display: grid;
+    gap: clamp(2.75rem, 5vw, 4.5rem);
+}
+
+.publication__year-group {
+    display: grid;
+    gap: var(--section-head-bottom);
+}
+
+.publication__year-heading {
+    margin: 0;
+    padding-bottom: 0.56rem;
+    border-bottom: 1px solid var(--tab-identity-border, var(--outline-color));
+    color: var(--text-primary);
+    font-family: "Times New Roman", Times, serif;
+    font-size: var(--group-title-size);
+    font-weight: 400;
+    line-height: var(--group-title-line-height);
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+    scroll-margin-top: 5.8rem;
+}
+
 .publication__card {
     width: 100%;
     margin: 0;
@@ -264,6 +292,13 @@
     border-color: rgba(23, 23, 23, 0.24);
     background: transparent;
     color: var(--text-secondary);
+}
+
+.publication__card-badge--year {
+    border-color: rgba(23, 23, 23, 0.24);
+    background: transparent;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
 }
 
 .publication__card-date {
@@ -400,6 +435,14 @@
 }
 
 @media (max-width: 70rem) {
+    .publication__controls-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .publication__controls-group--area {
+        grid-column: 1 / -1;
+    }
+
     .publication__card {
         grid-template-columns: minmax(8.8rem, 10rem) minmax(0, 1fr) auto;
         gap: max(0.64rem, var(--row-gap));

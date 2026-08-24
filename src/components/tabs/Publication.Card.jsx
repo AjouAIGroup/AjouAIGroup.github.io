@@ -28,6 +28,7 @@ function PublicationCard({
     const authorText = meta.author?.trim() ?? "";
     const venueText = meta.published_place?.trim() ?? "";
     const dateText = meta.published_date?.trim() ?? "";
+    const yearText = /^\d{4}/.exec(dateText)?.[0] ?? "Undated";
 
     return (
         <article
@@ -45,6 +46,9 @@ function PublicationCard({
                     <p
                         className={`publication__card-badge publication__card-badge--${category}`}>
                         {categoryLabel}
+                    </p>
+                    <p className="publication__card-badge publication__card-badge--year">
+                        {yearText}
                     </p>
                     {(meta.labs ?? []).map((lab) => (
                         <p key={lab} className="publication__card-badge publication__card-badge--lab">

@@ -4,6 +4,7 @@ import HeiPortrait from "../../assets/images/laboratories/hei-gicheon-kang.jpg";
 import IknowPortrait from "../../assets/images/laboratories/iknow-hyunsouk-cho.jpg";
 import SailPortrait from "../../assets/images/laboratories/sail-sanghoon-lee.jpg";
 import { LABORATORIES } from "../../data/laboratories";
+import { STUDENT_REPRESENTATIVES } from "../../data/contactDirectory";
 import { shuffleItems } from "../../utils/collections";
 import "./Lab.css";
 
@@ -149,6 +150,24 @@ function Lab() {
                             <ExternalLink href={member.href} className="lab-page__link">
                                 Visit lab website ↗
                             </ExternalLink>
+                        </article>
+                    ))}
+                </div>
+            </section>
+
+            <section className="lab-page__representatives" aria-labelledby="representatives-title">
+                <div className="lab-page__directory-head">
+                    <h2 id="representatives-title">Student Representatives</h2>
+                </div>
+                <div className="lab-page__representative-grid">
+                    {STUDENT_REPRESENTATIVES.map((member) => (
+                        <article key={member.email} className="lab-page__representative">
+                            <p className="lab-page__number">{member.lab}</p>
+                            <h3>{member.name}</h3>
+                            <p>{member.role}</p>
+                            <a className="lab-page__email" href={`mailto:${member.email}`}>
+                                {member.email}
+                            </a>
                         </article>
                     ))}
                 </div>

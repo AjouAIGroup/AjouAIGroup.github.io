@@ -12,6 +12,10 @@ import SpeechStudioImage from "../../assets/images/news_placeholders/speech-stud
 import KnowledgeGraphImage from "../../assets/images/news_placeholders/knowledge-graph.webp";
 import { LABORATORIES } from "../../data/laboratories";
 import { shuffleItems } from "../../utils/collections";
+import {
+    getLatestPublications,
+    getPublicationYearSnapshot,
+} from "../../utils/publicationData";
 import "./Home.css";
 
 const NEWS_IMAGES = [
@@ -28,6 +32,11 @@ function Home() {
     const newsItems = useMemo(() => getLatestNewsItems(5), []);
     const orderedResearchAreas = useMemo(() => shuffleItems(LABORATORIES), []);
     const orderedLaboratories = useMemo(() => shuffleItems(LABORATORIES), []);
+    const publicationSnapshot = useMemo(
+        () => getPublicationYearSnapshot(),
+        [],
+    );
+    const latestPublications = useMemo(() => getLatestPublications(3), []);
 
     const moveRail = (targetRef, direction) => {
         const rail = targetRef.current;
@@ -111,38 +120,6 @@ function Home() {
         </section>
         <section
             data-reveal
-            data-reveal-load-delay="100"
-            className="home-research-index"
-            aria-labelledby="home-research-title">
-            <div className="home-research-index__head">
-                <div>
-                    <h2 id="home-research-title">Research Areas</h2>
-                </div>
-                <Link className="home-research-index__all" to="/research">
-                    Explore research ↗
-                </Link>
-            </div>
-
-            <div className="home-research-index__grid">
-                {orderedResearchAreas.map((area) => (
-                    <Link
-                        key={area.key}
-                        className={`home-research-index__card home-research-index__card--${area.key}`}
-                        to="/research">
-                        <figure className="home-research-index__media">
-                            <img src={area.homeResearchImage} alt="" loading="lazy" decoding="async" />
-                        </figure>
-                        <div className="home-research-index__copy">
-                            <p>{area.shortName}</p>
-                            <h3>{area.researchTitle}</h3>
-                            <span>{area.researchSummary}</span>
-                        </div>
-                    </Link>
-                ))}
-            </div>
-        </section>
-        <section
-            data-reveal
             data-reveal-load-delay="120"
             className="home-laboratories-index"
             aria-labelledby="home-laboratories-title">
@@ -184,6 +161,105 @@ function Home() {
                         <p className="home-laboratories-index__lab">{lab.shortName}</p>
                         <h3>{lab.name}</h3>
                         <span>{lab.summary}</span>
+                    </Link>
+                ))}
+            </div>
+        </section>
+        <section
+            data-reveal
+            data-reveal-load-delay="140"
+            className="home-publication-index"
+            aria-labelledby="home-publication-title">
+            <div className="home-publication-index__intro">
+                <h2 id="home-publication-title">Publications</h2>
+                <p>Recent work from the four AAIG laboratories.</p>
+                <Link className="home-publication-index__link" to="/publication">
+                    View all publications ↗
+                </Link>
+            </div>
+            <div className="home-publication-index__list">
+                {latestPublications.map((publication) => (
+                    <Link
+                        key={publication.id}
+                        className="home-publication-index__item"
+                        to={`/publication?q=${encodeURIComponent(publication.title)}`}>
+                        <p>{publication.research_meta.published_place}</p>
+                        <h3>{publication.title}</h3>
+                        <span>{publication.research_meta.author}</span>
+                    </Link>
+                ))}
+            </div>
+        </section>
+        <section
+            data-reveal
+            data-reveal-load-delay="160"
+            className="home-publication-snapshot"
+            aria-labelledby="home-publication-snapshot-title">
+            <div className="home-publication-snapshot__intro">
+                <p className="home-publication-snapshot__label">
+                    {publicationSnapshot.year} publications
+                </p>
+                <h2 id="home-publication-snapshot-title">
+                    Current publication snapshot
+                </h2>
+                <p>
+                    A quick view of publications currently listed in the AAIG
+                    archive.
+                </p>
+                <Link to="/publication" className="home-publication-snapshot__link">
+                    View all publications ↗
+                </Link>
+            </div>
+            <div className="home-publication-snapshot__results">
+                <p className="home-publication-snapshot__total">
+                    <strong>{publicationSnapshot.total}</strong>
+                    <span>papers</span>
+                </p>
+                {publicationSnapshot.venues.length ? (
+                    <ul className="home-publication-snapshot__venues" aria-label={`${publicationSnapshot.year} publication counts by venue`}>
+                        {publicationSnapshot.venues.map(({ venue, count }) => (
+                            <li key={venue}>
+                                <span>{venue}</span>
+                                <strong>{count}</strong>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="home-publication-snapshot__empty">
+                        New publications will appear here as they are added to
+                        the archive.
+                    </p>
+                )}
+            </div>
+        </section>
+        <section
+            data-reveal
+            data-reveal-load-delay="180"
+            className="home-research-index"
+            aria-labelledby="home-research-title">
+            <div className="home-research-index__head">
+                <div>
+                    <h2 id="home-research-title">Research Areas</h2>
+                </div>
+                <Link className="home-research-index__all" to="/research">
+                    Explore research ↗
+                </Link>
+            </div>
+
+            <div className="home-research-index__grid">
+                {orderedResearchAreas.map((area) => (
+                    <Link
+                        key={area.key}
+                        className={`home-research-index__card home-research-index__card--${area.key}`}
+                        to="/research">
+                        <figure className="home-research-index__media">
+                            <img src={area.homeResearchImage} alt="" loading="lazy" decoding="async" />
+                        </figure>
+                        <div className="home-research-index__copy">
+                            <p>{area.shortName}</p>
+                            <h3>{area.researchTitle}</h3>
+                            <span>{area.researchSummary}</span>
+                        </div>
                     </Link>
                 ))}
             </div>

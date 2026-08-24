@@ -5,6 +5,7 @@ export const TAB_KEYS = [
     "lab",
     "gallery",
     "publication",
+    "contact",
 ];
 
 const TAB_KEY_SET = new Set(TAB_KEYS);

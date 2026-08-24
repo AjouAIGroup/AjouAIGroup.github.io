@@ -4,7 +4,8 @@
 }
 
 .lab-page__directory,
-.lab-page__faculty {
+.lab-page__faculty,
+.lab-page__representatives {
     display: grid;
     gap: 2rem;
 }
@@ -41,14 +42,16 @@
 }
 
 .lab-page__grid,
-.lab-page__faculty-grid {
+.lab-page__faculty-grid,
+.lab-page__representative-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(2.5rem, 5vw, 5.5rem) clamp(1.75rem, 4vw, 4rem);
 }
 
 .lab-page__item,
-.lab-page__faculty-card {
+.lab-page__faculty-card,
+.lab-page__representative {
     display: grid;
     align-content: start;
     gap: 0.85rem;
@@ -82,7 +85,8 @@
 }
 
 .lab-page__item h3,
-.lab-page__faculty-card h3 {
+.lab-page__faculty-card h3,
+.lab-page__representative h3 {
     margin: 0;
     font-size: clamp(1.45rem, 2.5vw, 2rem);
     line-height: 1.04;
@@ -115,7 +119,8 @@
 }
 
 .lab-page__item > p:not(.lab-page__number),
-.lab-page__faculty-card > p:not(.lab-page__number) {
+.lab-page__faculty-card > p:not(.lab-page__number),
+.lab-page__representative > p:not(.lab-page__number) {
     max-width: 32rem;
     margin: 0;
     color: #54514b;
@@ -174,7 +179,8 @@
 
 @media (max-width: 42rem) {
     .lab-page__grid,
-    .lab-page__faculty-grid {
+    .lab-page__faculty-grid,
+    .lab-page__representative-grid {
         grid-template-columns: 1fr;
     }
 }

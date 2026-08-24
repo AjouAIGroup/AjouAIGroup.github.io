@@ -92,3 +92,54 @@ export const getPublicationCategories = () => {
 
 export const getLatestPublications = (limit = 3) =>
     getAllPublications().slice(0, limit);
+
+const VENUE_SHORT_NAMES = [
+    "AAAI",
+    "ACL",
+    "CVPR",
+    "ECCV",
+    "EMNLP",
+    "ICCV",
+    "ICLR",
+    "ICML",
+    "IJCAI",
+    "Interspeech",
+    "IROS",
+    "NeurIPS",
+    "NAACL",
+    "RSS",
+    "WACV",
+];
+
+const getVenueShortName = (venue = "") => {
+    const normalizedVenue = normalizeText(venue);
+    const knownVenue = VENUE_SHORT_NAMES.find((name) =>
+        new RegExp(`\\b${name}\\b`, "i").test(normalizedVenue),
+    );
+
+    return knownVenue || normalizedVenue || "Other";
+};
+
+export const getPublicationYearSnapshot = (year = new Date().getFullYear()) => {
+    const targetYear = String(year);
+    const publications = getAllPublications().filter((item) =>
+        item.research_meta.published_date.startsWith(targetYear),
+    );
+    const venueCounts = new Map();
+
+    publications.forEach((item) => {
+        const venue = getVenueShortName(item.research_meta.published_place);
+        venueCounts.set(venue, (venueCounts.get(venue) ?? 0) + 1);
+    });
+
+    return {
+        year: targetYear,
+        total: publications.length,
+        venues: Array.from(venueCounts, ([venue, count]) => ({ venue, count }))
+            .sort((first, second) =>
+                second.count === first.count
+                    ? first.venue.localeCompare(second.venue)
+                    : second.count - first.count,
+            ),
+    };
+};

@@ -23,6 +23,10 @@ function AppRoutes() {
                 />
             ))}
             <Route
+                path="/prospective"
+                element={<Navigate to="/contact" replace />}
+            />
+            <Route
                 path="/research/*"
                 element={<Navigate to="/research" replace />}
             />

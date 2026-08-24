@@ -5,6 +5,7 @@ const HomePage = lazy(() => import("../pages/HomePage"));
 const NewsPage = lazy(() => import("../pages/NewsPage"));
 const ResearchPage = lazy(() => import("../pages/ResearchPage"));
 const LabPage = lazy(() => import("../pages/LabPage"));
+const ContactPage = lazy(() => import("../pages/ContactPage"));
 const GalleryPage = lazy(() => import("../pages/GalleryPage"));
 const PublicationPage = lazy(() => import("../pages/PublicationPage"));
 
@@ -13,6 +14,7 @@ const PAGE_COMPONENTS = {
     news: NewsPage,
     research: ResearchPage,
     lab: LabPage,
+    contact: ContactPage,
     gallery: GalleryPage,
     publication: PublicationPage,
 };

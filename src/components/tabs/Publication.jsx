@@ -191,20 +191,8 @@ function Publication() {
 
             <section
                 data-reveal
-                className="publication__archive page-panel"
-                aria-labelledby="publication-archive-title">
-                <div className="publication__section-head">
-                    <div>
-                        <h2 id="publication-archive-title">
-                            Publications Archive
-                        </h2>
-                        <p>
-                            {filteredPublications.length} result
-                            {filteredPublications.length === 1 ? "" : "s"} in
-                            the current view
-                        </p>
-                    </div>
-                </div>
+                className="publication__archive"
+                aria-label="Publication list">
                 <div className="publication__archive-groups">
                     {groupedPublications.map((group, groupIndex) => (
                         <section

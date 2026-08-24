@@ -44,7 +44,7 @@
 - `title` : Publication 제목
 - `date` : `YYYY-MM-DD`
 - `authors` : 저자 문자열
-- `venue` : 학회/저널
+- `venue` : 학회/저널 약자와 연도. 예: `CVPR 2026` (날짜의 연도와 같아야 함)
 
 #### 선택 필드
 
@@ -170,7 +170,8 @@ summary: 비용을 줄이면서 멀티모달 성능을 유지하는 attention ro
 4. `category` 값이 허용 값인지 확인
     - `research_areas.json`의 `meta.area_order`에 있는 canonical key
 5. `date` 형식 확인 (`YYYY-MM-DD`)
-6. 아래 명령 실행
+6. `venue`가 `약자 연도` 형식이며 date의 연도와 일치하는지 확인
+7. 아래 명령 실행
     ```bash
     npm run content:sync
     npm run validate:content

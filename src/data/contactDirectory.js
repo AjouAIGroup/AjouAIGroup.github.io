@@ -8,6 +8,8 @@ const CONTACT_DETAILS = {
         guidance:
             "Start by reviewing the lab's research areas. Send a short email with your CV, research interests, and any available academic record to discuss fit and current opportunities.",
         note: "Donggeon Lee is the current first contact for prospective students.",
+        studentProfile:
+            "The laboratory will add its preferred background, skills, and research interests here.",
     },
     sail: {
         contactName: "Sanghoon Lee",
@@ -15,6 +17,8 @@ const CONTACT_DETAILS = {
         contactEmail: "sanghoonlee@ajou.ac.kr",
         guidance:
             "Review current research on speech and generative AI, then introduce your background and intended research direction by email. Confirm current openings and required materials with the lab.",
+        studentProfile:
+            "The laboratory will add its preferred background, skills, and research interests here.",
     },
     hei: {
         contactName: "Gicheon Kang",
@@ -22,6 +26,8 @@ const CONTACT_DETAILS = {
         contactEmail: "gckang@ajou.ac.kr",
         guidance:
             "Read the lab's work in embodied intelligence and robotics before contacting the lab. Include a CV and a concise note about the research topics you would like to pursue.",
+        studentProfile:
+            "The laboratory will add its preferred background, skills, and research interests here.",
     },
     iknow: {
         contactName: "Hyunsouk Cho",
@@ -29,6 +35,8 @@ const CONTACT_DETAILS = {
         contactEmail: "hyunsouk@ajou.ac.kr",
         guidance:
             "Review the lab's research in knowledge-centered AI, then email an introduction with your CV and relevant interests. The lab can confirm its current application process and available positions.",
+        studentProfile:
+            "The laboratory will add its preferred background, skills, and research interests here.",
     },
 };
 

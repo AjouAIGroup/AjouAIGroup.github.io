@@ -5,7 +5,7 @@ status: published
 title: "Channel Propagation Networks for Refreshable Vision Transformer"
 date: 2025-01-01
 authors: "Junhyung Ko, Jongbin Ryu"
-venue: "Winter Conference on Applications of Computer Vision (WACV)"
+venue: WACV 2025
 keywords: [Vision Transformer, Channel Propagation, Over-smoothing]
 labs: [CVL Lab]
 paper_url: "https://openaccess.thecvf.com/content/WACV2025/papers/Go_Channel_Propagation_Networks_for_Refreshable_Vision_Transformer_WACV_2025_paper.pdf"

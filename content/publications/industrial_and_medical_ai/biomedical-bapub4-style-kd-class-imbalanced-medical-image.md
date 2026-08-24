@@ -5,7 +5,7 @@ status: published
 title: "Style-KD : Class-Imbalanced Medical Image Classification via Style Knowledge Distillation"
 date: 2024-12-29
 authors: "Inhyuk Park, Won Hwa Kim, Jongbin Ryu"
-venue: "Biomedical Signall Processing and Control"
+venue: BSPC 2024
 keywords: [Class Imbalance, Knowledge Distillation, Medical Image Classification]
 labs: [CVL Lab]
 paper_url: "https://www.sciencedirect.com/science/article/pii/S1746809423013617"

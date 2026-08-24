@@ -7,7 +7,6 @@ const pageComponents = {
     research: lazy(() => import("../pages/ResearchPage")),
     lab: lazy(() => import("../pages/LabPage")),
     contact: lazy(() => import("../pages/ContactPage")),
-    gallery: lazy(() => import("../pages/GalleryPage")),
     publication: lazy(() => import("../pages/PublicationPage")),
 };
 

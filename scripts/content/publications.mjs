@@ -18,6 +18,25 @@ const RESEARCH_AREAS_FILE = path.resolve(
     "src/assets/dataset/research_areas.json",
 );
 const PUBLICATION_STATUSES = new Set(["published", "working", "project"]);
+const PUBLICATION_VENUES = new Set([
+    "ACCV",
+    "BMVC",
+    "BSPC",
+    "CBM",
+    "CMPB",
+    "CVPR",
+    "ECCV",
+    "ESWA",
+    "ICCVW",
+    "ICML",
+    "IJS",
+    "MedIA",
+    "NAACL",
+    "RSS",
+    "Sci Rep",
+    "WACV",
+]);
+const VENUE_WITH_YEAR_PATTERN = /^(.+?)\s+(\d{4})$/;
 
 const normalizeText = (value) => String(value ?? "").trim();
 const normalizeStringList = (value) => {
@@ -95,6 +114,19 @@ const parsePublicationFile = async (filePath, publicationCategories) => {
     }
     if (!venue) {
         throw new Error(requiredError(filePath, "venue"));
+    }
+
+    const venueMatch = venue.match(VENUE_WITH_YEAR_PATTERN);
+    const publicationYear = date.slice(0, 4);
+    if (!venueMatch || !PUBLICATION_VENUES.has(venueMatch[1])) {
+        throw new Error(
+            `[publications] ${relativeFromRoot(filePath)}: "venue" must use an approved abbreviation and year (for example, "CVPR ${publicationYear}").`,
+        );
+    }
+    if (venueMatch[2] !== publicationYear) {
+        throw new Error(
+            `[publications] ${relativeFromRoot(filePath)}: venue year "${venueMatch[2]}" must match date year "${publicationYear}".`,
+        );
     }
 
     return {

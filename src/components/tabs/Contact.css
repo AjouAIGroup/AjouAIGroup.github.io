@@ -12,75 +12,47 @@
     letter-spacing: -0.045em;
 }
 
+.contact-page__head {
+    gap: clamp(1.35rem, 2.2vw, 1.85rem) !important;
+}
+
 .contact-page__directory {
     display: grid;
-    border-top: 1px solid rgba(23, 23, 23, 0.2);
 }
 
-.contact-page__location {
+.contact-page__introduction {
     display: grid;
-    grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 0.8fr);
+    grid-template-columns: minmax(14rem, 0.92fr) minmax(18rem, 1.08fr);
     gap: clamp(1.5rem, 5vw, 5.5rem);
-    align-items: stretch;
+    padding: clamp(2.2rem, 4vw, 3.5rem) 0;
+    border-top: 2px solid #171717;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.2);
 }
 
-.contact-page__map-wrap {
-    min-height: clamp(19rem, 32vw, 28rem);
-    overflow: hidden;
-    background: #d9d7d0;
-}
-
-.contact-page__map-wrap iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: inherit;
-    border: 0;
-}
-
-.contact-page__location-copy {
-    display: grid;
-    align-content: end;
-    gap: 0.85rem;
-    padding-block: 1rem;
-}
-
-.contact-page__location-label {
+.contact-page__introduction h2 {
     margin: 0;
-    color: #67635b;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    line-height: 1.35;
-    text-transform: uppercase;
+    font-size: clamp(2.6rem, 5vw, 5rem);
+    line-height: 0.9;
 }
 
-.contact-page__location-copy h2 {
-    margin: 0;
-    font-size: clamp(2rem, 3.2vw, 3.2rem);
-    line-height: 0.98;
-}
-
-.contact-page__location-copy address {
+.contact-page__introduction-copy {
     display: grid;
-    gap: 0.22rem;
-    margin: 0.35rem 0 0;
+    align-content: center;
+    gap: 1rem;
+    max-width: 35rem;
+}
+
+.contact-page__introduction-copy p,
+.contact-page__section-head > p {
+    margin: 0;
     color: #54514b;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.98rem;
-    font-style: normal;
-    line-height: 1.58;
+    font-size: 1.04rem;
+    line-height: 1.62;
 }
 
-.contact-page__location-copy address span:first-child {
-    margin-bottom: 0.42rem;
-    color: #171717;
-}
-
-.contact-page__location-copy > a {
+.contact-page__introduction-copy a {
     width: fit-content;
-    margin-top: 0.35rem;
     color: #171717;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.92rem;
@@ -90,16 +62,46 @@
     text-underline-offset: 0.22em;
 }
 
+.contact-page__section-head {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 42rem;
+}
+
+.contact-page__section-head h2 {
+    margin: 0;
+    font-size: clamp(2.1rem, 3.7vw, 3.7rem);
+    line-height: 0.94;
+}
+
 .contact-page__lab {
     display: grid;
-    grid-template-columns: minmax(12rem, 0.68fr) minmax(15rem, 1fr) minmax(12rem, 0.62fr);
-    gap: clamp(1.5rem, 4vw, 4.5rem);
+    gap: clamp(1.6rem, 3vw, 2.6rem);
     padding: clamp(2rem, 4vw, 3.5rem) 0;
+    border-top: 1px solid rgba(23, 23, 23, 0.2);
     border-bottom: 1px solid rgba(23, 23, 23, 0.2);
 }
 
+.contact-page__lab-primary,
+.contact-page__lab-secondary {
+    display: grid;
+    grid-template-columns: minmax(13rem, 0.78fr) minmax(12rem, 0.72fr) minmax(18rem, 1.2fr);
+    gap: clamp(1.25rem, 3vw, 3.75rem);
+}
+
+.contact-page__lab-secondary {
+    padding-top: clamp(1.4rem, 2.5vw, 2.1rem);
+    border-top: 1px solid rgba(23, 23, 23, 0.2);
+}
+
+.contact-page__prospective {
+    grid-column: 1 / 3;
+}
+
 .contact-page__lab-heading,
+.contact-page__fit,
 .contact-page__guidance,
+.contact-page__prospective,
 .contact-page__contact {
     min-width: 0;
     display: grid;
@@ -139,6 +141,8 @@
 }
 
 .contact-page__guidance h3,
+.contact-page__fit h3,
+.contact-page__prospective h3,
 .contact-page__contact h3 {
     margin: 0 0 0.2rem;
     color: #67635b;
@@ -151,6 +155,8 @@
 }
 
 .contact-page__guidance p,
+.contact-page__fit > p,
+.contact-page__prospective > p,
 .contact-page__contact > p:not(.contact-page__contact-name) {
     margin: 0;
     color: #54514b;
@@ -161,6 +167,23 @@
 
 .contact-page__note {
     color: #171717 !important;
+}
+
+.contact-page__fit ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    color: #54514b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    list-style: none;
+}
+
+.contact-page__fit li:not(:last-child)::after {
+    content: ",";
 }
 
 .contact-page__contact-name {
@@ -186,34 +209,34 @@
 }
 
 @media (max-width: 56rem) {
-    .contact-page__location {
+    .contact-page__introduction {
         grid-template-columns: 1fr;
         gap: 1.75rem;
     }
 
-    .contact-page__map-wrap {
-        min-height: clamp(17rem, 56vw, 24rem);
+    .contact-page__lab-primary,
+    .contact-page__lab-secondary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .contact-page__location-copy {
-        padding-block: 0;
+    .contact-page__lab-heading {
+        grid-column: 1 / -1;
     }
 
-    .contact-page__lab {
-        grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
-    }
-
-    .contact-page__contact {
-        grid-column: 2;
+    .contact-page__prospective {
+        grid-column: auto;
     }
 }
 
 @media (max-width: 42rem) {
-    .contact-page__lab {
+    .contact-page__lab-primary,
+    .contact-page__lab-secondary {
         grid-template-columns: 1fr;
         gap: 1.75rem;
     }
 
+    .contact-page__lab-heading,
+    .contact-page__prospective,
     .contact-page__contact {
         grid-column: auto;
     }

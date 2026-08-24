@@ -5,7 +5,7 @@ status: published
 title: "Unsupervised Hashing Network with Hyper Quantization Tree"
 date: 2024-11-25
 authors: "Sungeun Kim, Jongbin Ryu"
-venue: "British Machine Vision Conference (BMVC)"
+venue: BMVC 2024
 keywords: [Unsupervised Hashing, Image Retrieval, Quantization]
 labs: [CVL Lab]
 paper_url: "https://bmva-archive.org.uk/bmvc/2024/papers/Paper_482/paper.pdf"

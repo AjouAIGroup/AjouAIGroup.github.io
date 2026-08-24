@@ -5,7 +5,7 @@ status: published
 title: "Fine-Grained Self-Supervised Learning with Jigsaw puzzles for medical image classification"
 date: 2024-01-01
 authors: "Wongi Park, Jongbin Ryu"
-venue: "Computers in Biology and Medicine"
+venue: CBM 2024
 keywords: [Fine-Grained Classification, Self-Supervised Learning, Jigsaw Puzzle]
 labs: [CVL Lab]
 paper_url: "https://www.sciencedirect.com/science/article/abs/pii/S0010482524005444"

@@ -4,7 +4,6 @@ import NewsPage from "../pages/NewsPage";
 import ResearchPage from "../pages/ResearchPage";
 import LabPage from "../pages/LabPage";
 import ContactPage from "../pages/ContactPage";
-import GalleryPage from "../pages/GalleryPage";
 import PublicationPage from "../pages/PublicationPage";
 
 const PAGE_COMPONENTS = {
@@ -13,7 +12,6 @@ const PAGE_COMPONENTS = {
     research: ResearchPage,
     lab: LabPage,
     contact: ContactPage,
-    gallery: GalleryPage,
     publication: PublicationPage,
 };
 

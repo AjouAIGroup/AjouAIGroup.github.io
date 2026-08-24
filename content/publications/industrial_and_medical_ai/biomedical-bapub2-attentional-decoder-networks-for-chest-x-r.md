@@ -5,7 +5,7 @@ status: published
 title: "Attentional Decoder Networks for Chest X-ray Image Recognition on High-resolution Features"
 date: 2024-04-21
 authors: "Hankyul Kang, Namkug Kim, Jongbin Ryu"
-venue: "Computer Methods and Programs in Biomedicine"
+venue: CMPB 2024
 keywords: [Chest X-ray, Attention Decoder, High-resolution Features]
 labs: [CVL Lab]
 paper_url: "https://www.sciencedirect.com/science/article/pii/S0169260724001949"

@@ -1,7 +1,6 @@
 .nav {
     position: fixed;
     z-index: 20;
-    isolation: isolate;
     top: clamp(1.25rem, 2.15vw, 2.15rem);
     left: clamp(1.25rem, 2.2vw, 2.4rem);
     right: clamp(1.25rem, 2.2vw, 2.4rem);
@@ -29,7 +28,7 @@
 }
 
 .nav__logo {
-    width: clamp(10.5rem, 12vw, 12.8rem);
+    width: clamp(8.4rem, 9.6vw, 10.24rem);
     text-decoration: none;
     display: block;
 }
@@ -83,20 +82,11 @@
 }
 
 .app--home .nav.is-scrolled {
-    background: transparent;
-    border-color: transparent;
-    backdrop-filter: none;
-}
-
-.app--home .nav.is-scrolled::before {
-    content: "";
-    position: fixed;
-    z-index: -1;
     top: 0;
-    right: 0;
     left: 0;
-    height: clamp(5.8rem, 8.2vw, 7rem);
-    pointer-events: none;
+    right: 0;
+    align-items: center;
+    padding: 1rem clamp(1.25rem, 4vw, 4rem);
     background: rgba(244, 243, 239, 0.88);
     border-bottom: 1px solid rgba(23, 23, 23, 0.14);
     backdrop-filter: blur(14px);
@@ -200,8 +190,8 @@
         padding: 1rem 1.25rem;
     }
 
-    .app--home .nav.is-scrolled::before {
-        height: 4.75rem;
+    .app--home .nav.is-scrolled {
+        padding: 1rem 1.25rem;
     }
 
     .app:not(.app--home) .nav__toggle {

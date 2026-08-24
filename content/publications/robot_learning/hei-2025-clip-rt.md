@@ -5,7 +5,7 @@ status: published
 title: "CLIP-RT: Learning Language-Conditioned Robotic Policies from Natural Language Supervision"
 date: 2025-06-01
 authors: "Gi-Cheon Kang, Junghyun Kim, Kyuhwan Shim, Jun Ki Lee, Byoung-Tak Zhang"
-venue: "Robotics: Science and Systems (RSS) 2025"
+venue: RSS 2025
 keywords: [Vision-Language-Action, Natural Language Supervision, Robot Learning]
 labs: [HEI Lab]
 pdf_url: "https://www.roboticsproceedings.org/rss21/p016.pdf"

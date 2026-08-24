@@ -5,7 +5,7 @@ status: published
 title: "Generative Self-Supervised Learning for Medical Image Classification"
 date: 2024-12-01
 authors: "Inhyuk Park, Sungeun Kim, Jongbin Ryu"
-venue: "Asian Conference on Computer Vision (ACCV)"
+venue: ACCV 2024
 keywords: [Generative Self-Supervised Learning, Medical Image Classification, Diffusion Model]
 labs: [CVL Lab]
 paper_url: "https://openaccess.thecvf.com/content/ACCV2024/html/Park_Generative_Self-Supervised_Learning_for_Medical_Image_Classification_ACCV_2024_paper.html"

@@ -3,7 +3,6 @@ export const TAB_KEYS = [
     "news",
     "research",
     "lab",
-    "gallery",
     "publication",
     "contact",
 ];

@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-24T04:51:38.873Z",
+    "generated_at": "2026-08-24T07:23:00.403Z",
     "source": "content/publications",
     "categories": [
       "robot_learning",
@@ -26,7 +26,7 @@
       "featured": false,
       "research_meta": {
         "author": "Ngseo Kim, Junghyun Kim, Gi-Cheon Kang, Youngjae Yu, Byoung-Tak Zhang",
-        "published_place": "RSS 2026 Workshop on L2P",
+        "published_place": "RSS 2026",
         "published_date": "2026-01-01",
         "keywords": [
           "Vision-Language-Action",
@@ -125,7 +125,7 @@
       "featured": false,
       "research_meta": {
         "author": "Hankyul Kang, Gregor Seifer, Donghyun Lee, Jongbin Ryu",
-        "published_place": "Computer Vision and Pattern Recognition (CVPR)",
+        "published_place": "CVPR 2025",
         "published_date": "2025-06-01",
         "keywords": [
           "Continual Learning",
@@ -158,7 +158,7 @@
       "featured": true,
       "research_meta": {
         "author": "Gi-Cheon Kang, Junghyun Kim, Kyuhwan Shim, Jun Ki Lee, Byoung-Tak Zhang",
-        "published_place": "Robotics: Science and Systems (RSS) 2025",
+        "published_place": "RSS 2025",
         "published_date": "2025-06-01",
         "keywords": [
           "Vision-Language-Action",
@@ -191,7 +191,7 @@
       "featured": false,
       "research_meta": {
         "author": "Junhyung Ko, Jongbin Ryu",
-        "published_place": "Winter Conference on Applications of Computer Vision (WACV)",
+        "published_place": "WACV 2025",
         "published_date": "2025-01-01",
         "keywords": [
           "Vision Transformer",
@@ -224,7 +224,7 @@
       "featured": false,
       "research_meta": {
         "author": "Hankyul Kang, Jongbin Ryu",
-        "published_place": "Winter Conference on Applications of Computer Vision (WACV)",
+        "published_place": "WACV 2025",
         "published_date": "2025-01-01",
         "keywords": [
           "Attention Pooling",
@@ -323,7 +323,7 @@
       "featured": false,
       "research_meta": {
         "author": "Inhyuk Park, Won Hwa Kim, Jongbin Ryu",
-        "published_place": "Biomedical Signall Processing and Control",
+        "published_place": "BSPC 2024",
         "published_date": "2024-12-29",
         "keywords": [
           "Class Imbalance",
@@ -356,7 +356,7 @@
       "featured": false,
       "research_meta": {
         "author": "Inhyuk Park, Sungeun Kim, Jongbin Ryu",
-        "published_place": "Asian Conference on Computer Vision (ACCV)",
+        "published_place": "ACCV 2024",
         "published_date": "2024-12-01",
         "keywords": [
           "Generative Self-Supervised Learning",
@@ -389,7 +389,7 @@
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Jongbin Ryu",
-        "published_place": "Asian Conference on Computer Vision (ACCV)",
+        "published_place": "ACCV 2024",
         "published_date": "2024-12-01",
         "keywords": [
           "Network Re-parameterization",
@@ -422,7 +422,7 @@
       "featured": false,
       "research_meta": {
         "author": "Sungeun Kim, Jongbin Ryu",
-        "published_place": "British Machine Vision Conference (BMVC)",
+        "published_place": "BMVC 2024",
         "published_date": "2024-11-25",
         "keywords": [
           "Unsupervised Hashing",
@@ -455,7 +455,7 @@
       "featured": false,
       "research_meta": {
         "author": "Junhyung Go, Jonngbin Ryu",
-        "published_place": "Expert Systems with applications",
+        "published_place": "ESWA 2024",
         "published_date": "2024-10-04",
         "keywords": [
           "Non-local Networks",
@@ -488,7 +488,7 @@
       "featured": false,
       "research_meta": {
         "author": "Hankyul Kang, Namkug Kim, Jongbin Ryu",
-        "published_place": "Computer Methods and Programs in Biomedicine",
+        "published_place": "CMPB 2024",
         "published_date": "2024-04-21",
         "keywords": [
           "Chest X-ray",
@@ -521,7 +521,7 @@
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Namkug Kim, Jongbin Ryu",
-        "published_place": "Scientific Reports",
+        "published_place": "Sci Rep 2024",
         "published_date": "2024-04-16",
         "keywords": [
           "Medical Imaging",
@@ -554,7 +554,7 @@
       "featured": false,
       "research_meta": {
         "author": "CVAMD participants including Jongbin Ryu",
-        "published_place": "Medical Image Analysis (MedIA)",
+        "published_place": "MedIA 2024",
         "published_date": "2024-01-01",
         "keywords": [
           "Long-tailed Learning",
@@ -587,7 +587,7 @@
       "featured": false,
       "research_meta": {
         "author": "Wongi Park, Jongbin Ryu",
-        "published_place": "Computers in Biology and Medicine",
+        "published_place": "CBM 2024",
         "published_date": "2024-01-01",
         "keywords": [
           "Fine-Grained Classification",
@@ -620,7 +620,7 @@
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Jongbin Ryu, Ho-Jung Shin, Jeong Ho Song, Sang-Yong Son, Hoon Hur, Sang-Uk Han",
-        "published_place": "International Journal of Surgery",
+        "published_place": "IJS 2023",
         "published_date": "2023-12-01",
         "keywords": [
           "CT Analysis",
@@ -653,7 +653,7 @@
       "featured": false,
       "research_meta": {
         "author": "Wongi Park, Inhyuk Park, Sungeun Kim, Jongbin Ryu",
-        "published_place": "ICCVW",
+        "published_place": "ICCVW 2023",
         "published_date": "2023-08-10",
         "keywords": [
           "Long-tailed Learning",

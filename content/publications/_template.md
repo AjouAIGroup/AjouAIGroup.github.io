@@ -5,7 +5,7 @@ status: published
 title: Example Publication Title
 date: 2026-03-16
 authors: First Author, Second Author, Corresponding Author
-venue: Example Conference 2026
+venue: CVPR 2026
 keywords: [Vision-Language Learning, Efficient Training, Benchmarking]
 pdf_url: https://example.org/paper.pdf
 arxiv_url: ""

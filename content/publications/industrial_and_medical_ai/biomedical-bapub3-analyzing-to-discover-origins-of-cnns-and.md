@@ -5,7 +5,7 @@ status: published
 title: "Analyzing to Discover Origins of CNNs and ViT Architectures in Medical Images"
 date: 2024-04-16
 authors: "Seungmin Oh, Namkug Kim, Jongbin Ryu"
-venue: "Scientific Reports"
+venue: "Sci Rep 2024"
 keywords: [Medical Imaging, CNN and ViT Analysis, Model Interpretability]
 labs: [CVL Lab]
 paper_url: "https://www.nature.com/articles/s41598-024-58382-3"

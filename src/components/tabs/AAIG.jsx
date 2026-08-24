@@ -1,9 +1,15 @@
 import "./AAIG.css";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import AAIG_FULL_LOGO from "../../assets/brand/aaig-full-logo.png";
 import AAIG_HERO from "../../assets/brand/aaig-hero-campus-v2.webp";
 import { SITE } from "../../config/site";
+import { LABORATORIES } from "../../data/laboratories";
+import { shuffleItems } from "../../utils/collections";
 
 function AaigHero({ isHome }) {
+    const laboratories = useMemo(() => shuffleItems(LABORATORIES), []);
+
     if (isHome) {
         return (
             <section className="aaig-hero" aria-labelledby="aaig-hero-title">
@@ -23,6 +29,29 @@ function AaigHero({ isHome }) {
                     </div>
                     <p>Ajou University</p>
                 </div>
+                <section className="aaig-hero__laboratories" aria-label="Laboratories">
+                    {laboratories.map((lab) => (
+                        <Link key={lab.key} className="aaig-hero__laboratory" to="/lab">
+                            <div className="aaig-hero__laboratory-identity">
+                                {lab.logo ? (
+                                    <img src={lab.logo} alt={lab.logoAlt} />
+                                ) : (
+                                    <span>{lab.shortName}</span>
+                                )}
+                            </div>
+                            <div className="aaig-hero__laboratory-copy">
+                                <p className="aaig-hero__laboratory-label">{lab.shortName}</p>
+                                <h2>{lab.name}</h2>
+                                <p className="aaig-hero__laboratory-summary">{lab.summary}</p>
+                            </div>
+                            <ul className="aaig-hero__laboratory-topics" aria-label={`${lab.shortName} research topics`}>
+                                {lab.topics.slice(0, 2).map((topic) => (
+                                    <li key={topic}>{topic}</li>
+                                ))}
+                            </ul>
+                        </Link>
+                    ))}
+                </section>
             </section>
         );
     }

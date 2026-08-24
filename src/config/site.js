@@ -2,7 +2,7 @@ export const SITE = {
     name: "AAIG",
     title: "Ajou Artificial Intelligence Group",
     description:
-        "Ajou Artificial Intelligence Group — four laboratories, one research community.",
+        "Ajou Artificial Intelligence Group: four laboratories, one research community.",
 };
 
 // Keep the first menu definition in one place so the AAIG information

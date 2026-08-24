@@ -1,4 +1,5 @@
 import { CONTACT_LABS } from "../../data/contactDirectory";
+import { AJOU_LOCATION } from "../../config/location";
 import "./Contact.css";
 
 function ContactIdentity({ lab }) {
@@ -23,6 +24,35 @@ function Contact() {
                     available opportunities, and application requirements.
                 </p>
             </header>
+
+            <section
+                className="contact-page__location"
+                aria-labelledby="contact-location-title">
+                <div className="contact-page__map-wrap">
+                    <iframe
+                        title="Ajou University Paldal Hall location"
+                        src={AJOU_LOCATION.mapEmbedUrl}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                    />
+                </div>
+                <div className="contact-page__location-copy">
+                    <p className="contact-page__location-label">Visiting address</p>
+                    <h2 id="contact-location-title">{AJOU_LOCATION.building}</h2>
+                    <address>
+                        <span>{AJOU_LOCATION.koreanAddress}</span>
+                        {AJOU_LOCATION.englishAddress.map((line) => (
+                            <span key={line}>{line}</span>
+                        ))}
+                    </address>
+                    <a
+                        href={AJOU_LOCATION.mapsUrl}
+                        target="_blank"
+                        rel="noreferrer">
+                        Open in Google Maps ↗
+                    </a>
+                </div>
+            </section>
 
             <section className="contact-page__directory" aria-label="AAIG laboratory contacts">
                 {CONTACT_LABS.map((lab) => (

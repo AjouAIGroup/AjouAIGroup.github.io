@@ -4,7 +4,7 @@ import NavButton from "./Nav.Button";
 import { resolveTabFromPath } from "../routes/routeUtils";
 import { scrollWindowTo } from "../utils/scrollMotion";
 import { NAV_ITEMS } from "../config/site";
-import AAIG_MARK from "../assets/brand/aaig-mark.png";
+import AJOU_AI_GROUP_LOGO from "../assets/brand/ajou-ai-group-logo.png";
 import "./Nav.css";
 
 const MOBILE_NAV_QUERY = "(max-width: 57rem)";
@@ -28,14 +28,18 @@ export default function Nav() {
     }, [location.pathname, location.hash]);
 
     useEffect(() => {
-        const syncScrollState = () => {
-            setHasScrolled(window.scrollY > 16);
-        };
+        const marker = document.querySelector("[data-nav-scroll-sentinel]");
+        if (!marker || typeof IntersectionObserver === "undefined") {
+            return undefined;
+        }
 
-        syncScrollState();
-        window.addEventListener("scroll", syncScrollState, { passive: true });
+        const observer = new IntersectionObserver(
+            ([entry]) => setHasScrolled(!entry.isIntersecting),
+            { threshold: 0 },
+        );
 
-        return () => window.removeEventListener("scroll", syncScrollState);
+        observer.observe(marker);
+        return () => observer.disconnect();
     }, [location.pathname]);
 
     useEffect(() => {
@@ -122,6 +126,7 @@ export default function Nav() {
 
     return (
         <>
+            <div className="nav__scroll-sentinel" data-nav-scroll-sentinel aria-hidden="true" />
             {isMobileNav ? (
                 <div
                     className={`nav__overlay ${isMenuOpen ? "is-visible" : ""}`}
@@ -136,9 +141,11 @@ export default function Nav() {
                         className="nav__logo"
                         onClick={handleLogoClick}
                         aria-label="Go to Home">
-                        <span className="nav__brand-mark" aria-hidden="true">
-                            <img src={AAIG_MARK} alt="" />
-                        </span>
+                        <img
+                            className="nav__brand-mark"
+                            src={AJOU_AI_GROUP_LOGO}
+                            alt="Ajou AI Group"
+                        />
                     </Link>
                     {isMobileNav ? (
                         <div className="nav__header-actions">

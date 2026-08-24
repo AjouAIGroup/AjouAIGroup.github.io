@@ -13,34 +13,30 @@
     transition: top 220ms ease, left 220ms ease, right 220ms ease, padding 220ms ease, background-color 220ms ease, border-color 220ms ease;
 }
 
+.nav__scroll-sentinel {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
 .nav__header {
     display: flex;
     align-items: center;
 }
 
 .nav__logo {
-    width: clamp(5.3rem, 7vw, 6.8rem);
+    width: clamp(10.5rem, 12vw, 12.8rem);
     text-decoration: none;
     display: block;
 }
 
 .nav__brand-mark {
     width: 100%;
-    aspect-ratio: 458 / 156;
     display: block;
-    overflow: hidden;
-    position: relative;
-}
-
-.nav__brand-mark img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 218.35%;
-    max-width: none;
     height: auto;
-    display: block;
-    transform: translate(-29%, -32.4%);
     filter: none;
 }
 
@@ -109,7 +105,7 @@
     backdrop-filter: blur(14px);
 }
 
-.app:not(.app--home) .nav__brand-mark img {
+.app:not(.app--home) .nav__brand-mark {
     filter: none;
 }
 

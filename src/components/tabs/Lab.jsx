@@ -38,7 +38,7 @@ const FACULTY = [
         role: "Assistant Professor",
         department: "Department of Software, Ajou University",
         email: "gckang@ajou.ac.kr",
-        interests: "Physical AI · Robot Learning · Human–Robot Interaction",
+        interests: "Physical AI, Robot Learning, Human-Robot Interaction",
         href: "https://heilaboratory.github.io/",
         portrait: HeiPortrait,
     },

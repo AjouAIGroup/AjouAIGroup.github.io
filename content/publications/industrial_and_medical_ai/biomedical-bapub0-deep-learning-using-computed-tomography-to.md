@@ -7,6 +7,7 @@ date: 2023-12-01
 authors: "Seungmin Oh, Jongbin Ryu, Ho-Jung Shin, Jeong Ho Song, Sang-Yong Son, Hoon Hur, Sang-Uk Han"
 venue: "International Journal of Surgery"
 keywords: [CT Analysis, Risk Prediction, Clinical AI]
+labs: [CVL Lab]
 paper_url: "https://journals.lww.com/international-journal-of-surgery/fulltext/2023/12000/deep_learning_using_computed_tomography_to.39.aspx"
 source_code_url: ""
 featured: false

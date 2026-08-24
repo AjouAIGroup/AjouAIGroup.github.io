@@ -49,6 +49,7 @@
 #### 선택 필드
 
 - `keywords` : keyword 배열 또는 쉼표 구분 문자열
+- `labs` : 담당 연구실 배열 (예: `[CVL Lab]`, 여러 연구실이면 모두 입력)
 - `pdf_url` : PDF 링크
 - `arxiv_url` : arXiv 링크
 - `github_url` : GitHub 링크
@@ -105,6 +106,7 @@ date: 2026-03-16
 authors: First Author, Second Author, Corresponding Author
 venue: CVPR 2026
 keywords: [Efficient Attention, VLM, Vision Transformer]
+labs: [CVL Lab]
 pdf_url: https://example.org/paper.pdf
 arxiv_url: https://arxiv.org/abs/1234.5678
 github_url: https://github.com/example/repo

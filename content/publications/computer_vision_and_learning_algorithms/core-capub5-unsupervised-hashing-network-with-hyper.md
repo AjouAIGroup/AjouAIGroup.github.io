@@ -7,6 +7,7 @@ date: 2024-11-25
 authors: "Sungeun Kim, Jongbin Ryu"
 venue: "British Machine Vision Conference (BMVC)"
 keywords: [Unsupervised Hashing, Image Retrieval, Quantization]
+labs: [CVL Lab]
 paper_url: "https://bmva-archive.org.uk/bmvc/2024/papers/Paper_482/paper.pdf"
 source_code_url: "https://github.com/Lab-LVM/HQT"
 featured: false

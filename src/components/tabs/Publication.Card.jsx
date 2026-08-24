@@ -46,6 +46,11 @@ function PublicationCard({
                         className={`publication__card-badge publication__card-badge--${category}`}>
                         {categoryLabel}
                     </p>
+                    {(meta.labs ?? []).map((lab) => (
+                        <p key={lab} className="publication__card-badge publication__card-badge--lab">
+                            {lab}
+                        </p>
+                    ))}
                 </div>
                 <h3 className="publication__card-title">
                     {hasPaperLink ? (

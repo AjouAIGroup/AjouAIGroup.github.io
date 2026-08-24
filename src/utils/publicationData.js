@@ -55,6 +55,7 @@ export const getAllPublications = () =>
                     ),
                     published_date: publishedDate,
                     keywords: normalizeStringList(researchMeta?.keywords),
+                    labs: normalizeStringList(researchMeta?.labs),
                     pdf_link: normalizeText(researchMeta?.pdf_link),
                     arxiv_link: normalizeText(researchMeta?.arxiv_link),
                     github_link: normalizeText(

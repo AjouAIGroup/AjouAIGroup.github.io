@@ -5,21 +5,21 @@ import {
     getLatestNewsItems,
     getNewsTypeMeta,
 } from "../../utils/newsData";
-import CampusImage from "../../assets/images/home/optimized/cvl-lab-home-bg.webp";
-import GpuImage from "../../assets/images/home/optimized/resource-gpu-nodes.webp";
-import ResearchImage from "../../assets/images/research_concepts/optimized/multi-modal-wide.webp";
-import SeminarImage from "../../assets/images/photo/20241127.jpg";
-import WorkshopImage from "../../assets/images/photo/20240826_1.jpg";
+import ResearchWorkspaceImage from "../../assets/images/news_placeholders/research-workspace.webp";
+import ComputeClusterImage from "../../assets/images/news_placeholders/compute-cluster.webp";
+import RoboticsBenchImage from "../../assets/images/news_placeholders/robotics-bench.webp";
+import SpeechStudioImage from "../../assets/images/news_placeholders/speech-studio.webp";
+import KnowledgeGraphImage from "../../assets/images/news_placeholders/knowledge-graph.webp";
 import { LABORATORIES } from "../../data/laboratories";
 import { shuffleItems } from "../../utils/collections";
 import "./Home.css";
 
 const NEWS_IMAGES = [
-    CampusImage,
-    ResearchImage,
-    SeminarImage,
-    GpuImage,
-    WorkshopImage,
+    ResearchWorkspaceImage,
+    ComputeClusterImage,
+    RoboticsBenchImage,
+    SpeechStudioImage,
+    KnowledgeGraphImage,
 ];
 
 function Home() {

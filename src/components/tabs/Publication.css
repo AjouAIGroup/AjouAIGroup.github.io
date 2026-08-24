@@ -136,40 +136,6 @@
     color: var(--text-muted);
 }
 
-.publication__scope-wrap {
-    min-width: 0;
-    display: grid;
-    gap: var(--space-2);
-}
-
-.publication__scope-label {
-    margin: 0;
-}
-
-.publication__scope {
-    width: 100%;
-    min-width: 0;
-}
-
-.publication__scope-btn {
-    --btn-height-local: 2.15rem;
-    --btn-pad-x-local: 0.72rem;
-    --surface-hover-bg: var(--surface-hover-soft);
-    --surface-hover-border: var(--line-strong);
-    --surface-hover-shadow: var(--shadow-elev-1);
-    --surface-hover-translate: 0px;
-
-    font-size: var(--type-button-size);
-    white-space: normal;
-    text-align: center;
-}
-
-.publication__scope-btn.is-active {
-    --btn-bg: var(--tab-identity-tint, var(--surface-2));
-    --btn-border: var(--tab-identity-border, var(--outline-color));
-    --btn-ink: var(--tab-identity-accent, var(--text-primary));
-    --btn-shadow: var(--shadow-elev-1);
-}
 
 .publication__section-head {
     width: 100%;
@@ -292,6 +258,12 @@
     border-color: #d9e1ea;
     background: var(--topic-efficient-learning-for-llms-100);
     color: var(--topic-efficient-learning-for-llms-800);
+}
+
+.publication__card-badge--lab {
+    border-color: rgba(23, 23, 23, 0.24);
+    background: transparent;
+    color: var(--text-secondary);
 }
 
 .publication__card-date {

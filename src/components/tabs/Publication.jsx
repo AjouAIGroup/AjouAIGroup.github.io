@@ -14,22 +14,10 @@ import {
 
 const areaCategory = getPublicationCategories();
 const publications = getAllPublications();
-const SEARCH_SCOPES = [
-    { key: "title", label: "Title" },
-    { key: "title-authors", label: "Title + Authors" },
-    { key: "title-authors-venue", label: "Title + Authors + Venue" },
-];
-const SEARCH_PLACEHOLDER_BY_SCOPE = {
-    title: "Search by title",
-    "title-authors": "Search by title or authors",
-    "title-authors-venue": "Search by title, authors, or venue",
-};
-
 function Publication() {
     const location = useLocation();
     const [selectedArea, setSelectedArea] = useState("all");
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchScope, setSearchScope] = useState("title");
 
     const handleSelectedArea = (area) => {
         setSelectedArea(area);
@@ -38,26 +26,15 @@ function Publication() {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const queryFromParams = params.get("q")?.trim() ?? "";
-        const scopeFromParams = params.get("scope")?.trim() ?? "";
         const areaFromParams = params.get("area")?.trim() ?? "";
         const normalizedAreaFromParams =
             areaFromParams === "all"
                 ? "all"
                 : resolveResearchAreaKey(areaFromParams);
 
-        const hasValidScope = SEARCH_SCOPES.some(
-            (item) => item.key === scopeFromParams,
-        );
         const hasValidArea = areaCategory.includes(normalizedAreaFromParams);
 
         setSearchQuery(queryFromParams);
-        setSearchScope(
-            hasValidScope
-                ? scopeFromParams
-                : queryFromParams
-                  ? "title-authors"
-                  : "title",
-        );
         setSelectedArea(hasValidArea ? normalizedAreaFromParams : "all");
     }, [location.search]);
 
@@ -77,27 +54,17 @@ function Publication() {
                 return true;
             }
 
-            const searchParts = [publicationItem.title, publicationItem.id];
-
-            if (
-                searchScope === "title-authors" ||
-                searchScope === "title-authors-venue"
-            ) {
-                searchParts.push(publicationItem.research_meta.author);
-            }
-
-            if (searchScope === "title-authors-venue") {
-                searchParts.push(publicationItem.research_meta.published_place);
-                searchParts.push(
-                    ...(publicationItem.research_meta.keywords ?? []),
-                );
-            }
+            const searchParts = [
+                publicationItem.title,
+                publicationItem.research_meta.author,
+                publicationItem.research_meta.published_place,
+            ];
 
             const searchTarget = searchParts.join(" ").toLowerCase();
 
             return searchTarget.includes(normalizedQuery);
         });
-    }, [searchQuery, selectedArea, searchScope]);
+    }, [searchQuery, selectedArea]);
 
     return (
         <div data-reveal data-reveal-load-delay="60" className="publication">
@@ -154,40 +121,12 @@ function Publication() {
                                     id="publication-search"
                                     type="search"
                                     className="publication__search-input"
-                                    placeholder={
-                                        SEARCH_PLACEHOLDER_BY_SCOPE[
-                                            searchScope
-                                        ] || "Search publications"
-                                    }
+                                    placeholder="Search by title, authors, or venue"
                                     value={searchQuery}
                                     onChange={(event) =>
                                         setSearchQuery(event.target.value)
                                     }
                                 />
-                            </div>
-                            <div className="publication__scope-wrap">
-                                <p className="publication__scope-label page-controls__label">
-                                    Search in
-                                </p>
-                                <div
-                                    className="publication__scope page-controls__actions"
-                                    role="group"
-                                    aria-label="Publication search scope">
-                                    {SEARCH_SCOPES.map((scope) => (
-                                        <button
-                                            key={scope.key}
-                                            type="button"
-                                            className={`publication__scope-btn btn btn--secondary btn--sm interactive-button ${searchScope === scope.key ? "is-active" : ""}`}
-                                            onClick={() =>
-                                                setSearchScope(scope.key)
-                                            }
-                                            aria-pressed={
-                                                searchScope === scope.key
-                                            }>
-                                            {scope.label}
-                                        </button>
-                                    ))}
-                                </div>
                             </div>
                         </div>
                     </section>
@@ -225,7 +164,7 @@ function Publication() {
                     {filteredPublications.length === 0 && (
                         <p className="publication__empty">
                             No publications match your selected category and
-                            search scope.
+                            search query.
                         </p>
                     )}
                 </div>

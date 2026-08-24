@@ -7,6 +7,7 @@ date: 2024-04-21
 authors: "Hankyul Kang, Namkug Kim, Jongbin Ryu"
 venue: "Computer Methods and Programs in Biomedicine"
 keywords: [Chest X-ray, Attention Decoder, High-resolution Features]
+labs: [CVL Lab]
 paper_url: "https://www.sciencedirect.com/science/article/pii/S0169260724001949"
 source_code_url: "https://github.com/CVL-Lab/ADNet"
 featured: false

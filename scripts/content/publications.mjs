@@ -58,6 +58,7 @@ const parsePublicationFile = async (filePath, publicationCategories) => {
     const arxivUrl = normalizeHttpUrl(data.arxiv_url);
     const githubUrl = normalizeHttpUrl(data.github_url || data.source_code_url);
     const keywords = normalizeStringList(data.keywords);
+    const labs = normalizeStringList(data.labs || data.lab);
     const featured = data.featured === true;
     const summary =
         normalizeText(data.summary) || body.split("\n")[0]?.trim() || "";
@@ -109,6 +110,7 @@ const parsePublicationFile = async (filePath, publicationCategories) => {
             published_place: venue,
             published_date: date,
             keywords,
+            labs,
             pdf_link: pdfUrl,
             arxiv_link: arxivUrl,
             github_link: githubUrl,

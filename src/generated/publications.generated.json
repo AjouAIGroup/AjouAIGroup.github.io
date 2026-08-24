@@ -1,9 +1,11 @@
 {
   "meta": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-24T04:10:05.222Z",
+    "generated_at": "2026-08-24T04:51:38.873Z",
     "source": "content/publications",
     "categories": [
+      "robot_learning",
+      "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",
       "industrial_and_medical_ai"
     ],
@@ -14,6 +16,105 @@
     ]
   },
   "items": [
+    {
+      "id": "hei-2026-microvla",
+      "key": "hei-2026-microvla",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "MicroVLA: Edge-Deployable Vision Language Action at 10M Parameters",
+      "summary": "An edge-deployable vision-language-action model for robot learning.",
+      "featured": false,
+      "research_meta": {
+        "author": "Ngseo Kim, Junghyun Kim, Gi-Cheon Kang, Youngjae Yu, Byoung-Tak Zhang",
+        "published_place": "RSS 2026 Workshop on L2P",
+        "published_date": "2026-01-01",
+        "keywords": [
+          "Vision-Language-Action",
+          "Edge Robotics",
+          "Robot Learning"
+        ],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://heilaboratory.github.io/publications/",
+        "source_code_link": "",
+        "paper_link": "https://heilaboratory.github.io/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-2026-learning-sample-wise",
+      "key": "iknow-2026-learning-sample-wise",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
+      "summary": "Rank-aware interpolation for composed visual data retrieval.",
+      "featured": false,
+      "research_meta": {
+        "author": "Boseung Jeong, Taegyu Park, Donghyeon Kwon, Hyunsouk Cho, Suha Kwak",
+        "published_place": "ECCV 2026",
+        "published_date": "2026-01-01",
+        "keywords": [
+          "Visual Retrieval",
+          "Multimodal Learning",
+          "Rank-Aware Learning"
+        ],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-2026-textme",
+      "key": "iknow-2026-textme",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
+      "summary": "Text-guided representations that bridge unseen modalities.",
+      "featured": false,
+      "research_meta": {
+        "author": "Soyeon Hong, Jinchan Kim, Jaegook You, Seungtaek Choi, Suha Kwak, Hyunsouk Cho",
+        "published_place": "ICML 2026",
+        "published_date": "2026-01-01",
+        "keywords": [
+          "Multimodal Learning",
+          "Text Descriptions",
+          "Representation Learning"
+        ],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
     {
       "id": "core-capub1-do-your-best-and-get-enough-rest-for-continual",
       "key": "core-capub1-do-your-best-and-get-enough-rest-for-continual",
@@ -31,12 +132,48 @@
           "Self-Supervised Learning",
           "Replay Methods"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "https://github.com/hankyul2/ViewBatchModel",
         "project_link": "https://openaccess.thecvf.com/content/CVPR2025/html/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.html",
         "source_code_link": "https://github.com/hankyul2/ViewBatchModel",
         "paper_link": "https://openaccess.thecvf.com/content/CVPR2025/html/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.html"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-2025-clip-rt",
+      "key": "hei-2025-clip-rt",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "CLIP-RT: Learning Language-Conditioned Robotic Policies from Natural Language Supervision",
+      "summary": "Language-supervised robotic policies that make collecting robot demonstrations more accessible.",
+      "featured": true,
+      "research_meta": {
+        "author": "Gi-Cheon Kang, Junghyun Kim, Kyuhwan Shim, Jun Ki Lee, Byoung-Tak Zhang",
+        "published_place": "Robotics: Science and Systems (RSS) 2025",
+        "published_date": "2025-06-01",
+        "keywords": [
+          "Vision-Language-Action",
+          "Natural Language Supervision",
+          "Robot Learning"
+        ],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "https://www.roboticsproceedings.org/rss21/p016.pdf",
+        "arxiv_link": "",
+        "github_link": "https://github.com/clip-rt/clip-rt",
+        "project_link": "https://clip-rt.github.io/",
+        "source_code_link": "https://github.com/clip-rt/clip-rt",
+        "paper_link": "https://clip-rt.github.io/"
       },
       "content": {
         "problem": "",
@@ -60,6 +197,9 @@
           "Vision Transformer",
           "Channel Propagation",
           "Over-smoothing"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -91,12 +231,81 @@
           "Local Patterns",
           "Feature Representation"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "https://github.com/hankyul2/MAP",
         "project_link": "https://openaccess.thecvf.com/content/WACV2025/papers/Kang_Enriching_Local_Patterns_with_Multi-Token_Attention_for_Broad-Sight_Neural_Networks_WACV_2025_paper.pdf",
         "source_code_link": "https://github.com/hankyul2/MAP",
         "paper_link": "https://openaccess.thecvf.com/content/WACV2025/papers/Kang_Enriching_Local_Patterns_with_Multi-Token_Attention_for_Broad-Sight_Neural_Networks_WACV_2025_paper.pdf"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-2025-continual-vln",
+      "key": "hei-2025-continual-vln",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Continual Vision-and-Language Navigation",
+      "summary": "A continual learning formulation for vision-and-language navigation agents adapting to new scene domains.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seongjun Jeong, Gi-Cheon Kang, Seongho Choi, Joochan Kim, Byoung-Tak Zhang",
+        "published_place": "BMVC 2025",
+        "published_date": "2025-01-01",
+        "keywords": [
+          "Vision-Language Navigation",
+          "Continual Learning",
+          "Embodied AI"
+        ],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "https://arxiv.org/abs/2403.15049",
+        "github_link": "",
+        "project_link": "https://heilaboratory.github.io/publications/",
+        "source_code_link": "",
+        "paper_link": "https://heilaboratory.github.io/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-2025-flex",
+      "key": "iknow-2025-flex",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "FLEX: Expert-level False-Less EXecution Metric for Reliable Text-to-SQL Benchmark",
+      "summary": "An execution metric for assessing reliable Text-to-SQL systems.",
+      "featured": false,
+      "research_meta": {
+        "author": "Heegyu Kim, Taeyang Jeon, Seunghwan Choi, Seungtaek Choi, Hyunsouk Cho",
+        "published_place": "NAACL 2025",
+        "published_date": "2025-01-01",
+        "keywords": [
+          "Text-to-SQL",
+          "Evaluation Metric",
+          "Language Models"
+        ],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
       },
       "content": {
         "problem": "",
@@ -120,6 +329,9 @@
           "Class Imbalance",
           "Knowledge Distillation",
           "Medical Image Classification"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -151,6 +363,9 @@
           "Medical Image Classification",
           "Diffusion Model"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "https://github.com/inhyukpark2/gen-ssl",
@@ -180,6 +395,9 @@
           "Network Re-parameterization",
           "Branch-level Connectivity",
           "Model Efficiency"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -211,6 +429,9 @@
           "Image Retrieval",
           "Quantization"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "https://github.com/Lab-LVM/HQT",
@@ -240,6 +461,9 @@
           "Non-local Networks",
           "Attention-free Vision",
           "Spatial Bias"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -271,6 +495,9 @@
           "Attention Decoder",
           "High-resolution Features"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "https://github.com/CVL-Lab/ADNet",
@@ -300,6 +527,9 @@
           "Medical Imaging",
           "CNN and ViT Analysis",
           "Model Interpretability"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -331,6 +561,9 @@
           "Multi-label Classification",
           "Chest X-ray"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
@@ -360,6 +593,9 @@
           "Fine-Grained Classification",
           "Self-Supervised Learning",
           "Jigsaw Puzzle"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -391,6 +627,9 @@
           "Risk Prediction",
           "Clinical AI"
         ],
+        "labs": [
+          "CVL Lab"
+        ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
@@ -420,6 +659,9 @@
           "Long-tailed Learning",
           "Multi-label Classification",
           "Robust Loss"
+        ],
+        "labs": [
+          "CVL Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",

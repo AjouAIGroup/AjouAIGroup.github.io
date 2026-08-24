@@ -7,6 +7,7 @@ date: 2024-01-01
 authors: "Wongi Park, Jongbin Ryu"
 venue: "Computers in Biology and Medicine"
 keywords: [Fine-Grained Classification, Self-Supervised Learning, Jigsaw Puzzle]
+labs: [CVL Lab]
 paper_url: "https://www.sciencedirect.com/science/article/abs/pii/S0010482524005444"
 source_code_url: "https://github.com/kalelpark/FG-SSL"
 featured: false

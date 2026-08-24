@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 import {
     notifyProgrammaticScroll,
+    resolveScrollBehavior,
     scrollWindowTo,
 } from "../utils/scrollMotion";
 
@@ -13,8 +14,6 @@ const SCROLL_TARGET_CLEAR_DELAY_MS = 1600;
 
 let activeScrollTarget = null;
 let scrollTargetTimeoutId = null;
-
-const getScrollBehavior = () => "smooth";
 
 const toPx = (value) => {
     const parsed = Number.parseFloat(value || "0");
@@ -171,7 +170,7 @@ function RouteScrollManager() {
             return undefined;
         }
 
-        const behavior = getScrollBehavior();
+        const behavior = resolveScrollBehavior();
         const stateInstruction = location.state?.scroll ?? null;
         const hashSelector = getEscapedIdSelector(location.hash);
         const instruction =

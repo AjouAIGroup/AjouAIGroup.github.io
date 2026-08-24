@@ -12,6 +12,7 @@ import SpeechStudioImage from "../../assets/images/news_placeholders/speech-stud
 import KnowledgeGraphImage from "../../assets/images/news_placeholders/knowledge-graph.webp";
 import { LABORATORIES } from "../../data/laboratories";
 import { shuffleItems } from "../../utils/collections";
+import { resolveScrollBehavior } from "../../utils/scrollMotion";
 import {
     getLatestPublications,
     getPublicationYearSnapshot,
@@ -46,7 +47,7 @@ function Home() {
 
         rail.scrollBy({
             left: direction * Math.max(rail.clientWidth * 0.82, 320),
-            behavior: "smooth",
+            behavior: resolveScrollBehavior(),
         });
     };
 

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect } from "react";
+import { prefersReducedMotion } from "../utils/scrollMotion";
 
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const DEFAULT_LOAD_DELAY = 120;
 const IN_VIEW_REVEAL_THRESHOLD = 1.08;
 const IN_VIEW_TOP_EXIT_THRESHOLD = -0.12;
@@ -17,7 +17,7 @@ function useRevealOnScroll(containerRef, dependency = null) {
       return undefined;
     }
 
-    const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+    const shouldReduceMotion = prefersReducedMotion();
     const timerIds = [];
     const trackedNodes = new Set();
     let revealIndex = 0;
@@ -34,7 +34,7 @@ function useRevealOnScroll(containerRef, dependency = null) {
       observer?.unobserve(node);
     };
 
-    if (!prefersReducedMotion) {
+    if (!shouldReduceMotion) {
       observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -59,7 +59,7 @@ function useRevealOnScroll(containerRef, dependency = null) {
 
       trackedNodes.add(node);
 
-      if (prefersReducedMotion) {
+      if (shouldReduceMotion) {
         node.classList.add("is-reveal-ready");
         node.classList.remove("is-revealed");
         delete node.dataset.revealed;

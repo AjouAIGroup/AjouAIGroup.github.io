@@ -5,9 +5,6 @@ import "./index.css";
 // import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { getRouterBasename } from "./routes/routerBasename";
-import { applyThemeToDocument, resolvePreferredTheme } from "./utils/themeMode";
-
-applyThemeToDocument(resolvePreferredTheme());
 
 const appTree = (
     <StrictMode>

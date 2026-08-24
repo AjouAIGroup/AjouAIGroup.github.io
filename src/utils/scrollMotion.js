@@ -1,10 +1,19 @@
 export const PROGRAMMATIC_SCROLL_EVENT = "cvl-section-scroll";
 export const PROGRAMMATIC_SCROLL_DURATION_MS = 760;
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 let activeFrameId = null;
 let activeTimeoutId = null;
 
 const easeOutCubic = (progress) => 1 - Math.pow(1 - progress, 3);
+
+export const prefersReducedMotion = () =>
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia(REDUCED_MOTION_QUERY).matches;
+
+export const resolveScrollBehavior = (behavior = "smooth") =>
+    behavior === "smooth" && prefersReducedMotion() ? "auto" : behavior;
 
 const cancelActiveScroll = () => {
     if (typeof window === "undefined") {
@@ -51,6 +60,7 @@ export const scrollWindowTo = ({
     }
 
     const nextTop = Math.max(top, 0);
+    const resolvedBehavior = resolveScrollBehavior(behavior);
 
     cancelActiveScroll();
 
@@ -58,7 +68,7 @@ export const scrollWindowTo = ({
         notifyProgrammaticScroll(duration);
     }
 
-    if (behavior !== "smooth") {
+    if (resolvedBehavior !== "smooth") {
         window.scrollTo({ top: nextTop, behavior: "auto" });
         return;
     }

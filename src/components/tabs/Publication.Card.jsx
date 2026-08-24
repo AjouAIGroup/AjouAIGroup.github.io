@@ -1,18 +1,10 @@
-import PublicationLinkIcons, {
-    getPublicationPrimaryLink,
-} from "./Publication.LinkIcons";
+import PublicationLinkIcons from "./Publication.LinkIcons";
 import PublicationFigure from "./Publication.Figure";
 import { RESEARCH_CATEGORY_LABELS } from "../../utils/researchData";
-
-const isValidHttpUrl = (url) => {
-    if (!url) return false;
-    try {
-        const parsed = new URL(url);
-        return parsed.protocol === "https:" || parsed.protocol === "http:";
-    } catch {
-        return false;
-    }
-};
+import {
+    getPublicationPrimaryLink,
+    isValidHttpUrl,
+} from "../../utils/publicationLinks";
 
 function PublicationCard({
     publicationId,

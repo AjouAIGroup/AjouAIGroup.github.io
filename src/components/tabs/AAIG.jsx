@@ -3,7 +3,7 @@ import AAIG_FULL_LOGO from "../../assets/brand/aaig-full-logo.png";
 import AAIG_HERO from "../../assets/brand/aaig-hero-campus-v2.webp";
 import { SITE } from "../../config/site";
 
-function AAIG({ isHome }) {
+function AaigHero({ isHome }) {
     if (isHome) {
         return (
             <section className="aaig-hero" aria-labelledby="aaig-hero-title">
@@ -30,4 +30,4 @@ function AAIG({ isHome }) {
     return <h1 className="aaig-page-title">{SITE.name}</h1>;
 }
 
-export default AAIG;
+export default AaigHero;

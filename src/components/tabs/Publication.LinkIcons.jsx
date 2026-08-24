@@ -5,6 +5,7 @@ import {
     faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { isValidHttpUrl } from "../../utils/publicationLinks";
 import "./Publication.LinkIcons.css";
 
 const LINK_ITEMS = [
@@ -21,39 +22,6 @@ const LINK_ITEMS = [
 
 const normalizeText = (value) =>
     typeof value === "string" ? value.trim() : "";
-
-const isValidHttpUrl = (url) => {
-    if (!url) {
-        return false;
-    }
-
-    try {
-        const parsed = new URL(url);
-        return parsed.protocol === "https:" || parsed.protocol === "http:";
-    } catch {
-        return false;
-    }
-};
-
-export const getPublicationPrimaryLink = (meta = {}) => {
-    const orderedKeys = [
-        "pdf_link",
-        "arxiv_link",
-        "project_link",
-        "github_link",
-        "paper_link",
-        "source_code_link",
-    ];
-
-    for (const key of orderedKeys) {
-        const value = normalizeText(meta?.[key]);
-        if (isValidHttpUrl(value)) {
-            return value;
-        }
-    }
-
-    return "";
-};
 
 export default function PublicationLinkIcons({ meta = {}, className = "" }) {
     const rootClassName = `publication-link-icons ${className}`.trim();

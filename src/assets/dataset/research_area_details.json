@@ -1,0 +1,79 @@
+{
+    "meta": {
+        "schema_version": "4.0"
+    },
+    "topics": {
+        "computer_vision_and_learning_algorithms": {
+            "headline": "Foundational vision and learning methods for robust generalization",
+            "abstract": "This area investigates scalable visual representations and adaptation strategies that remain reliable across data shifts, label scarcity, and long-tail conditions.",
+            "focus_areas": [
+                {
+                    "title": "Core Architecture",
+                    "description": "Designing efficient SOTA architectures with manageable computational cost"
+                },
+                {
+                    "title": "Representation Learning",
+                    "description": "Reinforcing feature representation through token pooling, hashing, and continual learning"
+                },
+                {
+                    "title": "Vision-Language Model",
+                    "description": "Adapting large VLM to new tasks and domains through parameter-efficient transfer learning"
+                }
+            ]
+        },
+        "efficient_learning_for_llms": {
+            "headline": "Efficient and practical multimodal intelligence for deployment",
+            "abstract": "This area focuses on making large language and multimodal models lighter, faster, and easier to deploy while preserving reasoning quality.",
+            "focus_areas": [
+                {
+                    "title": "Pruning & Quantization",
+                    "description": "Compressing through layer pruning and low-bit quantization to reduce memory and latency"
+                },
+                {
+                    "title": "Efficient Transfer Learning",
+                    "description": "Transferring knowledge across tasks efficiently using Mixture-of-Experts with LoRA"
+                },
+                {
+                    "title": "Vector Symbolic Architecture",
+                    "description": "Encoding compact, hardware-efficient symbolic vector representations in LLMs"
+                }
+            ]
+        },
+        "robot_learning": {
+            "headline": "Embodied AI from perception to reliable robot behavior",
+            "abstract": "This area connects visual-language understanding to robot policies for practical perception-to-action pipelines in real environments.",
+            "focus_areas": [
+                {
+                    "title": "Multimodal World Model",
+                    "description": "Learning world dynamics to understand causality and dynamics in physical environments"
+                },
+                {
+                    "title": "Robust & Generalizable VLA",
+                    "description": "Improving robustness and generalization across diverse tasks, environments, and embodiments"
+                },
+                {
+                    "title": "Speech & Sound VLA",
+                    "description": "Grounding speech instructions and sound for reactive robot control instead of relying on text"
+                }
+            ]
+        },
+        "industrial_and_medical_ai": {
+            "headline": "Trustworthy AI for industrial reliability and medical analysis",
+            "abstract": "This area applies machine learning to industry and healthcare with emphasis on reliability, interpretability, and robust validation in real use cases.",
+            "focus_areas": [
+                {
+                    "title": "Medical Image Diagnosis",
+                    "description": "Building diagnostic models robust to long-tail distributions and domain shift problem"
+                },
+                {
+                    "title": "Real-World Visual Tracking",
+                    "description": "Applying vision systems to tracking, recognition, and defect detection in real-world environments"
+                },
+                {
+                    "title": "Battery Prognostics",
+                    "description": "Predicting battery degradation and remaining useful life by fusing heterogeneous signals"
+                }
+            ]
+        }
+    }
+}

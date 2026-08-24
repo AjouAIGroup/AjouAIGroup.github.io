@@ -1,0 +1,18 @@
+---
+id: publication-2026-example
+category: computer_vision_and_learning_algorithms
+status: published
+title: Example Publication Title
+date: 2026-03-16
+authors: First Author, Second Author, Corresponding Author
+venue: Example Conference 2026
+keywords: [Vision-Language Learning, Efficient Training, Benchmarking]
+pdf_url: https://example.org/paper.pdf
+arxiv_url: ""
+github_url: https://github.com/example/repo
+project_url: https://example.org/project
+featured: false
+summary: One-line publication summary for preview cards.
+---
+
+Optional abstract or notes for long-form documentation.

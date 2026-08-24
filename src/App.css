@@ -1,0 +1,40 @@
+.app {
+    min-height: 100svh;
+    color: #171717;
+    background: #f4f3ef;
+}
+
+.app__content {
+    width: 100%;
+    min-height: 100svh;
+}
+
+.app__main {
+    width: 100%;
+}
+
+.app__hero-loading {
+    min-height: 100svh;
+    background: #d6d2c8;
+}
+
+.app--home .app__main {
+    display: block;
+}
+
+.app:not(.app--home) .app__content {
+    width: min(100%, 90rem);
+    margin-inline: auto;
+    padding: 7.5rem clamp(1.25rem, 4vw, 4rem) 4rem;
+}
+
+.app:not(.app--home) .app__main {
+    max-width: 74rem;
+    margin-inline: auto;
+}
+
+@media (max-width: 57rem) {
+    .app:not(.app--home) .app__content {
+        padding-top: 5.8rem;
+    }
+}

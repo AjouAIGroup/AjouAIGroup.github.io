@@ -1,0 +1,384 @@
+/* AAIG editorial system: overrides the former panel and token-led UI. */
+#root {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Keep supporting copy sans-serif without overriding display headings. */
+#root :is(p, li, dd, dt, address, label, a, button, input, textarea, select, option, small, span) {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.app:not(.app--home) {
+    --surface: #f4f3ef;
+    --surface-2: #eeece6;
+    --bg: #f4f3ef;
+    --text-primary: #171717;
+    --text-secondary: #40403d;
+    --text-muted: #76736c;
+    --outline-color: rgba(23, 23, 23, 0.18);
+    --tab-home-tint: transparent;
+    --tab-news-tint: transparent;
+    --tab-research-tint: transparent;
+    --tab-resources-tint: transparent;
+    --tab-publication-tint: transparent;
+    --tab-people-tint: transparent;
+    --tab-photo-tint: transparent;
+    --tab-contact-tint: transparent;
+    --tab-deadlines-tint: transparent;
+    --tab-home-border: rgba(23, 23, 23, 0.18);
+    --tab-news-border: rgba(23, 23, 23, 0.18);
+    --tab-research-border: rgba(23, 23, 23, 0.18);
+    --tab-resources-border: rgba(23, 23, 23, 0.18);
+    --tab-publication-border: rgba(23, 23, 23, 0.18);
+    --tab-people-border: rgba(23, 23, 23, 0.18);
+    --tab-photo-border: rgba(23, 23, 23, 0.18);
+    --tab-contact-border: rgba(23, 23, 23, 0.18);
+    --tab-deadlines-border: rgba(23, 23, 23, 0.18);
+    --tab-home-accent: #171717;
+    --tab-news-accent: #171717;
+    --tab-research-accent: #171717;
+    --tab-resources-accent: #171717;
+    --tab-publication-accent: #171717;
+    --tab-people-accent: #171717;
+    --tab-photo-accent: #171717;
+    --tab-contact-accent: #171717;
+    --tab-deadlines-accent: #171717;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.app:not(.app--home) .main-content__body {
+    gap: 3.5rem;
+}
+
+.app:not(.app--home) .tab-header {
+    padding: 0 0 2.25rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.2) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.app:not(.app--home) .tab-header::before {
+    display: none !important;
+}
+
+.app:not(.app--home) :is(
+    .tab-header h1,
+    .research__section-head h2,
+    .resources__section-head h2,
+    .publication__section-head h2,
+    .people__degree-header h2,
+    .photo-gallery__head h2,
+    .deadlines__section-head h2
+) {
+    max-width: 12ch;
+    color: #171717;
+    font-family: "Times New Roman", Times, serif !important;
+}
+
+.app:not(.app--home) .tab-header h1 {
+    font-size: clamp(3.1rem, 7vw, 6.8rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.065em !important;
+    line-height: 0.9 !important;
+}
+
+.app:not(.app--home) .tab-header p,
+.app:not(.app--home) .page-head__summary {
+    max-width: 37rem;
+    color: #54514b !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.08rem !important;
+    font-weight: 400 !important;
+    line-height: 1.55 !important;
+}
+
+.app:not(.app--home) :is(
+    .page-panel,
+    .research__detail-panel,
+    .research__detail-focus-area,
+    .resources__card,
+    .publication__card,
+    .people__section,
+    .people__card,
+    .deadlines__venue,
+    .contact__panel,
+    .photo-gallery
+) {
+    border-color: rgba(23, 23, 23, 0.18) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.app:not(.app--home) :is(
+    .resources__grid-section,
+    .research__details,
+    .publication__content,
+    .news-page__controls,
+    .news-page__year-group,
+    .people__section,
+    .contact__body,
+    .photo-gallery,
+    .deadlines__venue
+) {
+    padding: 1.4rem 0 0 !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
+}
+
+.app:not(.app--home) :is(
+    .btn,
+    .interactive-button,
+    .animated-underline
+) {
+    min-height: auto !important;
+    padding: 0.2rem 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #171717 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 0.74rem !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 0.22em !important;
+    transform: none !important;
+}
+
+.app:not(.app--home) :is(
+    .btn,
+    .interactive-button,
+    .animated-underline
+):hover {
+    opacity: 0.56;
+}
+
+.app:not(.app--home) :is(
+    .resources__card,
+    .research__detail-focus-area,
+    .publication__card,
+    .people__card
+):hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.app:not(.app--home) :is(
+    .resources__card img,
+    .research__detail-media img,
+    .research__detail-focus-media img,
+    .people__card img,
+    .publication__figure img,
+    .photo-gallery img
+) {
+    border-radius: 0 !important;
+}
+
+.app:not(.app--home) .resources__grid,
+.app:not(.app--home) .people__card-grid,
+.app:not(.app--home) .publication__grid {
+    gap: 1px !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18);
+    border-left: 1px solid rgba(23, 23, 23, 0.18);
+}
+
+.app:not(.app--home) :is(
+    .resources__card,
+    .people__card,
+    .publication__card
+) {
+    padding: clamp(1rem, 2.1vw, 1.75rem) !important;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 1px solid rgba(23, 23, 23, 0.18) !important;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.18) !important;
+}
+
+.app:not(.app--home) :is(
+    .resources__card-value,
+    .publication__card-title,
+    .people__card-name,
+    .people__professor-name,
+    .research__detail-panel h3,
+    .deadlines__venue h2,
+    .contact__header h2
+) {
+    color: #171717 !important;
+    font-family: "Times New Roman", Times, serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.04em !important;
+}
+
+.app:not(.app--home) :is(
+    .resources__card-label,
+    .research__detail-kicker,
+    .news-page__badge,
+    .deadlines__badge,
+    .publication__card-badge,
+    .contact__kicker
+) {
+    color: #67635b !important;
+    border: 0 !important;
+    background: transparent !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 0.64rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase;
+}
+
+.app:not(.app--home) :is(
+    .research__detail-tab,
+    .deadlines__milestone-btn,
+    .news-page__filter-btn,
+    .news-page__year-link,
+    .publication__filter-btn
+) {
+    border-bottom: 1px solid transparent !important;
+    text-decoration: none !important;
+}
+
+.app:not(.app--home) :is(
+    .research__detail-tab,
+    .deadlines__milestone-btn,
+    .news-page__filter-btn,
+    .news-page__year-link,
+    .publication__filter-btn
+).is-active {
+    border-bottom-color: #171717 !important;
+}
+
+.app:not(.app--home) :is(
+    .research__detail-tabs,
+    .deadlines__milestone-tabs,
+    .news-page__filters,
+    .news-page__year-nav-list,
+    .publication__filters
+) {
+    gap: 1rem !important;
+}
+
+.app:not(.app--home) .news-page__item {
+    padding: 1.25rem 0 !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.app:not(.app--home) .news-page__item:last-child {
+    border-bottom: 1px solid rgba(23, 23, 23, 0.18);
+}
+
+.app:not(.app--home) .news-page__title {
+    color: #171717 !important;
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: clamp(1.35rem, 2.4vw, 2rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.04em !important;
+}
+
+.app:not(.app--home) .research__detail-panel {
+    padding: 1.5rem 0 !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
+}
+
+.app:not(.app--home) .research__detail-focus-area {
+    padding: 1rem 0 !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
+}
+
+.app:not(.app--home) .contact__body {
+    gap: 2.5rem !important;
+}
+
+.app:not(.app--home) .contact__details {
+    gap: 1px !important;
+}
+
+.app:not(.app--home) .contact__panel {
+    padding: 1.25rem 0 !important;
+    border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
+}
+
+.app:not(.app--home) .photo-gallery {
+    padding-top: 1.2rem !important;
+}
+
+/* Body copy is deliberately sans-serif and more readable than the display type. */
+.app:not(.app--home) .main-content__body :is(p, li, dd, dt, address, label) {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 1.04rem !important;
+    line-height: 1.62 !important;
+}
+
+.app:not(.app--home) :is(
+    .news-page__badge,
+    .deadlines__badge,
+    .publication__card-badge,
+    .resources__card-label,
+    .research__detail-kicker,
+    .contact__kicker
+) {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 0.72rem !important;
+    line-height: 1.3 !important;
+}
+
+/* Remove panel, card, image, and grid outlines; hierarchy comes from spacing. */
+.app:not(.app--home) :is(
+    .page-panel,
+    .research__details,
+    .research__detail-panel,
+    .research__detail-media,
+    .research__detail-focus-area,
+    .research__detail-focus-media,
+    .resources__grid-section,
+    .resources__card,
+    .publication__content,
+    .publication__card,
+    .people__section,
+    .people__card,
+    .deadlines__venue,
+    .contact__body,
+    .contact__panel,
+    .photo-gallery
+) {
+    border: 0 !important;
+    outline: 0 !important;
+}
+
+.app:not(.app--home) :is(
+    .resources__grid,
+    .people__card-grid,
+    .publication__grid
+) {
+    gap: clamp(1.25rem, 2.4vw, 2.5rem) !important;
+    border: 0 !important;
+}
+
+.app:not(.app--home) :is(
+    .resources__card,
+    .people__card,
+    .publication__card
+) {
+    padding: 0 !important;
+}
+
+.app:not(.app--home) .news-page__item,
+.app:not(.app--home) .news-page__item:last-child {
+    border: 0 !important;
+}
+
+@media (max-width: 57rem) {
+    .app:not(.app--home) .tab-header h1 {
+        font-size: clamp(2.7rem, 14vw, 4.5rem) !important;
+    }
+
+    .app:not(.app--home) .main-content__body {
+        gap: 2.5rem;
+    }
+}

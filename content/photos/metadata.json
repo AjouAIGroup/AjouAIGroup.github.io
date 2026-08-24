@@ -1,0 +1,253 @@
+{
+  "defaults": {
+    "category": "events",
+    "description": ""
+  },
+  "items": {
+    "250220_somech1": {
+      "title": "SoMeCH Seminar",
+      "caption": "SoMeCH Seminar",
+      "date": "2025-02-20",
+      "category": "events",
+      "slug": "somech-seminar",
+      "order": 1,
+      "alt": "SoMeCH seminar photo"
+    },
+    "250220_somech2": {
+      "title": "SoMeCH Seminar",
+      "caption": "SoMeCH Seminar",
+      "date": "2025-02-20",
+      "category": "events",
+      "slug": "somech-seminar",
+      "order": 2,
+      "alt": "SoMeCH seminar photo"
+    },
+    "250220_somech3": {
+      "title": "SoMeCH Seminar",
+      "caption": "SoMeCH Seminar",
+      "date": "2025-02-20",
+      "category": "events",
+      "slug": "somech-seminar",
+      "order": 3,
+      "alt": "SoMeCH seminar photo"
+    },
+    "250220_somech4": {
+      "title": "SoMeCH Seminar",
+      "caption": "SoMeCH Seminar",
+      "date": "2025-02-20",
+      "category": "events",
+      "slug": "somech-seminar",
+      "order": 4,
+      "alt": "SoMeCH seminar photo"
+    },
+    "250226_graduate": {
+      "title": "February 2025 Graduation",
+      "caption": "February 2025 Graduation",
+      "date": "2025-02-26",
+      "category": "events",
+      "slug": "february-2025-graduation",
+      "order": 1,
+      "alt": "February 2025 graduation photo"
+    },
+    "250411_blossom": {
+      "title": "Spring Blossom Gathering",
+      "caption": "Spring Blossom Gathering",
+      "date": "2025-04-11",
+      "category": "events",
+      "slug": "spring-blossom-gathering",
+      "order": 1,
+      "alt": "Lab members at spring blossom gathering"
+    },
+    "250616_LPCVC": {
+      "title": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC)",
+      "caption": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC)",
+      "date": "2026-06-11",
+      "category": "events",
+      "slug": "lpcvc",
+      "order": 1,
+      "alt": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC) photo"
+    },
+    "250616_LPCVC2": {
+      "title": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC)",
+      "caption": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC)",
+      "date": "2026-06-11",
+      "category": "events",
+      "slug": "lpcvc",
+      "order": 2,
+      "alt": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC) photo"
+    },
+    "250616_LPCVC3": {
+      "title": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC)",
+      "caption": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC)",
+      "date": "2026-06-11",
+      "category": "events",
+      "slug": "lpcvc",
+      "order": 3,
+      "alt": "2025 IEEE Low-Power Computer Vision Challenge (LPCVC) photo"
+    },
+    "251110_dinner": {
+      "title": "November 2025 Lab Dinner",
+      "caption": "November 2025 Lab Dinner",
+      "date": "2025-11-10",
+      "category": "events",
+      "slug": "november-2025-lab-dinner",
+      "order": 1,
+      "alt": "Lab dinner photo"
+    },
+    "260220_graduate": {
+      "title": "February 2026 Graduation",
+      "caption": "February 2026 Graduation",
+      "date": "2026-02-20",
+      "category": "events",
+      "slug": "february-2026-graduation",
+      "order": 1,
+      "alt": "February 2026 graduation photo"
+    },
+    "260706_icml": {
+      "title": "ICML 2026",
+      "caption": "ICML 2026",
+      "description": "Conference tutorials",
+      "date": "2026-07-06",
+      "category": "events",
+      "slug": "icml-2026",
+      "order": 1,
+      "alt": "ICML 2026 conference photo"
+    },
+    "260301_wacv1": {
+      "title": "WACV 2026",
+      "caption": "WACV 2026",
+      "description": "Conference presentation",
+      "date": "2026-03-01",
+      "category": "events",
+      "slug": "wacv-2026",
+      "order": 1,
+      "alt": "WACV 2026 conference photo"
+    },
+    "260301_wacv2": {
+      "title": "WACV 2026",
+      "caption": "WACV 2026",
+      "description": "Conference presentation",
+      "date": "2026-03-01",
+      "category": "events",
+      "slug": "wacv-2026",
+      "order": 2,
+      "alt": "WACV 2026 conference photo"
+    },
+    "260301_wacv_oral": {
+      "title": "WACV 2026",
+      "caption": "WACV 2026 Oral Presentation",
+      "description": "Oral presentation",
+      "date": "2026-03-01",
+      "category": "events",
+      "slug": "wacv-2026",
+      "order": 3,
+      "alt": "WACV 2026 oral presentation photo"
+    },
+    "260612_cvpr1": {
+      "title": "CVPR 2026",
+      "caption": "CVPR 2026",
+      "description": "Conference presentation",
+      "date": "2026-06-12",
+      "category": "events",
+      "slug": "cvpr-2026",
+      "order": 2,
+      "alt": "CVPR 2026 conference photo"
+    },
+    "260612_cvpr2": {
+      "title": "CVPR 2026",
+      "caption": "CVPR 2026",
+      "description": "Conference presentation",
+      "date": "2026-06-12",
+      "category": "events",
+      "slug": "cvpr-2026",
+      "order": 1,
+      "alt": "CVPR 2026 conference photo"
+    },
+    "251130_furiosa": {
+      "title": "FuriosaAI Visit",
+      "caption": "FuriosaAI Visit",
+      "date": "2025-11-30",
+      "category": "events",
+      "slug": "furiosaai-visit",
+      "order": 2,
+      "alt": "FuriosaAI visit photo"
+    },
+    "251130_furiosa2": {
+      "title": "FuriosaAI Visit",
+      "caption": "FuriosaAI Visit",
+      "date": "2025-11-30",
+      "category": "events",
+      "slug": "furiosaai-visit",
+      "order": 1,
+      "alt": "FuriosaAI visit photo"
+    },
+    "20230609": {
+      "title": "June Lab Dinner",
+      "caption": "June Lab Dinner",
+      "date": "2023-06-09"
+    },
+    "20240222": {
+      "title": "February 2024 Graduation",
+      "caption": "February 2024 Graduation",
+      "date": "2024-02-22"
+    },
+    "20240717": {
+      "title": "Summer 2024 Team Event",
+      "caption": "Summer 2024 Team Event",
+      "date": "2024-07-17"
+    },
+    "20240910": {
+      "title": "AIAI 2024",
+      "caption": "AIAI 2024",
+      "description": "Invited talk",
+      "date": "2024-09-10"
+    },
+    "20241127": {
+      "title": "Winter 2024 Lab Gathering",
+      "caption": "Winter 2024 Lab Gathering",
+      "date": "2024-11-27"
+    },
+    "20241128": {
+      "title": "BMVC 2024",
+      "caption": "BMVC 2024",
+      "description": "Lab poster session",
+      "date": "2024-11-28"
+    },
+    "20241211": {
+      "title": "ACCV 2024",
+      "caption": "ACCV 2024",
+      "description": "Conference presentation",
+      "date": "2024-12-11"
+    },
+    "20240826_2": {
+      "title": "August 2024 Graduation",
+      "caption": "August 2024 Graduation",
+      "date": "2024-08-26"
+    },
+    "20240826_1": {
+      "title": "Summer 2024 Mentoring Program",
+      "caption": "Summer 2024 Mentoring Program",
+      "date": "2024-08-26"
+    },
+    "20231227_2": {
+      "title": "2023 Year-end Gathering",
+      "caption": "2023 Year-end Gathering",
+      "date": "2023-12-27"
+    },
+    "20231227_1": {
+      "title": "December Lab Seminar",
+      "caption": "December Lab Seminar",
+      "date": "2023-12-27"
+    },
+    "20230822_2": {
+      "title": "August 2023 Graduation",
+      "caption": "August 2023 Graduation",
+      "date": "2023-08-22"
+    },
+    "20230822_1": {
+      "title": "August 2023 Graduation",
+      "caption": "August 2023 Graduation",
+      "date": "2023-08-22"
+    }
+  }
+}

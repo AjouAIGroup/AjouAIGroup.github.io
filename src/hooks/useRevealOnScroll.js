@@ -1,0 +1,137 @@
+import { useEffect, useLayoutEffect } from "react";
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+const DEFAULT_LOAD_DELAY = 120;
+const IN_VIEW_REVEAL_THRESHOLD = 1.08;
+const IN_VIEW_TOP_EXIT_THRESHOLD = -0.12;
+const OBSERVER_ROOT_MARGIN = "0px 0px 14% 0px";
+const REVEAL_STAGGER_MS = 58;
+const REVEAL_STAGGER_LIMIT_MS = 290;
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+function useRevealOnScroll(containerRef, dependency = null) {
+  useIsomorphicLayoutEffect(() => {
+    const containerNode = containerRef?.current;
+    if (!containerNode) {
+      return undefined;
+    }
+
+    const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+    const timerIds = [];
+    const trackedNodes = new Set();
+    let revealIndex = 0;
+    let observer;
+
+    const revealNode = (node) => {
+      if (!node || node.dataset.revealed === "true") {
+        return;
+      }
+
+      node.classList.add("is-revealed");
+      node.classList.remove("is-reveal-ready");
+      node.dataset.revealed = "true";
+      observer?.unobserve(node);
+    };
+
+    if (!prefersReducedMotion) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            revealNode(entry.target);
+          });
+        },
+        {
+          threshold: 0.01,
+          rootMargin: OBSERVER_ROOT_MARGIN,
+        },
+      );
+    }
+
+    const registerNode = (node) => {
+      if (!(node instanceof HTMLElement) || trackedNodes.has(node)) {
+        return;
+      }
+
+      trackedNodes.add(node);
+
+      if (prefersReducedMotion) {
+        node.classList.add("is-reveal-ready");
+        node.classList.remove("is-revealed");
+        delete node.dataset.revealed;
+        window.requestAnimationFrame(() => {
+          revealNode(node);
+        });
+        return;
+      }
+
+      node.classList.add("is-reveal-ready");
+      node.classList.remove("is-revealed");
+      delete node.dataset.revealed;
+
+      if (!node.style.getPropertyValue("--reveal-delay")) {
+        node.style.setProperty(
+          "--reveal-delay",
+          `${Math.min(revealIndex * REVEAL_STAGGER_MS, REVEAL_STAGGER_LIMIT_MS)}ms`,
+        );
+      }
+      revealIndex += 1;
+
+      const nodeRect = node.getBoundingClientRect();
+      const shouldRevealImmediately =
+        nodeRect.top <= window.innerHeight * IN_VIEW_REVEAL_THRESHOLD &&
+        nodeRect.bottom >= window.innerHeight * IN_VIEW_TOP_EXIT_THRESHOLD;
+      if (shouldRevealImmediately) {
+        const delay = Number.parseInt(node.dataset.revealLoadDelay ?? String(DEFAULT_LOAD_DELAY), 10);
+        const timerId = window.setTimeout(() => {
+          window.requestAnimationFrame(() => {
+            revealNode(node);
+          });
+        }, Number.isNaN(delay) ? DEFAULT_LOAD_DELAY : delay);
+        timerIds.push(timerId);
+        return;
+      }
+
+      observer?.observe(node);
+    };
+
+    const registerTree = (rootNode) => {
+      if (!(rootNode instanceof HTMLElement)) {
+        return;
+      }
+
+      if (rootNode.matches("[data-reveal]")) {
+        registerNode(rootNode);
+      }
+
+      rootNode.querySelectorAll?.("[data-reveal]").forEach((node) => registerNode(node));
+    };
+
+    registerTree(containerNode);
+
+    const mutationObserver = new MutationObserver((mutationList) => {
+      mutationList.forEach((mutation) => {
+        mutation.addedNodes.forEach((addedNode) => {
+          registerTree(addedNode);
+        });
+      });
+    });
+
+    mutationObserver.observe(containerNode, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      timerIds.forEach((id) => window.clearTimeout(id));
+      mutationObserver.disconnect();
+      observer?.disconnect();
+    };
+  }, [containerRef, dependency]);
+}
+
+export default useRevealOnScroll;

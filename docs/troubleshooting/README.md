@@ -1,0 +1,256 @@
+# 문제 해결 가이드 (Troubleshooting)
+
+이 문서는 운영 중 자주 발생하는 오류를 빠르게 해결하기 위한 점검표입니다.  
+대상은 **비개발자 운영자**이며, “어디를 먼저 확인해야 하는지”에 집중합니다.
+
+---
+
+## 1) 가장 먼저 하는 공통 점검 5단계
+
+1. 수정한 파일이 `content/...` 아래에 있는지 확인  
+   (`src/generated/...` 수정은 반영되지 않습니다)
+2. 파일명/폴더명 규칙이 맞는지 확인
+3. 날짜 형식이 `YYYY-MM-DD`인지 확인
+4. 아래 명령을 로컬에서 실행해 로그 확인
+    ```bash
+    npm run content:sync
+    npm run validate:content
+    npm run build
+    ```
+5. GitHub Actions `Content Build Check` 성공 여부 확인
+
+---
+
+## 2) “News/Publication이 안 보입니다”
+
+### 증상
+
+- Home 최신 항목에 새 데이터가 안 뜸
+- `/news`, `/publication`에서 새 항목이 안 뜸
+
+### 원인 후보
+
+1. 파일을 잘못된 폴더에 추가
+2. frontmatter 필수 필드 누락
+3. 날짜 형식/타입 값 오타
+4. `id` 중복
+
+### 해결 절차
+
+1. 파일 경로 확인
+    - News: `content/news/*.md`
+    - Publication: `content/publications/<category>/*.md`
+2. frontmatter 구분자 `---`가 맨 위/아래에 정확히 있는지 확인
+3. `npm run validate:content` 실행 후 오류 메시지 확인
+4. 수정 후 `npm run content:sync` 다시 실행
+
+---
+
+## 3) “Photo이 안 뜨거나 일부만 뜹니다”
+
+### 증상
+
+- `/photo`에 새 Photo이 보이지 않음
+- 썸네일은 나오는데 확대 이미지가 깨짐
+
+### 원인 후보
+
+1. 원본 Photo이 `content/photos/raw` 밖에 있음
+2. 폴더명 규칙 오류 (`YYYY-MM-DD__slug` 미준수)
+3. 이미지 처리 도구 미설치 (`magick`/`convert`/`sips`)
+4. `photos:sync` 미실행
+
+### 해결 절차
+
+1. 원본 경로 확인
+    - 예: `content/photos/raw/events/2026-03-16__spring-seminar/*.jpg`
+2. `npm run photos:sync` 실행
+3. 생성물 확인
+    - `public/uploads/photos/...`
+    - `src/generated/photos.generated.json`
+4. 필요 시 `content/photos/metadata.json` 값 보정
+
+---
+
+## 4) frontmatter/JSON 형식 오류
+
+### 증상
+
+- validate 단계에서 파싱 오류
+- build 실패
+
+### 자주 하는 실수
+
+1. frontmatter 시작/종료 `---` 누락
+2. `key: value`에서 콜론/공백 형식 오타
+3. 문자열 따옴표 처리 실수
+4. JSON 마지막 쉼표(trailing comma)
+
+참고:
+
+- 현재 content parser는 YAML frontmatter를 사용하므로 배열의 inline/multiline 표기를 모두 지원합니다.
+- 단, YAML 들여쓰기 자체가 깨지면 파싱 오류가 발생할 수 있습니다.
+
+### 빠른 해결 팁
+
+1. template 파일을 복사해 붙여넣은 뒤 값만 수정합니다.
+    - `content/news/_template.md`
+    - `content/publications/_template.md`
+    - `content/photos/metadata.template.json`
+2. 파일 인코딩은 UTF-8 권장
+
+---
+
+## 5) 날짜 형식 오류
+
+### 증상
+
+- `date must be YYYY-MM-DD` 오류
+
+### 해결
+
+- 반드시 `2026-03-16` 형태 사용
+- `/`, `.`, 월/일 한 자리 표기(예: `2026-3-6`) 금지
+
+---
+
+## 6) 링크 오류
+
+### 증상
+
+- 클릭 시 링크 동작 안 함
+- 외부 News가 내부 News처럼 동작함
+
+### 체크리스트
+
+1. URL이 `http://` 또는 `https://`로 시작하는지
+2. News에서 `is_external: true`이면 `external_url`이 있는지
+3. 빈 링크면 `""` 또는 필드 생략 처리했는지
+
+---
+
+## 7) build 실패 (로컬/GitHub Actions)
+
+### 로컬에서 실패할 때
+
+1. `npm install`을 다시 실행
+2. Node version 확인(workflow는 Node 20 사용)
+3. `npm run content:sync` → `npm run validate:content` 순서로 재실행
+
+### GitHub Actions에서 실패할 때
+
+1. 저장소 `Actions` tab 진입
+2. 실패한 `Content Build Check` 실행 열기
+3. 실패 단계 확인
+    - Sync Content
+    - Validate Content
+    - Build Site
+4. 오류 메시지 기준으로 해당 content 파일 수정 후 재푸시
+
+---
+
+## 8) deploy workflow(`Deploy GitHub Pages`) 실패
+
+### 증상
+
+- `Content Build Check`는 성공인데 사이트 반영이 안 됨
+- `Deploy GitHub Pages`가 실패
+
+### 원인 후보
+
+1. GitHub Actions 권한 문제(`GITHUB_TOKEN` write 권한)
+2. build 단계에서 content 오류 발생
+3. gh-pages 브랜치 푸시 충돌
+
+### 해결 절차
+
+1. Actions 로그에서 실패 단계 확인
+    - `Build Site` 실패인지
+    - `Deploy to gh-pages` 실패인지
+2. 권한 오류라면 저장소 설정에서 Actions 권한 확인
+3. content 오류라면 `docs/troubleshooting`의 2~6번 항목 순서대로 점검
+4. 다시 push해서 재실행 확인
+
+---
+
+## 9) deploy했는데 사이트 반영이 안 됩니다
+
+### 원인 후보
+
+1. push는 했지만 `Deploy GitHub Pages`가 실패/미실행
+2. 브라우저 캐시
+3. 잘못된 브랜치/repository에 deploy
+
+### 해결 절차
+
+1. Actions에서 `Deploy GitHub Pages` 성공 여부 확인
+2. GitHub Pages 설정(브랜치/폴더) 확인
+3. 브라우저 강력 새로고침
+    - Windows: `Ctrl + F5`
+    - macOS: `Cmd + Shift + R`
+
+---
+
+## 10) dependency audit 실패
+
+### 증상
+
+- `npm run audit:dependencies`가 실패
+- GitHub Actions가 `Audit Dependencies` 단계에서 중단
+- GitHub Dependabot alert가 열림
+
+### 해결 절차
+
+1. committed lockfile 기준으로 다시 설치합니다.
+    ```bash
+    npm ci
+    npm run audit:dependencies
+    ```
+2. 취약 package의 유입 경로를 확인합니다.
+    ```bash
+    npm explain <package-name>
+    ```
+3. 직접 의존성이면 현재 major의 patched version으로 최소 버전을 올립니다.
+4. 전이 의존성이면 `npm audit fix`를 실행하고 lockfile diff를 검토합니다.
+5. `npm audit fix --force`로 우회하지 않습니다.
+6. audit와 build를 다시 실행합니다.
+    ```bash
+    npm run audit:dependencies
+    npm run build
+    ```
+
+로컬 audit가 0인데 GitHub alert가 남아 있다면 새 `package-lock.json`이 push됐는지 확인하고 GitHub 재검사를 기다립니다. 근거 없이 alert를 dismiss하지 않습니다.
+
+자세한 policy와 rollback 절차는 `docs/dependencies/README.md`를 참고합니다.
+
+---
+
+## 11) “Research 영역·상세·Resource가 안 보입니다”
+
+### 점검 순서
+
+1. `research_areas.json`의 `area_order`와 `areas`에 같은 key가 있는지 확인
+2. `research_area_details.json`의 `topics`에 같은 key가 있는지 확인
+3. key가 `snake_case`이고 slug가 같은 단어의 `kebab-case`인지 확인
+4. `images`에 기록된 WebP 세 파일이 실제로 존재하는지 확인
+5. Resource의 `image_key`가 `home_media.json`에 존재하는지 확인
+6. 아래 명령의 첫 번째 `[research]` 오류를 수정
+
+    ```bash
+    npm run research:validate
+    npm run build:static
+    ```
+
+Publication에서 `unsupported category`가 나오면 해당 frontmatter의 `category`를 `research_areas.json`의 canonical key로 변경합니다.
+
+자세한 변경 시나리오는 `docs/research/README.md`를 참고합니다.
+
+---
+
+## 12) 운영자가 꼭 기억할 원칙
+
+1. Research 원본, content, People 원본과 `package.json`만 직접 편집
+2. `src/generated/...`, `node_modules/...`는 자동 생성 결과물
+3. lockfile은 package manager로 갱신하고 손으로 고치지 않음
+4. “오류가 나면 template으로 되돌려 비교”가 가장 빠름
+5. 반영 확인은 항상 Home + 개별 tab(`/news`, `/publication`, `/photo`)까지 확인

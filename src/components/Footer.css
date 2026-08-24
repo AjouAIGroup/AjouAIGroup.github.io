@@ -1,0 +1,44 @@
+.footer {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 1.2rem clamp(1.25rem, 2.2vw, 2.4rem);
+    color: #171717;
+    background: #f4f3ef;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.footer__inner,
+.footer__panel,
+.footer__identity,
+.footer__meta-grid,
+.footer__group,
+.footer__bottom {
+    display: contents;
+}
+
+.footer__kicker,
+.footer__title,
+.footer__text,
+.footer__copyright,
+.footer__group-title {
+    margin: 0;
+    color: inherit;
+    font: inherit;
+}
+
+.footer__kicker,
+.footer__title,
+.footer__meta-grid {
+    display: none;
+}
+
+.footer__bottom {
+    display: block;
+}
+
+.footer__copyright {
+    color: rgba(23, 23, 23, 0.58);
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+}

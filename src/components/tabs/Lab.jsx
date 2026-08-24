@@ -161,13 +161,18 @@ function Lab() {
                 </div>
                 <div className="lab-page__representative-grid">
                     {STUDENT_REPRESENTATIVES.map((member) => (
-                        <article key={member.email} className="lab-page__representative">
+                        <article key={member.lab} className="lab-page__representative">
                             <p className="lab-page__number">{member.lab}</p>
-                            <h3>{member.name}</h3>
-                            <p>{member.role}</p>
-                            <a className="lab-page__email" href={`mailto:${member.email}`}>
-                                {member.email}
-                            </a>
+                            <h3>
+                                {member.name}
+                                <span>{member.koreanName}</span>
+                            </h3>
+                            <p className="lab-page__faculty-role">{member.role}</p>
+                            {member.email ? (
+                                <a className="lab-page__email" href={`mailto:${member.email}`}>
+                                    {member.email}
+                                </a>
+                            ) : null}
                         </article>
                     ))}
                 </div>

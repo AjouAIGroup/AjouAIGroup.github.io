@@ -2,12 +2,12 @@ import { LABORATORIES } from "./laboratories";
 
 const CONTACT_DETAILS = {
     cvl: {
-        contactName: "Donggun Lee",
+        contactName: "Donggeon Lee",
         contactRole: "Ph.D. Student and student representative",
-        contactEmail: "edg1113@ajou.ac.kr",
+        contactEmail: "donggeon_lee@ajou.ac.kr",
         guidance:
             "Start by reviewing the lab's research areas. Send a short email with your CV, research interests, and any available academic record to discuss fit and current opportunities.",
-        note: "Donggun Lee is the current first contact for prospective students.",
+        note: "Donggeon Lee is the current first contact for prospective students.",
     },
     sail: {
         contactName: "Sanghoon Lee",
@@ -40,8 +40,30 @@ export const CONTACT_LABS = LABORATORIES.map((lab) => ({
 export const STUDENT_REPRESENTATIVES = [
     {
         lab: "CVL Lab",
-        name: "Donggun Lee",
+        name: "Donggeon Lee",
+        koreanName: "이동건",
         role: "Ph.D. Student and student representative",
-        email: "edg1113@ajou.ac.kr",
+        email: "donggeon_lee@ajou.ac.kr",
+    },
+    {
+        lab: "SAIL",
+        name: "Student representative",
+        koreanName: "추후 안내",
+        role: "To be announced",
+        email: null,
+    },
+    {
+        lab: "HEI Lab",
+        name: "Student representative",
+        koreanName: "추후 안내",
+        role: "To be announced",
+        email: null,
+    },
+    {
+        lab: "iKnow Lab",
+        name: "Student representative",
+        koreanName: "추후 안내",
+        role: "To be announced",
+        email: null,
     },
 ];

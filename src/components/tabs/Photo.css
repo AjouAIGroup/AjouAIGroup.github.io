@@ -9,13 +9,6 @@
 .photo-gallery {
     width: 100%;
     margin: 0;
-    display: grid;
-    gap: var(--section-head-bottom);
-}
-
-.photo-gallery__head {
-    margin: 0;
-    padding-bottom: var(--section-head-bottom);
 }
 
 .photo-gallery__loading {

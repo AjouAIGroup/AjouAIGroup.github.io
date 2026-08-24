@@ -343,10 +343,6 @@ function Photo() {
       </div>
 
       <div data-reveal ref={galleryRef} className="photo-gallery page-panel page-panel--compact">
-        <div className="photo-gallery__head section-start-head">
-          <h2 id="photo-gallery-title">Gallery Archive</h2>
-          <p>Browse activities, seminars, and research snapshots from across the AAIG labs.</p>
-        </div>
         <PhotoGallery
           images={images}
           enableImageSelection={false}

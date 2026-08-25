@@ -57,6 +57,11 @@ const PUBLICATION_VENUES = new Set([
 ]);
 const VENUE_WITH_YEAR_PATTERN = /^(.+?)\s+(\d{4})$/;
 
+const isApprovedVenue = (venue) =>
+    PUBLICATION_VENUES.has(venue) ||
+    (venue.endsWith(" Workshop") &&
+        PUBLICATION_VENUES.has(venue.slice(0, -" Workshop".length)));
+
 const normalizeText = (value) => String(value ?? "").trim();
 const normalizeStringList = (value) => {
     if (Array.isArray(value)) {
@@ -137,7 +142,7 @@ const parsePublicationFile = async (filePath, publicationCategories) => {
 
     const venueMatch = venue.match(VENUE_WITH_YEAR_PATTERN);
     const publicationYear = date.slice(0, 4);
-    if (!venueMatch || !PUBLICATION_VENUES.has(venueMatch[1])) {
+    if (!venueMatch || !isApprovedVenue(venueMatch[1])) {
         throw new Error(
             `[publications] ${relativeFromRoot(filePath)}: "venue" must use an approved abbreviation and year (for example, "CVPR ${publicationYear}").`,
         );
@@ -198,7 +203,7 @@ const parseExternalPublicationItem = (rawItem, publicationCategories) => {
 
     const venueMatch = venue.match(VENUE_WITH_YEAR_PATTERN);
     const publicationYear = date.slice(0, 4);
-    if (!venueMatch || !PUBLICATION_VENUES.has(venueMatch[1]) || venueMatch[2] !== publicationYear) {
+    if (!venueMatch || !isApprovedVenue(venueMatch[1]) || venueMatch[2] !== publicationYear) {
         throw new Error(`[publications] External publication "${id}" must use an approved venue abbreviation and matching year.`);
     }
 

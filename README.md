@@ -35,7 +35,7 @@ npm run build
 1. News는 `content/news/_template.md`를 복사해 `content/news/YYYY-제목.md`로 저장합니다.
 2. Publications는 `content/publications/_template.md`를 복사해 맞는 카테고리 폴더에 저장합니다.
 3. Publication에는 `labs: [CVL Lab]`처럼 연구실 태그를 반드시 넣습니다. 여러 연구실이 함께 참여했다면 배열에 모두 적습니다.
-4. Publication의 `venue`는 `CVPR 2026`처럼 **학회/저널 약자 + 연도** 형식으로 입력합니다.
+4. Publication의 `venue`는 `CVPR 2026`처럼 **학회/저널 약자 + 연도** 형식으로 입력합니다. 워크숍 논문은 본 학회와 구분해 `CVPR Workshop 2026`처럼 입력합니다.
 5. 사진은 `content/photos/_README.md`의 절차를 따릅니다.
 6. Conference Calendar는 `content/deadlines/venues.json`에서 관리합니다. 학회와 마일스톤을 수정한 뒤에는 ISO 형식의 `deadline_at`과 공식 CFP 링크를 확인합니다.
 7. 저장 뒤 아래 명령으로 생성 데이터와 화면을 확인합니다.

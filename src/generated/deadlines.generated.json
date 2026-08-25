@@ -35,7 +35,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.983Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "df9cca766b463b89",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "iccv",
@@ -55,7 +62,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.984Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "afbe06eea3bf9889",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "eccv",
@@ -75,7 +89,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.984Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "b1d00792801ad040",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "wacv",
@@ -150,7 +171,19 @@
           }
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.985Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "eedc896c181fedee",
+        "extracted_milestones": {
+          "round-2-registration": "2026-08-21T23:59:00-12:00",
+          "round-2-paper": "2026-08-28T23:59:00-12:00",
+          "round-2-supplementary": "2026-08-30T23:59:00-12:00",
+          "final-decision": "2026-10-09T23:59:00-12:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "bmvc",
@@ -170,7 +203,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.985Z",
+        "state": "unavailable",
+        "http_status": null,
+        "content_fingerprint": null,
+        "extracted_milestones": {},
+        "message": "Official source could not be checked: fetch failed."
+      }
     },
     {
       "id": "accv",
@@ -190,7 +230,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.986Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "eca9b095bee2c4a1",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "3dv",
@@ -257,7 +304,17 @@
           "status": "verified"
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.986Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "d932603f5174d2d9",
+        "extracted_milestones": {
+          "paper": "2026-08-28T23:59:00-12:00",
+          "supplementary": "2026-09-02T23:59:00-12:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "miccai",
@@ -277,7 +334,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.987Z",
+        "state": "needs_review",
+        "http_status": 403,
+        "content_fingerprint": "3c8e4551b538b9c5",
+        "extracted_milestones": {},
+        "message": "Official source returned HTTP 403."
+      }
     },
     {
       "id": "neurips",
@@ -298,7 +362,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.987Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "a03581990c50d9bb",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "icml",
@@ -318,7 +389,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.987Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "508fb44aaec5e9dc",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "iclr",
@@ -387,7 +465,17 @@
           "status": "verified"
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.988Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "c0491009da89c4e4",
+        "extracted_milestones": {
+          "abstract": "2026-09-18T23:59:00-12:00",
+          "paper": "2026-09-25T23:59:00-12:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "aaai",
@@ -469,7 +557,18 @@
           "status": "verified"
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.988Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "faa3522d4376007e",
+        "extracted_milestones": {
+          "abstract": "2026-07-21T23:59:00-12:00",
+          "paper": "2026-07-28T23:59:00-12:00",
+          "supplementary": "2026-07-31T23:59:00-12:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "aistats",
@@ -489,7 +588,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.988Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "8577f2e2b650e82f",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "uai",
@@ -509,7 +615,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.988Z",
+        "state": "needs_review",
+        "http_status": 404,
+        "content_fingerprint": "b8c1d648ac198b1e",
+        "extracted_milestones": {},
+        "message": "Official source returned HTTP 404."
+      }
     },
     {
       "id": "acl",
@@ -529,7 +642,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.989Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "040849489abc6d98",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "emnlp",
@@ -549,7 +669,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.989Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "a0c707a51714c500",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "naacl",
@@ -585,7 +712,16 @@
           }
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.989Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "8d1bb38bc8f7ba50",
+        "extracted_milestones": {
+          "arr-submission": "2026-10-12T23:59:00-12:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "eacl",
@@ -643,7 +779,17 @@
           "status": "verified"
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.990Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "9840d97764656a34",
+        "extracted_milestones": {
+          "arr-submission": "2026-08-03T23:59:00-12:00",
+          "commitment": "2026-10-11T23:59:00-12:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "aacl",
@@ -663,7 +809,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.990Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "f0dc3ce0634662f7",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "coling",
@@ -683,7 +836,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.990Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "79dd6dd6681be131",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "conll",
@@ -703,7 +863,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.990Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "95348c1e4d2eb4e5",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "icra",
@@ -748,7 +915,16 @@
           "status": "verified"
         }
       ],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.990Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "83952fb1efda6869",
+        "extracted_milestones": {
+          "paper": "2026-09-15T23:59:00-07:00"
+        },
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "iros",
@@ -768,7 +944,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.991Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "4c860d29bd6fc15c",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "rss",
@@ -788,7 +971,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.991Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "77165ff831242873",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "corl",
@@ -809,7 +999,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.992Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "6be1a4dfe7d5771f",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "humanoids",
@@ -829,7 +1026,14 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": null
+      "source_check": {
+        "checked_at": "2026-08-25T07:51:42.992Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "78784a1c4cb8684f",
+        "extracted_milestones": {},
+        "message": "Official source matched the configured evidence."
+      }
     }
   ]
 }

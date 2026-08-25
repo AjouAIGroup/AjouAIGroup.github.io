@@ -148,7 +148,11 @@ const cleanVenue = (value, year) => {
     const matched = VENUE_ALIASES.find(([needle]) =>
         text.toLowerCase().includes(needle.toLowerCase()),
     );
-    return matched ? `${matched[1]} ${sourceYear}` : "";
+    if (!matched) {
+        return "";
+    }
+    const workshopSuffix = /\bworkshops?\b/i.test(text) ? " Workshop" : "";
+    return `${matched[1]}${workshopSuffix} ${sourceYear}`;
 };
 
 const publicationItem = ({ source, title, authors, venueText, year, url }) => {

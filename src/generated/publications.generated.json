@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-25T07:44:01.491Z",
+    "generated_at": "2026-08-25T07:51:47.078Z",
     "source": "content/publications",
     "categories": [
       "robot_learning",
@@ -26,7 +26,7 @@
       "featured": false,
       "research_meta": {
         "author": "Ngseo Kim, Junghyun Kim, Gi-Cheon Kang, Youngjae Yu, Byoung-Tak Zhang",
-        "published_place": "RSS 2026",
+        "published_place": "RSS Workshop 2026",
         "published_date": "2026-01-01",
         "keywords": [
           "Vision-Language-Action",
@@ -55,11 +55,11 @@
       "category": "robot_learning",
       "status": "published",
       "title": "Can Embodied Agents Remember What You Said? Evaluating Dialogue-Grounded Embodied Memory in 3D Environments",
-      "summary": "CVPR 2026 publication from HEI Lab.",
+      "summary": "CVPR Workshop 2026 publication from HEI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seongjun Jeong, Junghyun Kim, Gi-Cheon Kang†, Byoung-Tak Zhang†",
-        "published_place": "CVPR 2026",
+        "published_place": "CVPR Workshop 2026",
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
@@ -84,11 +84,11 @@
       "category": "robot_learning",
       "status": "published",
       "title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
-      "summary": "RSS 2026 publication from HEI Lab.",
+      "summary": "RSS Workshop 2026 publication from HEI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Junghyun Kim*, Ngseo Kim*, ChungWoo Lee, Seoyeon Lee, Woo-Jeong Baek, Adam Zhou, Chip Huyen, Jun-Ki Lee†, Gi-Cheon Kang†, Byoung-Tak Zhang†",
-        "published_place": "RSS 2026",
+        "published_place": "RSS Workshop 2026",
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [

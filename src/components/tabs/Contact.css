@@ -20,6 +20,11 @@
     display: grid;
 }
 
+.contact-page__section-head {
+    padding-bottom: clamp(1.8rem, 3vw, 2.6rem);
+    border-bottom: 2px solid rgba(23, 23, 23, 0.42);
+}
+
 .contact-page__introduction {
     display: grid;
     grid-template-columns: minmax(14rem, 0.92fr) minmax(18rem, 1.08fr);
@@ -77,8 +82,7 @@
     display: grid;
     gap: clamp(1.6rem, 3vw, 2.6rem);
     padding: clamp(2rem, 4vw, 3.5rem) 0;
-    border-top: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
-    border-bottom: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
+    border-bottom: 1px solid rgba(23, 23, 23, 0.24);
 }
 
 .contact-page__lab-primary,
@@ -90,7 +94,7 @@
 
 .contact-page__lab-secondary {
     padding-top: clamp(1.4rem, 2.5vw, 2.1rem);
-    border-top: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
+    border-top: 1px solid rgba(23, 23, 23, 0.15);
 }
 
 .contact-page__prospective {

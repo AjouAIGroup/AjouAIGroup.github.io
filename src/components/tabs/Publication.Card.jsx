@@ -1,5 +1,4 @@
 import PublicationLinkIcons from "./Publication.LinkIcons";
-import PublicationFigure from "./Publication.Figure";
 import { RESEARCH_CATEGORY_LABELS } from "../../utils/researchData";
 import {
     getPublicationPrimaryLink,
@@ -7,7 +6,6 @@ import {
 } from "../../utils/publicationLinks";
 
 function PublicationCard({
-    publicationId,
     category,
     meta,
     title,
@@ -28,11 +26,6 @@ function PublicationCard({
             data-reveal-load-delay={revealLoadDelay}
             style={{ "--reveal-delay": revealDelay }}
             className="publication__card">
-            <PublicationFigure
-                publicationId={publicationId}
-                className="publication__card-media"
-                sizes="(max-width: 768px) 13rem, 11.2rem"
-            />
             <div className="publication__card-main">
                 <div className="publication__card-badges">
                     <p

@@ -25,7 +25,7 @@
     grid-template-columns: minmax(14rem, 0.92fr) minmax(18rem, 1.08fr);
     gap: clamp(1.5rem, 5vw, 5.5rem);
     padding: clamp(2.2rem, 4vw, 3.5rem) 0;
-    border-bottom: 1px solid rgba(23, 23, 23, 0.2);
+    border-bottom: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
 }
 
 .contact-page__introduction h2 {
@@ -77,8 +77,8 @@
     display: grid;
     gap: clamp(1.6rem, 3vw, 2.6rem);
     padding: clamp(2rem, 4vw, 3.5rem) 0;
-    border-top: 1px solid rgba(23, 23, 23, 0.2);
-    border-bottom: 1px solid rgba(23, 23, 23, 0.2);
+    border-top: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
+    border-bottom: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
 }
 
 .contact-page__lab-primary,
@@ -90,7 +90,7 @@
 
 .contact-page__lab-secondary {
     padding-top: clamp(1.4rem, 2.5vw, 2.1rem);
-    border-top: 1px solid rgba(23, 23, 23, 0.2);
+    border-top: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
 }
 
 .contact-page__prospective {

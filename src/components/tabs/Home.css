@@ -11,8 +11,8 @@
     grid-template-columns: minmax(16rem, 0.88fr) minmax(0, 1.12fr);
     gap: clamp(1.75rem, 4vw, 4.5rem);
     padding: var(--home-section-padding-block) clamp(1.25rem, 6vw, 7rem);
-    background: #dfddd4;
-    color: #171717;
+    background: #d8d5ca;
+    color: #0e0e0d;
 }
 
 .home-publication-snapshot__intro {
@@ -35,10 +35,10 @@
 
 .home-publication-snapshot h2 {
     margin: 0;
-    color: #171717;
+    color: #0b0b0a;
     font-family: "Times New Roman", Times, serif;
-    font-size: clamp(2.35rem, 4vw, 4.25rem);
-    font-weight: 400;
+    font-size: clamp(2.55rem, 4.35vw, 4.65rem);
+    font-weight: 700;
     letter-spacing: -0.065em;
     line-height: 0.91;
 }
@@ -78,10 +78,10 @@
 }
 
 .home-publication-snapshot__total strong {
-    color: #171717;
+    color: #080807;
     font-family: "Times New Roman", Times, serif;
-    font-size: clamp(4.5rem, 8vw, 7.5rem);
-    font-weight: 400;
+    font-size: clamp(5.15rem, 9vw, 8.4rem);
+    font-weight: 700;
     letter-spacing: -0.1em;
     line-height: 0.72;
 }
@@ -109,21 +109,22 @@
     gap: 1rem;
     min-height: 4.3rem;
     padding: 0.75rem 0.85rem;
-    background: #dfddd4;
+    background: #d8d5ca;
 }
 
 .home-publication-snapshot__venues span {
-    color: #171717;
+    color: #10100f;
     font-family: "Times New Roman", Times, serif;
-    font-size: clamp(1.15rem, 1.65vw, 1.5rem);
+    font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+    font-weight: 700;
     line-height: 1.05;
 }
 
 .home-publication-snapshot__venues strong {
-    color: #171717;
+    color: #080807;
     font-family: "Times New Roman", Times, serif;
-    font-size: clamp(2.35rem, 3vw, 3rem);
-    font-weight: 400;
+    font-size: clamp(2.7rem, 3.4vw, 3.5rem);
+    font-weight: 700;
     letter-spacing: -0.06em;
     line-height: 1;
 }

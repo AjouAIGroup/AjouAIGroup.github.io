@@ -8,6 +8,7 @@ const pageComponents = {
     lab: lazy(() => import("../pages/LabPage")),
     contact: lazy(() => import("../pages/ContactPage")),
     publication: lazy(() => import("../pages/PublicationPage")),
+    calendar: lazy(() => import("../pages/CalendarPage")),
 };
 
 export const PAGE_MANIFEST = ROUTE_DEFINITIONS.map((route) => ({

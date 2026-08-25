@@ -4,6 +4,7 @@ export const TAB_KEYS = [
     "research",
     "lab",
     "publication",
+    "calendar",
     "contact",
 ];
 

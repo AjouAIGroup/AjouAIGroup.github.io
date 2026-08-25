@@ -169,7 +169,7 @@
     width: 100%;
     margin: 0;
     display: grid;
-    gap: var(--list-gap);
+    gap: clamp(0.7rem, 1vw, 0.95rem);
 }
 
 .publication__archive-groups {
@@ -179,13 +179,13 @@
 
 .publication__year-group {
     display: grid;
-    gap: var(--section-head-bottom);
+    gap: clamp(0.75rem, 1.2vw, 1rem);
 }
 
 .publication__year-heading {
     margin: 0;
     padding-bottom: 0.56rem;
-    border-bottom: 1px solid var(--tab-identity-border, var(--outline-color));
+    border-bottom: 1px solid var(--editorial-rule, var(--tab-identity-border, var(--outline-color)));
     color: var(--text-primary);
     font-family: "Times New Roman", Times, serif;
     font-size: var(--group-title-size);
@@ -199,14 +199,14 @@
 .publication__card {
     width: 100%;
     margin: 0;
-    padding: var(--row-pad-y) var(--row-pad-x);
+    padding: clamp(0.85rem, 1.25vw, 1.1rem) 0;
     border: var(--outline-width) solid var(--outline-color);
     border-radius: var(--radius-md);
     background: var(--surface);
     box-shadow: var(--shadow-elev-1);
     display: grid;
-    grid-template-columns: minmax(10.2rem, 11.2rem) minmax(0, 1fr) auto;
-    gap: var(--row-gap);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(0.8rem, 1.4vw, 1.25rem);
     align-items: center;
     transition: var(--transition-interactive);
 }
@@ -215,43 +215,10 @@
     margin: 0;
 }
 
-.publication__card-media {
-    width: 100%;
-    margin: 0;
-    aspect-ratio: 4 / 3;
-    min-height: 8.6rem;
-    border: 1px solid var(--outline-color);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    background: #ffffff;
-}
-
-.publication__card-media img,
-.publication__card-media-placeholder,
-.publication__card-media .publication-figure__placeholder {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.publication__card-media img {
-    object-fit: contain;
-    padding: var(--space-1);
-    background: #ffffff;
-}
-
-.publication__card-media-placeholder,
-.publication__card-media .publication-figure__placeholder {
-    display: grid;
-    place-items: center;
-    color: var(--text-muted);
-    font-size: var(--type-support-size);
-}
-
 .publication__card-main {
     min-width: 0;
     display: grid;
-    gap: var(--space-1p5);
+    gap: 0.34rem;
     align-content: center;
 }
 
@@ -260,7 +227,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--control-gap);
+    gap: 0.36rem;
 }
 
 .publication__card-badge {
@@ -356,7 +323,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-    gap: var(--control-gap);
+    gap: 0.36rem;
 }
 
 .publication__card-title {
@@ -459,7 +426,7 @@
     }
 
     .publication__card {
-        grid-template-columns: minmax(8.8rem, 10rem) minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto;
         gap: max(0.64rem, var(--row-gap));
     }
 }
@@ -515,36 +482,27 @@
     }
 
     .publication__card {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: start;
-        gap: var(--row-gap);
-        padding: var(--row-pad-y) var(--row-pad-x);
-    }
-
-    .publication__card-media {
-        grid-column: 1 / -1;
-        grid-row: 1;
-        width: min(100%, 13rem);
-        justify-self: center;
-        min-height: clamp(6rem, 24vw, 7.15rem);
-        aspect-ratio: 5 / 4;
+        gap: 0.75rem;
+        padding: 0.85rem 0;
     }
 
     .publication__card-main {
-        grid-column: 1 / -1;
-        grid-row: 2;
-        gap: var(--space-1p5);
+        grid-column: 1;
+        grid-row: 1;
+        gap: 0.34rem;
     }
 
     .publication__card-links {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        border-top: 1px solid var(--outline-color);
-        padding-top: var(--section-head-bottom);
-        gap: var(--control-gap);
+        grid-column: 2;
+        grid-row: 1;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        border: 0;
+        padding: 0;
+        gap: 0.35rem;
     }
 
     .publication__card-links > *:last-child {
@@ -583,14 +541,9 @@
     }
 
     .publication__card {
-        grid-template-columns: minmax(0, 1fr);
-        gap: var(--row-gap);
-        padding: var(--row-pad-y) var(--row-pad-x);
-    }
-
-    .publication__card-media {
-        width: min(100%, 11.2rem);
-        min-height: clamp(5.1rem, 24vw, 6rem);
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 0.6rem;
+        padding: 0.75rem 0;
     }
 
     .publication__card-title-link {

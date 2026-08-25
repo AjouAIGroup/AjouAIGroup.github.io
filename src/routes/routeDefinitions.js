@@ -15,6 +15,7 @@ export const ROUTE_DEFINITIONS = [
     { path: "/lab", tabKey: "lab" },
     { path: "/contact", tabKey: "contact" },
     { path: "/publication", tabKey: "publication" },
+    { path: "/calendar", tabKey: "calendar" },
 ];
 
 export const SSG_ROUTE_PATHS = ROUTE_DEFINITIONS.map((item) => item.path);

@@ -30,8 +30,12 @@ function AaigHero({ isHome }) {
                     <p>Ajou University</p>
                 </div>
                 <section className="aaig-hero__laboratories" aria-label="Laboratories">
-                    {laboratories.map((lab) => (
-                        <Link key={lab.key} className="aaig-hero__laboratory" to="/lab">
+                    {laboratories.map((lab, index) => (
+                        <Link
+                            key={lab.key}
+                            className="aaig-hero__laboratory"
+                            style={{ "--laboratory-enter-delay": `${280 + index * 90}ms` }}
+                            to="/lab">
                             <div className="aaig-hero__laboratory-identity">
                                 {lab.logo ? (
                                     <img src={lab.logo} alt={lab.logoAlt} />

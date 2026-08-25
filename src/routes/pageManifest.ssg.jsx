@@ -5,6 +5,7 @@ import ResearchPage from "../pages/ResearchPage";
 import LabPage from "../pages/LabPage";
 import ContactPage from "../pages/ContactPage";
 import PublicationPage from "../pages/PublicationPage";
+import CalendarPage from "../pages/CalendarPage";
 
 const PAGE_COMPONENTS = {
     home: HomePage,
@@ -13,6 +14,7 @@ const PAGE_COMPONENTS = {
     lab: LabPage,
     contact: ContactPage,
     publication: PublicationPage,
+    calendar: CalendarPage,
 };
 
 export const PAGE_MANIFEST_SSG = ROUTE_DEFINITIONS.map((route) => ({

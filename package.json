@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "vite",
         "content:sync": "node scripts/content/sync.mjs",
+        "content:refresh": "node scripts/content/refresh.mjs",
         "photos:sync": "node scripts/content/photos.mjs",
         "research:validate": "node scripts/content/research.mjs",
         "validate:content": "node scripts/content/validate.mjs",

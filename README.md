@@ -19,6 +19,7 @@ npm run dev
 | Publication | `content/publications` |
 | Research | `src/assets/dataset/research_*.json` |
 | Conference Calendar | `content/deadlines/venues.json` |
+| External source registry/cache | `content/sources` |
 
 콘텐츠를 바꾼 뒤에는 아래를 실행합니다.
 
@@ -46,6 +47,24 @@ npm run build
 ```
 
 `src/generated` 파일은 직접 수정하지 않습니다. 더 자세한 필드 설명은 [News 가이드](docs/news/README.md), [Publication 가이드](docs/publications/README.md)를 참고하세요.
+
+### 공식 사이트 자동 수집
+
+`content/sources/labs.json`에는 각 연구실의 공식 뉴스·논문 URL과 수집 방식이 있습니다. 매주 수요일 GitHub Actions가 다음을 수행합니다.
+
+1. 공식 사이트에서 수집 가능한 News와 Publications를 가져와 `content/sources/cache`에 정규화합니다.
+2. 공식 CFP 페이지에서 검증 가능한 Conference 마감일을 갱신합니다.
+3. 변경사항을 바로 공개하지 않고 검토용 Pull Request로 만듭니다. PR을 병합하면 기존 배포 파이프라인이 사이트를 공개합니다.
+
+로컬에서 같은 과정을 실행하려면 다음 명령을 사용합니다.
+
+```bash
+npm run content:refresh
+npm run validate:content
+npm run build
+```
+
+수집에 실패하거나 소스가 구조적으로 바뀌면 기존 캐시를 유지합니다. 로컬 실행 시에는 `content/sources/cache/last-sync-report.json`에서 상태를 볼 수 있고, 정기 실행 상태는 GitHub Actions 로그에서 확인합니다. 현재 날짜가 있는 공식 아카이브가 없는 소스(CVL News, SAIL News)는 잘못된 자동 게시를 막기 위해 레지스트리에서 비활성화되어 있습니다. 날짜가 있는 News/Publication URL이 준비되면 해당 항목의 `enabled`를 `true`로 바꾸고 맞는 adapter를 추가합니다.
 
 ## 배포
 

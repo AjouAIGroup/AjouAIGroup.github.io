@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "description": "Official public sources used by the scheduled AAIG content refresh. Disabled entries stay documented but are not imported."
+  },
+  "sources": [
+    {
+      "id": "cvl-publications",
+      "lab": "CVL Lab",
+      "kind": "publication",
+      "adapter": "cvl-publications",
+      "url": "https://cvl-lab.github.io/publication/",
+      "category": "computer_vision_and_learning_algorithms",
+      "enabled": true
+    },
+    {
+      "id": "cvl-news",
+      "lab": "CVL Lab",
+      "kind": "news",
+      "adapter": "cvl-news",
+      "url": "https://cvl-lab.github.io/news/",
+      "enabled": false,
+      "disabled_reason": "CVL's public news archive is currently an in-progress source with placeholder entries."
+    },
+    {
+      "id": "hei-publications",
+      "lab": "HEI Lab",
+      "kind": "publication",
+      "adapter": "hei-publications",
+      "url": "https://heilaboratory.github.io/publications/",
+      "category": "robot_learning",
+      "enabled": true
+    },
+    {
+      "id": "iknow-publications",
+      "lab": "iKnow Lab",
+      "kind": "publication",
+      "adapter": "iknow-publications",
+      "url": "https://iknow.ajou.ac.kr/publications/",
+      "category": "efficient_learning_for_llms",
+      "enabled": true
+    },
+    {
+      "id": "sail-news",
+      "lab": "SAIL",
+      "kind": "news",
+      "adapter": "google-sites-news",
+      "url": "https://sites.google.com/view/speechailab",
+      "enabled": false,
+      "disabled_reason": "The public Google Sites page has no dated news archive. Add a dated feed or archive URL before enabling."
+    }
+  ]
+}

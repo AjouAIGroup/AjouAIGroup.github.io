@@ -1,0 +1,53 @@
+name: Refresh External Content
+
+on:
+  schedule:
+    - cron: "20 3 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: aaig-content-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Refresh official sources
+        run: npm run content:refresh
+
+      - name: Validate refreshed content
+        run: npm run validate:content
+
+      - name: Create review pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(content): refresh external lab sources"
+          title: "chore(content): refresh external lab sources"
+          body: |
+            Scheduled refresh of official lab publications/news and conference sources.
+
+            Review the imported source cache and deadline diff before merging.
+          branch: automation/content-refresh
+          delete-branch: true
+          labels: content, automation
+          add-paths: |
+            content/sources/cache/news.json
+            content/sources/cache/publications.json
+            content/deadlines/venues.json

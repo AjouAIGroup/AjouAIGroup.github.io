@@ -17,6 +17,8 @@ export const PUBLICATIONS_CONTENT_DIR = path.resolve(
     "publications",
 );
 export const PHOTOS_CONTENT_DIR = path.resolve(CONTENT_DIR, "photos");
+export const SOURCES_CONTENT_DIR = path.resolve(CONTENT_DIR, "sources");
+export const SOURCES_CACHE_DIR = path.resolve(SOURCES_CONTENT_DIR, "cache");
 export const PHOTOS_RAW_DIR = path.resolve(PHOTOS_CONTENT_DIR, "raw");
 export const PHOTOS_METADATA_FILE = path.resolve(
     PHOTOS_CONTENT_DIR,
@@ -35,6 +37,19 @@ export const PUBLICATIONS_GENERATED_FILE = path.resolve(
 export const PHOTOS_GENERATED_FILE = path.resolve(
     GENERATED_DIR,
     "photos.generated.json",
+);
+
+export const EXTERNAL_NEWS_FILE = path.resolve(
+    SOURCES_CACHE_DIR,
+    "news.json",
+);
+export const EXTERNAL_PUBLICATIONS_FILE = path.resolve(
+    SOURCES_CACHE_DIR,
+    "publications.json",
+);
+export const EXTERNAL_SYNC_REPORT_FILE = path.resolve(
+    SOURCES_CACHE_DIR,
+    "last-sync-report.json",
 );
 
 export const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);

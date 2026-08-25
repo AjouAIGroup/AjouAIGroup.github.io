@@ -368,11 +368,50 @@ const buildGeneratedData = (data, sourceChecks = {}) => ({
     })),
 });
 
+const applySourceRefresh = (data, sourceChecks) => {
+    let changed = false;
+    const refreshedVenues = data.venues.map((venue) => {
+        const check = sourceChecks[venue.id];
+        if (!check || check.state !== "matched") {
+            return venue;
+        }
+
+        let venueChanged = false;
+        const milestones = venue.milestones.map((milestone) => {
+            const extractedDeadline = check.extracted_milestones?.[milestone.id];
+            if (!extractedDeadline || extractedDeadline === milestone.deadline_at) {
+                return milestone;
+            }
+            changed = true;
+            venueChanged = true;
+            return { ...milestone, deadline_at: extractedDeadline };
+        });
+
+        return venueChanged
+            ? { ...venue, milestones, source_checked_at: check.checked_at }
+            : venue;
+    });
+
+    if (!changed) {
+        return { data, changed: false };
+    }
+
+    return {
+        data: {
+            ...data,
+            meta: { ...data.meta, updated_at: new Date().toISOString() },
+            venues: refreshedVenues,
+        },
+        changed: true,
+    };
+};
+
 export const syncDeadlineContent = async ({
     validateOnly = false,
     refreshSources = false,
+    persistSourceRefresh = false,
 } = {}) => {
-    const data = await readDeadlineContent();
+    let data = await readDeadlineContent();
     validateDeadlineContent(data);
 
     const sourceChecks = {};
@@ -383,6 +422,14 @@ export const syncDeadlineContent = async ({
         results.forEach(([id, check]) => {
             sourceChecks[id] = check;
         });
+        if (persistSourceRefresh) {
+            const refreshed = applySourceRefresh(data, sourceChecks);
+            data = refreshed.data;
+            if (refreshed.changed) {
+                await writeJsonFile(DEADLINE_CONTENT_FILE, data);
+                console.log("[deadlines] persisted verified deadline changes from official sources.");
+            }
+        }
     }
 
     const generated = buildGeneratedData(data, sourceChecks);
@@ -399,8 +446,9 @@ const isExecutedDirectly =
 if (isExecutedDirectly) {
     const refreshSources = process.argv.includes("--refresh-sources");
     const validateOnly = process.argv.includes("--validate-only");
+    const persistSourceRefresh = process.argv.includes("--persist");
 
-    syncDeadlineContent({ validateOnly, refreshSources })
+    syncDeadlineContent({ validateOnly, refreshSources, persistSourceRefresh })
         .then((data) => {
             console.log(
                 `[deadlines] ${validateOnly ? "validation" : refreshSources ? "source refresh" : "sync"} completed for ${data.venues.length} venues.`,

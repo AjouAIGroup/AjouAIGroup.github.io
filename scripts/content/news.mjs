@@ -2,6 +2,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import {
     NEWS_CONTENT_DIR,
+    EXTERNAL_NEWS_FILE,
     NEWS_GENERATED_FILE,
     getNowIso,
     isIsoDate,
@@ -138,6 +139,58 @@ const parseNewsFile = async (filePath) => {
     };
 };
 
+const parseExternalNewsItem = (rawItem) => {
+    const id = normalizeText(rawItem?.id);
+    const type = validateType(rawItem?.type, EXTERNAL_NEWS_FILE);
+    const title = normalizeText(rawItem?.title);
+    const summary = normalizeText(rawItem?.summary);
+    const date = normalizeText(rawItem?.date);
+    const externalUrl = normalizeHttpUrl(rawItem?.external_url);
+
+    if (!id || !title || !summary || !isIsoDate(date) || !externalUrl) {
+        throw new Error(`[news] Invalid external news item "${id || "unknown"}".`);
+    }
+
+    return {
+        id,
+        type,
+        title,
+        summary,
+        date,
+        year: toYear(date),
+        related_person: normalizeText(rawItem?.related_person),
+        venue: normalizeText(rawItem?.venue),
+        external_url: externalUrl,
+        internal_slug: normalizeSlug(rawItem?.internal_slug || id || title),
+        is_external: true,
+        featured: rawItem?.featured === true,
+        publication_id: normalizeText(rawItem?.publication_id),
+        publication_title: normalizeText(rawItem?.publication_title),
+        publication_query: normalizeText(rawItem?.publication_query),
+        generated_from: normalizeText(rawItem?.generated_from || "external-source"),
+    };
+};
+
+const loadExternalNewsItems = async () => {
+    const data = await (async () => {
+        try {
+            const raw = await fs.readFile(EXTERNAL_NEWS_FILE, "utf8");
+            return JSON.parse(raw);
+        } catch (error) {
+            if (error?.code === "ENOENT") {
+                return { items: [] };
+            }
+            throw new Error(`[news] Cannot read external news cache: ${error.message || error}`);
+        }
+    })();
+
+    if (!Array.isArray(data?.items)) {
+        throw new Error("[news] External news cache must contain an items array.");
+    }
+
+    return data.items.map(parseExternalNewsItem);
+};
+
 const createAutoPublicationNewsItem = (publicationItem) => {
     const publicationId = normalizeText(publicationItem.id);
     const publicationTitle = normalizeText(publicationItem.title);
@@ -151,12 +204,16 @@ const createAutoPublicationNewsItem = (publicationItem) => {
     const publicationAuthors = normalizeText(
         publicationItem.research_meta?.author,
     );
+    const publicationLabs = Array.isArray(publicationItem.research_meta?.labs)
+        ? publicationItem.research_meta.labs.map(normalizeText).filter(Boolean)
+        : [];
+    const publicationLabLabel = publicationLabs.join(", ") || "AAIG";
 
     const summary =
         publicationSummary ||
         (publicationVenue
-            ? `${publicationVenue} publication update from CVL Lab.`
-            : "Publication update from CVL Lab.");
+            ? `${publicationVenue} publication update from ${publicationLabLabel}.`
+            : `Publication update from ${publicationLabLabel}.`);
 
     return {
         id: `publication-${publicationId}`,
@@ -254,6 +311,18 @@ export const syncNewsContent = async ({
         seenIds.add(item.id);
         items.push(item);
     }
+
+    const externalItems = await loadExternalNewsItems();
+    externalItems.forEach((item) => {
+        const itemKey = normalizePaperKey(item.date, item.title);
+        const duplicate = seenIds.has(item.id) || items.some((existing) =>
+            normalizePaperKey(existing.date, existing.title) === itemKey,
+        );
+        if (!duplicate) {
+            seenIds.add(item.id);
+            items.push(item);
+        }
+    });
 
     const resolvedPublicationItems = Array.isArray(publicationItems)
         ? publicationItems

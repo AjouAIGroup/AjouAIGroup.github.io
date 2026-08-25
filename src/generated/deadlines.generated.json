@@ -35,14 +35,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.373Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "df9cca766b463b89",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "iccv",
@@ -62,14 +55,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.394Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "21d8ae8ccbca0680",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "eccv",
@@ -89,14 +75,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.395Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "87bf552c3c1aec01",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "wacv",
@@ -171,19 +150,7 @@
           }
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.395Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "20f5e9a0b08c0b3e",
-        "extracted_milestones": {
-          "round-2-registration": "2026-08-21T23:59:00-12:00",
-          "round-2-paper": "2026-08-28T23:59:00-12:00",
-          "round-2-supplementary": "2026-08-30T23:59:00-12:00",
-          "final-decision": "2026-10-09T23:59:00-12:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "bmvc",
@@ -203,14 +170,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.396Z",
-        "state": "unavailable",
-        "http_status": null,
-        "content_fingerprint": null,
-        "extracted_milestones": {},
-        "message": "Official source could not be checked: fetch failed."
-      }
+      "source_check": null
     },
     {
       "id": "accv",
@@ -230,14 +190,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.396Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "1a466d0c3989c11f",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "3dv",
@@ -304,17 +257,7 @@
           "status": "verified"
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.396Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "6351c2ff68b3bc95",
-        "extracted_milestones": {
-          "paper": "2026-08-28T23:59:00-12:00",
-          "supplementary": "2026-09-02T23:59:00-12:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "miccai",
@@ -334,14 +277,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.397Z",
-        "state": "needs_review",
-        "http_status": 403,
-        "content_fingerprint": "3c8e4551b538b9c5",
-        "extracted_milestones": {},
-        "message": "Official source returned HTTP 403."
-      }
+      "source_check": null
     },
     {
       "id": "neurips",
@@ -362,14 +298,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.397Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "8507f5d0ba16175e",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "icml",
@@ -389,14 +318,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.397Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "508fb44aaec5e9dc",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "iclr",
@@ -465,17 +387,7 @@
           "status": "verified"
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.397Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "8f6749dff9eb3aaa",
-        "extracted_milestones": {
-          "abstract": "2026-09-18T23:59:00-12:00",
-          "paper": "2026-09-25T23:59:00-12:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "aaai",
@@ -557,18 +469,7 @@
           "status": "verified"
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.398Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "04dbde09822af144",
-        "extracted_milestones": {
-          "abstract": "2026-07-21T23:59:00-12:00",
-          "paper": "2026-07-28T23:59:00-12:00",
-          "supplementary": "2026-07-31T23:59:00-12:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "aistats",
@@ -588,14 +489,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.398Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "8577f2e2b650e82f",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "uai",
@@ -615,14 +509,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.398Z",
-        "state": "needs_review",
-        "http_status": 404,
-        "content_fingerprint": "b8c1d648ac198b1e",
-        "extracted_milestones": {},
-        "message": "Official source returned HTTP 404."
-      }
+      "source_check": null
     },
     {
       "id": "acl",
@@ -642,14 +529,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.399Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "53f6aae209dd3a9c",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "emnlp",
@@ -669,14 +549,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.399Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "f0a2284452494587",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "naacl",
@@ -712,16 +585,7 @@
           }
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.399Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "25b93a93dcbd5100",
-        "extracted_milestones": {
-          "arr-submission": "2026-10-12T23:59:00-12:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "eacl",
@@ -779,17 +643,7 @@
           "status": "verified"
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.399Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "f3c439b4df339ad5",
-        "extracted_milestones": {
-          "arr-submission": "2026-08-03T23:59:00-12:00",
-          "commitment": "2026-10-11T23:59:00-12:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "aacl",
@@ -809,14 +663,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.400Z",
-        "state": "unavailable",
-        "http_status": null,
-        "content_fingerprint": null,
-        "extracted_milestones": {},
-        "message": "Official source could not be checked: fetch failed."
-      }
+      "source_check": null
     },
     {
       "id": "coling",
@@ -836,14 +683,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.400Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "79dd6dd6681be131",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "conll",
@@ -863,14 +703,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.400Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "95348c1e4d2eb4e5",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "icra",
@@ -915,16 +748,7 @@
           "status": "verified"
         }
       ],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.400Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "83952fb1efda6869",
-        "extracted_milestones": {
-          "paper": "2026-09-15T23:59:00-07:00"
-        },
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "iros",
@@ -944,14 +768,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.401Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "4597fda4cef8e8ee",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "rss",
@@ -971,14 +788,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.401Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "77165ff831242873",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "corl",
@@ -999,14 +809,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.401Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "50dadf680b736f1b",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     },
     {
       "id": "humanoids",
@@ -1026,14 +829,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_check": {
-        "checked_at": "2026-08-12T09:37:55.401Z",
-        "state": "matched",
-        "http_status": 200,
-        "content_fingerprint": "673d1d958ed36078",
-        "extracted_milestones": {},
-        "message": "Official source matched the configured evidence."
-      }
+      "source_check": null
     }
   ]
 }

@@ -2,6 +2,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import {
     PUBLICATIONS_CONTENT_DIR,
+    EXTERNAL_PUBLICATIONS_FILE,
     PUBLICATIONS_GENERATED_FILE,
     getNowIso,
     isIsoDate,
@@ -35,6 +36,24 @@ const PUBLICATION_VENUES = new Set([
     "RSS",
     "Sci Rep",
     "WACV",
+    "AAAI",
+    "ACL",
+    "EMNLP",
+    "Findings of EMNLP",
+    "ICDE",
+    "ICLR",
+    "ICME",
+    "ICRA",
+    "ICASSP",
+    "IROS",
+    "Interspeech",
+    "KCC",
+    "LREC",
+    "SIGIR",
+    "TKDE",
+    "IEEE Access",
+    "CoRL",
+    "COLING",
 ]);
 const VENUE_WITH_YEAR_PATTERN = /^(.+?)\s+(\d{4})$/;
 
@@ -158,6 +177,71 @@ const parsePublicationFile = async (filePath, publicationCategories) => {
     };
 };
 
+const parseExternalPublicationItem = (rawItem, publicationCategories) => {
+    const id = normalizeText(rawItem?.id);
+    const category = normalizeText(rawItem?.category);
+    const status = normalizeText(rawItem?.status || "published");
+    const title = normalizeText(rawItem?.title);
+    const summary = normalizeText(rawItem?.summary);
+    const featured = rawItem?.featured === true;
+    const meta = rawItem?.research_meta ?? {};
+    const date = normalizeText(meta.published_date);
+    const authors = normalizeText(meta.author);
+    const venue = normalizeText(meta.published_place);
+
+    if (!id || !title || !publicationCategories.has(category)) {
+        throw new Error(`[publications] Invalid external publication item "${id || "unknown"}".`);
+    }
+    if (!PUBLICATION_STATUSES.has(status) || !isIsoDate(date) || !authors) {
+        throw new Error(`[publications] External publication "${id}" has invalid status, date, or authors.`);
+    }
+
+    const venueMatch = venue.match(VENUE_WITH_YEAR_PATTERN);
+    const publicationYear = date.slice(0, 4);
+    if (!venueMatch || !PUBLICATION_VENUES.has(venueMatch[1]) || venueMatch[2] !== publicationYear) {
+        throw new Error(`[publications] External publication "${id}" must use an approved venue abbreviation and matching year.`);
+    }
+
+    return {
+        id,
+        key: id,
+        category,
+        status,
+        title,
+        summary,
+        featured,
+        research_meta: {
+            author: authors,
+            published_place: venue,
+            published_date: date,
+            keywords: normalizeStringList(meta.keywords),
+            labs: normalizeStringList(meta.labs),
+            pdf_link: normalizeHttpUrl(meta.pdf_link),
+            arxiv_link: normalizeHttpUrl(meta.arxiv_link),
+            github_link: normalizeHttpUrl(meta.github_link),
+            project_link: normalizeHttpUrl(meta.project_link),
+            source_code_link: normalizeHttpUrl(meta.source_code_link),
+            paper_link: normalizeHttpUrl(meta.paper_link),
+        },
+        content: {
+            problem: "",
+            solve: "",
+            expermental_result: "",
+        },
+    };
+};
+
+const loadExternalPublicationItems = async (publicationCategories) => {
+    const data = await readJsonFile(EXTERNAL_PUBLICATIONS_FILE, { items: [] });
+    if (!Array.isArray(data?.items)) {
+        throw new Error(`[publications] External publication cache must contain an items array.`);
+    }
+
+    return data.items.map((item) =>
+        parseExternalPublicationItem(item, publicationCategories),
+    );
+};
+
 export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
     const researchCatalog = await readJsonFile(RESEARCH_AREAS_FILE, {});
     const publicationCategories = new Set(
@@ -180,7 +264,7 @@ export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
         );
     }
 
-    const items = [];
+    const manualItems = [];
     const seenIds = new Set();
 
     for (const filePath of markdownFiles) {
@@ -194,8 +278,20 @@ export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
             );
         }
         seenIds.add(item.id);
-        items.push(item);
+        manualItems.push(item);
     }
+
+    const externalItems = await loadExternalPublicationItems(publicationCategories);
+    const seenTitles = new Set(manualItems.map((item) => normalizeSlug(item.title)));
+    const items = [...manualItems];
+    externalItems.forEach((item) => {
+        if (seenIds.has(item.id) || seenTitles.has(normalizeSlug(item.title))) {
+            return;
+        }
+        seenIds.add(item.id);
+        seenTitles.add(normalizeSlug(item.title));
+        items.push(item);
+    });
 
     items.sort((a, b) => {
         const dateCompare = b.research_meta.published_date.localeCompare(

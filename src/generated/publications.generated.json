@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-24T07:23:00.403Z",
+    "generated_at": "2026-08-25T07:44:01.491Z",
     "source": "content/publications",
     "categories": [
       "robot_learning",
@@ -42,6 +42,64 @@
         "project_link": "https://heilaboratory.github.io/publications/",
         "source_code_link": "",
         "paper_link": "https://heilaboratory.github.io/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-can-embodied-agents-remember-what-you-said-evaluating-dialogue-grounded-embodied-memory-in-3d-environments",
+      "key": "hei-publications-can-embodied-agents-remember-what-you-said-evaluating-dialogue-grounded-embodied-memory-in-3d-environments",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Can Embodied Agents Remember What You Said? Evaluating Dialogue-Grounded Embodied Memory in 3D Environments",
+      "summary": "CVPR 2026 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seongjun Jeong, Junghyun Kim, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+        "published_place": "CVPR 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://3d-llm-vla.github.io/",
+        "source_code_link": "",
+        "paper_link": "https://3d-llm-vla.github.io/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-disentangling-spurious-correlations-in-vision-language-action-models-via-predicting-domain-invariant-latent-lookahead",
+      "key": "hei-publications-disentangling-spurious-correlations-in-vision-language-action-models-via-predicting-domain-invariant-latent-lookahead",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
+      "summary": "RSS 2026 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junghyun Kim*, Ngseo Kim*, ChungWoo Lee, Seoyeon Lee, Woo-Jeong Baek, Adam Zhou, Chip Huyen, Jun-Ki Lee†, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+        "published_place": "RSS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://rcba-workshop.github.io/rss2026/accepted-papers.html",
+        "source_code_link": "",
+        "paper_link": "https://rcba-workshop.github.io/rss2026/accepted-papers.html"
       },
       "content": {
         "problem": "",
@@ -281,6 +339,35 @@
       }
     },
     {
+      "id": "hei-publications-socratic-planner-self-qa-based-zero-shot-planning-for-embodied-instruction-following",
+      "key": "hei-publications-socratic-planner-self-qa-based-zero-shot-planning-for-embodied-instruction-following",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Socratic Planner: Self-QA-Based Zero-Shot Planning for Embodied Instruction Following",
+      "summary": "ICRA 2025 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Suyeon Shin, Sujin Jeon*, Junghyun Kim*, Gi-Cheon Kang*, Byoung-Tak Zhang",
+        "published_place": "ICRA 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/abstract/document/11128677",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/abstract/document/11128677"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
       "id": "iknow-2025-flex",
       "key": "iknow-2025-flex",
       "category": "efficient_learning_for_llms",
@@ -297,6 +384,93 @@
           "Evaluation Metric",
           "Language Models"
         ],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-data-augmentation-for-improving-convergence-speed-in-federated-sequential-recommendation-system",
+      "key": "iknow-publications-data-augmentation-for-improving-convergence-speed-in-federated-sequential-recommendation-system",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Data Augmentation for Improving Convergence Speed in Federated Sequential Recommendation System",
+      "summary": "IEEE Access 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Donghoon Lee, Hyunsouk Cho",
+        "published_place": "IEEE Access 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-dcc-differentiable-cardinality-constraints-for-partial-index-tracking",
+      "key": "iknow-publications-dcc-differentiable-cardinality-constraints-for-partial-index-tracking",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "DCC: Differentiable Cardinality Constraints for Partial Index Tracking",
+      "summary": "AAAI 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Wooyeon Jo, Hyunsouk Cho",
+        "published_place": "AAAI 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-exploring-the-side-information-fusion-for-sequential-recommendation",
+      "key": "iknow-publications-exploring-the-side-information-fusion-for-sequential-recommendation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Exploring the Side-information Fusion for Sequential Recommendation",
+      "summary": "IEEE Access 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seunghwan Choi, Donghoon Lee, Hyeoungguk Kang, Hyunsouk Cho",
+        "published_place": "IEEE Access 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
         "labs": [
           "iKnow Lab"
         ],
@@ -611,6 +785,151 @@
       }
     },
     {
+      "id": "hei-publications-pga-personalizing-grasping-agents-with-single-human-robot-interaction",
+      "key": "hei-publications-pga-personalizing-grasping-agents-with-single-human-robot-interaction",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "PGA: Personalizing Grasping Agents with Single Human-Robot Interaction",
+      "summary": "IROS 2024 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junghyun Kim, Gi-Cheon Kang*, Jaein Kim*, Seoyoon Yang, Minjoon Jung, Byoung-Tak Zhang",
+        "published_place": "IROS 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/document/10801347",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/document/10801347"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-prograsp-pragmatic-human-robot-communication-for-object-grasping",
+      "key": "hei-publications-prograsp-pragmatic-human-robot-communication-for-object-grasping",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "PROGrasp: Pragmatic Human-Robot Communication for Object Grasping",
+      "summary": "ICRA 2024 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Gi-Cheon Kang, Junghyun Kim, Jaein Kim, Byoung-Tak Zhang",
+        "published_place": "ICRA 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/document/10610543",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/document/10610543"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-can-large-language-models-be-good-emotional-supporter-mitigating-preference-bias-on-emotional-support-conversation",
+      "key": "iknow-publications-can-large-language-models-be-good-emotional-supporter-mitigating-preference-bias-on-emotional-support-conversation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Can Large Language Models be Good Emotional Supporter? Mitigating Preference Bias on Emotional Support Conversation",
+      "summary": "ACL 2024 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "{Dongjin Kang, Sunghwan Kim}, Taeyoon Kwon, Seungjun Moon, Hyunsouk Cho , Youngjae Yu, Dongha Lee, Jinyoung Yeo",
+        "published_place": "ACL 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-cross-modal-dynamic-transfer-learning-for-multimodal-emotion-recognition",
+      "key": "iknow-publications-cross-modal-dynamic-transfer-learning-for-multimodal-emotion-recognition",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Cross-Modal Dynamic Transfer Learning for Multimodal Emotion Recognition",
+      "summary": "IEEE Access 2024 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Soyeon Hong, HyeoungGuk Kang, Hyunsouk Cho",
+        "published_place": "IEEE Access 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-multi-intent-aware-session-based-recommendation",
+      "key": "iknow-publications-multi-intent-aware-session-based-recommendation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Multi-intent-aware Session-based Recommendation",
+      "summary": "SIGIR 2024 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Minjin Choi, Hye-young Kim, Hyunsouk Cho , Jongwuk Lee",
+        "published_place": "SIGIR 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
       "id": "biomedical-bapub0-deep-learning-using-computed-tomography-to",
       "key": "biomedical-bapub0-deep-learning-using-computed-tomography-to",
       "category": "industrial_and_medical_ai",
@@ -669,6 +988,412 @@
         "project_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html",
         "source_code_link": "https://github.com/kalelpark/RAL",
         "paper_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-gvcci-lifelong-learning-of-visual-grounding-for-language-guided-robotic-manipulation",
+      "key": "hei-publications-gvcci-lifelong-learning-of-visual-grounding-for-language-guided-robotic-manipulation",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "GVCCI: Lifelong Learning of Visual Grounding for Language-Guided Robotic Manipulation",
+      "summary": "IROS 2023 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junghyun Kim, Gi-Cheon Kang*, Jaein Kim*, Suyeon Shin, Byoung-Tak Zhang",
+        "published_place": "IROS 2023",
+        "published_date": "2023-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/document/10342021",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/document/10342021"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-the-dialog-must-go-on-improving-visual-dialog-via-generative-self-training",
+      "key": "hei-publications-the-dialog-must-go-on-improving-visual-dialog-via-generative-self-training",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "The Dialog Must Go On: Improving Visual Dialog via Generative Self-Training",
+      "summary": "CVPR 2023 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Gi-Cheon Kang, Sungdong Kim*, Jin-Hwa Kim*, Donghyun Kwak*, Byoung-Tak Zhang",
+        "published_place": "CVPR 2023",
+        "published_date": "2023-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/document/10203535",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/document/10203535"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-gta-gated-toxicity-avoidance-for-lm-performance-preservation",
+      "key": "iknow-publications-gta-gated-toxicity-avoidance-for-lm-performance-preservation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "GTA: Gated Toxicity Avoidance for LM Performance Preservation",
+      "summary": "EMNLP 2023 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Heegyu Kim, Hyunsouk Cho",
+        "published_place": "EMNLP 2023",
+        "published_date": "2023-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-fpadametric-false-positive-aware-adaptive-metric-learning-for-session-based-recommendation",
+      "key": "iknow-publications-fpadametric-false-positive-aware-adaptive-metric-learning-for-session-based-recommendation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "FPAdaMetric: False-positive-aware Adaptive Metric Learning for Session-based Recommendation",
+      "summary": "AAAI 2022 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jongwon Jeong, Jeong Choi, Hyunsouk Cho , Sehee Chung",
+        "published_place": "AAAI 2022",
+        "published_date": "2022-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-attend-what-you-need-motion-appearance-synergistic-networks-for-video-question-answering",
+      "key": "hei-publications-attend-what-you-need-motion-appearance-synergistic-networks-for-video-question-answering",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Attend What You Need: Motion-Appearance Synergistic Networks for Video Question Answering",
+      "summary": "ACL 2021 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Ahjeong Seo, Gi-Cheon Kang, Joonhan Park, Byoung-Tak Zhang",
+        "published_place": "ACL 2021",
+        "published_date": "2021-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://aclanthology.org/2021.acl-long.481",
+        "source_code_link": "",
+        "paper_link": "https://aclanthology.org/2021.acl-long.481"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-reasoning-visual-dialog-with-sparse-graph-learning-and-knowledge-transfer",
+      "key": "hei-publications-reasoning-visual-dialog-with-sparse-graph-learning-and-knowledge-transfer",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Reasoning Visual Dialog with Sparse Graph Learning and Knowledge Transfer",
+      "summary": "EMNLP 2021 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Gi-Cheon Kang, Junseok Park, Hwaran Lee, Byoung-Tak Zhang*, Jin-Hwa Kim*",
+        "published_place": "EMNLP 2021",
+        "published_date": "2021-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://aclanthology.org/2021.findings-emnlp.31",
+        "source_code_link": "",
+        "paper_link": "https://aclanthology.org/2021.findings-emnlp.31"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-one-step-pixel-level-perturbation-based-saliency-detector",
+      "key": "iknow-publications-one-step-pixel-level-perturbation-based-saliency-detector",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "One-Step Pixel-Level Perturbation-Based Saliency Detector",
+      "summary": "BMVC 2021 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Vinnam Kim, Hyunsouk Cho , Sehee Chung",
+        "published_place": "BMVC 2021",
+        "published_date": "2021-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-self-supervised-multimodal-opinion-summarization",
+      "key": "iknow-publications-self-supervised-multimodal-opinion-summarization",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Self-Supervised Multimodal Opinion Summarization",
+      "summary": "ACL 2021 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jinbae Im, Moonki Kim, Hoyoep Lee, Hyunsouk Cho , Sehee Chung",
+        "published_place": "ACL 2021",
+        "published_date": "2021-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-label-propagation-adaptive-resonance-theory-for-semi-supervised-continuous-learning",
+      "key": "hei-publications-label-propagation-adaptive-resonance-theory-for-semi-supervised-continuous-learning",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Label Propagation Adaptive Resonance Theory for Semi-Supervised Continuous Learning",
+      "summary": "ICASSP 2020 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Taehyeong Kim, Injune Hwang, Gi-Cheon Kang, Won-Seok Choi, Hyunseo Kim, Byoung-Tak Zhang",
+        "published_place": "ICASSP 2020",
+        "published_date": "2020-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/document/9054655",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/document/9054655"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-squad2-cr-semi-supervised-annotation-for-cause-and-rationales-for-unanswerability-in-squad-2-0",
+      "key": "iknow-publications-squad2-cr-semi-supervised-annotation-for-cause-and-rationales-for-unanswerability-in-squad-2-0",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "SQuAD2-CR: Semi-supervised Annotation for Cause and Rationales for Unanswerability in SQuAD 2.0",
+      "summary": "LREC 2020 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Gyeongbok Lee, Seung-won Hwang, Hyunsouk Cho",
+        "published_place": "LREC 2020",
+        "published_date": "2020-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "hei-publications-dual-attention-networks-for-visual-reference-resolution-in-visual-dialog",
+      "key": "hei-publications-dual-attention-networks-for-visual-reference-resolution-in-visual-dialog",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Dual Attention Networks for Visual Reference Resolution in Visual Dialog",
+      "summary": "EMNLP 2019 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Gi-Cheon Kang, Jaeseo Lim, Byoung-Tak Zhang",
+        "published_place": "EMNLP 2019",
+        "published_date": "2019-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://aclanthology.org/D19-1209",
+        "source_code_link": "",
+        "paper_link": "https://aclanthology.org/D19-1209"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-machine-translated-knowledge-transfer-for-commonsense-causal-reasoning",
+      "key": "iknow-publications-machine-translated-knowledge-transfer-for-commonsense-causal-reasoning",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Machine-Translated Knowledge Transfer for Commonsense Causal Reasoning",
+      "summary": "AAAI 2018 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jinyoung Yeo, Gengyu Wang, Hyunsouk Cho , Seungtaek Choi, Seung-won Hwang",
+        "published_place": "AAAI 2018",
+        "published_date": "2018-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-visual-choice-of-plausible-alternatives-an-evaluation-of-image-based-commonsense-causal-reasoning",
+      "key": "iknow-publications-visual-choice-of-plausible-alternatives-an-evaluation-of-image-based-commonsense-causal-reasoning",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Visual Choice of Plausible Alternatives: An Evaluation of Image-based Commonsense Causal Reasoning",
+      "summary": "LREC 2018 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jinyoung Yeo, Geongbok Lee, Gengyu Wang, Seungtaek Choi, Hyunsouk Cho , Reinald Kim Amplayo, Seung-won Hwang",
+        "published_place": "LREC 2018",
+        "published_date": "2018-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-efficient-dual-resolution-layer-indexing-for-top-k-queries",
+      "key": "iknow-publications-efficient-dual-resolution-layer-indexing-for-top-k-queries",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Efficient Dual-Resolution Layer Indexing for Top-k Queries",
+      "summary": "ICDE 2012 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jongwuk Lee, Hyunsouk Cho , Seung-won Hwang",
+        "published_place": "ICDE 2012",
+        "published_date": "2012-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
       },
       "content": {
         "problem": "",

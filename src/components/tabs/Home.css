@@ -117,6 +117,20 @@
     background: #d8d5ca;
 }
 
+.home-publication-snapshot__venues li:first-child {
+    grid-column: span 2;
+    min-height: 5rem;
+    background: #cbc7ba;
+}
+
+.home-publication-snapshot__venues li:nth-child(-n + 2) span {
+    font-size: clamp(1.45rem, 2.2vw, 2.05rem);
+}
+
+.home-publication-snapshot__venues li:nth-child(-n + 2) strong {
+    font-size: clamp(3.1rem, 4.1vw, 4.15rem);
+}
+
 .home-publication-snapshot__venues span {
     color: #10100f;
     font-family: "Times New Roman", Times, serif;
@@ -214,7 +228,8 @@
 }
 
 .home-news-carousel__rail-wrap,
-.home-research-index__rail-wrap {
+.home-research-index__rail-wrap,
+.home-publication-index__rail-wrap {
     position: relative;
     min-width: 0;
 }
@@ -308,7 +323,7 @@
     width: 100%;
     display: grid;
     padding: var(--home-section-padding-block) clamp(1.25rem, 6vw, 7rem);
-    background: #eae8e1;
+    background: #d8d5ca;
 }
 
 .home-research-index__head {
@@ -498,36 +513,17 @@
     margin-top: 0.6rem;
 }
 
-.home-publication-index__rail-wrap {
-    position: relative;
-    min-width: 0;
-}
-
 /* Desktop controls occupy dedicated gutters, never the first or last card. */
 @media (min-width: 52.0625rem) {
-    .home-news-carousel__rail-wrap,
-    .home-research-index__rail-wrap,
-    .home-publication-index__rail-wrap {
+    :is(.home-news-carousel__rail-wrap, .home-research-index__rail-wrap, .home-publication-index__rail-wrap) {
         --home-carousel-control-gutter: clamp(3.1rem, 4vw, 4.25rem);
+        --home-carousel-control-offset: calc(-1 * var(--home-carousel-control-gutter));
         padding-inline: var(--home-carousel-control-gutter);
     }
 
-    .home-news-carousel__controls button:first-child,
-    .home-research-index__controls button:first-child,
-    .home-publication-index__controls button:first-child {
-        left: 0;
-    }
-
-    .home-news-carousel__controls button:last-child,
-    .home-research-index__controls button:last-child,
-    .home-publication-index__controls button:last-child {
-        right: 0;
-    }
 }
 
-.home-news-carousel__controls button,
-.home-research-index__controls button,
-.home-publication-index__controls button {
+.home-carousel-controls button {
     position: absolute;
     top: 50%;
     z-index: 1;
@@ -551,28 +547,24 @@
     transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
 }
 
-.home-news-carousel__controls button:first-child,
-.home-research-index__controls button:first-child,
-.home-publication-index__controls button:first-child {
-    left: 0.45rem;
+.home-carousel-controls__hint {
+    display: none;
 }
 
-.home-news-carousel__controls button:last-child,
-.home-research-index__controls button:last-child,
-.home-publication-index__controls button:last-child {
-    right: 0.45rem;
+.home-carousel-controls button:first-of-type {
+    left: var(--home-carousel-control-offset, 0);
 }
 
-.home-news-carousel__controls button:hover,
-.home-research-index__controls button:hover,
-.home-publication-index__controls button:hover {
+.home-carousel-controls button:last-of-type {
+    right: var(--home-carousel-control-offset, 0);
+}
+
+.home-carousel-controls button:hover {
     color: #f4f3ef;
     background: #171717;
 }
 
-.home-news-carousel__controls button:active,
-.home-research-index__controls button:active,
-.home-publication-index__controls button:active {
+.home-carousel-controls button:active {
     transform: translateY(-50%) scale(0.96);
 }
 
@@ -699,9 +691,7 @@
 
 /* On narrow screens, controls sit below the swipe rail instead of covering a card. */
 @media (max-width: 52rem) {
-    .home-news-carousel__controls,
-    .home-research-index__controls,
-    .home-publication-index__controls {
+    .home-carousel-controls {
         display: flex;
         justify-content: flex-end;
         gap: 0.55rem;
@@ -709,9 +699,19 @@
         padding-right: 0.1rem;
     }
 
-    .home-news-carousel__controls button,
-    .home-research-index__controls button,
-    .home-publication-index__controls button {
+    .home-carousel-controls__hint {
+        display: inline-flex;
+        align-items: center;
+        margin-right: auto;
+        color: #67635b;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.76rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        line-height: 1.35;
+    }
+
+    .home-carousel-controls button {
         position: static;
         width: 2.75rem;
         height: 2.75rem;
@@ -724,19 +724,13 @@
         touch-action: manipulation;
     }
 
-    .home-news-carousel__controls button:first-child,
-    .home-research-index__controls button:first-child,
-    .home-publication-index__controls button:first-child,
-    .home-news-carousel__controls button:last-child,
-    .home-research-index__controls button:last-child,
-    .home-publication-index__controls button:last-child {
+    .home-carousel-controls button:first-of-type,
+    .home-carousel-controls button:last-of-type {
         left: auto;
         right: auto;
     }
 
-    .home-news-carousel__controls button:active,
-    .home-research-index__controls button:active,
-    .home-publication-index__controls button:active {
+    .home-carousel-controls button:active {
         transform: scale(0.96);
     }
 }

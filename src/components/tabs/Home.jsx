@@ -27,6 +27,26 @@ const NEWS_IMAGES = [
     KnowledgeGraphImage,
 ];
 
+function CarouselControls({ label, targetRef, onMove }) {
+    return (
+        <div className="home-carousel-controls" aria-label={`${label} carousel controls`}>
+            <span className="home-carousel-controls__hint">Swipe to browse</span>
+            <button
+                type="button"
+                onClick={() => onMove(targetRef, -1)}
+                aria-label={`Previous ${label}`}>
+                ‹
+            </button>
+            <button
+                type="button"
+                onClick={() => onMove(targetRef, 1)}
+                aria-label={`Next ${label}`}>
+                ›
+            </button>
+        </div>
+    );
+}
+
 function Home() {
     const newsRailRef = useRef(null);
     const publicationRailRef = useRef(null);
@@ -111,14 +131,7 @@ function Home() {
                         </Link>
                     ))}
                 </div>
-                <div className="home-news-carousel__controls" aria-label="News carousel controls">
-                    <button type="button" onClick={() => moveRail(newsRailRef, -1)} aria-label="Previous news">
-                        ‹
-                    </button>
-                    <button type="button" onClick={() => moveRail(newsRailRef, 1)} aria-label="Next news">
-                        ›
-                    </button>
-                </div>
+                <CarouselControls label="news" targetRef={newsRailRef} onMove={moveRail} />
             </div>
         </section>
         <section
@@ -131,7 +144,7 @@ function Home() {
                     AAIG research output
                 </p>
                 <h2 id="home-publication-snapshot-title">
-                   Publication Summary {publicationSnapshot.year}
+                    Publication Summary {publicationSnapshot.year}
                 </h2>
                 <p>
                     A quick view of publications currently listed in the AAIG
@@ -200,14 +213,7 @@ function Home() {
                         </Link>
                     ))}
                 </div>
-                <div className="home-publication-index__controls" aria-label="Publication carousel controls">
-                    <button type="button" onClick={() => moveRail(publicationRailRef, -1)} aria-label="Previous publications">
-                        ‹
-                    </button>
-                    <button type="button" onClick={() => moveRail(publicationRailRef, 1)} aria-label="Next publications">
-                        ›
-                    </button>
-                </div>
+                <CarouselControls label="publications" targetRef={publicationRailRef} onMove={moveRail} />
             </div>
         </section>
         <section
@@ -248,14 +254,7 @@ function Home() {
                         </Link>
                     ))}
                 </div>
-                <div className="home-research-index__controls" aria-label="Research area carousel controls">
-                    <button type="button" onClick={() => moveRail(researchRailRef, -1)} aria-label="Previous research areas">
-                        ‹
-                    </button>
-                    <button type="button" onClick={() => moveRail(researchRailRef, 1)} aria-label="Next research areas">
-                        ›
-                    </button>
-                </div>
+                <CarouselControls label="research areas" targetRef={researchRailRef} onMove={moveRail} />
             </div>
         </section>
         </>

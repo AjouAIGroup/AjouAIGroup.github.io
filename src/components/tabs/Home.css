@@ -503,6 +503,28 @@
     min-width: 0;
 }
 
+/* Desktop controls occupy dedicated gutters, never the first or last card. */
+@media (min-width: 52.0625rem) {
+    .home-news-carousel__rail-wrap,
+    .home-research-index__rail-wrap,
+    .home-publication-index__rail-wrap {
+        --home-carousel-control-gutter: clamp(3.1rem, 4vw, 4.25rem);
+        padding-inline: var(--home-carousel-control-gutter);
+    }
+
+    .home-news-carousel__controls button:first-child,
+    .home-research-index__controls button:first-child,
+    .home-publication-index__controls button:first-child {
+        left: 0;
+    }
+
+    .home-news-carousel__controls button:last-child,
+    .home-research-index__controls button:last-child,
+    .home-publication-index__controls button:last-child {
+        right: 0;
+    }
+}
+
 .home-news-carousel__controls button,
 .home-research-index__controls button,
 .home-publication-index__controls button {
@@ -673,12 +695,49 @@
         min-height: 18rem;
     }
 
+}
+
+/* On narrow screens, controls sit below the swipe rail instead of covering a card. */
+@media (max-width: 52rem) {
+    .home-news-carousel__controls,
+    .home-research-index__controls,
+    .home-publication-index__controls {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.55rem;
+        margin-top: 0.8rem;
+        padding-right: 0.1rem;
+    }
+
     .home-news-carousel__controls button,
     .home-research-index__controls button,
     .home-publication-index__controls button {
-        width: 2.35rem;
-        height: 3.35rem;
-        font-size: 2.25rem;
+        position: static;
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 1px solid rgba(23, 23, 23, 0.28);
+        border-radius: 0;
+        background: rgba(244, 243, 239, 0.92);
+        box-shadow: none;
+        font-size: 2rem;
+        transform: none;
+        touch-action: manipulation;
+    }
+
+    .home-news-carousel__controls button:first-child,
+    .home-research-index__controls button:first-child,
+    .home-publication-index__controls button:first-child,
+    .home-news-carousel__controls button:last-child,
+    .home-research-index__controls button:last-child,
+    .home-publication-index__controls button:last-child {
+        left: auto;
+        right: auto;
+    }
+
+    .home-news-carousel__controls button:active,
+    .home-research-index__controls button:active,
+    .home-publication-index__controls button:active {
+        transform: scale(0.96);
     }
 }
 

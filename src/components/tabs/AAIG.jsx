@@ -1,7 +1,6 @@
 import "./AAIG.css";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import AAIG_FULL_LOGO from "../../assets/brand/aaig-full-logo.png";
 import AAIG_HERO from "../../assets/brand/aaig-hero-campus-v2.webp";
 import { SITE } from "../../config/site";
 import { LABORATORIES } from "../../data/laboratories";
@@ -24,8 +23,11 @@ function AaigHero({ isHome }) {
                     <h1 id="aaig-hero-title" className="aaig-hero__title">
                         Ajou Artificial Intelligence Group
                     </h1>
-                    <div className="aaig-hero__full-logo" aria-hidden="true">
-                        <img src={AAIG_FULL_LOGO} alt="" />
+                    <div className="aaig-hero__wordmark" aria-hidden="true">
+                        <div>Ajou</div>
+                        <div>Artificial</div>
+                        <div className="aaig-hero__wordmark-intelligence">Intelligence</div>
+                        <div>Group</div>
                     </div>
                     <p>Ajou University</p>
                 </div>

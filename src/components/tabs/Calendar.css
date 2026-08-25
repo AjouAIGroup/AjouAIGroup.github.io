@@ -28,7 +28,8 @@
     background: transparent;
     color: #615e57;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.94rem;
+    font-weight: 600;
     line-height: 1.45;
     cursor: pointer;
 }
@@ -107,7 +108,7 @@
     display: grid;
     gap: 1.25rem;
     padding: clamp(1.2rem, 2vw, 1.75rem) 0;
-    border-top: 1px solid rgba(23, 23, 23, 0.13);
+    border-top: 2px solid #a7a398;
 }
 
 .calendar__venue-heading {
@@ -121,7 +122,7 @@
 .calendar__venue-meta { display: flex; flex-wrap: wrap; gap: 0.65rem; }
 .calendar__venue-meta span + span::before { content: "·"; margin-right: 0.65rem; }
 .calendar__venue h2 { font-size: clamp(1.65rem, 2.4vw, 2.45rem); line-height: 1; }
-.calendar__link { flex: 0 0 auto; color: #171717; font: 0.9rem/1.4 Arial, Helvetica, sans-serif; }
+.calendar__link { flex: 0 0 auto; color: #171717; font: 600 0.96rem/1.4 Arial, Helvetica, sans-serif; }
 
 .calendar__event {
     display: grid;
@@ -135,6 +136,7 @@
 
 .calendar__event div { min-width: 0; display: grid; gap: 0.25rem; }
 .calendar__event dd { margin: 0; }
+.calendar__location-flags { margin-right: 0.38rem; font-size: 0.98rem; letter-spacing: 0.08em; }
 
 .calendar__deadline { display: grid; grid-template-columns: minmax(11rem, 0.66fr) minmax(0, 1.34fr); gap: 1.5rem; align-items: end; }
 .calendar__milestones { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.8rem; }

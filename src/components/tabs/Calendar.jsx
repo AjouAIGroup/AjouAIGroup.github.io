@@ -12,11 +12,40 @@ import "./Calendar.css";
 
 const ALL_AREAS = "all";
 
+const LOCATION_FLAGS = [
+    ["Hong Kong", "🇭🇰"],
+    ["Macau", "🇲🇴"],
+    ["South Korea", "🇰🇷"],
+    ["United Kingdom", "🇬🇧"],
+    ["Netherlands", "🇳🇱"],
+    ["Australia", "🇦🇺"],
+    ["Canada", "🇨🇦"],
+    ["Sweden", "🇸🇪"],
+    ["France", "🇫🇷"],
+    ["Greece", "🇬🇷"],
+    ["Hungary", "🇭🇺"],
+    ["Morocco", "🇲🇦"],
+    ["Italy", "🇮🇹"],
+    ["Japan", "🇯🇵"],
+    ["China", "🇨🇳"],
+    ["USA", "🇺🇸"],
+];
+
+const getLocationFlags = (location = "") =>
+    location
+        .split(";")
+        .map((place) =>
+            LOCATION_FLAGS.find(([country]) => place.includes(country))?.[1],
+        )
+        .filter(Boolean)
+        .filter((flag, index, flags) => flags.indexOf(flag) === index);
+
 function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
     const milestoneId =
         selectedMilestones[venue.id] ?? getDefaultMilestoneId(venue, now ?? new Date());
     const milestone = venue.milestones.find((item) => item.id === milestoneId);
     const status = getVenueStatusMeta(venue.status);
+    const locationFlags = getLocationFlags(venue.event?.location);
 
     return (
         <article data-reveal className="calendar__venue">
@@ -42,7 +71,14 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
                     </div>
                     <div>
                         <dt>Location</dt>
-                        <dd>{venue.event.location}</dd>
+                        <dd>
+                            {locationFlags.length ? (
+                                <span className="calendar__location-flags" aria-hidden="true">
+                                    {locationFlags.join(" ")}
+                                </span>
+                            ) : null}
+                            {venue.event.location}
+                        </dd>
                     </div>
                     <div>
                         <dt>Venue</dt>

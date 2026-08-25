@@ -51,6 +51,30 @@
     gap: 3.5rem;
 }
 
+/* Keep the first content block—and every following section—on one editorial rhythm. */
+.app:not(.app--home) :is(
+    .news-page,
+    .aaig-research,
+    .lab-page,
+    .publication,
+    .contact-page,
+    .calendar
+) {
+    --aaig-page-flow-gap: clamp(2.5rem, 4vw, 3.5rem);
+    row-gap: 0 !important;
+}
+
+.app:not(.app--home) :is(
+    .news-page,
+    .aaig-research,
+    .lab-page,
+    .publication,
+    .contact-page,
+    .calendar
+) > * + * {
+    margin-block-start: var(--aaig-page-flow-gap);
+}
+
 .app:not(.app--home) .tab-header {
     padding: 0 !important;
     border: 0 !important;
@@ -140,32 +164,30 @@
 
 .app:not(.app--home) :is(
     .btn,
-    .interactive-button,
-    .animated-underline
+    .interactive-button
 ) {
-    min-height: auto !important;
-    padding: 0.2rem 0 !important;
-    border: 0 !important;
+    min-height: 2.35rem !important;
+    padding: 0.42rem 0.75rem !important;
+    border: 1px solid rgba(23, 23, 23, 0.28) !important;
     border-radius: 0 !important;
-    background: transparent !important;
+    background: rgba(234, 232, 225, 0.34) !important;
     box-shadow: none !important;
     color: #171717 !important;
     font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 0.74rem !important;
-    font-weight: 500 !important;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
     line-height: 1.35 !important;
-    text-decoration: underline !important;
-    text-decoration-thickness: 1px !important;
-    text-underline-offset: 0.22em !important;
+    text-decoration: none !important;
     transform: none !important;
 }
 
 .app:not(.app--home) :is(
     .btn,
-    .interactive-button,
-    .animated-underline
+    .interactive-button
 ):hover {
-    opacity: 0.56;
+    border-color: #171717 !important;
+    background: rgba(234, 232, 225, 0.7) !important;
+    opacity: 1;
 }
 
 .app:not(.app--home) :is(
@@ -386,8 +408,9 @@
 
 /* News and publication archives share one quiet, editorial control and row system. */
 .app:not(.app--home) :is(.news-page__controls, .publication__controls) {
-    padding: 1.35rem 0 0 !important;
+    padding: 1.05rem 0 !important;
     border-top: 1px solid var(--editorial-rule) !important;
+    border-bottom: 1px solid var(--editorial-rule) !important;
 }
 
 .app:not(.app--home) :is(
@@ -395,6 +418,34 @@
     .publication__controls-grid
 ) {
     gap: clamp(1.5rem, 4vw, 4rem) !important;
+}
+
+/* Archive controls are a toolbar, not a second layer of cards. */
+.app:not(.app--home) :is(
+    .news-page__controls-group,
+    .publication__controls-group
+) {
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    grid-template-rows: auto !important;
+    align-content: start;
+    box-shadow: none !important;
+}
+
+.app:not(.app--home) .publication__controls-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr) minmax(0, 1fr) !important;
+    align-items: start !important;
+}
+
+.app:not(.app--home) .publication__controls-group {
+    gap: 0.7rem !important;
+}
+
+.app:not(.app--home) .news-page__controls-group {
+    gap: 0.7rem !important;
 }
 
 .app:not(.app--home) :is(
@@ -484,7 +535,22 @@
 
 @media (max-width: 52rem) {
     .app:not(.app--home) :is(.news-page__controls, .publication__controls) {
-        padding-top: 1.1rem !important;
+        padding: 0.9rem 0 !important;
+    }
+
+    .app:not(.app--home) :is(
+        .news-page,
+        .aaig-research,
+        .lab-page,
+        .publication,
+        .contact-page,
+        .calendar
+    ) {
+        --aaig-page-flow-gap: clamp(2.25rem, 9vw, 2.75rem);
+    }
+
+    .app:not(.app--home) .publication__controls-grid {
+        grid-template-columns: 1fr !important;
     }
 
     .app:not(.app--home) .publication__card-links {

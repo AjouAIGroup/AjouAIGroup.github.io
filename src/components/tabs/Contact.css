@@ -24,7 +24,7 @@
     display: grid;
     grid-template-columns: minmax(14rem, 0.92fr) minmax(18rem, 1.08fr);
     gap: clamp(1.5rem, 5vw, 5.5rem);
-    padding: clamp(2.2rem, 4vw, 3.5rem) 0;
+    padding: 0 0 clamp(2.2rem, 4vw, 3.5rem);
     border-bottom: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
 }
 

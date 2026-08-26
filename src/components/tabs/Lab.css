@@ -95,9 +95,15 @@
     line-height: 1;
 }
 
-.lab-page__item--sail .lab-page__wordmark {
-    font-size: clamp(2.8rem, 4.5vw, 4.1rem);
-    letter-spacing: -0.07em;
+.app:not(.app--home) .main-content__body .lab-page__item--sail p.lab-page__wordmark {
+    /* SAIL has no supplied image mark, so its typographic mark occupies the
+       same visual territory as the adjacent laboratory logos. */
+    padding: 0.1em 0 0.16em;
+    font-family: var(--font-sans) !important;
+    font-size: clamp(4rem, 6vw, 5.6rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.1em !important;
+    line-height: 0.8 !important;
 }
 
 .lab-page__item h3,

@@ -1221,8 +1221,14 @@
         "machine-learning"
       ],
       "official_url": "https://www.corl.org/",
-      "cfp_url": "https://www.corl.org/",
-      "status": "awaiting_cfp",
+      "cfp_url": "https://openreview.net/group?id=robot-learning.org%2FCoRL%2F2026%2FConference",
+      "status": "verified",
+      "source_checked_at": "2026-08-26T00:00:00+09:00",
+      "source_evidence": "Submission Deadline",
+      "next_cfp": {
+        "cycle": "CoRL 2027",
+        "expected_window": "early 2027; official announcement pending"
+      },
       "event": {
         "dates": "November 9-12, 2026",
         "location": "Austin, Texas, USA",
@@ -1230,7 +1236,45 @@
         "source_url": "https://www.corl.org/home",
         "status": "official"
       },
-      "milestones": [],
+      "milestones": [
+        {
+          "id": "abstract",
+          "label": "Abstract registration deadline",
+          "short_label": "Abstract",
+          "kind": "abstract",
+          "deadline_at": "2026-05-26T11:59:00+00:00",
+          "timezone_label": "Coordinated Universal Time (UTC)",
+          "status": "verified",
+          "source_parser": {
+            "match": "Abstract Registration:\\s*([A-Za-z]+\\s+\\d{1,2},?\\s+\\d{4})",
+            "timezone": "UTC",
+            "time": "11:59"
+          }
+        },
+        {
+          "id": "paper",
+          "label": "Paper submission deadline",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-05-29T11:59:00+00:00",
+          "timezone_label": "Coordinated Universal Time (UTC)",
+          "status": "verified",
+          "source_parser": {
+            "match": "Submission Deadline:\\s*([A-Za-z]+\\s+\\d{1,2},?\\s+\\d{4})",
+            "timezone": "UTC",
+            "time": "11:59"
+          }
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready deadline",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2026-10-12T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        }
+      ],
       "source_check": null
     },
     {

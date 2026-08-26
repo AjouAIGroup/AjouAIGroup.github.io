@@ -24,6 +24,18 @@ const asDate = (value) => {
     return Number.isNaN(timestamp) ? null : new Date(timestamp);
 };
 
+const CFP_SUBMISSION_KINDS = new Set([
+    "abstract",
+    "registration",
+    "paper",
+    "supplementary",
+]);
+
+const getCfpSubmissionMilestones = (venue) =>
+    (venue.milestones ?? []).filter((milestone) =>
+        CFP_SUBMISSION_KINDS.has(milestone.kind),
+    );
+
 export const getVenueStatusMeta = (status) =>
     DEADLINE_STATUS_META[status] ?? {
         label: "Source status unavailable",
@@ -49,12 +61,51 @@ export const getAllVenues = () =>
         });
 
 export const getDefaultMilestoneId = (venue, now = new Date()) => {
+    const submissionMilestones = getCfpSubmissionMilestones(venue);
+    const nextSubmissionMilestone = submissionMilestones.find((milestone) => {
+        const deadline = asDate(milestone.deadline_at);
+        return deadline && deadline > now;
+    });
+
+    if (nextSubmissionMilestone) {
+        return nextSubmissionMilestone.id;
+    }
+
+    const mostRecentSubmissionMilestone = submissionMilestones
+        .filter((milestone) => {
+            const deadline = asDate(milestone.deadline_at);
+            return deadline && deadline <= now;
+        })
+        .at(-1);
+
+    if (mostRecentSubmissionMilestone) {
+        return mostRecentSubmissionMilestone.id;
+    }
+
     const nextMilestone = venue.milestones?.find((milestone) => {
         const deadline = asDate(milestone.deadline_at);
         return deadline && deadline > now;
     });
 
     return nextMilestone?.id ?? venue.milestones?.[0]?.id ?? null;
+};
+
+export const getVenueCfpState = (venue, now = new Date()) => {
+    const milestones = getCfpSubmissionMilestones(venue);
+    if (!milestones.length) {
+        return venue.status === "awaiting_cfp"
+            ? { label: "Current CFP awaiting", tone: "awaiting" }
+            : { label: "Submission dates unavailable", tone: "review" };
+    }
+
+    const hasUpcomingSubmission = milestones.some((milestone) => {
+        const deadline = asDate(milestone.deadline_at);
+        return deadline && deadline > now;
+    });
+
+    return hasUpcomingSubmission
+        ? { label: "Main CFP open", tone: "open" }
+        : { label: "Main CFP closed", tone: "closed" };
 };
 
 export const formatDeadlineInDisplayTimezone = (deadlineAt) => {

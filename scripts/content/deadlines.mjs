@@ -12,6 +12,7 @@ const DEADLINE_GENERATED_FILE = path.resolve(
     "deadlines.generated.json",
 );
 const SOURCE_TIMEOUT_MS = 15_000;
+const CFP_ANNOUNCEMENT_PATTERN = /\b(call for papers|paper submission|abstract registration|submission deadline|key dates)\b/i;
 const MONTH_INDEX = {
     jan: "01",
     january: "01",
@@ -213,15 +214,29 @@ const readDeadlineContent = async () => {
     }
 };
 
-const normalizePageText = (html) =>
-    html
+const normalizePageText = (html) => {
+    // Some official CFP systems, including OpenReview, serialize key dates only
+    // inside inline application state. Keep just scripts that mention a CFP term
+    // so this parser can read those dates without treating every script as text.
+    const cfpScriptText = Array.from(
+        html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi),
+        (match) => match[1],
+    )
+        .filter((script) => CFP_ANNOUNCEMENT_PATTERN.test(script))
+        .join(" ");
+
+    return `${html
         .replace(/<!--[\s\S]*?-->/g, " ")
         .replace(/<script[\s\S]*?<\/script>/gi, " ")
         .replace(/<style[\s\S]*?<\/style>/gi, " ")
         .replace(/<[^>]+>/g, " ")
         .replace(/&nbsp;/gi, " ")
+        .replace(/\s+/g, " ")} ${cfpScriptText}`
+        .replace(/\\[nr]/g, " ")
+        .replace(/\\"/g, '"')
         .replace(/\s+/g, " ")
         .trim();
+};
 
 const getTimezoneOffset = (date, timezone) => {
     if (timezone === "AoE") {
@@ -336,21 +351,31 @@ const checkOfficialSource = async (venue) => {
         const evidenceFound = !evidence || text.toLowerCase().includes(evidence.toLowerCase());
         const { extracted, errors } = extractMilestones(venue, text);
         const hasExtractionFailure = errors.length > 0;
+        const needsMilestoneDiscovery =
+            venue.status === "awaiting_cfp" &&
+            venue.milestones.length === 0 &&
+            CFP_ANNOUNCEMENT_PATTERN.test(text);
 
         return {
             checked_at: checkedAt,
             state:
-                response.ok && evidenceFound && !hasExtractionFailure
+                response.ok &&
+                evidenceFound &&
+                !hasExtractionFailure &&
+                !needsMilestoneDiscovery
                     ? "matched"
                     : "needs_review",
             http_status: response.status,
             content_fingerprint: createHash("sha256").update(text).digest("hex").slice(0, 16),
             extracted_milestones: extracted,
+            needs_milestone_discovery: needsMilestoneDiscovery,
             message: response.ok
                 ? !evidenceFound
                     ? "Official source changed or no longer contains the configured evidence."
                     : hasExtractionFailure
                       ? `Official source needs review: ${errors.join(", ")}.`
+                      : needsMilestoneDiscovery
+                        ? "Official source appears to publish a CFP, but this venue has no configured milestones."
                       : "Official source matched the configured evidence."
                 : `Official source returned HTTP ${response.status}.`,
         };
@@ -392,7 +417,20 @@ const applySourceRefresh = (data, sourceChecks) => {
     let changed = false;
     const refreshedVenues = data.venues.map((venue) => {
         const check = sourceChecks[venue.id];
-        if (!check || check.state !== "matched") {
+        if (!check) {
+            return venue;
+        }
+
+        if (check.needs_milestone_discovery && venue.status === "awaiting_cfp") {
+            changed = true;
+            return {
+                ...venue,
+                status: "needs_review",
+                source_checked_at: check.checked_at,
+            };
+        }
+
+        if (check.state !== "matched") {
             return venue;
         }
 

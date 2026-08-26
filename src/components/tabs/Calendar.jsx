@@ -6,6 +6,7 @@ import {
     getAllVenues,
     getCountdownLabel,
     getDefaultMilestoneId,
+    getVenueCfpState,
     getVenueStatusMeta,
 } from "../../utils/deadlineData";
 import "./Calendar.css";
@@ -54,17 +55,19 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
         selectedMilestones[venue.id] ?? getDefaultMilestoneId(venue, now ?? new Date());
     const milestone = venue.milestones.find((item) => item.id === milestoneId);
     const status = getVenueStatusMeta(venue.status);
+    const cfpState = getVenueCfpState(venue, now ?? new Date());
     const locationFlags = getLocationFlags(venue.event?.location);
     const countdown = milestone ? getCountdownLabel(milestone.deadline_at, now) : null;
 
     return (
         <article data-reveal className="calendar__venue">
             <div className="calendar__venue-heading">
-                <div>
-                    <div className="calendar__venue-meta">
-                        <span>{venue.areas.map((area) => DEADLINE_AREAS.find((item) => item.key === area)?.label ?? area).join(" · ")}</span>
-                        <span>{status.label}</span>
-                    </div>
+                    <div>
+                        <div className="calendar__venue-meta">
+                            <span>{venue.areas.map((area) => DEADLINE_AREAS.find((item) => item.key === area)?.label ?? area).join(" · ")}</span>
+                            <span className={`calendar__venue-cycle calendar__venue-cycle--${cfpState.tone}`}>{cfpState.label}</span>
+                            <span className="calendar__venue-source">{status.label}</span>
+                        </div>
                     <h2>{venue.name}</h2>
                     <p>{venue.full_name}</p>
                 </div>

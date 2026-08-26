@@ -7,7 +7,7 @@
 .contact-page h2,
 .contact-page__contact-name {
     color: #171717;
-    font-family: "Times New Roman", Times, serif !important;
+    font-family: var(--font-serif) !important;
     font-weight: 400;
     letter-spacing: -0.045em;
 }
@@ -50,7 +50,7 @@
 .contact-page__section-head > p {
     margin: 0;
     color: #54514b;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.04rem;
     line-height: 1.62;
 }
@@ -58,7 +58,7 @@
 .contact-page__introduction-copy a {
     width: fit-content;
     color: #171717;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.92rem;
     line-height: 1.45;
     text-decoration: underline;
@@ -130,7 +130,7 @@
 .contact-page__identity p {
     margin: 0;
     color: #171717;
-    font-family: "Times New Roman", Times, serif !important;
+    font-family: var(--font-serif) !important;
     font-size: clamp(1.85rem, 3vw, 2.6rem) !important;
     font-weight: 400;
     letter-spacing: -0.055em;
@@ -149,7 +149,7 @@
 .contact-page__contact h3 {
     margin: 0 0 0.2rem;
     color: #67635b;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 0.72rem !important;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -163,7 +163,7 @@
 .contact-page__contact > p:not(.contact-page__contact-name) {
     margin: 0;
     color: #54514b;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.04rem;
     line-height: 1.62;
 }
@@ -179,7 +179,7 @@
     margin: 0.25rem 0 0;
     padding: 0;
     color: #54514b;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.84rem;
     line-height: 1.45;
     list-style: none;
@@ -198,7 +198,7 @@
 .contact-page__contact a {
     width: fit-content;
     color: #171717;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.92rem;
     line-height: 1.45;
     overflow-wrap: anywhere;

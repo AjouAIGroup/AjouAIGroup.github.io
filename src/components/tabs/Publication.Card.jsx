@@ -1,12 +1,12 @@
 import PublicationLinkIcons from "./Publication.LinkIcons";
-import { RESEARCH_CATEGORY_LABELS } from "../../utils/researchData";
+import { PUBLICATION_AREA_LABELS } from "../../utils/publicationData";
 import {
     getPublicationPrimaryLink,
     isValidHttpUrl,
 } from "../../utils/publicationLinks";
 
 function PublicationCard({
-    category,
+    area,
     meta,
     title,
     revealDelay = "0ms",
@@ -14,7 +14,7 @@ function PublicationCard({
 }) {
     const paperLink = getPublicationPrimaryLink(meta);
     const hasPaperLink = isValidHttpUrl(paperLink);
-    const categoryLabel = RESEARCH_CATEGORY_LABELS[category] ?? category;
+    const areaLabel = PUBLICATION_AREA_LABELS[area] ?? "Research";
     const authorText = meta.author?.trim() ?? "";
     const venueText = meta.published_place?.trim() ?? "";
     const dateText = meta.published_date?.trim() ?? "";
@@ -27,17 +27,26 @@ function PublicationCard({
             style={{ "--reveal-delay": revealDelay }}
             className="publication__card">
             <div className="publication__card-main">
-                <div className="publication__card-badges">
-                    <p
-                        className={`publication__card-badge publication__card-badge--${category}`}>
-                        {categoryLabel}
+                <div className="publication__card-taxonomy" aria-label="Publication classification">
+                    <p className="publication__card-taxonomy-item">
+                        <span className="publication__card-taxonomy-label">Area</span>
+                        <span
+                            className={`publication__card-taxonomy-value publication__card-taxonomy-value--${area}`}>
+                            {areaLabel}
+                        </span>
                     </p>
-                    <p className="publication__card-badge publication__card-badge--year">
-                        {yearText}
+                    <p className="publication__card-taxonomy-item">
+                        <span className="publication__card-taxonomy-label">Year</span>
+                        <span className="publication__card-taxonomy-value publication__card-taxonomy-value--year">
+                            {yearText}
+                        </span>
                     </p>
                     {(meta.labs ?? []).map((lab) => (
-                        <p key={lab} className="publication__card-badge publication__card-badge--lab">
-                            {lab}
+                        <p key={lab} className="publication__card-taxonomy-item">
+                            <span className="publication__card-taxonomy-label">Lab</span>
+                            <span className="publication__card-taxonomy-value publication__card-taxonomy-value--lab">
+                                {lab}
+                            </span>
                         </p>
                     ))}
                 </div>

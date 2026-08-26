@@ -18,7 +18,7 @@
 .aaig-research__lab {
     margin: 0;
     color: #67635b;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -29,7 +29,7 @@
 .aaig-research__copy h3 {
     margin: 0;
     color: #171717;
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -0.05em;
 }
@@ -88,7 +88,7 @@
     max-width: 37rem;
     margin: 0;
     color: #54514b;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.04rem;
     line-height: 1.62;
 }
@@ -100,7 +100,7 @@
     margin: 0.15rem 0;
     padding: 0;
     color: #67635b;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.76rem;
     font-weight: 600;
     line-height: 1.4;
@@ -115,7 +115,7 @@
 .aaig-research__copy a {
     width: fit-content;
     color: #171717;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.88rem;
     line-height: 1.4;
     text-decoration: underline;

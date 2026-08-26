@@ -22,6 +22,9 @@ export function createAppShell(HeroComponent, RoutesComponent) {
                 className={`app app--${selectedTab || "home"}`}
                 data-rendered-route={location.pathname}>
                 <RouteScrollManager />
+                <a className="skip-link" href="#site-content">
+                    Skip to content
+                </a>
                 <div className="app__content">
                     <Nav />
                     {selectedTab === "home" ? (

@@ -187,7 +187,7 @@
     padding-bottom: 0.56rem;
     border-bottom: 1px solid var(--editorial-rule, var(--tab-identity-border, var(--outline-color)));
     color: var(--text-primary);
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     font-size: var(--group-title-size);
     font-weight: 400;
     line-height: var(--group-title-line-height);
@@ -222,62 +222,67 @@
     align-content: center;
 }
 
-.publication__card-badges {
+.publication__card-taxonomy {
     min-width: 0;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 0.36rem;
+    align-items: baseline;
+    gap: 0.4rem 0;
 }
 
-.publication__card-badge {
-    width: fit-content;
-    padding: var(--chip-pad-y) var(--chip-pad-x);
-    border: 1px solid var(--outline-color);
-    border-radius: 999px;
-    background: var(--surface-2);
+.publication__card-taxonomy-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.38rem;
+    margin: 0;
+    padding: 0 0.82rem;
     color: var(--text-secondary);
-    font-size: var(--badge-text-size);
-    font-weight: var(--type-badge-weight);
-    line-height: var(--type-button-line-height);
-    letter-spacing: 0;
-    text-transform: none;
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    line-height: 1.35;
 }
 
-.publication__card-badge--robot_learning {
-    border-color: #efb7b3;
-    background: var(--topic-robot-learning-100);
-    color: var(--topic-robot-learning-800);
+.publication__card-taxonomy-item + .publication__card-taxonomy-item {
+    padding-left: 0.82rem;
+    border-left: 1px solid var(--editorial-rule, var(--outline-color));
 }
 
-.publication__card-badge--industrial_and_medical_ai {
-    border-color: #c3e0ce;
-    background: var(--topic-industrial-and-medical-ai-100);
-    color: var(--topic-industrial-and-medical-ai-800);
+.publication__card-taxonomy-label {
+    color: var(--text-muted);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
-.publication__card-badge--computer_vision_and_learning_algorithms {
-    border-color: #bdd0fa;
-    background: var(--topic-computer-vision-and-learning-algorithms-100);
+.publication__card-taxonomy-value {
+    color: var(--text-primary);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.publication__card-taxonomy-value--vision-learning {
     color: var(--topic-computer-vision-and-learning-algorithms-800);
 }
 
-.publication__card-badge--efficient_learning_for_llms {
-    border-color: #d9e1ea;
-    background: var(--topic-efficient-learning-for-llms-100);
+.publication__card-taxonomy-value--embodied-ai-robotics {
+    color: var(--topic-robot-learning-800);
+}
+
+.publication__card-taxonomy-value--healthcare-ai {
+    color: var(--topic-industrial-and-medical-ai-800);
+}
+
+.publication__card-taxonomy-value--knowledge-multimodal-llms {
     color: var(--topic-efficient-learning-for-llms-800);
 }
 
-.publication__card-badge--lab {
-    border-color: rgba(23, 23, 23, 0.24);
-    background: transparent;
-    color: var(--text-secondary);
+.publication__card-taxonomy-value--speech-generative-ai {
+    color: #885f21;
 }
 
-.publication__card-badge--year {
-    border-color: rgba(23, 23, 23, 0.24);
-    background: transparent;
-    color: var(--text-secondary);
+.publication__card-taxonomy-value--year {
     font-variant-numeric: tabular-nums;
 }
 
@@ -368,7 +373,7 @@
 .publication__card-venue {
     margin: 0;
     color: var(--text-primary);
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     font-size: var(--card-title-size);
     font-weight: var(--card-title-weight);
     letter-spacing: -0.025em;
@@ -535,9 +540,21 @@
         flex: 0 0 auto;
     }
 
-    .publication__card-badge {
-        font-size: var(--badge-text-size);
-        padding: var(--chip-pad-y) var(--chip-pad-x);
+    .publication__card-taxonomy-item {
+        padding-right: 0.62rem;
+        font-size: 0.7rem;
+    }
+
+    .publication__card-taxonomy-item + .publication__card-taxonomy-item {
+        padding-left: 0.62rem;
+    }
+
+    .publication__card-taxonomy-label {
+        font-size: 0.6rem;
+    }
+
+    .publication__card-taxonomy-value {
+        font-size: 0.72rem;
     }
 
     .publication__card {

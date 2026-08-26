@@ -31,7 +31,12 @@ function Research() {
                             style={{ "--reveal-delay": `${index * 55}ms` }}
                             className="aaig-research__card">
                             <figure className="aaig-research__media">
-                                <img src={area.researchImage} alt="" loading="lazy" decoding="async" />
+                                <img
+                                    src={area.researchImage}
+                                    alt={`${area.researchTitle} research concept`}
+                                    loading="lazy"
+                                    decoding="async"
+                                />
                             </figure>
                             <div className="aaig-research__copy">
                                 <p className="aaig-research__lab">{area.shortName}</p>

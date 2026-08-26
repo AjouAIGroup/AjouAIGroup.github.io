@@ -62,7 +62,7 @@
     display: grid;
     margin: 0;
     color: #111;
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     font-size: clamp(5rem, 9vw, 8.7rem);
     font-weight: 400;
     letter-spacing: -0.08em;
@@ -76,7 +76,7 @@
 .aaig-hero__identity p {
     margin: clamp(0.75rem, 1.2vw, 1.15rem) 0 0;
     color: rgba(17, 17, 17, 0.82);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: clamp(0.68rem, 0.9vw, 0.82rem);
     letter-spacing: 0.11em;
     text-transform: uppercase;
@@ -139,10 +139,16 @@
     max-height: 4.15rem;
     object-fit: contain;
     object-position: left center;
+    transform: scale(var(--aaig-hero-logo-scale, 1));
+    transform-origin: left center;
+}
+
+.aaig-hero__laboratory-logo--iknow {
+    --aaig-hero-logo-scale: 1.35;
 }
 
 .aaig-hero__laboratory-identity span {
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     font-size: clamp(2rem, 3.4vw, 3.5rem);
     letter-spacing: -0.055em;
     line-height: 0.9;
@@ -150,6 +156,9 @@
 
 .aaig-hero__laboratory-copy {
     min-width: 0;
+    overflow: hidden;
+    display: grid;
+    align-content: start;
 }
 
 .aaig-hero__laboratory-label,
@@ -157,7 +166,7 @@
 .aaig-hero__laboratory h2,
 .aaig-hero__laboratory-topics {
     margin: 0;
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
 }
 
 .aaig-hero__laboratory-label {
@@ -202,8 +211,8 @@
     content: ",";
 }
 
-/* Keep the square desktop cards legible if their available width is constrained. */
-@container (max-width: 17rem) {
+/* Keep every laboratory card readable before its layout falls back to a stack. */
+@container (max-width: 16rem) {
     .aaig-hero__laboratory {
         grid-template-rows: minmax(3.1rem, 0.72fr) minmax(0, 1fr);
         gap: 0.5rem;
@@ -214,19 +223,32 @@
         max-height: 3.1rem;
     }
 
+    .aaig-hero__laboratory-logo--iknow {
+        --aaig-hero-logo-scale: 1.18;
+    }
+
     .aaig-hero__laboratory h2 {
         display: -webkit-box;
+        box-sizing: content-box;
         overflow: hidden;
+        padding-block-end: 0.14em;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
+        line-height: 1.05;
     }
 
     .aaig-hero__laboratory-summary {
-        -webkit-line-clamp: 2;
+        display: none;
     }
 
     .aaig-hero__laboratory-topics {
         display: none;
+    }
+}
+
+@container (max-width: 14rem) {
+    .aaig-hero__laboratory h2 {
+        -webkit-line-clamp: 2;
     }
 }
 
@@ -298,7 +320,7 @@
     }
 }
 
-@media (max-width: 64rem) {
+@media (max-width: 76rem) {
     .aaig-hero {
         min-height: auto;
         flex-direction: column;

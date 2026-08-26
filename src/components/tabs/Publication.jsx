@@ -7,12 +7,10 @@ import {
     getPublicationCategories,
     getPublicationYear,
     getPublicationYears,
+    PUBLICATION_AREA_LABELS,
+    resolvePublicationAreaKey,
 } from "../../utils/publicationData";
 import { useLocation } from "react-router-dom";
-import {
-    RESEARCH_CATEGORY_LABELS,
-    resolveResearchAreaKey,
-} from "../../utils/researchData";
 
 const areaCategory = getPublicationCategories();
 const publicationYears = getPublicationYears();
@@ -32,10 +30,7 @@ function Publication() {
         const queryFromParams = params.get("q")?.trim() ?? "";
         const areaFromParams = params.get("area")?.trim() ?? "";
         const yearFromParams = params.get("year")?.trim() ?? "";
-        const normalizedAreaFromParams =
-            areaFromParams === "all"
-                ? "all"
-                : resolveResearchAreaKey(areaFromParams);
+        const normalizedAreaFromParams = resolvePublicationAreaKey(areaFromParams);
 
         const hasValidArea = areaCategory.includes(normalizedAreaFromParams);
         const hasValidYear = publicationYears.includes(yearFromParams);
@@ -51,7 +46,7 @@ function Publication() {
         return publications.filter((publicationItem) => {
             const areaMatch =
                 selectedArea === "all" ||
-                selectedArea === publicationItem.category;
+                publicationItem.areas.includes(selectedArea);
 
             if (!areaMatch) {
                 return false;
@@ -127,7 +122,7 @@ function Publication() {
                                     areaKey={area}
                                     isSelected={selectedArea === area}
                                     onSelect={() => handleSelectedArea(area)}>
-                                    {RESEARCH_CATEGORY_LABELS[area] ||
+                                    {PUBLICATION_AREA_LABELS[area] ||
                                         area.charAt(0).toUpperCase() +
                                             area.slice(1)}
                                 </PublicationButton>
@@ -209,7 +204,7 @@ function Publication() {
                                     <PublicationCard
                                         key={`${tpub.key}-${index}`}
                                         publicationId={tpub.id}
-                                        category={tpub.category}
+                                        area={tpub.primaryArea}
                                         meta={tpub.research_meta}
                                         title={tpub.title}
                                         revealDelay={`${Math.min(index, 5) * 60}ms`}

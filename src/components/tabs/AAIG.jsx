@@ -40,7 +40,11 @@ function AaigHero({ isHome }) {
                             to="/lab">
                             <div className="aaig-hero__laboratory-identity">
                                 {lab.logo ? (
-                                    <img src={lab.logo} alt={lab.logoAlt} />
+                                    <img
+                                        className={`aaig-hero__laboratory-logo aaig-hero__laboratory-logo--${lab.key}`}
+                                        src={lab.logo}
+                                        alt={lab.logoAlt}
+                                    />
                                 ) : (
                                     <span>{lab.shortName}</span>
                                 )}

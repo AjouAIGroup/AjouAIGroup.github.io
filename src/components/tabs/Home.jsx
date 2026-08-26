@@ -27,6 +27,21 @@ const NEWS_IMAGES = [
     KnowledgeGraphImage,
 ];
 
+const getLeadAuthor = (authors) => {
+    const authorList = authors
+        .split(",")
+        .map((author) => author.replace(/[†*]+$/u, "").trim())
+        .filter(Boolean);
+
+    if (!authorList.length) {
+        return "AAIG";
+    }
+
+    return authorList.length > 1 ? `${authorList[0]} et al.` : authorList[0];
+};
+
+const getPublicationLab = (labs) => labs[0] || "AAIG";
+
 function CarouselControls({ label, targetRef, onMove }) {
     return (
         <div className="home-carousel-controls" aria-label={`${label} carousel controls`}>
@@ -206,10 +221,17 @@ function Home() {
                             <p className="home-publication-index__venue">
                                 {publication.research_meta.published_place}
                             </p>
-                            <h3>{publication.title}</h3>
-                            <span className="home-publication-index__authors">
-                                {publication.research_meta.author}
-                            </span>
+                            <div className="home-publication-index__body">
+                                <h3>{publication.title}</h3>
+                                <div className="home-publication-index__meta">
+                                    <span className="home-publication-index__authors">
+                                        {getLeadAuthor(publication.research_meta.author)}
+                                    </span>
+                                    <strong className="home-publication-index__lab">
+                                        {getPublicationLab(publication.research_meta.labs)}
+                                    </strong>
+                                </div>
+                            </div>
                         </Link>
                     ))}
                 </div>

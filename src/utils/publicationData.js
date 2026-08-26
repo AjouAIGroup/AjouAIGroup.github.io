@@ -30,6 +30,89 @@ const normalizeStringList = (value) => {
     return value.map((item) => normalizeText(item)).filter(Boolean);
 };
 
+export const PUBLICATION_AREA_DEFINITIONS = [
+    {
+        key: "vision-learning",
+        label: "Vision & Learning",
+        legacyCategories: ["computer_vision_and_learning_algorithms"],
+    },
+    {
+        key: "embodied-ai-robotics",
+        label: "Embodied AI & Robotics",
+        legacyCategories: ["robot_learning"],
+    },
+    {
+        key: "knowledge-multimodal-llms",
+        label: "Knowledge, Multimodal & LLMs",
+        legacyCategories: ["efficient_learning_for_llms"],
+    },
+    {
+        key: "healthcare-ai",
+        label: "Healthcare AI",
+        legacyCategories: ["industrial_and_medical_ai"],
+    },
+    {
+        key: "speech-generative-ai",
+        label: "Speech & Generative AI",
+        legacyCategories: [],
+    },
+];
+
+export const PUBLICATION_AREA_LABELS = Object.fromEntries([
+    ["all", "All"],
+    ...PUBLICATION_AREA_DEFINITIONS.map(({ key, label }) => [key, label]),
+]);
+
+const PUBLICATION_AREA_BY_LEGACY_CATEGORY = Object.fromEntries(
+    PUBLICATION_AREA_DEFINITIONS.flatMap(({ key, legacyCategories }) =>
+        legacyCategories.map((category) => [category, key]),
+    ),
+);
+
+const PUBLICATION_AREA_BY_LAB = {
+    "CVL Lab": "vision-learning",
+    "HEI Lab": "embodied-ai-robotics",
+    "iKnow Lab": "knowledge-multimodal-llms",
+    SAIL: "speech-generative-ai",
+};
+
+const normalizeAreaKey = (value) =>
+    normalizeText(value).toLowerCase().replace(/[\s_]+/g, "-");
+
+export const resolvePublicationAreaKey = (value) => {
+    const normalized = normalizeAreaKey(value);
+
+    if (normalized === "all") {
+        return "all";
+    }
+
+    if (PUBLICATION_AREA_LABELS[normalized]) {
+        return normalized;
+    }
+
+    const legacyMatch = Object.entries(PUBLICATION_AREA_BY_LEGACY_CATEGORY).find(
+        ([legacyCategory]) => normalizeAreaKey(legacyCategory) === normalized,
+    );
+
+    return legacyMatch?.[1] ?? null;
+};
+
+export const getPublicationAreas = (publication = {}) => {
+    const category = normalizeText(publication.category);
+    const labs = normalizeStringList(publication?.research_meta?.labs);
+    const legacyArea = PUBLICATION_AREA_BY_LEGACY_CATEGORY[category];
+
+    if (legacyArea) {
+        return [legacyArea];
+    }
+
+    const labArea = labs
+        .map((lab) => PUBLICATION_AREA_BY_LAB[lab])
+        .find(Boolean);
+
+    return labArea ? [labArea] : [];
+};
+
 export const getAllPublications = () =>
     (PUBLICATION_DATA?.items ?? [])
         .map((item, index) => {
@@ -41,12 +124,18 @@ export const getAllPublications = () =>
             const researchMeta = item?.research_meta ?? {};
             const publishedDate =
                 normalizeText(researchMeta?.published_date) || "1970-01-01";
+            const areas = getPublicationAreas({
+                category,
+                research_meta: researchMeta,
+            });
 
             return {
                 ...item,
                 id,
                 key: normalizeText(item?.key) || id,
                 category,
+                areas,
+                primaryArea: areas[0] ?? null,
                 title,
                 research_meta: {
                     author: normalizeText(researchMeta?.author),
@@ -84,10 +173,16 @@ export const getAllPublications = () =>
         });
 
 export const getPublicationCategories = () => {
-    const categories = Array.from(
-        new Set(getAllPublications().map((item) => item.category)),
+    const publicationAreas = new Set(
+        getAllPublications().flatMap((item) => item.areas),
     );
-    return ["all", ...categories];
+
+    return [
+        "all",
+        ...PUBLICATION_AREA_DEFINITIONS.map(({ key }) => key).filter((key) =>
+            publicationAreas.has(key),
+        ),
+    ];
 };
 
 export const getPublicationYear = (publication) => {

@@ -9,7 +9,7 @@
     justify-content: space-between;
     gap: 2rem;
     color: #111;
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     transition: top 220ms ease, left 220ms ease, right 220ms ease, padding 220ms ease, background-color 220ms ease, border-color 220ms ease;
 }
 

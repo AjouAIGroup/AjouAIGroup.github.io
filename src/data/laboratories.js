@@ -5,10 +5,10 @@ import VisionLearningImage from "../assets/images/research_areas/aaig-vision-lea
 import SpeechGenerativeImage from "../assets/images/research_areas/aaig-speech-generative.webp";
 import EmbodiedIntelligenceImage from "../assets/images/research_areas/aaig-embodied-intelligence.webp";
 import KnowledgeAiImage from "../assets/images/research_areas/aaig-knowledge-ai.webp";
-import VisionImage from "../assets/images/research_concepts/optimized/multi-modal-wide.webp";
-import SpeechImage from "../assets/images/research_concepts/optimized/application-wide.webp";
-import RoboticsImage from "../assets/images/home/optimized/resource-robotics-platform.webp";
-import KnowledgeImage from "../assets/images/research_concepts/optimized/core-wide.webp";
+import VisionImage from "../assets/images/research_concepts/aaig/cvl-vision-research.webp";
+import SpeechImage from "../assets/images/research_concepts/aaig/sail-speech-research.webp";
+import RoboticsImage from "../assets/images/research_concepts/aaig/hei-embodied-research.webp";
+import KnowledgeImage from "../assets/images/research_concepts/aaig/iknow-knowledge-research.webp";
 
 export const LABORATORIES = [
     {

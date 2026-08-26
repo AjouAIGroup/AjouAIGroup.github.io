@@ -106,7 +106,9 @@ function Lab() {
 
                 <div className="lab-page__grid">
                     {orderedLabs.map((lab) => (
-                        <article key={lab.key} className="lab-page__item">
+                        <article
+                            key={lab.key}
+                            className={`lab-page__item lab-page__item--${lab.key}`}>
                             <div className="lab-page__identity">
                                 {lab.logo ? (
                                     <img

@@ -197,10 +197,12 @@
     --tab-resources-border: #d7dfe8;
     --tab-resources-accent: var(--identity-resources-accent);
 
-    --font-base:
+    --font-sans:
         ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    --font-heading: var(--font-base);
+    --font-serif: "Times New Roman", Times, serif;
+    --font-base: var(--font-sans);
+    --font-heading: var(--font-serif);
 
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;

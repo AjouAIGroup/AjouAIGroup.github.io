@@ -5,7 +5,7 @@
     padding-block: clamp(2.4rem, 5vw, 4.6rem);
     color: #171717;
     background: #eae8e1;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
 }
 
 .footer__inner {
@@ -44,7 +44,7 @@
 }
 
 .footer__name {
-    font-family: "Times New Roman", Times, serif;
+    font-family: var(--font-serif);
     font-size: clamp(1.3rem, 2vw, 1.8rem);
     font-weight: 400;
     letter-spacing: -0.04em;

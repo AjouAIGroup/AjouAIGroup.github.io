@@ -1,22 +1,35 @@
-/* AAIG editorial system: overrides the former panel and token-led UI. */
+/* AAIG editorial system: the semantic source of truth for site surfaces. */
+:root {
+    --aaig-canvas: #f4f3ef;
+    --aaig-surface: #eeece6;
+    --aaig-stone: #d8d5ca;
+    --aaig-card: #dfddd4;
+    --aaig-ink: #171717;
+    --aaig-copy: #54514b;
+    --aaig-muted: #67635b;
+    --aaig-rule: rgba(23, 23, 23, 0.13);
+    --aaig-rule-strong: rgba(23, 23, 23, 0.26);
+    --aaig-action-height: 2.75rem;
+    --aaig-action-padding-inline: 0.9rem;
+}
 #root {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
 }
 
 /* Keep supporting copy sans-serif without overriding display headings. */
 #root :is(p, li, dd, dt, address, label, a, button, input, textarea, select, option, small, span) {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
 }
 
 .app:not(.app--home) {
-    --surface: #f4f3ef;
-    --surface-2: #eeece6;
-    --bg: #f4f3ef;
-    --text-primary: #171717;
+    --surface: var(--aaig-canvas);
+    --surface-2: var(--aaig-surface);
+    --bg: var(--aaig-canvas);
+    --text-primary: var(--aaig-ink);
     --text-secondary: #40403d;
     --text-muted: #76736c;
     --outline-color: rgba(23, 23, 23, 0.18);
-    --editorial-rule: rgba(23, 23, 23, 0.13);
+    --editorial-rule: var(--aaig-rule);
     --tab-home-tint: transparent;
     --tab-news-tint: transparent;
     --tab-research-tint: transparent;
@@ -35,16 +48,16 @@
     --tab-photo-border: rgba(23, 23, 23, 0.18);
     --tab-contact-border: rgba(23, 23, 23, 0.18);
     --tab-deadlines-border: rgba(23, 23, 23, 0.18);
-    --tab-home-accent: #171717;
-    --tab-news-accent: #171717;
-    --tab-research-accent: #171717;
-    --tab-resources-accent: #171717;
-    --tab-publication-accent: #171717;
-    --tab-people-accent: #171717;
-    --tab-photo-accent: #171717;
-    --tab-contact-accent: #171717;
-    --tab-deadlines-accent: #171717;
-    font-family: Arial, Helvetica, sans-serif;
+    --tab-home-accent: var(--aaig-ink);
+    --tab-news-accent: var(--aaig-ink);
+    --tab-research-accent: var(--aaig-ink);
+    --tab-resources-accent: var(--aaig-ink);
+    --tab-publication-accent: var(--aaig-ink);
+    --tab-people-accent: var(--aaig-ink);
+    --tab-photo-accent: var(--aaig-ink);
+    --tab-contact-accent: var(--aaig-ink);
+    --tab-deadlines-accent: var(--aaig-ink);
+    font-family: var(--font-sans);
 }
 
 .app:not(.app--home) .main-content__body {
@@ -109,7 +122,7 @@
 ) {
     max-width: 12ch;
     color: #171717;
-    font-family: "Times New Roman", Times, serif !important;
+    font-family: var(--font-serif) !important;
 }
 
 .app:not(.app--home) .tab-header h1 {
@@ -123,7 +136,7 @@
 .app:not(.app--home) .page-head__summary {
     max-width: 37rem;
     color: #54514b !important;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.08rem !important;
     font-weight: 400 !important;
     line-height: 1.55 !important;
@@ -166,19 +179,23 @@
     .btn,
     .interactive-button
 ) {
-    min-height: 2.35rem !important;
-    padding: 0.42rem 0.75rem !important;
+    min-height: var(--aaig-action-height) !important;
+    padding: 0.5rem var(--aaig-action-padding-inline) !important;
     border: 1px solid rgba(23, 23, 23, 0.28) !important;
     border-radius: 0 !important;
     background: rgba(234, 232, 225, 0.34) !important;
     box-shadow: none !important;
     color: #171717 !important;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 0.92rem !important;
     font-weight: 600 !important;
     line-height: 1.35 !important;
     text-decoration: none !important;
     transform: none !important;
+}
+
+.app:not(.app--home) :is(.btn, .interactive-button):active {
+    transform: translateY(1px) scale(0.985) !important;
 }
 
 .app:not(.app--home) :is(
@@ -241,7 +258,7 @@
     .contact__header h2
 ) {
     color: #171717 !important;
-    font-family: "Times New Roman", Times, serif !important;
+    font-family: var(--font-serif) !important;
     font-weight: 400 !important;
     letter-spacing: -0.04em !important;
 }
@@ -257,7 +274,7 @@
     color: #67635b !important;
     border: 0 !important;
     background: transparent !important;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 0.64rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.08em !important;
@@ -308,7 +325,7 @@
 
 .app:not(.app--home) .news-page__title {
     color: #171717 !important;
-    font-family: "Times New Roman", Times, serif !important;
+    font-family: var(--font-serif) !important;
     font-size: clamp(1.35rem, 2.4vw, 2rem) !important;
     font-weight: 400 !important;
     letter-spacing: -0.04em !important;
@@ -343,7 +360,7 @@
 
 /* Body copy is deliberately sans-serif and more readable than the display type. */
 .app:not(.app--home) .main-content__body :is(p, li, dd, dt, address, label) {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 1.04rem !important;
     line-height: 1.62 !important;
 }
@@ -356,7 +373,7 @@
     .research__detail-kicker,
     .contact__kicker
 ) {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 0.72rem !important;
     line-height: 1.3 !important;
 }
@@ -455,7 +472,7 @@
     .publication__scope-label
 ) {
     color: #67635b !important;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 0.72rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.08em !important;
@@ -493,7 +510,7 @@
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 0.92rem !important;
 }
 

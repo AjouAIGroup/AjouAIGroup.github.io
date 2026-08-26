@@ -69,6 +69,10 @@
       "status": "verified",
       "source_checked_at": "2026-08-26T00:00:00+09:00",
       "source_evidence": "Paper Registration Deadline",
+      "next_cfp": {
+        "cycle": "ECCV 2028",
+        "expected_window": "early 2028 (estimated)"
+      },
       "event": {
         "dates": "September 8-12, 2026",
         "location": "Malmo, Sweden",
@@ -394,6 +398,10 @@
       "status": "verified",
       "source_checked_at": "2026-08-26T00:00:00+09:00",
       "source_evidence": "Main Conference Paper Submission",
+      "next_cfp": {
+        "cycle": "MICCAI 2027",
+        "expected_window": "late 2026 (estimated)"
+      },
       "event": {
         "dates": "September 27-October 1, 2026",
         "location": "Strasbourg, France",
@@ -1137,6 +1145,10 @@
       "status": "verified",
       "source_checked_at": "2026-08-26T00:00:00+09:00",
       "source_evidence": "Paper Submission Deadline",
+      "next_cfp": {
+        "cycle": "RSS 2027",
+        "expected_window": "late 2026 (estimated)"
+      },
       "event": {
         "dates": "July 13-17, 2026",
         "location": "Sydney, Australia",
@@ -1233,6 +1245,10 @@
       "status": "verified",
       "source_checked_at": "2026-08-26T00:00:00+09:00",
       "source_evidence": "Paper submission deadline: Humanoids",
+      "next_cfp": {
+        "cycle": "Humanoids 2027",
+        "expected_window": "mid-2026; official announcement pending"
+      },
       "event": {
         "dates": "December 7-9, 2026",
         "location": "Santa Clara, California, USA",

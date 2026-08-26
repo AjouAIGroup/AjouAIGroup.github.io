@@ -40,12 +40,22 @@ const getLocationFlags = (location = "") =>
         .filter(Boolean)
         .filter((flag, index, flags) => flags.indexOf(flag) === index);
 
+const getNextCfpMessage = (venue) => {
+    const nextCfp = venue.next_cfp;
+    if (!nextCfp) {
+        return "Awaiting the organizer's official announcement for the next cycle.";
+    }
+
+    return `${nextCfp.cycle} · Expected ${nextCfp.expected_window}`;
+};
+
 function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
     const milestoneId =
         selectedMilestones[venue.id] ?? getDefaultMilestoneId(venue, now ?? new Date());
     const milestone = venue.milestones.find((item) => item.id === milestoneId);
     const status = getVenueStatusMeta(venue.status);
     const locationFlags = getLocationFlags(venue.event?.location);
+    const countdown = milestone ? getCountdownLabel(milestone.deadline_at, now) : null;
 
     return (
         <article data-reveal className="calendar__venue">
@@ -112,7 +122,15 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
                             </time>
                             <small>Official deadline timezone: {milestone.timezone_label}</small>
                         </div>
-                        <strong>{getCountdownLabel(milestone.deadline_at, now)}</strong>
+                        <div className="calendar__deadline-status">
+                            <strong>{countdown}</strong>
+                            {countdown === "Closed" ? (
+                                <p className="calendar__next-cfp">
+                                    <span>Next CFP</span>
+                                    {getNextCfpMessage(venue)}
+                                </p>
+                            ) : null}
+                        </div>
                     </div>
                 </div>
             ) : (

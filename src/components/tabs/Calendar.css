@@ -149,6 +149,9 @@
 .calendar__deadline-detail time { color: #171717; font: clamp(1.12rem, 1.7vw, 1.45rem)/1.15 "Times New Roman", Times, serif; }
 .calendar__deadline-detail small { color: #69655d; font: 0.75rem/1.4 Arial, Helvetica, sans-serif; }
 .calendar__deadline-detail strong { flex: 0 0 auto; color: #171717; font: 700 clamp(1.3rem, 2vw, 1.8rem)/1 "Times New Roman", Times, serif; letter-spacing: -0.035em; white-space: nowrap; }
+.calendar__deadline-status { display: grid; justify-items: end; gap: 0.38rem; }
+.calendar__next-cfp { max-width: 18rem; margin: 0; color: #69655d; font: 0.72rem/1.42 Arial, Helvetica, sans-serif; text-align: right; }
+.calendar__next-cfp span { display: block; margin-bottom: 0.08rem; color: #171717; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .calendar__unannounced { padding-top: 0.2rem; }
 .calendar__empty { margin: 0; padding: 1.5rem 0; border-top: 1px solid rgba(23, 23, 23, 0.13); color: #615e57; font: 1rem/1.5 Arial, Helvetica, sans-serif; }
 
@@ -163,4 +166,6 @@
     .calendar__venue-heading { display: flex; }
     .calendar__event { grid-template-columns: 1fr; gap: 0.65rem; }
     .calendar__deadline-detail strong { font-size: 1.45rem; }
+    .calendar__deadline-status { justify-items: start; }
+    .calendar__next-cfp { max-width: none; text-align: left; }
 }

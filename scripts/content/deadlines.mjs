@@ -220,7 +220,10 @@ const getTimezoneOffset = (date, timezone) => {
         return "-12:00";
     }
 
-    if (timezone !== "America/Los_Angeles") {
+    if (
+        timezone !== "America/Los_Angeles" &&
+        timezone !== "America/New_York"
+    ) {
         return null;
     }
 

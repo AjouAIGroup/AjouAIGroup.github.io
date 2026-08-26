@@ -76,7 +76,12 @@
           "kind": "registration",
           "deadline_at": "2026-02-26T23:00:00+01:00",
           "timezone_label": "Central European Time (CET)",
-          "status": "verified"
+          "status": "verified",
+          "source_parser": {
+            "match": "Paper Registration Deadline:.{0,500}?([A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4})\\s+11:00 PM CET",
+            "timezone": "Europe/Stockholm",
+            "time": "23:00"
+          }
         },
         {
           "id": "paper",
@@ -85,7 +90,12 @@
           "kind": "paper",
           "deadline_at": "2026-03-05T23:00:00+01:00",
           "timezone_label": "Central European Time (CET)",
-          "status": "verified"
+          "status": "verified",
+          "source_parser": {
+            "match": "Paper Registration Deadline:.{0,500}?[A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4}\\s+11:00 PM CET\\s+or\\s+([A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4})\\s+11:00 PM CET",
+            "timezone": "Europe/Stockholm",
+            "time": "23:00"
+          }
         },
         {
           "id": "supplementary",
@@ -94,7 +104,12 @@
           "kind": "supplementary",
           "deadline_at": "2026-03-12T23:00:00+01:00",
           "timezone_label": "Central European Time (CET)",
-          "status": "verified"
+          "status": "verified",
+          "source_parser": {
+            "match": "Paper Registration Deadline:.{0,500}?[A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4}\\s+11:00 PM CET\\s+or\\s+[A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4}\\s+11:00 PM CET\\s+or\\s+([A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4})\\s+11:00 PM CET",
+            "timezone": "Europe/Stockholm",
+            "time": "23:00"
+          }
         },
         {
           "id": "rebuttal",
@@ -103,7 +118,12 @@
           "kind": "rebuttal",
           "deadline_at": "2026-05-11T23:00:00+02:00",
           "timezone_label": "Central European Summer Time (CEST)",
-          "status": "verified"
+          "status": "verified",
+          "source_parser": {
+            "match": "Rebuttal Deadline:.{0,300}?([A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4})\\s+11:00 PM CEST",
+            "timezone": "Europe/Stockholm",
+            "time": "23:00"
+          }
         },
         {
           "id": "camera-ready",

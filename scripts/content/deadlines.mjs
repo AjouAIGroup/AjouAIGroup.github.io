@@ -88,6 +88,13 @@ const validateDeadline = (deadline, venueId, index) => {
         } catch {
             throw new Error(`${prefix}.source_parser.match is not a valid regular expression.`);
         }
+
+        if (
+            deadline.source_parser.time !== undefined &&
+            !/^\d{2}:\d{2}$/.test(deadline.source_parser.time)
+        ) {
+            throw new Error(`${prefix}.source_parser.time must use HH:MM format.`);
+        }
     }
 };
 
@@ -227,7 +234,8 @@ const getTimezoneOffset = (date, timezone) => {
 
     if (
         timezone !== "America/Los_Angeles" &&
-        timezone !== "America/New_York"
+        timezone !== "America/New_York" &&
+        timezone !== "Europe/Stockholm"
     ) {
         return null;
     }
@@ -258,7 +266,7 @@ const getTimezoneOffset = (date, timezone) => {
     return `${sign}${hours}:${minutes}`;
 };
 
-const toDeadlineAt = (dateText, timezone) => {
+const toDeadlineAt = (dateText, timezone, time = "23:59") => {
     const match = dateText
         .trim()
         .match(/^([A-Za-z]+)\.?\s+(\d{1,2})(?:,)?\s+'?(\d{2}|\d{4})$/);
@@ -273,10 +281,10 @@ const toDeadlineAt = (dateText, timezone) => {
         return null;
     }
 
-    const date = new Date(`${year}-${month}-${day}T23:59:00Z`);
+    const date = new Date(`${year}-${month}-${day}T${time}:00Z`);
     const timezoneOffset = getTimezoneOffset(date, timezone);
     return timezoneOffset
-        ? `${year}-${month}-${day}T23:59:00${timezoneOffset}`
+        ? `${year}-${month}-${day}T${time}:00${timezoneOffset}`
         : null;
 };
 
@@ -291,7 +299,11 @@ const extractMilestones = (venue, text) => {
 
         const matched = new RegExp(milestone.source_parser.match, "i").exec(text);
         const dateText = matched?.[1] ?? "";
-        const deadlineAt = toDeadlineAt(dateText, milestone.source_parser.timezone);
+        const deadlineAt = toDeadlineAt(
+            dateText,
+            milestone.source_parser.timezone,
+            milestone.source_parser.time,
+        );
 
         if (!deadlineAt) {
             errors.push(`${milestone.short_label} could not be extracted`);

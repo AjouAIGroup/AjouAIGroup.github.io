@@ -35,7 +35,7 @@ function AaigHero({ isHome }) {
                     {laboratories.map((lab, index) => (
                         <Link
                             key={lab.key}
-                            className="aaig-hero__laboratory"
+                            className={`aaig-hero__laboratory aaig-hero__laboratory--${lab.key}`}
                             style={{ "--laboratory-enter-delay": `${280 + index * 90}ms` }}
                             to="/lab">
                             <div className="aaig-hero__laboratory-identity">
@@ -52,7 +52,7 @@ function AaigHero({ isHome }) {
                             <div className="aaig-hero__laboratory-copy">
                                 <p className="aaig-hero__laboratory-label">{lab.shortName}</p>
                                 <h2>{lab.name}</h2>
-                                <p className="aaig-hero__laboratory-summary">{lab.summary}</p>
+                                <p className="aaig-hero__laboratory-summary">{lab.heroSummary ?? lab.summary}</p>
                             </div>
                             <ul className="aaig-hero__laboratory-topics" aria-label={`${lab.shortName} research topics`}>
                                 {lab.topics.slice(0, 2).map((topic) => (

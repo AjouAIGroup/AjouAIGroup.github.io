@@ -196,6 +196,13 @@
     -webkit-line-clamp: 3;
 }
 
+/* The SAIL title is longer than the supplied image-logo labs. Its dedicated,
+   concise hero description stays fully legible inside the 2×2 desktop grid. */
+.aaig-hero__laboratory--sail .aaig-hero__laboratory-summary {
+    font-size: clamp(0.78rem, 0.9vw, 0.96rem);
+    -webkit-line-clamp: 2;
+}
+
 .aaig-hero__laboratory-topics {
     display: flex;
     flex-wrap: wrap;
@@ -239,6 +246,12 @@
 
     .aaig-hero__laboratory-summary {
         display: none;
+    }
+
+    .aaig-hero__laboratory--sail .aaig-hero__laboratory-summary {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
     }
 
     .aaig-hero__laboratory-topics {

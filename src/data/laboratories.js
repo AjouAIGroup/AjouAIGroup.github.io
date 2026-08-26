@@ -36,6 +36,8 @@ export const LABORATORIES = [
         name: "Speech Artificial Intelligence Lab",
         summary:
             "Research on speech synthesis, speech language models, and generative models for audio, talking-head, and video generation.",
+        heroSummary:
+            "Speech, language, and generative models for audio and visual media.",
         topics: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
         href: "https://sites.google.com/view/speechailab",
         researchTitle: "Speech AI & Generative Models",

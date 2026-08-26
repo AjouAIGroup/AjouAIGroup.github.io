@@ -208,6 +208,7 @@ const readDeadlineContent = async () => {
 
 const normalizePageText = (html) =>
     html
+        .replace(/<!--[\s\S]*?-->/g, " ")
         .replace(/<script[\s\S]*?<\/script>/gi, " ")
         .replace(/<style[\s\S]*?<\/style>/gi, " ")
         .replace(/<[^>]+>/g, " ")
@@ -218,6 +219,10 @@ const normalizePageText = (html) =>
 const getTimezoneOffset = (date, timezone) => {
     if (timezone === "AoE") {
         return "-12:00";
+    }
+
+    if (timezone === "UTC") {
+        return "+00:00";
     }
 
     if (

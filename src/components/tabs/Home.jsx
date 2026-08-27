@@ -272,6 +272,13 @@ function Home() {
                                 <p>{area.shortName}</p>
                                 <h3>{area.researchTitle}</h3>
                                 <span>{area.researchSummary}</span>
+                                <ul
+                                    className="home-research-index__topics"
+                                    aria-label={`${area.researchTitle} topics`}>
+                                    {area.topics.map((topic) => (
+                                        <li key={topic}>{topic}</li>
+                                    ))}
+                                </ul>
                             </div>
                         </Link>
                     ))}

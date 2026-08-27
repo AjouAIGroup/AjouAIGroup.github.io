@@ -17,7 +17,12 @@ export const LABORATORIES = [
         name: "Computer Vision & Learning Lab",
         summary:
             "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
-        topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
+        topics: [
+            "Computer Vision and Learning Algorithms",
+            "Efficient Learning for LLMs",
+            "Robot Learning",
+            "Industrial and Medical AI",
+        ],
         href: "https://cvl-lab.github.io/",
         logo: CvlLogo,
         logoAlt: "CVL Lab logo",
@@ -26,7 +31,12 @@ export const LABORATORIES = [
             "Robust visual recognition and representation learning for reliable perception in real-world settings.",
         researchDescription:
             "We develop robust visual recognition and representation-learning methods that remain reliable across changing environments and real-world data.",
-        themes: ["Visual Recognition", "Representation Learning", "Robust AI"],
+        themes: [
+            "Computer Vision and Learning Algorithms",
+            "Efficient Learning for LLMs",
+            "Robot Learning",
+            "Industrial and Medical AI",
+        ],
         homeResearchImage: VisionLearningImage,
         researchImage: VisionImage,
     },

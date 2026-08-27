@@ -275,7 +275,7 @@ function Home() {
                                 <ul
                                     className="home-research-index__topics"
                                     aria-label={`${area.researchTitle} topics`}>
-                                    {area.topics.map((topic) => (
+                                    {(area.researchTopics ?? area.topics).map((topic) => (
                                         <li key={topic}>{topic}</li>
                                     ))}
                                 </ul>

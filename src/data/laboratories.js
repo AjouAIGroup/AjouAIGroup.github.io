@@ -17,7 +17,8 @@ export const LABORATORIES = [
         name: "Computer Vision & Learning Lab",
         summary:
             "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
-        topics: [
+        topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
+        researchTopics: [
             "Computer Vision and Learning Algorithms",
             "Efficient Learning for LLMs",
             "Robot Learning",
@@ -30,13 +31,8 @@ export const LABORATORIES = [
         researchSummary:
             "Robust visual recognition and representation learning for reliable perception in real-world settings.",
         researchDescription:
-            "Our work spans computer vision and learning algorithms, efficient learning for LLMs, robot learning, and industrial and medical AI.",
-        themes: [
-            "Computer Vision and Learning Algorithms",
-            "Efficient Learning for LLMs",
-            "Robot Learning",
-            "Industrial and Medical AI",
-        ],
+            "We develop robust visual recognition and representation-learning methods that remain reliable across changing environments and real-world data.",
+        themes: ["Visual Recognition", "Representation Learning", "Robust AI"],
         homeResearchImage: VisionLearningImage,
         researchImage: VisionImage,
     },
@@ -49,12 +45,17 @@ export const LABORATORIES = [
         heroSummary:
             "Speech, language, and generative models for audio and visual media.",
         topics: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
+        researchTopics: [
+            "Speech Synthesis",
+            "Speech Language Models",
+            "Generative Models",
+        ],
         href: "https://sites.google.com/view/speechailab",
         researchTitle: "Speech AI & Generative Models",
         researchSummary:
             "Speech synthesis, speech language models, and generative approaches for audio and visual media.",
         researchDescription:
-            "We study speech synthesis, speech language models, and generative models, including text-to-speech, voice conversion, speech translation, speech editing, audio, and talking-head generation.",
+            "We study speech synthesis, speech language models, and generative approaches for audio, talking-head, and video generation.",
         themes: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
         homeResearchImage: SpeechGenerativeImage,
         researchImage: SpeechImage,
@@ -65,7 +66,8 @@ export const LABORATORIES = [
         name: "Human-Centered Embodied Intelligence Lab",
         summary:
             "Building robots that learn, adapt, and interact with people through foundation models for robotics, human-robot interaction, and lifelong learning.",
-        topics: [
+        topics: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
+        researchTopics: [
             "Foundation Models for Robotics",
             "Human-Robot Interaction",
             "Lifelong Robot Learning",
@@ -75,14 +77,10 @@ export const LABORATORIES = [
         logoAlt: "HEI Lab logo",
         researchTitle: "Embodied Intelligence",
         researchSummary:
-            "Foundation models, human-robot interaction, and lifelong learning for robots that adapt with people.",
+            "Foundation models and lifelong learning for robots that adapt and collaborate with people.",
         researchDescription:
-            "We develop foundation models for robotics, natural human-robot interaction, and lifelong robot learning for changing physical environments.",
-        themes: [
-            "Foundation Models for Robotics",
-            "Human-Robot Interaction",
-            "Lifelong Robot Learning",
-        ],
+            "We build adaptive robots through foundation models, human-robot interaction, and lifelong learning in changing physical environments.",
+        themes: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
         homeResearchImage: EmbodiedIntelligenceImage,
         researchImage: RoboticsImage,
     },
@@ -92,7 +90,8 @@ export const LABORATORIES = [
         name: "intelligence and Knowledge Lab",
         summary:
             "Research on recommendation systems, multimodal understanding, large language models, and federated learning.",
-        topics: [
+        topics: ["Recommendation", "Multimodal AI", "Large Language Models"],
+        researchTopics: [
             "Recommendation Systems",
             "Multimodal Understanding",
             "Large Language Models",
@@ -103,15 +102,10 @@ export const LABORATORIES = [
         logoAlt: "iKnow Lab logo",
         researchTitle: "Knowledge-Centered AI",
         researchSummary:
-            "Recommendation systems, multimodal understanding, large language models, and federated learning.",
+            "Recommendation, multimodal understanding, large language models, and federated learning.",
         researchDescription:
             "We explore recommendation systems, multimodal understanding, large language models, and federated learning for intelligent knowledge systems.",
-        themes: [
-            "Recommendation Systems",
-            "Multimodal Understanding",
-            "Large Language Models",
-            "Federated Learning",
-        ],
+        themes: ["Recommendation", "Multimodal AI", "Large Language Models"],
         homeResearchImage: KnowledgeAiImage,
         researchImage: KnowledgeImage,
     },

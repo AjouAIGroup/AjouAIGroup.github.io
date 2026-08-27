@@ -5,10 +5,10 @@ import VisionLearningImage from "../assets/images/research_areas/aaig-vision-lea
 import SpeechGenerativeImage from "../assets/images/research_areas/aaig-speech-generative.webp";
 import EmbodiedIntelligenceImage from "../assets/images/research_areas/aaig-embodied-intelligence.webp";
 import KnowledgeAiImage from "../assets/images/research_areas/aaig-knowledge-ai.webp";
-import VisionImage from "../assets/images/research_concepts/aaig/cvl-vision-research.webp";
-import SpeechImage from "../assets/images/research_concepts/aaig/sail-speech-research.webp";
-import RoboticsImage from "../assets/images/research_concepts/aaig/hei-embodied-research.webp";
-import KnowledgeImage from "../assets/images/research_concepts/aaig/iknow-knowledge-research.webp";
+import CvlResearchImage from "../assets/images/research_labs/cvl-research.webp";
+import SailResearchImage from "../assets/images/research_labs/sail-research.webp";
+import HeiResearchImage from "../assets/images/research_labs/hei-research.webp";
+import IknowResearchImage from "../assets/images/research_labs/iknow-research.webp";
 
 export const LABORATORIES = [
     {
@@ -46,7 +46,7 @@ export const LABORATORIES = [
             },
         ],
         homeResearchImage: VisionLearningImage,
-        researchImage: VisionImage,
+        researchImage: CvlResearchImage,
     },
     {
         key: "sail",
@@ -79,7 +79,7 @@ export const LABORATORIES = [
             },
         ],
         homeResearchImage: SpeechGenerativeImage,
-        researchImage: SpeechImage,
+        researchImage: SailResearchImage,
     },
     {
         key: "hei",
@@ -112,7 +112,7 @@ export const LABORATORIES = [
             },
         ],
         homeResearchImage: EmbodiedIntelligenceImage,
-        researchImage: RoboticsImage,
+        researchImage: HeiResearchImage,
     },
     {
         key: "iknow",
@@ -149,6 +149,6 @@ export const LABORATORIES = [
             },
         ],
         homeResearchImage: KnowledgeAiImage,
-        researchImage: KnowledgeImage,
+        researchImage: IknowResearchImage,
     },
 ];

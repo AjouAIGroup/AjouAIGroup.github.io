@@ -10,7 +10,7 @@ import ComputeClusterImage from "../../assets/images/news_placeholders/compute-c
 import RoboticsBenchImage from "../../assets/images/news_placeholders/robotics-bench.webp";
 import SpeechStudioImage from "../../assets/images/news_placeholders/speech-studio.webp";
 import KnowledgeGraphImage from "../../assets/images/news_placeholders/knowledge-graph.webp";
-import { LABORATORIES } from "../../data/laboratories";
+import { HOME_RESEARCH_AREAS } from "../../data/homeResearchAreas";
 import { shuffleItems } from "../../utils/collections";
 import { resolveScrollBehavior } from "../../utils/scrollMotion";
 import {
@@ -67,7 +67,10 @@ function Home() {
     const publicationRailRef = useRef(null);
     const researchRailRef = useRef(null);
     const newsItems = useMemo(() => getLatestNewsItems(5), []);
-    const orderedResearchAreas = useMemo(() => shuffleItems(LABORATORIES), []);
+    const orderedResearchAreas = useMemo(
+        () => shuffleItems(HOME_RESEARCH_AREAS),
+        [],
+    );
     const publicationSnapshot = useMemo(
         () => getPublicationYearSnapshot(),
         [],
@@ -262,23 +265,16 @@ function Home() {
                     onKeyDown={(event) => handleRailKeyDown(researchRailRef, event)}>
                     {orderedResearchAreas.map((area) => (
                         <Link
-                            key={area.key}
-                            className={`home-research-index__card home-research-index__card--${area.key}`}
+                            key={area.id}
+                            className={`home-research-index__card home-research-index__card--${area.labKey}`}
                             to="/research">
                             <figure className="home-research-index__media">
-                                <img src={area.homeResearchImage} alt="" loading="lazy" decoding="async" />
+                                <img src={area.image} alt="" loading="lazy" decoding="async" />
                             </figure>
                             <div className="home-research-index__copy">
-                                <p>{area.shortName}</p>
-                                <h3>{area.researchTitle}</h3>
-                                <span>{area.researchSummary}</span>
-                                <ul
-                                    className="home-research-index__topics"
-                                    aria-label={`${area.researchTitle} topics`}>
-                                    {(area.researchTopics ?? area.topics).map((topic) => (
-                                        <li key={topic}>{topic}</li>
-                                    ))}
-                                </ul>
+                                <p>{area.lab}</p>
+                                <h3>{area.title}</h3>
+                                <span>{area.summary}</span>
                             </div>
                         </Link>
                     ))}

@@ -415,7 +415,7 @@
 
 .home-research-index__copy {
     display: grid;
-    grid-template-rows: auto minmax(2.8em, auto) minmax(3.04em, auto) auto;
+    grid-template-rows: auto minmax(2.8em, auto) minmax(3.04em, auto);
     gap: 0.5rem;
     padding: clamp(1.1rem, 1.8vw, 1.55rem);
 }
@@ -424,9 +424,9 @@
     margin: 0;
     color: #67635b;
     font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
     line-height: 1.35;
     text-transform: uppercase;
 }
@@ -448,25 +448,6 @@
     line-height: 1.45;
 }
 
-.home-research-index__topics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.28rem 0.58rem;
-    margin: 0.12rem 0 0;
-    padding: 0;
-    color: #45423d;
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 600;
-    line-height: 1.35;
-    list-style: none;
-}
-
-.home-research-index__topics li:not(:last-child)::after {
-    margin-left: 0.58rem;
-    color: #89857c;
-    content: "·";
-}
 
 .home-publication-index {
     display: grid;

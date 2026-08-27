@@ -18,12 +18,6 @@ export const LABORATORIES = [
         summary:
             "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
         topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
-        researchTopics: [
-            "Computer Vision and Learning Algorithms",
-            "Efficient Learning for LLMs",
-            "Robot Learning",
-            "Industrial and Medical AI",
-        ],
         href: "https://cvl-lab.github.io/",
         logo: CvlLogo,
         logoAlt: "CVL Lab logo",
@@ -45,11 +39,6 @@ export const LABORATORIES = [
         heroSummary:
             "Speech, language, and generative models for audio and visual media.",
         topics: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
-        researchTopics: [
-            "Speech Synthesis",
-            "Speech Language Models",
-            "Generative Models",
-        ],
         href: "https://sites.google.com/view/speechailab",
         researchTitle: "Speech AI & Generative Models",
         researchSummary:
@@ -67,11 +56,6 @@ export const LABORATORIES = [
         summary:
             "Building robots that learn, adapt, and interact with people through foundation models for robotics, human-robot interaction, and lifelong learning.",
         topics: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
-        researchTopics: [
-            "Foundation Models for Robotics",
-            "Human-Robot Interaction",
-            "Lifelong Robot Learning",
-        ],
         href: "https://heilaboratory.github.io/",
         logo: HeiLogo,
         logoAlt: "HEI Lab logo",
@@ -91,12 +75,6 @@ export const LABORATORIES = [
         summary:
             "Research on recommendation systems, multimodal understanding, large language models, and federated learning.",
         topics: ["Recommendation", "Multimodal AI", "Large Language Models"],
-        researchTopics: [
-            "Recommendation Systems",
-            "Multimodal Understanding",
-            "Large Language Models",
-            "Federated Learning",
-        ],
         href: "https://iknow.ajou.ac.kr/",
         logo: IknowLogo,
         logoAlt: "iKnow Lab logo",

@@ -1,93 +1,93 @@
 import { LABORATORIES } from "./laboratories";
+import VisionPerceptionImage from "../assets/images/home_research/vision-perception.webp";
+import MultimodalUnderstandingImage from "../assets/images/home_research/multimodal-understanding.webp";
+import LearningFoundationModelsImage from "../assets/images/home_research/learning-foundation-models.webp";
+import SpeechLanguageImage from "../assets/images/home_research/speech-language.webp";
+import GenerativeMediaImage from "../assets/images/home_research/generative-media.webp";
+import EmbodiedIntelligenceImage from "../assets/images/home_research/embodied-intelligence.webp";
+import HumanCenteredAiImage from "../assets/images/home_research/human-centered-ai.webp";
+import KnowledgeRecommendationImage from "../assets/images/home_research/knowledge-recommendation.webp";
+import AppliedAiImage from "../assets/images/home_research/applied-ai.webp";
 
 const labsByKey = Object.fromEntries(
     LABORATORIES.map((lab) => [lab.key, lab]),
 );
 
-const makeArea = (labKey, title, summary) => {
-    const lab = labsByKey[labKey];
+const makeArea = (id, title, summary, labKeys, image) => ({
+    id,
+    title,
+    summary,
+    image,
+    labs: labKeys.map((key) => ({
+        key,
+        label: labsByKey[key].shortName,
+    })),
+});
 
-    return {
-        id: `${labKey}-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
-        lab: lab.shortName,
-        labKey,
-        title,
-        summary,
-        image: lab.homeResearchImage,
-    };
-};
-
-// Home is for discovery: each card represents one research direction while
-// the longer Research page remains the destination for expanded context.
+// The Home page groups related work across laboratories. The detailed Research
+// page remains the destination for individual areas and longer descriptions.
 export const HOME_RESEARCH_AREAS = [
     makeArea(
-        "cvl",
-        "Computer Vision & Learning Algorithms",
-        "Visual recognition, large-scale models, and learning algorithms for reliable perception.",
+        "vision-perception",
+        "Vision & Perception",
+        "Reliable visual understanding, representation learning, and perception across real-world environments.",
+        ["cvl", "iknow"],
+        VisionPerceptionImage,
     ),
     makeArea(
-        "cvl",
-        "Efficient Learning for LLMs",
-        "Model compression and efficient learning methods for capable language models.",
-    ),
-    makeArea(
-        "cvl",
-        "Robot Learning",
-        "Vision-language-action learning and perception for robots in the physical world.",
-    ),
-    makeArea(
-        "cvl",
-        "Industrial & Medical AI",
-        "Learning systems for industrial inspection, biomedical data, and real-world deployment.",
-    ),
-    makeArea(
-        "sail",
-        "Speech Synthesis",
-        "Expressive speech generation, text-to-speech, and voice conversion.",
-    ),
-    makeArea(
-        "sail",
-        "Speech Language Models",
-        "Speech-to-speech translation, speech editing, and language-aware audio intelligence.",
-    ),
-    makeArea(
-        "sail",
-        "Generative Audio & Media",
-        "Audio generation and talking-head generation across multimodal media.",
-    ),
-    makeArea(
-        "hei",
-        "Foundation Models for Robotics",
-        "Generalizable models that transfer robot skills across tasks and environments.",
-    ),
-    makeArea(
-        "hei",
-        "Human-Robot Interaction",
-        "Natural collaboration, shared autonomy, and interaction between people and robots.",
-    ),
-    makeArea(
-        "hei",
-        "Lifelong Robot Learning",
-        "Robots that continuously acquire skills and adapt through real-world interaction.",
-    ),
-    makeArea(
-        "iknow",
-        "Recommendation Systems",
-        "Personalized recommendation and intelligent knowledge systems.",
-    ),
-    makeArea(
-        "iknow",
+        "multimodal-understanding",
         "Multimodal Understanding",
-        "Learning from interconnected language, vision, and structured information.",
+        "Methods that connect visual, audio, language, and structured information to reason across modalities.",
+        ["cvl", "sail", "iknow"],
+        MultimodalUnderstandingImage,
     ),
     makeArea(
-        "iknow",
-        "Large Language Models",
-        "Knowledge-aware language models for reasoning and intelligent assistance.",
+        "learning-foundation-models",
+        "Learning Systems & Foundation Models",
+        "Efficient, scalable, and generalizable learning systems for language, vision, and physical intelligence.",
+        ["cvl", "hei", "iknow"],
+        LearningFoundationModelsImage,
     ),
     makeArea(
-        "iknow",
-        "Federated Learning",
-        "Privacy-conscious distributed learning across data and devices.",
+        "speech-language-ai",
+        "Speech & Language AI",
+        "Speech synthesis, spoken-language modeling, translation, and knowledge-aware language intelligence.",
+        ["sail", "iknow"],
+        SpeechLanguageImage,
+    ),
+    makeArea(
+        "generative-media",
+        "Generative Media",
+        "Generative methods for audio, video, visual content, and interactive multimodal media.",
+        ["cvl", "sail"],
+        GenerativeMediaImage,
+    ),
+    makeArea(
+        "embodied-intelligence",
+        "Embodied Intelligence & Robot Learning",
+        "Vision-language-action learning and adaptable robot skills for interaction in the physical world.",
+        ["cvl", "hei"],
+        EmbodiedIntelligenceImage,
+    ),
+    makeArea(
+        "human-centered-ai",
+        "Human-Centered AI",
+        "Human-aware systems that collaborate, communicate, and adapt to people in practical settings.",
+        ["sail", "hei", "iknow"],
+        HumanCenteredAiImage,
+    ),
+    makeArea(
+        "knowledge-recommendation",
+        "Knowledge, Recommendation & Personalization",
+        "Personalized and knowledge-centered intelligence for recommendation, retrieval, and assistance.",
+        ["iknow"],
+        KnowledgeRecommendationImage,
+    ),
+    makeArea(
+        "applied-ai",
+        "Applied AI for Industry & Health",
+        "Robust AI methods for industrial inspection, biomedical data, and dependable real-world deployment.",
+        ["cvl", "hei"],
+        AppliedAiImage,
     ),
 ];

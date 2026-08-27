@@ -400,10 +400,6 @@
     transition: transform 700ms cubic-bezier(0.2, 0.72, 0.18, 1);
 }
 
-.home-research-index__card--hei .home-research-index__media img {
-    object-position: center 32%;
-}
-
 .home-research-index__card:hover .home-research-index__media img {
     transform: scale(1.035);
 }
@@ -420,15 +416,27 @@
     padding: clamp(1.1rem, 1.8vw, 1.55rem);
 }
 
-.home-research-index__copy p {
+.home-research-index__labs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0;
     margin: 0;
+    padding: 0;
     color: #67635b;
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: clamp(0.94rem, 1.05vw, 1rem);
     font-weight: 700;
     letter-spacing: 0.09em;
     line-height: 1.35;
+    list-style: none;
     text-transform: uppercase;
+}
+
+.home-research-index__labs li + li {
+    margin-left: 0.62rem;
+    padding-left: 0.62rem;
+    border-left: 1px solid #aaa69d;
 }
 
 .home-research-index__copy h3 {

@@ -266,13 +266,17 @@ function Home() {
                     {orderedResearchAreas.map((area) => (
                         <Link
                             key={area.id}
-                            className={`home-research-index__card home-research-index__card--${area.labKey}`}
+                            className="home-research-index__card"
                             to="/research">
                             <figure className="home-research-index__media">
                                 <img src={area.image} alt="" loading="lazy" decoding="async" />
                             </figure>
                             <div className="home-research-index__copy">
-                                <p>{area.lab}</p>
+                                <ul className="home-research-index__labs" aria-label="Participating laboratories">
+                                    {area.labs.map((lab) => (
+                                        <li key={lab.key}>{lab.label}</li>
+                                    ))}
+                                </ul>
                                 <h3>{area.title}</h3>
                                 <span>{area.summary}</span>
                             </div>

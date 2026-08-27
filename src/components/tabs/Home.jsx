@@ -66,7 +66,7 @@ function Home() {
     const newsRailRef = useRef(null);
     const publicationRailRef = useRef(null);
     const researchRailRef = useRef(null);
-    const newsItems = useMemo(() => getLatestNewsItems(5), []);
+    const newsItems = useMemo(() => getLatestNewsItems(8), []);
     const orderedResearchAreas = useMemo(
         () => shuffleItems(HOME_RESEARCH_AREAS),
         [],
@@ -75,7 +75,7 @@ function Home() {
         () => getPublicationYearSnapshot(),
         [],
     );
-    const latestPublications = useMemo(() => getLatestPublications(5), []);
+    const latestPublications = useMemo(() => getLatestPublications(8), []);
 
     const moveRail = (targetRef, direction) => {
         const rail = targetRef.current;

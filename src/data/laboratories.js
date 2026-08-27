@@ -27,6 +27,24 @@ export const LABORATORIES = [
         researchDescription:
             "We develop robust visual recognition and representation-learning methods that remain reliable across changing environments and real-world data.",
         themes: ["Visual Recognition", "Representation Learning", "Robust AI"],
+        researchDetails: [
+            {
+                title: "Computer Vision & Learning Algorithms",
+                items: ["Visual Recognition", "Large-scale Models", "Meta Learning"],
+            },
+            {
+                title: "Efficient Learning for LLMs",
+                items: ["Model Compression", "Efficient Learning", "System-level Optimization"],
+            },
+            {
+                title: "Robot Learning",
+                items: ["Vision-Language-Action", "Efficient Robotics", "3D Recognition"],
+            },
+            {
+                title: "Industrial & Medical AI",
+                items: ["Battery AI", "Fault Detection", "Medical AI"],
+            },
+        ],
         homeResearchImage: VisionLearningImage,
         researchImage: VisionImage,
     },
@@ -46,6 +64,20 @@ export const LABORATORIES = [
         researchDescription:
             "We study speech synthesis, speech language models, and generative approaches for audio, talking-head, and video generation.",
         themes: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
+        researchDetails: [
+            {
+                title: "Speech Synthesis",
+                items: ["Text-to-Speech", "Voice Conversion", "Neural Vocoder"],
+            },
+            {
+                title: "Speech Language Models",
+                items: ["Neural Codec", "Speech-to-Speech Translation", "Speech Editing"],
+            },
+            {
+                title: "Generative AI",
+                items: ["Audio Generation", "Talking Head Generation", "Video Generation"],
+            },
+        ],
         homeResearchImage: SpeechGenerativeImage,
         researchImage: SpeechImage,
     },
@@ -65,6 +97,20 @@ export const LABORATORIES = [
         researchDescription:
             "We build adaptive robots through foundation models, human-robot interaction, and lifelong learning in changing physical environments.",
         themes: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
+        researchDetails: [
+            {
+                title: "Foundation Models for Robotics",
+                items: ["Task Generalization", "Cross-environment Adaptation"],
+            },
+            {
+                title: "Human-Robot Interaction",
+                items: ["Natural Collaboration", "Shared Autonomy"],
+            },
+            {
+                title: "Lifelong Robot Learning",
+                items: ["Continuous Skill Acquisition", "Interactive Adaptation"],
+            },
+        ],
         homeResearchImage: EmbodiedIntelligenceImage,
         researchImage: RoboticsImage,
     },
@@ -84,6 +130,24 @@ export const LABORATORIES = [
         researchDescription:
             "We explore recommendation systems, multimodal understanding, large language models, and federated learning for intelligent knowledge systems.",
         themes: ["Recommendation", "Multimodal AI", "Large Language Models"],
+        researchDetails: [
+            {
+                title: "Recommendation Systems",
+                items: ["Personalization", "Intelligent Knowledge Systems"],
+            },
+            {
+                title: "Multimodal Understanding",
+                items: ["Multimodal Representation", "Cross-modal Reasoning"],
+            },
+            {
+                title: "Large Language Models",
+                items: ["Knowledge-aware Language Intelligence", "Reasoning"],
+            },
+            {
+                title: "Federated Learning",
+                items: ["Distributed Learning", "Privacy-conscious AI"],
+            },
+        ],
         homeResearchImage: KnowledgeAiImage,
         researchImage: KnowledgeImage,
     },

@@ -57,7 +57,7 @@ export const HOME_RESEARCH_AREAS = [
     ),
     makeArea(
         "generative-media",
-        "Generative Media",
+        "Generative AI",
         "Generative methods for audio, video, visual content, and interactive multimodal media.",
         ["cvl", "sail"],
         GenerativeMediaImage,

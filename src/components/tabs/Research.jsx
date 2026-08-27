@@ -18,8 +18,7 @@ function Research() {
 
             <section className="aaig-research__areas" aria-labelledby="research-area-details-title">
                 <div className="aaig-research__head">
-                    <p>AAIG RESEARCH AREAS</p>
-                    <h2 id="research-area-details-title">Four Perspectives on Artificial Intelligence</h2>
+                    <h2 id="research-area-details-title">Research by Laboratory</h2>
                 </div>
 
                 <div className="aaig-research__grid">
@@ -42,11 +41,14 @@ function Research() {
                                 <p className="aaig-research__lab">{area.shortName}</p>
                                 <h3>{area.researchTitle}</h3>
                                 <p>{area.researchDescription}</p>
-                                <ul aria-label={`${area.researchTitle} themes`}>
-                                    {area.themes.map((theme) => (
-                                        <li key={theme}>{theme}</li>
+                                <dl className="aaig-research__details">
+                                    {area.researchDetails.map((detail) => (
+                                        <div key={detail.title}>
+                                            <dt>{detail.title}</dt>
+                                            <dd>{detail.items.join(" / ")}</dd>
+                                        </div>
                                     ))}
-                                </ul>
+                                </dl>
                                 <a href={area.href} target="_blank" rel="noreferrer">
                                     Visit {area.shortName} ↗
                                 </a>

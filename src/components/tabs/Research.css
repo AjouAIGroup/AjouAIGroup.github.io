@@ -14,16 +14,6 @@
     max-width: 43rem;
 }
 
-.aaig-research__lab {
-    margin: 0;
-    color: #67635b;
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    line-height: 1.35;
-}
-
 .aaig-research__head h2,
 .aaig-research__copy h3 {
     margin: 0;
@@ -46,7 +36,8 @@
 
 .aaig-research__card {
     display: grid;
-    gap: 1.2rem;
+    grid-template-rows: auto minmax(0, 1fr);
+    row-gap: clamp(1.45rem, 2vw, 1.7rem);
     min-width: 0;
     padding-top: 1rem;
     border-top: 1px solid var(--editorial-rule, rgba(23, 23, 23, 0.13));
@@ -76,6 +67,43 @@
     display: grid;
     gap: 0.75rem;
     align-content: start;
+    margin: 0;
+    padding: 0;
+}
+
+.aaig-research__identity {
+    display: flex;
+    align-items: center;
+    min-height: 2.85rem;
+    margin: 0;
+}
+
+.aaig-research__lab-logo {
+    display: block;
+    width: clamp(6rem, 11vw, 8.5rem);
+    max-height: 2.85rem;
+    object-fit: contain;
+    object-position: left center;
+    transform: scale(var(--research-logo-scale, 1));
+    transform-origin: left center;
+}
+
+.aaig-research__identity--hei {
+    --research-logo-scale: 0.86;
+}
+
+.aaig-research__identity--iknow {
+    --research-logo-scale: 1.32;
+}
+
+.aaig-research__lab-wordmark {
+    margin: 0;
+    color: #171717;
+    font-family: var(--font-sans);
+    font-size: clamp(2.25rem, 4vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.1em;
+    line-height: 0.8;
 }
 
 .aaig-research__copy h3 {
@@ -83,7 +111,7 @@
     line-height: 0.98;
 }
 
-.aaig-research__copy > p:not(.aaig-research__lab) {
+.aaig-research__copy > p {
     max-width: 37rem;
     margin: 0;
     color: #54514b;

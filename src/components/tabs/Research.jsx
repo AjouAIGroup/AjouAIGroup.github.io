@@ -38,7 +38,17 @@ function Research() {
                                 />
                             </figure>
                             <div className="aaig-research__copy">
-                                <p className="aaig-research__lab">{area.shortName}</p>
+                                <div className={`aaig-research__identity aaig-research__identity--${area.key}`}>
+                                    {area.logo ? (
+                                        <img
+                                            className="aaig-research__lab-logo"
+                                            src={area.logo}
+                                            alt={area.logoAlt}
+                                        />
+                                    ) : (
+                                        <p className="aaig-research__lab-wordmark">{area.shortName}</p>
+                                    )}
+                                </div>
                                 <h3>{area.researchTitle}</h3>
                                 <p>{area.researchDescription}</p>
                                 <dl className="aaig-research__details">

@@ -36,6 +36,12 @@ const getCfpSubmissionMilestones = (venue) =>
         CFP_SUBMISSION_KINDS.has(milestone.kind),
     );
 
+const getNextUpcomingMilestone = (venue, now) =>
+    venue.milestones?.find((milestone) => {
+        const deadline = asDate(milestone.deadline_at);
+        return deadline && deadline > now;
+    }) ?? null;
+
 export const getVenueStatusMeta = (status) =>
     DEADLINE_STATUS_META[status] ?? {
         label: "Source status unavailable",
@@ -61,16 +67,12 @@ export const getAllVenues = () =>
         });
 
 export const getDefaultMilestoneId = (venue, now = new Date()) => {
-    const submissionMilestones = getCfpSubmissionMilestones(venue);
-    const nextSubmissionMilestone = submissionMilestones.find((milestone) => {
-        const deadline = asDate(milestone.deadline_at);
-        return deadline && deadline > now;
-    });
-
-    if (nextSubmissionMilestone) {
-        return nextSubmissionMilestone.id;
+    const nextMilestone = getNextUpcomingMilestone(venue, now);
+    if (nextMilestone) {
+        return nextMilestone.id;
     }
 
+    const submissionMilestones = getCfpSubmissionMilestones(venue);
     const mostRecentSubmissionMilestone = submissionMilestones
         .filter((milestone) => {
             const deadline = asDate(milestone.deadline_at);
@@ -82,12 +84,7 @@ export const getDefaultMilestoneId = (venue, now = new Date()) => {
         return mostRecentSubmissionMilestone.id;
     }
 
-    const nextMilestone = venue.milestones?.find((milestone) => {
-        const deadline = asDate(milestone.deadline_at);
-        return deadline && deadline > now;
-    });
-
-    return nextMilestone?.id ?? venue.milestones?.[0]?.id ?? null;
+    return venue.milestones?.at(-1)?.id ?? null;
 };
 
 export const getVenueCfpState = (venue, now = new Date()) => {
@@ -98,14 +95,28 @@ export const getVenueCfpState = (venue, now = new Date()) => {
             : { label: "Submission dates unavailable", tone: "review" };
     }
 
-    const hasUpcomingSubmission = milestones.some((milestone) => {
-        const deadline = asDate(milestone.deadline_at);
-        return deadline && deadline > now;
-    });
+    const nextMilestone = getNextUpcomingMilestone(venue, now);
+    if (!nextMilestone) {
+        return { label: "Main CFP closed", tone: "closed" };
+    }
 
-    return hasUpcomingSubmission
-        ? { label: "Main CFP open", tone: "open" }
-        : { label: "Main CFP closed", tone: "closed" };
+    if (CFP_SUBMISSION_KINDS.has(nextMilestone.kind)) {
+        return { label: "Main CFP open", tone: "open" };
+    }
+
+    if (nextMilestone.kind === "notification") {
+        return { label: "Decision pending", tone: "in-progress" };
+    }
+
+    if (nextMilestone.kind === "review" || nextMilestone.kind === "rebuttal") {
+        return { label: "Review in progress", tone: "in-progress" };
+    }
+
+    if (nextMilestone.kind === "camera-ready") {
+        return { label: "Camera-ready pending", tone: "in-progress" };
+    }
+
+    return { label: "Schedule in progress", tone: "in-progress" };
 };
 
 export const formatDeadlineInDisplayTimezone = (deadlineAt) => {

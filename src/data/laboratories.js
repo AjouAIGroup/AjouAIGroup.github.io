@@ -5,7 +5,7 @@ import VisionLearningImage from "../assets/images/research_areas/aaig-vision-lea
 import SpeechGenerativeImage from "../assets/images/research_areas/aaig-speech-generative.webp";
 import EmbodiedIntelligenceImage from "../assets/images/research_areas/aaig-embodied-intelligence.webp";
 import KnowledgeAiImage from "../assets/images/research_areas/aaig-knowledge-ai.webp";
-import CvlResearchImage from "../assets/images/research_labs/cvl-research.webp";
+import CvlResearchImage from "../assets/images/research_labs/cvl-research-v2.webp";
 import SailResearchImage from "../assets/images/research_labs/sail-research.webp";
 import HeiResearchImage from "../assets/images/research_labs/hei-research.webp";
 import IknowResearchImage from "../assets/images/research_labs/iknow-research.webp";

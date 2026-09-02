@@ -244,7 +244,13 @@ const getVenueShortName = (venue = "") => {
         new RegExp(`\\b${name}\\b`, "i").test(normalizedVenue),
     );
 
-    return knownVenue || normalizedVenue || "Other";
+    // The home snapshot is a venue comparison, not a bibliography. Keep a
+    // single display rule even for venues outside the curated abbreviation list.
+    const venueWithoutYear = normalizedVenue
+        .replace(/\s*[··-]?\s*20\d{2}\b.*$/u, "")
+        .trim();
+
+    return knownVenue || venueWithoutYear || "Other";
 };
 
 export const getPublicationYearSnapshot = (year = new Date().getFullYear()) => {

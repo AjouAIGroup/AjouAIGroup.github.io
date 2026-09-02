@@ -51,7 +51,7 @@ function AaigHero({ isHome }) {
                             </div>
                             <div className="aaig-hero__laboratory-copy">
                                 <p className="aaig-hero__laboratory-label">{lab.shortName}</p>
-                                <h2>{lab.name}</h2>
+                                <h2>{lab.heroTitle ?? lab.name}</h2>
                                 <p className="aaig-hero__laboratory-summary">{lab.heroSummary ?? lab.summary}</p>
                             </div>
                             <ul className="aaig-hero__laboratory-topics" aria-label={`${lab.shortName} research topics`}>

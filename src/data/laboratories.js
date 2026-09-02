@@ -17,6 +17,7 @@ export const LABORATORIES = [
         key: "cvl",
         shortName: "CVL Lab",
         name: "Computer Vision & Learning Lab",
+        heroTitle: "Computer Vision & Learning",
         summary:
             "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
         topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
@@ -54,6 +55,7 @@ export const LABORATORIES = [
         key: "sail",
         shortName: "SAIL",
         name: "Speech Artificial Intelligence Lab",
+        heroTitle: "Speech Artificial Intelligence",
         summary:
             "Research on speech synthesis, speech language models, and generative models for audio, talking-head, and video generation.",
         heroSummary:
@@ -87,6 +89,7 @@ export const LABORATORIES = [
         key: "hei",
         shortName: "HEI Lab",
         name: "Human-Centered Embodied Intelligence Lab",
+        heroTitle: "Human-Centered Embodied Intelligence",
         summary:
             "Building robots that learn, adapt, and interact with people through foundation models for robotics, human-robot interaction, and lifelong learning.",
         topics: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
@@ -120,6 +123,7 @@ export const LABORATORIES = [
         key: "iknow",
         shortName: "iKnow Lab",
         name: "intelligence and Knowledge Lab",
+        heroTitle: "Intelligence & Knowledge",
         summary:
             "Research on recommendation systems, multimodal understanding, large language models, and federated learning.",
         topics: ["Recommendation", "Multimodal AI", "Large Language Models"],
@@ -157,6 +161,7 @@ export const LABORATORIES = [
         key: "lamda",
         shortName: "LAMDA Lab",
         name: "Learning and Mining from DAta Lab",
+        heroTitle: "Learning & Mining from Data",
         summary:
             "Multimodal, self-supervised, explainable, and trustworthy AI for biomedical, social, and other real-world data.",
         heroSummary:

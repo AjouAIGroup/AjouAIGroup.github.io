@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import CvlPortrait from "../../assets/images/laboratories/cvl-jongbin-ryu.webp";
 import HeiPortrait from "../../assets/images/laboratories/hei-gicheon-kang.jpg";
 import IknowPortrait from "../../assets/images/laboratories/iknow-hyunsouk-cho.jpg";
+import LamdaPortrait from "../../assets/images/laboratories/lamda-kyung-ah-sohn.webp";
 import SailPortrait from "../../assets/images/laboratories/sail-sanghoon-lee.jpg";
 import { LABORATORIES } from "../../data/laboratories";
 import { STUDENT_REPRESENTATIVES } from "../../data/contactDirectory";
@@ -54,6 +55,18 @@ const FACULTY = [
             "Recommendation Systems · Multimodal Understanding · Large Language Models",
         href: "https://iknow.ajou.ac.kr/",
         portrait: IknowPortrait,
+    },
+    {
+        name: "Kyung-Ah Sohn",
+        koreanName: "손경아",
+        lab: "LAMDA Lab",
+        role: "Professor",
+        department:
+            "Departments of Software and Computer Engineering & Artificial Intelligence, Ajou University",
+        email: "kasohn@ajou.ac.kr",
+        interests: "Machine Learning · Data Mining · Biomedical Informatics",
+        href: "https://sites.google.com/site/kasohn/group",
+        portrait: LamdaPortrait,
     },
 ];
 

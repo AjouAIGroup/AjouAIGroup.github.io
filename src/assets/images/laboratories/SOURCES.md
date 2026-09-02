@@ -12,5 +12,7 @@ The assets in this directory were collected on 2026-08-24 from the official webs
 - iKnow Lab: [homepage](https://iknow.ajou.ac.kr/) and [Professor page](https://iknow.ajou.ac.kr/professor/)
   - `iknow-logo.png`, `iknow-research.webp`
   - `iknow-hyunsouk-cho.jpg` was updated from [Ajou University's official Department of Software faculty profile](https://software.ajou.ac.kr/bbs/board.php?tbl=professor).
+- LAMDA Lab: [official lab page](https://sites.google.com/site/kasohn/group)
+  - `lamda-kyung-ah-sohn.webp` was collected from [Ajou University's official Department of Software faculty profile](https://sw.ajou.ac.kr/sw/faculty/professor02.do).
 
 Replace or remove these images if a source laboratory updates its site, branding, or image-use guidance.

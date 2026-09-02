@@ -28,13 +28,20 @@
     z-index: -1;
     background:
         radial-gradient(
-            56% 38% at 17% 88%,
-            rgba(247, 244, 237, 0.72) 0%,
+            58% 66% at 13% 81%,
+            rgba(247, 244, 237, 0.92) 0%,
+            rgba(247, 244, 237, 0.7) 42%,
             rgba(247, 244, 237, 0) 100%
         ),
         linear-gradient(
+            90deg,
+            rgba(247, 244, 237, 0.46) 0%,
+            rgba(247, 244, 237, 0.18) 38%,
+            rgba(247, 244, 237, 0) 62%
+        ),
+        linear-gradient(
             180deg,
-            rgba(12, 15, 17, 0.08) 0%,
+            rgba(12, 15, 17, 0.04) 0%,
             rgba(12, 15, 17, 0.02) 48%,
             rgba(12, 15, 17, 0.22) 100%
         );
@@ -67,6 +74,7 @@
     font-weight: 400;
     letter-spacing: -0.06em;
     line-height: 0.77;
+    text-shadow: 0 1px 14px rgba(247, 244, 237, 0.62);
 }
 
 .aaig-hero__wordmark-intelligence {

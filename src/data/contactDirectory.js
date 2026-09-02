@@ -38,6 +38,17 @@ const CONTACT_DETAILS = {
         studentProfile:
             "The laboratory will add its preferred background, skills, and research interests here.",
     },
+    lamda: {
+        contactName: "Kyung-Ah Sohn",
+        contactRole: "Professor",
+        contactEmail: "kasohn@ajou.ac.kr",
+        guidance:
+            "Review the lab's work in multimodal learning, trustworthy AI, and biomedical or social data. Send a concise email with your CV, research interests, and relevant academic background.",
+        note:
+            "LAMDA currently recruits graduate students through the Department of Artificial Intelligence.",
+        studentProfile:
+            "The laboratory will add its preferred background, skills, and research interests here.",
+    },
 };
 
 export const CONTACT_LABS = LABORATORIES.map((lab) => ({
@@ -69,6 +80,13 @@ export const STUDENT_REPRESENTATIVES = [
     },
     {
         lab: "iKnow Lab",
+        name: "Student representative",
+        koreanName: "추후 안내",
+        role: "To be announced",
+        email: null,
+    },
+    {
+        lab: "LAMDA Lab",
         name: "Student representative",
         koreanName: "추후 안내",
         role: "To be announced",

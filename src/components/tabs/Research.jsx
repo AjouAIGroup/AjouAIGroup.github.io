@@ -11,7 +11,7 @@ function Research() {
             <header data-reveal className="tab-header page-head page-head--research">
                 <h1>Research</h1>
                 <p className="page-head__summary">
-                    AAIG connects four labs working across vision, speech,
+                    AAIG connects five labs working across vision, speech,
                     embodied intelligence, and knowledge-based AI.
                 </p>
             </header>

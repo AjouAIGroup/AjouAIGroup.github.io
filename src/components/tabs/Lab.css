@@ -106,6 +106,15 @@
     line-height: 0.8 !important;
 }
 
+.app:not(.app--home) .main-content__body .lab-page__item--lamda p.lab-page__wordmark {
+    padding: 0.12em 0 0.18em;
+    font-family: var(--font-sans) !important;
+    font-size: clamp(2.4rem, 4.5vw, 4.1rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.085em !important;
+    line-height: 0.82 !important;
+}
+
 .lab-page__item h3,
 .lab-page__faculty-card h3,
 .lab-page__representative h3 {

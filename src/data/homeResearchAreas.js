@@ -8,6 +8,7 @@ import EmbodiedIntelligenceImage from "../assets/images/home_research/embodied-i
 import HumanCenteredAiImage from "../assets/images/home_research/human-centered-ai.webp";
 import KnowledgeRecommendationImage from "../assets/images/home_research/knowledge-recommendation.webp";
 import AppliedAiImage from "../assets/images/home_research/applied-ai.webp";
+import DataCentricTrustworthyAiImage from "../assets/images/home_research/data-centric-trustworthy-ai.webp";
 
 const labsByKey = Object.fromEntries(
     LABORATORIES.map((lab) => [lab.key, lab]),
@@ -31,21 +32,21 @@ export const HOME_RESEARCH_AREAS = [
         "vision-perception",
         "Vision & Perception",
         "Reliable visual understanding, representation learning, and perception across real-world environments.",
-        ["cvl", "iknow"],
+        ["cvl", "iknow", "lamda"],
         VisionPerceptionImage,
     ),
     makeArea(
         "multimodal-understanding",
         "Multimodal Understanding",
         "Methods that connect visual, audio, language, and structured information to reason across modalities.",
-        ["cvl", "sail", "iknow"],
+        ["cvl", "sail", "iknow", "lamda"],
         MultimodalUnderstandingImage,
     ),
     makeArea(
         "learning-foundation-models",
         "Learning Systems & Foundation Models",
         "Efficient, scalable, and generalizable learning systems for language, vision, and physical intelligence.",
-        ["cvl", "hei", "iknow"],
+        ["cvl", "hei", "iknow", "lamda"],
         LearningFoundationModelsImage,
     ),
     makeArea(
@@ -80,14 +81,21 @@ export const HOME_RESEARCH_AREAS = [
         "knowledge-recommendation",
         "Knowledge, Recommendation & Personalization",
         "Personalized and knowledge-centered intelligence for recommendation, retrieval, and assistance.",
-        ["iknow"],
+        ["iknow", "lamda"],
         KnowledgeRecommendationImage,
     ),
     makeArea(
         "applied-ai",
         "Applied AI for Industry & Health",
         "Robust AI methods for industrial inspection, biomedical data, and dependable real-world deployment.",
-        ["cvl", "hei"],
+        ["cvl", "hei", "lamda"],
         AppliedAiImage,
+    ),
+    makeArea(
+        "data-centric-trustworthy-ai",
+        "Data-Centric & Trustworthy AI",
+        "Explainable, robust, and efficient learning for heterogeneous data in biomedical, social, and practical settings.",
+        ["lamda", "cvl", "iknow"],
+        DataCentricTrustworthyAiImage,
     ),
 ];

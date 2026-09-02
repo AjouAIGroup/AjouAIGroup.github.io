@@ -9,6 +9,8 @@ import CvlResearchImage from "../assets/images/research_labs/cvl-research-v2.web
 import SailResearchImage from "../assets/images/research_labs/sail-research.webp";
 import HeiResearchImage from "../assets/images/research_labs/hei-research.webp";
 import IknowResearchImage from "../assets/images/research_labs/iknow-research.webp";
+import LamdaResearchImage from "../assets/images/research_labs/lamda-research.webp";
+import LamdaHomeResearchImage from "../assets/images/home_research/data-centric-trustworthy-ai.webp";
 
 export const LABORATORIES = [
     {
@@ -150,5 +152,42 @@ export const LABORATORIES = [
         ],
         homeResearchImage: KnowledgeAiImage,
         researchImage: IknowResearchImage,
+    },
+    {
+        key: "lamda",
+        shortName: "LAMDA Lab",
+        name: "Learning and Mining from DAta Lab",
+        summary:
+            "Multimodal, self-supervised, explainable, and trustworthy AI for biomedical, social, and other real-world data.",
+        heroSummary:
+            "Data-centric learning for multimodal, medical, and social intelligence.",
+        topics: ["Multimodal Learning", "Trustworthy AI", "Biomedical AI"],
+        href: "https://sites.google.com/site/kasohn/group",
+        researchTitle: "Data-Centric & Trustworthy AI",
+        researchSummary:
+            "Multimodal and self-supervised learning for reliable analysis of medical, social, and heterogeneous data.",
+        researchDescription:
+            "We develop multimodal, self-supervised, and explainable AI methods for trustworthy analysis of text, images, graphs, biosignals, and real-world data.",
+        themes: ["Multimodal Learning", "Trustworthy AI", "Biomedical AI"],
+        researchDetails: [
+            {
+                title: "Multimodal & Self-Supervised Learning",
+                items: ["Representation Learning", "Cross-modal Integration"],
+            },
+            {
+                title: "Trustworthy AI",
+                items: ["Explainability", "Robustness", "Safety"],
+            },
+            {
+                title: "Medical & Social Data AI",
+                items: ["Biomedical Informatics", "Network Analysis"],
+            },
+            {
+                title: "Efficient Language Models",
+                items: ["LLM Efficiency", "Real-world Deployment"],
+            },
+        ],
+        homeResearchImage: LamdaHomeResearchImage,
+        researchImage: LamdaResearchImage,
     },
 ];

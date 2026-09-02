@@ -201,7 +201,7 @@ function Home() {
             aria-labelledby="home-publication-title">
             <div className="home-publication-index__intro">
                 <h2 id="home-publication-title">Publications</h2>
-                <p>Recent work from the four AAIG laboratories.</p>
+                <p>Recent work from the five AAIG laboratories.</p>
                 <div className="home-publication-index__actions">
                     <Link className="home-publication-index__link" to="/publication">
                         View all publications ↗

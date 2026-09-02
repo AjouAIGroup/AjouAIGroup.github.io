@@ -92,7 +92,7 @@ function Lab() {
             <header data-reveal className="tab-header page-head page-head--lab">
                 <h1>Laboratories</h1>
                 <p className="page-head__summary">
-                    AAIG brings together four research labs working across
+                    AAIG brings together five research labs working across
                     vision, speech, embodied intelligence, and knowledge-based
                     AI.
                 </p>
@@ -101,7 +101,7 @@ function Lab() {
             <section className="lab-page__directory" aria-labelledby="lab-directory-title">
                 <div className="lab-page__directory-head">
                     <p className="lab-page__eyebrow">AAIG LAB DIRECTORY</p>
-                    <h2 id="lab-directory-title">Four Labs, One Research Community</h2>
+                    <h2 id="lab-directory-title">Five Labs, One Research Community</h2>
                 </div>
 
                 <div className="lab-page__grid">

@@ -1,12 +1,12 @@
 {
   "meta": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-26T05:18:08.032Z",
+    "generated_at": "2026-09-02T04:01:40.013Z",
     "source": "content/publications",
     "categories": [
+      "computer_vision_and_learning_algorithms",
       "robot_learning",
       "efficient_learning_for_llms",
-      "computer_vision_and_learning_algorithms",
       "industrial_and_medical_ai"
     ],
     "statuses": [
@@ -16,6 +16,122 @@
     ]
   },
   "items": [
+    {
+      "id": "cvl-publications-colla-q-toward-collaborative-experts-in-moe-quantization-via-minimax-precision-balancing",
+      "key": "cvl-publications-colla-q-toward-collaborative-experts-in-moe-quantization-via-minimax-precision-balancing",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Colla-Q: Toward Collaborative Experts in MoE Quantization via Minimax Precision Balancing",
+      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "EunJu Shin, Jongbin Ryu",
+        "published_place": "EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "CVL Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://cvl-lab.github.io/publication/",
+        "source_code_link": "",
+        "paper_link": "https://cvl-lab.github.io/publication/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "cvl-publications-layer-wise-curriculum-learning-for-efficient-llm-compression",
+      "key": "cvl-publications-layer-wise-curriculum-learning-for-efficient-llm-compression",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Layer-wise Curriculum Learning for Efficient LLM Compression",
+      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Donggeon Lee, Dooyeon Na, Seungmin Oh, Jongbin Ryu",
+        "published_place": "EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "CVL Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://cvl-lab.github.io/publication/",
+        "source_code_link": "",
+        "paper_link": "https://cvl-lab.github.io/publication/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "cvl-publications-re-calibrated-contrastive-loss-for-transformation-aware-prompt-conditioning-in-vision-language-models",
+      "key": "cvl-publications-re-calibrated-contrastive-loss-for-transformation-aware-prompt-conditioning-in-vision-language-models",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Re-calibrated Contrastive Loss for Transformation-Aware Prompt Conditioning in Vision-Language Models",
+      "summary": "BMVC 2026 publication from CVL Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seungmin Oh, Seunghun Kang, Jongbin Ryu",
+        "published_place": "BMVC 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "CVL Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://cvl-lab.github.io/publication/",
+        "source_code_link": "",
+        "paper_link": "https://cvl-lab.github.io/publication/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "cvl-publications-train-overcomplete-deploy-compact-scaling-recovery-capacity-for-structured-llm-pruning",
+      "key": "cvl-publications-train-overcomplete-deploy-compact-scaling-recovery-capacity-for-structured-llm-pruning",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Train Overcomplete, Deploy Compact: Scaling Recovery Capacity for Structured LLM Pruning",
+      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seungmin Oh, Donggeon Lee, Jongbin Ryu",
+        "published_place": "EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "CVL Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://cvl-lab.github.io/publication/",
+        "source_code_link": "",
+        "paper_link": "https://cvl-lab.github.io/publication/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
     {
       "id": "hei-2026-microvla",
       "key": "hei-2026-microvla",
@@ -166,6 +282,122 @@
         "project_link": "https://iknow.ajou.ac.kr/publications/",
         "source_code_link": "",
         "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "lamda-publications-dual-freqdae-frequency-aware-dual-branch-transformer-autoencoder-for-ecg-denoising-in-mixed-noise-conditions",
+      "key": "lamda-publications-dual-freqdae-frequency-aware-dual-branch-transformer-autoencoder-for-ecg-denoising-in-mixed-noise-conditions",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Dual-FreqDAE: Frequency-aware dual-branch transformer autoencoder for ECG denoising in mixed noise conditions",
+      "summary": "BSPC 2026 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Dong-Hun Choi, Jeong-Hyeon Moon, Kyung-Ah Sohn",
+        "published_place": "BSPC 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://www.sciencedirect.com/science/article/pii/S1746809426014783?dgcid=author",
+        "source_code_link": "",
+        "paper_link": "https://www.sciencedirect.com/science/article/pii/S1746809426014783?dgcid=author"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "lamda-publications-empathy-is-steerable-but-multi-axial-mechanism-geometry-and-persona-effects-in-llms",
+      "key": "lamda-publications-empathy-is-steerable-but-multi-axial-mechanism-geometry-and-persona-effects-in-llms",
+      "category": "efficient_learning_for_llms",
+      "status": "working",
+      "title": "Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs",
+      "summary": "EMNLP 2026 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "JuHeon Ha, Byounghan Lee, Yunseo Choi, Kyung-Ah Sohn",
+        "published_place": "EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://sites.google.com/",
+        "source_code_link": "",
+        "paper_link": "https://sites.google.com/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "lamda-publications-neuronetfusion-enhanced-eeg-abnormality-classification-via-multi-network-tf-idf-feature-selection",
+      "key": "lamda-publications-neuronetfusion-enhanced-eeg-abnormality-classification-via-multi-network-tf-idf-feature-selection",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "NeuroNetFusion: enhanced EEG abnormality classification via multi-network TF-IDF feature selection",
+      "summary": "Sci Rep 2026 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Sangjin Ahn, So Yeon Kim † & Kyung-Ah Sohn †",
+        "published_place": "Sci Rep 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://doi.org/10.1038/s41598-026-52750-x",
+        "source_code_link": "",
+        "paper_link": "https://doi.org/10.1038/s41598-026-52750-x"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "lamda-publications-semi-supervised-fatty-liver-classification-using-attention-based-graph-neural-network-models",
+      "key": "lamda-publications-semi-supervised-fatty-liver-classification-using-attention-based-graph-neural-network-models",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Semi-Supervised Fatty Liver Classification Using Attention-Based Graph Neural Network Models",
+      "summary": "JKMS 2026 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "So Yeon Kim † , Sehee Wang † , Kyung-Ah Sohn * , Eun Kyung Choe *",
+        "published_place": "JKMS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://jkms.org/DOIx.php?id=10.3346/jkms.2026.41.e30",
+        "source_code_link": "",
+        "paper_link": "https://jkms.org/DOIx.php?id=10.3346/jkms.2026.41.e30"
       },
       "content": {
         "problem": "",
@@ -480,6 +712,35 @@
         "project_link": "https://iknow.ajou.ac.kr/publications/",
         "source_code_link": "",
         "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "lamda-publications-evaluation-of-multi-agent-llms-in-multidisciplinary-team-decision-making-for-challenging-cancer-cases",
+      "key": "lamda-publications-evaluation-of-multi-agent-llms-in-multidisciplinary-team-decision-making-for-challenging-cancer-cases",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Evaluation of Multi-Agent LLMs in Multidisciplinary Team Decision-Making for Challenging Cancer Cases",
+      "summary": "MLHC 2025 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jaesik Kim, Byounghan Lee, Kyung-Ah Sohn, Dokyoon Kim, Young Chan Lee",
+        "published_place": "MLHC 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://proceedings.mlr.press/v298/kim25a.html",
+        "source_code_link": "",
+        "paper_link": "https://proceedings.mlr.press/v298/kim25a.html"
       },
       "content": {
         "problem": "",
@@ -922,6 +1183,35 @@
         "project_link": "https://iknow.ajou.ac.kr/publications/",
         "source_code_link": "",
         "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "lamda-publications-regularization-using-noise-samples-identified-by-the-feature-norm-for-face-recognition",
+      "key": "lamda-publications-regularization-using-noise-samples-identified-by-the-feature-norm-for-face-recognition",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Regularization Using Noise Samples Identified by the Feature Norm for Face Recognition",
+      "summary": "IEEE Access 2024 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Taeseong Gim and Kyung-Ah Sohn",
+        "published_place": "IEEE Access 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/document/10662963",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/document/10662963"
       },
       "content": {
         "problem": "",

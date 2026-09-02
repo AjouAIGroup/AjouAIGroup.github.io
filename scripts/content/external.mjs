@@ -40,6 +40,9 @@ const VENUE_ALIASES = [
     ["IEEE Transactions on Knowledge and Data Engineering", "TKDE"],
     ["IEEE Access", "IEEE Access"],
     ["Scientific Reports", "Sci Rep"],
+    ["Biomedical Signal Processing and Control", "BSPC"],
+    ["Journal of Korean Medical Science", "JKMS"],
+    ["Machine Learning for Healthcare", "MLHC"],
     ["Medical Image Analysis", "MedIA"],
     ["British Machine Vision Conference", "BMVC"],
     ["Asian Conference on Computer Vision", "ACCV"],
@@ -155,7 +158,16 @@ const cleanVenue = (value, year) => {
     return `${matched[1]}${workshopSuffix} ${sourceYear}`;
 };
 
-const publicationItem = ({ source, title, authors, venueText, year, url }) => {
+const publicationItem = ({
+    source,
+    title,
+    authors,
+    venueText,
+    year,
+    url,
+    category = source.category,
+    status = "published",
+}) => {
     const publicationYear = String(year);
     const venue = cleanVenue(venueText, publicationYear);
     if (!title || !authors || !venue || !/^20\d{2}$/.test(publicationYear)) {
@@ -164,8 +176,8 @@ const publicationItem = ({ source, title, authors, venueText, year, url }) => {
     const normalizedUrl = normalizeHttpUrl(url || source.url) || source.url;
     return {
         id: `${source.id}-${normalizeSlug(title)}`,
-        category: source.category,
-        status: "published",
+        category,
+        status,
         title,
         summary: `${venue} publication from ${source.lab}.`,
         featured: false,
@@ -274,11 +286,129 @@ const parseCvlNews = (html, source) => {
     }).filter(Boolean);
 };
 
+const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const getGoogleSitesSection = (html, heading) => {
+    const source = String(html);
+    const headingMatch = source.match(
+        new RegExp(`<h[1-6]\\b[^>]*>[\\s\\S]*?${escapeRegExp(heading)}[\\s\\S]*?<\\/h[1-6]>`, "i"),
+    );
+    if (!headingMatch || headingMatch.index === undefined) {
+        return "";
+    }
+    const remainder = source.slice(headingMatch.index + headingMatch[0].length);
+    const nextHeading = remainder.search(/<h[1-6]\b/i);
+    return nextHeading >= 0 ? remainder.slice(0, nextHeading) : remainder;
+};
+
+const getGoogleSiteParagraphs = (html) => [
+    ...String(html).matchAll(/<p\b[^>]*class=["'][^"']*\bCDt4Ke\b[^"']*["'][^>]*>([\s\S]*?)<\/p>/gi),
+].map((match) => htmlToText(match[1])).filter(Boolean);
+
+const getGoogleSiteListItems = (html) => [
+    ...String(html).matchAll(/<li\b[^>]*class=["'][^"']*\blsiHE\b[^"']*["'][^>]*>([\s\S]*?)<\/li>/gi),
+].map((match) => match[1]);
+
+const firstAnchor = (html) => {
+    const match = String(html).match(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
+    return {
+        index: match?.index ?? -1,
+        html: match?.[0] ?? "",
+        text: htmlToText(match?.[2] ?? ""),
+        url: absoluteUrl(match?.[1] ?? "", "https://sites.google.com/"),
+    };
+};
+
+const lamdaCategory = (venue) =>
+    /EMNLP|ACL|COLING|LREC|WASSA/i.test(venue)
+        ? "efficient_learning_for_llms"
+        : "industrial_and_medical_ai";
+
+const parseLamdaPublications = (html, source) =>
+    getGoogleSiteListItems(html)
+        .map((record) => {
+            const text = htmlToText(record);
+            const years = [...text.matchAll(/\b(20\d{2})\b/g)].map((match) => Number(match[1]));
+            const year = years.at(-1);
+            if (!year || year < Number(source.min_year || 0)) {
+                return null;
+            }
+
+            const anchor = firstAnchor(record);
+            let title = anchor.text;
+            let authors = "";
+            let venueText = "";
+
+            if (title && anchor.index >= 0) {
+                authors = htmlToText(record.slice(0, anchor.index))
+                    .replace(/^\s*\d+\.\s*/, "")
+                    .replace(/[.,\s]+$/, "");
+                venueText = htmlToText(record.slice(anchor.index + anchor.html.length));
+            } else {
+                const accepted = text.match(
+                    /^\s*(?:\d+\.\s*)?(.+?)\.\s*(.+?)\.\s*(The\s+20\d{2}\s+Conference[\s\S]+)$/i,
+                );
+                authors = accepted?.[1] ?? "";
+                title = accepted?.[2] ?? "";
+                venueText = accepted?.[3] ?? "";
+            }
+
+            return publicationItem({
+                source,
+                title,
+                authors,
+                venueText,
+                year,
+                url: anchor.url || source.url,
+                category: lamdaCategory(venueText),
+                status: /\baccepted\b/i.test(venueText) ? "working" : "published",
+            });
+        })
+        .filter(Boolean);
+
+const parseLamdaNews = (html, source) => {
+    const section = getGoogleSitesSection(html, "News");
+    return getGoogleSiteParagraphs(section)
+        .map((rawTitle) => {
+            const title = rawTitle
+                .replace(/(\d{3})\s+(\d)/g, "$1$2")
+                .replace(/(\d)\s+(\d)/g, "$1$2")
+                .replace(/\s*\.\s*/g, ".");
+            const dateMatch = title.match(/\(?\s*(20\d{2})\s*\.\s*(\d{1,2})/);
+            if (!dateMatch) {
+                return null;
+            }
+            const [, year, month] = dateMatch;
+            const type = /과제 수주/i.test(title)
+                ? "award"
+                : /파견 연구/i.test(title)
+                  ? "visit"
+                  : "general";
+            const date = `${year}-${month.padStart(2, "0")}-01`;
+            return {
+                id: `${source.id}-${normalizeSlug(title)}-${date}`,
+                type,
+                title,
+                summary: `LAMDA Lab update: ${title}`,
+                date,
+                related_person: source.lab,
+                venue: "",
+                external_url: source.url,
+                generated_from: source.id,
+                source_id: source.id,
+                source_url: source.url,
+            };
+        })
+        .filter(Boolean);
+};
+
 const ADAPTERS = {
     "cvl-publications": parseCvlPublications,
     "hei-publications": parseHeiPublications,
     "iknow-publications": parseIKnowPublications,
     "cvl-news": parseCvlNews,
+    "lamda-publications": parseLamdaPublications,
+    "lamda-news": parseLamdaNews,
 };
 
 const fetchSource = async (source) => {

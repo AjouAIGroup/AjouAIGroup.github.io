@@ -48,6 +48,24 @@
       "url": "https://sites.google.com/view/speechailab",
       "enabled": false,
       "disabled_reason": "The public Google Sites page has no dated news archive. Add a dated feed or archive URL before enabling."
+    },
+    {
+      "id": "lamda-publications",
+      "lab": "LAMDA Lab",
+      "kind": "publication",
+      "adapter": "lamda-publications",
+      "url": "https://sites.google.com/site/kasohn/publication",
+      "category": "industrial_and_medical_ai",
+      "min_year": 2024,
+      "enabled": true
+    },
+    {
+      "id": "lamda-news",
+      "lab": "LAMDA Lab",
+      "kind": "news",
+      "adapter": "lamda-news",
+      "url": "https://sites.google.com/site/kasohn/group",
+      "enabled": true
     }
   ]
 }

@@ -2,7 +2,73 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-08-25T07:38:28.982Z"
+    "generated_at": "2026-09-02T03:58:31.697Z"
   },
-  "items": []
+  "items": [
+    {
+      "id": "lamda-news-2-x-5-10-pi-2025-09-2025-09-01",
+      "type": "award",
+      "title": "한국연구재단 미래도전연구과제 수주 (연 2억원 x 5년, 총 10억원 규모, PI: 김소연 교수) (2025.09)",
+      "summary": "LAMDA Lab update: 한국연구재단 미래도전연구과제 수주 (연 2억원 x 5년, 총 10억원 규모, PI: 김소연 교수) (2025.09)",
+      "date": "2025-09-01",
+      "related_person": "LAMDA Lab",
+      "venue": "",
+      "external_url": "https://sites.google.com/site/kasohn/group",
+      "generated_from": "lamda-news",
+      "source_id": "lamda-news",
+      "source_url": "https://sites.google.com/site/kasohn/group"
+    },
+    {
+      "id": "lamda-news-2024-09-2024-09-01",
+      "type": "general",
+      "title": "연구실 졸업생 안남혁 박사, 인하대 정년트랙 전임교수로 임용 (2024.09)",
+      "summary": "LAMDA Lab update: 연구실 졸업생 안남혁 박사, 인하대 정년트랙 전임교수로 임용 (2024.09)",
+      "date": "2024-09-01",
+      "related_person": "LAMDA Lab",
+      "venue": "",
+      "external_url": "https://sites.google.com/site/kasohn/group",
+      "generated_from": "lamda-news",
+      "source_id": "lamda-news",
+      "source_url": "https://sites.google.com/site/kasohn/group"
+    },
+    {
+      "id": "lamda-news-2026-03-2027-02-2026-03-01",
+      "type": "visit",
+      "title": "이병한 학생(석박사통합과정), 미국 펜실베니아대학교 파견 연구 (2026.03 ~ 2027.02)",
+      "summary": "LAMDA Lab update: 이병한 학생(석박사통합과정), 미국 펜실베니아대학교 파견 연구 (2026.03 ~ 2027.02)",
+      "date": "2026-03-01",
+      "related_person": "LAMDA Lab",
+      "venue": "",
+      "external_url": "https://sites.google.com/site/kasohn/group",
+      "generated_from": "lamda-news",
+      "source_id": "lamda-news",
+      "source_url": "https://sites.google.com/site/kasohn/group"
+    },
+    {
+      "id": "lamda-news-2026-06-2026-11-2026-06-01",
+      "type": "general",
+      "title": "최윤서 학생(석박사통합과정), 퀄컴 인턴십 (2026.06~2026.11)",
+      "summary": "LAMDA Lab update: 최윤서 학생(석박사통합과정), 퀄컴 인턴십 (2026.06~2026.11)",
+      "date": "2026-06-01",
+      "related_person": "LAMDA Lab",
+      "venue": "",
+      "external_url": "https://sites.google.com/site/kasohn/group",
+      "generated_from": "lamda-news",
+      "source_id": "lamda-news",
+      "source_url": "https://sites.google.com/site/kasohn/group"
+    },
+    {
+      "id": "lamda-news-b-2-x-5-10-2026-03-2026-03-01",
+      "type": "award",
+      "title": "한국연구재단 우수연구-핵심연구(유형B) 과제 수주 (연 2억원 x 5년, 총 10억원 규모) (2026.03 )",
+      "summary": "LAMDA Lab update: 한국연구재단 우수연구-핵심연구(유형B) 과제 수주 (연 2억원 x 5년, 총 10억원 규모) (2026.03 )",
+      "date": "2026-03-01",
+      "related_person": "LAMDA Lab",
+      "venue": "",
+      "external_url": "https://sites.google.com/site/kasohn/group",
+      "generated_from": "lamda-news",
+      "source_id": "lamda-news",
+      "source_url": "https://sites.google.com/site/kasohn/group"
+    }
+  ]
 }

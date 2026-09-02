@@ -1,6 +1,5 @@
 import "./AAIG.css";
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
 import AAIG_HERO from "../../assets/brand/aaig-hero-campus-v2.webp";
 import { SITE } from "../../config/site";
 import { LABORATORIES } from "../../data/laboratories";
@@ -33,11 +32,13 @@ function AaigHero({ isHome }) {
                 </div>
                 <section className="aaig-hero__laboratories" aria-label="Laboratories">
                     {laboratories.map((lab, index) => (
-                        <Link
+                        <a
                             key={lab.key}
                             className={`aaig-hero__laboratory aaig-hero__laboratory--${lab.key}`}
                             style={{ "--laboratory-enter-delay": `${280 + index * 90}ms` }}
-                            to="/lab">
+                            href={lab.href}
+                            target="_blank"
+                            rel="noreferrer">
                             <div className="aaig-hero__laboratory-identity">
                                 {lab.logo ? (
                                     <img
@@ -59,7 +60,7 @@ function AaigHero({ isHome }) {
                                     <li key={topic}>{topic}</li>
                                 ))}
                             </ul>
-                        </Link>
+                        </a>
                     ))}
                 </section>
             </section>

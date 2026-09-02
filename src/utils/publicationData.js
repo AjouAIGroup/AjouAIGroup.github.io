@@ -30,6 +30,16 @@ const normalizeStringList = (value) => {
     return value.map((item) => normalizeText(item)).filter(Boolean);
 };
 
+// Historic source files retain the former CVL tag. This keeps that source
+// identifier stable while presenting the laboratory's current public name.
+const normalizeLabName = (value) =>
+    normalizeText(value) === "CVL Lab" ? "MMAI Lab" : normalizeText(value);
+const normalizeLabUrl = (value) =>
+    normalizeText(value).replace(
+        /^https?:\/\/cvl-lab\.github\.io\/?/i,
+        "https://mmai-laboratory.github.io/",
+    );
+
 export const PUBLICATION_AREA_DEFINITIONS = [
     {
         key: "vision-learning",
@@ -70,7 +80,7 @@ const PUBLICATION_AREA_BY_LEGACY_CATEGORY = Object.fromEntries(
 );
 
 const PUBLICATION_AREA_BY_LAB = {
-    "CVL Lab": "vision-learning",
+    "MMAI Lab": "vision-learning",
     "HEI Lab": "embodied-ai-robotics",
     "iKnow Lab": "knowledge-multimodal-llms",
     SAIL: "speech-generative-ai",
@@ -99,7 +109,9 @@ export const resolvePublicationAreaKey = (value) => {
 
 export const getPublicationAreas = (publication = {}) => {
     const category = normalizeText(publication.category);
-    const labs = normalizeStringList(publication?.research_meta?.labs);
+    const labs = normalizeStringList(publication?.research_meta?.labs).map(
+        normalizeLabName,
+    );
     const legacyArea = PUBLICATION_AREA_BY_LEGACY_CATEGORY[category];
 
     if (legacyArea) {
@@ -144,21 +156,23 @@ export const getAllPublications = () =>
                     ),
                     published_date: publishedDate,
                     keywords: normalizeStringList(researchMeta?.keywords),
-                    labs: normalizeStringList(researchMeta?.labs),
-                    pdf_link: normalizeText(researchMeta?.pdf_link),
-                    arxiv_link: normalizeText(researchMeta?.arxiv_link),
-                    github_link: normalizeText(
+                    labs: normalizeStringList(researchMeta?.labs).map(
+                        normalizeLabName,
+                    ),
+                    pdf_link: normalizeLabUrl(researchMeta?.pdf_link),
+                    arxiv_link: normalizeLabUrl(researchMeta?.arxiv_link),
+                    github_link: normalizeLabUrl(
                         researchMeta?.github_link ||
                             researchMeta?.source_code_link,
                     ),
-                    project_link: normalizeText(
+                    project_link: normalizeLabUrl(
                         researchMeta?.project_link || researchMeta?.paper_link,
                     ),
-                    source_code_link: normalizeText(
+                    source_code_link: normalizeLabUrl(
                         researchMeta?.source_code_link ||
                             researchMeta?.github_link,
                     ),
-                    paper_link: normalizeText(
+                    paper_link: normalizeLabUrl(
                         researchMeta?.paper_link || researchMeta?.project_link,
                     ),
                 },

@@ -43,6 +43,13 @@ const normalizeNewsType = (value) => {
 const normalizeText = (value) =>
     typeof value === "string" ? value.trim() : "";
 const normalizeBoolean = (value) => value === true;
+const normalizeLabBranding = (value) =>
+    normalizeText(value).replace(/\bCVL Lab\b/g, "MMAI Lab");
+const normalizeLabUrl = (value) =>
+    normalizeText(value).replace(
+        /^https?:\/\/cvl-lab\.github\.io\/?/i,
+        "https://mmai-laboratory.github.io/",
+    );
 
 const parseDate = (value) => {
     const raw = normalizeText(value);
@@ -85,9 +92,9 @@ const normalizeLegacyNewsItems = (items) =>
             type: "paper_accepted",
             title: normalizeText(item.title) || "Paper Accepted",
             summary:
-                normalizeText(item.summary) ||
+                normalizeLabBranding(item.summary) ||
                 normalizeText(item.desc) ||
-                "Publication update from CVL Lab.",
+                "Publication update from MMAI Lab.",
             date: normalizeText(item.date) || "1970-01-01",
             year: extractYear(item.year, parsedDate),
             related_person: "",
@@ -96,9 +103,9 @@ const normalizeLegacyNewsItems = (items) =>
                 normalizeText(item.published_place) ||
                 "",
             external_url:
-                normalizeText(item.external_url) ||
-                normalizeText(item.url) ||
-                normalizeText(item.link) ||
+                normalizeLabUrl(item.external_url) ||
+                normalizeLabUrl(item.url) ||
+                normalizeLabUrl(item.link) ||
                 "",
             internal_slug: normalizeText(item.internal_slug),
             is_external: Boolean(item.url || item.link || item.external_url),
@@ -110,16 +117,16 @@ const normalizeLegacyNewsItems = (items) =>
 const normalizeStructuredNewsItems = (items) =>
     items.map((item, index) => {
         const parsedDate = parseDate(item?.date);
-        const externalUrl = normalizeText(item?.external_url);
+        const externalUrl = normalizeLabUrl(item?.external_url);
 
         return {
             id: normalizeText(item?.id) || `news-${index + 1}`,
             type: normalizeNewsType(item?.type),
             title: normalizeText(item?.title) || "Lab Update",
-            summary: normalizeText(item?.summary) || "Update from CVL Lab.",
+            summary: normalizeLabBranding(item?.summary) || "Update from MMAI Lab.",
             date: normalizeText(item?.date) || "1970-01-01",
             year: extractYear(item?.year, parsedDate),
-            related_person: normalizeText(item?.related_person),
+            related_person: normalizeLabBranding(item?.related_person),
             venue: normalizeText(item?.venue),
             external_url: externalUrl,
             internal_slug: normalizeText(item?.internal_slug),

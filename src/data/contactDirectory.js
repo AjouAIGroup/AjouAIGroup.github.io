@@ -58,7 +58,7 @@ export const CONTACT_LABS = LABORATORIES.map((lab) => ({
 
 export const STUDENT_REPRESENTATIVES = [
     {
-        lab: "CVL Lab",
+        lab: "MMAI Lab",
         name: "Donggeon Lee",
         koreanName: "이동건",
         role: "Ph.D. Student and student representative",

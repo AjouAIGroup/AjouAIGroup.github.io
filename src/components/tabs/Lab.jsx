@@ -13,12 +13,12 @@ const FACULTY = [
     {
         name: "Jongbin Ryu",
         koreanName: "유종빈",
-        lab: "CVL Lab",
+        lab: "MMAI Lab",
         role: "Associate Professor",
         department: "Department of Software and Computer Engineering, Ajou University",
         email: "jongbinryu@ajou.ac.kr",
         interests: "Deep Learning · Computer Vision · Machine Learning",
-        href: "https://cvl-lab.github.io/",
+        href: "https://mmai-laboratory.github.io/",
         portrait: CvlPortrait,
     },
     {

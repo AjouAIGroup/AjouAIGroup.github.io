@@ -1,4 +1,4 @@
-import CvlLogo from "../assets/images/laboratories/cvl-logo.svg";
+import MmaiLogo from "../assets/images/laboratories/mmai-logo.svg";
 import HeiLogo from "../assets/images/laboratories/hei-logo.png";
 import IknowLogo from "../assets/images/laboratories/iknow-logo.png";
 import VisionLearningImage from "../assets/images/research_areas/aaig-vision-learning.webp";
@@ -15,21 +15,21 @@ import LamdaHomeResearchImage from "../assets/images/home_research/data-centric-
 export const LABORATORIES = [
     {
         key: "cvl",
-        shortName: "CVL Lab",
-        name: "Computer Vision & Learning Lab",
-        heroTitle: "Computer Vision & Learning",
+        shortName: "MMAI Lab",
+        name: "Multi-Modal Artificial Intelligence Lab",
+        heroTitle: "Multi-Modal AI",
         summary:
-            "Research in computer vision, deep learning, and machine learning, spanning visual recognition and robust learning methods.",
-        topics: ["Computer Vision", "Deep Learning", "Machine Learning"],
-        href: "https://cvl-lab.github.io/",
-        logo: CvlLogo,
-        logoAlt: "CVL Lab logo",
-        researchTitle: "Computer Vision & Learning",
+            "Multi-modal AI research connecting vision, language, and diverse signals for real-world impact.",
+        topics: ["Computer Vision", "Robot Learning", "Efficient LLMs"],
+        href: "https://mmai-laboratory.github.io/",
+        logo: MmaiLogo,
+        logoAlt: "MMAI Lab logo",
+        researchTitle: "Multi-Modal AI",
         researchSummary:
-            "Robust visual recognition and representation learning for reliable perception in real-world settings.",
+            "Vision, language, and multimodal learning systems for reliable real-world intelligence.",
         researchDescription:
-            "We develop robust visual recognition and representation-learning methods that remain reliable across changing environments and real-world data.",
-        themes: ["Visual Recognition", "Representation Learning", "Robust AI"],
+            "We develop multimodal learning systems that connect visual, language, and diverse real-world signals across computer vision, robotics, efficient LLMs, and applied AI.",
+        themes: ["Computer Vision", "Multimodal AI", "Efficient LLMs"],
         researchDetails: [
             {
                 title: "Computer Vision & Learning Algorithms",

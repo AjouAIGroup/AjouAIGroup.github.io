@@ -6,21 +6,21 @@
   "sources": [
     {
       "id": "cvl-publications",
-      "lab": "CVL Lab",
+      "lab": "MMAI Lab",
       "kind": "publication",
       "adapter": "cvl-publications",
-      "url": "https://cvl-lab.github.io/publication/",
+      "url": "https://mmai-laboratory.github.io/publication",
       "category": "computer_vision_and_learning_algorithms",
       "enabled": true
     },
     {
       "id": "cvl-news",
-      "lab": "CVL Lab",
+      "lab": "MMAI Lab",
       "kind": "news",
       "adapter": "cvl-news",
-      "url": "https://cvl-lab.github.io/news/",
+      "url": "https://mmai-laboratory.github.io/news",
       "enabled": false,
-      "disabled_reason": "CVL's public news archive is currently an in-progress source with placeholder entries."
+      "disabled_reason": "MMAI's public news archive is currently an in-progress source with placeholder entries."
     },
     {
       "id": "hei-publications",

@@ -1,18 +1,54 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import {
     formatNewsDate,
-    getVisibleNewsItems,
-    isValidExternalUrl,
+    getPublicationNewsItems,
 } from "../../utils/newsData";
 import "./News.css";
 
+const PAPER_ACCEPTED_TITLE_PATTERN = /^paper\s+accepted\b/i;
+
+const isNonEmpty = (value) =>
+    typeof value === "string" && value.trim().length > 0;
+
+const getPublicationSearchQuery = (item) => {
+    const candidates = [
+        item.publication_id,
+        item.publication_title,
+        item.publication_query,
+    ];
+
+    for (const candidate of candidates) {
+        if (isNonEmpty(candidate)) {
+            return candidate.trim();
+        }
+    }
+
+    if (
+        isNonEmpty(item.title) &&
+        !PAPER_ACCEPTED_TITLE_PATTERN.test(item.title.trim())
+    ) {
+        return item.title.trim();
+    }
+
+    if (isNonEmpty(item.summary)) {
+        return item.summary.trim();
+    }
+
+    if (isNonEmpty(item.venue)) {
+        return item.venue.trim();
+    }
+
+    return "";
+};
+
 function News() {
-    const newsItems = useMemo(() => getVisibleNewsItems(), []);
+    const publicationNewsItems = useMemo(() => getPublicationNewsItems(), []);
 
     const groupedByYear = useMemo(() => {
         const groups = new Map();
 
-        newsItems.forEach((item) => {
+        publicationNewsItems.forEach((item) => {
             const yearLabel = String(
                 item.year || new Date(item.date).getFullYear(),
             );
@@ -27,7 +63,7 @@ function News() {
             year,
             items,
         }));
-    }, [newsItems]);
+    }, [publicationNewsItems]);
     const yearOptions = useMemo(
         () => groupedByYear.map((group) => group.year),
         [groupedByYear],
@@ -38,8 +74,7 @@ function News() {
             <div data-reveal className="tab-header page-head page-head--news">
                 <h1>News</h1>
                 <p className="page-head__summary">
-                    Awards, people, visits, and lab activity from the five AAIG
-                    laboratories.
+                    Publication announcements from the five AAIG laboratories.
                 </p>
             </div>
 
@@ -48,7 +83,7 @@ function News() {
                     data-reveal
                     id="news-year-nav"
                     className="news-page__year-nav"
-                    aria-label="Jump to news year">
+                    aria-label="Jump to publication news year">
                     <span>Browse by year</span>
                     <div>
                         {yearOptions.map((year) => (
@@ -56,7 +91,7 @@ function News() {
                                 key={year}
                                 href={`#news-year-${year}`}
                                 className="news-page__year-link btn btn--secondary btn--sm interactive-button"
-                                aria-label={`Jump to ${year} news`}>
+                                aria-label={`Jump to ${year} publication news`}>
                                 {year}
                             </a>
                         ))}
@@ -79,12 +114,12 @@ function News() {
                         </h2>
                         <div className="news-page__list">
                             {group.items.map((item, index) => {
+                                const publicationQuery =
+                                    getPublicationSearchQuery(item);
+                                const publicationTarget = publicationQuery
+                                    ? `/publication?q=${encodeURIComponent(publicationQuery)}&scope=title-authors-venue`
+                                    : "/publication";
                                 const details = item.venue;
-                                const externalUrl = isValidExternalUrl(
-                                    item.external_url,
-                                )
-                                    ? item.external_url
-                                    : "";
 
                                 return (
                                     <article
@@ -95,7 +130,7 @@ function News() {
                                         style={{
                                             "--reveal-delay": `${Math.min(index, 5) * 60}ms`,
                                         }}
-                                        className={`news-page__item${externalUrl ? " news-page__item--with-action" : ""}`}>
+                                        className="news-page__item news-page__item--with-action">
                                         <p className="news-page__date">
                                             {formatNewsDate(item.date)}
                                         </p>
@@ -112,18 +147,14 @@ function News() {
                                                 </p>
                                             ) : null}
                                         </div>
-                                        {externalUrl ? (
-                                            <div className="news-page__action">
-                                                <a
-                                                    href={externalUrl}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="news-page__action-link btn btn--tertiary animated-underline">
-                                                    <span>Read more</span>
-                                                    <span className="news-page__action-arrow">↗</span>
-                                                </a>
-                                            </div>
-                                        ) : null}
+                                        <div className="news-page__action">
+                                            <Link
+                                                to={publicationTarget}
+                                                className="news-page__action-link btn btn--tertiary animated-underline">
+                                                <span>Publications</span>
+                                                <span className="news-page__action-arrow">→</span>
+                                            </Link>
+                                        </div>
                                     </article>
                                 );
                             })}

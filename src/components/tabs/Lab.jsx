@@ -81,15 +81,6 @@ function ExternalLink({ href, children, className }) {
 function Lab() {
     // A fresh page load creates a new lab order; faculty follows that same order.
     const orderedLabs = useMemo(() => shuffleItems(LABORATORIES), []);
-    const orderedFaculty = useMemo(() => {
-        const labOrder = new Map(
-            orderedLabs.map((lab, index) => [lab.shortName, index]),
-        );
-
-        return [...FACULTY].sort(
-            (first, second) => labOrder.get(first.lab) - labOrder.get(second.lab),
-        );
-    }, [orderedLabs]);
     const orderedRepresentatives = useMemo(() => {
         const labOrder = new Map(
             orderedLabs.map((lab, index) => [lab.shortName, index]),
@@ -99,6 +90,10 @@ function Lab() {
             (first, second) => labOrder.get(first.lab) - labOrder.get(second.lab),
         );
     }, [orderedLabs]);
+    const facultyByLab = useMemo(
+        () => new Map(FACULTY.map((member) => [member.lab, member])),
+        [],
+    );
 
     return (
         <div data-reveal data-reveal-load-delay="60" className="lab-page">
@@ -111,27 +106,42 @@ function Lab() {
                 </p>
             </header>
 
-            <section className="lab-page__directory" aria-labelledby="lab-directory-title">
-                <div className="lab-page__directory-head">
-                    <p className="lab-page__eyebrow">AAIG LAB DIRECTORY</p>
-                    <h2 id="lab-directory-title">Five Labs, One Research Community</h2>
-                </div>
-
+            <section className="lab-page__directory" aria-label="Laboratory directory">
                 <div className="lab-page__grid">
-                    {orderedLabs.map((lab) => (
-                        <article
-                            key={lab.key}
-                            className={`lab-page__item lab-page__item--${lab.key}`}>
-                            <div className="lab-page__identity">
-                                {lab.logo ? (
-                                    <img
-                                        className="lab-page__logo"
-                                        src={lab.logo}
-                                        alt={lab.logoAlt}
-                                    />
-                                ) : (
-                                    <p className="lab-page__wordmark">{lab.shortName}</p>
-                                )}
+                    {orderedLabs.map((lab) => {
+                        const faculty = facultyByLab.get(lab.shortName);
+
+                        return (
+                            <article
+                                key={lab.key}
+                                className={`lab-page__item lab-page__item--${lab.key}`}>
+                            <div className="lab-page__item-head">
+                                <div className="lab-page__identity">
+                                    {lab.logo ? (
+                                        <img
+                                            className="lab-page__logo"
+                                            src={lab.logo}
+                                            alt={lab.logoAlt}
+                                        />
+                                    ) : (
+                                        <p className="lab-page__wordmark">{lab.shortName}</p>
+                                    )}
+                                </div>
+                                {faculty ? (
+                                    <a
+                                        className="lab-page__faculty-identity"
+                                        href={`mailto:${faculty.email}`}
+                                        aria-label={`Email ${faculty.name}`}>
+                                        <img
+                                            src={faculty.portrait}
+                                            alt={`${faculty.name} portrait`}
+                                        />
+                                        <span>
+                                            <strong>{faculty.name}</strong>
+                                            <small>{faculty.koreanName}</small>
+                                        </span>
+                                    </a>
+                                ) : null}
                             </div>
                             <h3>{lab.name}</h3>
                             <p>{lab.summary}</p>
@@ -144,38 +154,8 @@ function Lab() {
                                 Visit lab website ↗
                             </ExternalLink>
                         </article>
-                    ))}
-                </div>
-            </section>
-
-            <section className="lab-page__faculty" aria-labelledby="faculty-title">
-                <div className="lab-page__directory-head">
-                    <p className="lab-page__eyebrow">FACULTY</p>
-                    <h2 id="faculty-title">Faculty</h2>
-                </div>
-
-                <div className="lab-page__faculty-grid">
-                    {orderedFaculty.map((member) => (
-                        <article key={member.name} className="lab-page__faculty-card">
-                            <figure className="lab-page__portrait">
-                                <img src={member.portrait} alt={`${member.name} portrait`} />
-                            </figure>
-                            <p className="lab-page__number">{member.lab}</p>
-                            <h3>
-                                {member.name}
-                                <span>{member.koreanName}</span>
-                            </h3>
-                            <p className="lab-page__faculty-role">{member.role}</p>
-                            <p>{member.department}</p>
-                            <p className="lab-page__faculty-interest">{member.interests}</p>
-                            <a className="lab-page__email" href={`mailto:${member.email}`}>
-                                {member.email}
-                            </a>
-                            <ExternalLink href={member.href} className="lab-page__link">
-                                Visit lab website ↗
-                            </ExternalLink>
-                        </article>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 

@@ -97,8 +97,11 @@
     box-sizing: border-box;
     width: min(50%, 58rem);
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
+    /* A six-column frame centers five equal cards as a balanced 3 + 2
+       composition. It avoids treating the fifth laboratory as a wider,
+       visually different card. */
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: clamp(0.5rem, 0.9vw, 0.75rem);
     height: min(43rem, calc(100svh - 7.25rem));
     padding-inline: clamp(1.25rem, 3.8vw, 4.5rem);
@@ -106,6 +109,7 @@
 }
 
 .aaig-hero__laboratory {
+    grid-column: span 2;
     aspect-ratio: auto;
     min-height: 0;
     container-type: inline-size;
@@ -127,17 +131,13 @@
     animation: aaig-hero-laboratory-in 760ms var(--laboratory-enter-delay, 280ms) cubic-bezier(0.2, 0.72, 0.18, 1) both;
 }
 
-/* Five laboratories form a complete 2 + 2 + 1 composition. The final card
-   spans the row, so every laboratory keeps a readable content width. */
-.aaig-hero__laboratory:last-child {
-    grid-column: 1 / -1;
+/* Center the second pair without creating an empty card or a different size. */
+.aaig-hero__laboratory:nth-child(4) {
+    grid-column: 2 / span 2;
 }
 
-/* The full-width final slot is intentionally shallower than a two-column
-   card. Keep its supporting copy to one complete line instead of letting a
-   second line get clipped at the lower edge. */
-.aaig-hero__laboratory:last-child .aaig-hero__laboratory-summary {
-    -webkit-line-clamp: 1;
+.aaig-hero__laboratory:nth-child(5) {
+    grid-column: 4 / span 2;
 }
 
 .aaig-hero__laboratory:hover {
@@ -300,9 +300,6 @@
         font-size: clamp(1.75rem, 3cqw, 2.6rem);
     }
 
-    .aaig-hero__laboratory-summary {
-        display: none;
-    }
 }
 
 .aaig-page-title {

@@ -222,21 +222,69 @@ export const getLatestPublications = (limit = 3) =>
 
 const VENUE_SHORT_NAMES = [
     "AAAI",
+    "ACCV",
     "ACL",
+    "BMVC",
+    "CoRL",
     "CVPR",
     "ECCV",
     "EMNLP",
+    "ICASSP",
     "ICCV",
+    "ICDE",
     "ICLR",
     "ICML",
+    "ICRA",
     "IJCAI",
     "Interspeech",
     "IROS",
+    "LREC",
+    "MLHC",
     "NeurIPS",
     "NAACL",
     "RSS",
+    "SIGIR",
     "WACV",
 ];
+
+// Manually curated regular-conference allowlist for the home summary. Do not
+// infer a main track from a venue string: journals, workshops, and Findings
+// tracks remain in the full archive until a person explicitly reviews a venue.
+// For example, "RSS Workshop" is excluded because only the exact "RSS" venue
+// appears here.
+const SUMMARY_REGULAR_CONFERENCE_VENUES = new Set(
+    [
+        "AAAI",
+        "ACCV",
+        "ACL",
+        "BMVC",
+        "CoRL",
+        "CVPR",
+        "ECCV",
+        "EMNLP",
+        "ICASSP",
+        "ICCV",
+        "ICDE",
+        "ICLR",
+        "ICML",
+        "ICRA",
+        "IJCAI",
+        "Interspeech",
+        "IROS",
+        "LREC",
+        "MLHC",
+        "NAACL",
+        "NeurIPS",
+        "RSS",
+        "SIGIR",
+        "WACV",
+    ].map((venue) => venue.toLowerCase()),
+);
+
+const getVenueBaseName = (venue = "") =>
+    normalizeText(venue)
+        .replace(/\s*[··-]?\s*20\d{2}\b.*$/u, "")
+        .trim();
 
 const getVenueShortName = (venue = "") => {
     const normalizedVenue = normalizeText(venue);
@@ -246,17 +294,25 @@ const getVenueShortName = (venue = "") => {
 
     // The home snapshot is a venue comparison, not a bibliography. Keep a
     // single display rule even for venues outside the curated abbreviation list.
-    const venueWithoutYear = normalizedVenue
-        .replace(/\s*[··-]?\s*20\d{2}\b.*$/u, "")
-        .trim();
+    const venueWithoutYear = getVenueBaseName(normalizedVenue);
 
     return knownVenue || venueWithoutYear || "Other";
 };
 
+const isSummaryEligiblePublication = (publication) => {
+    const venue = getVenueBaseName(
+        publication?.research_meta?.published_place,
+    );
+
+    return SUMMARY_REGULAR_CONFERENCE_VENUES.has(venue.toLowerCase());
+};
+
 export const getPublicationYearSnapshot = (year = new Date().getFullYear()) => {
     const targetYear = String(year);
-    const publications = getAllPublications().filter((item) =>
-        item.research_meta.published_date.startsWith(targetYear),
+    const publications = getAllPublications().filter(
+        (item) =>
+            item.research_meta.published_date.startsWith(targetYear) &&
+            isSummaryEligiblePublication(item),
     );
     const venueCounts = new Map();
 

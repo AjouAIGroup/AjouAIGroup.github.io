@@ -6,41 +6,26 @@
     gap: var(--section-gap);
 }
 
-.news-page__controls {
+.news-page__year-nav {
     width: 100%;
-}
-
-.news-page__controls-grid {
-    align-items: start;
-}
-
-.news-page__controls-group {
-    min-width: 0;
+    display: flex;
+    align-items: center;
     gap: var(--space-2);
+    padding-bottom: var(--space-1p5);
+    border-bottom: 1px solid var(--outline-color);
 }
 
-.news-page__controls-head {
-    display: grid;
-    gap: var(--space-0p5);
+.news-page__year-nav > span {
+    color: var(--text-muted);
+    font-size: var(--type-support-size);
+    font-weight: var(--type-support-weight);
+    white-space: nowrap;
 }
 
-.news-page__controls-label {
-    margin: 0;
-}
-
-.news-page__controls-caption {
-    margin: 0;
-}
-
-.news-page__filters {
-    width: 100%;
-    min-width: 0;
-    padding-top: 0;
-}
-
-.news-page__year-nav-list {
-    width: 100%;
-    padding-top: 0;
+.news-page__year-nav > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--control-gap);
 }
 
 .news-page__year-link {
@@ -55,26 +40,8 @@
     font-weight: var(--type-button-weight);
 }
 
-.news-page__filter-btn {
-    --btn-height-local: 2.05rem;
-    --btn-pad-x-local: 0.72rem;
-    --surface-hover-bg: var(--surface-hover-soft);
-    --surface-hover-border: var(--line-strong);
-    --surface-hover-shadow: var(--shadow-elev-1);
-    --surface-hover-translate: 0px;
-    font-size: var(--type-button-size);
-}
-
-.news-page__filter-btn.is-active {
-    --btn-bg: var(--tab-identity-tint, var(--surface-2));
-    --btn-border: var(--tab-identity-border, var(--outline-color));
-    --btn-ink: var(--tab-identity-accent, var(--text-primary));
-    --btn-shadow: var(--shadow-elev-1);
-}
-
 @media (max-width: 52rem) {
-    .news-page__year-link,
-    .news-page__filter-btn {
+    .news-page__year-link {
         --btn-height-local: var(--target-min);
     }
 }
@@ -284,8 +251,10 @@
         gap: var(--mobile-section-gap);
     }
 
-    .news-page__controls-grid {
-        grid-template-columns: 1fr;
+    .news-page__year-nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: var(--space-1);
     }
 
     .news-page__item,

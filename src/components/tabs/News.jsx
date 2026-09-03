@@ -1,11 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
     formatNewsDate,
-    getAllNewsItems,
-    getNewsTypeMeta,
-    getNewsTypes,
-    isValidExternalUrl,
+    getPublicationNewsItems,
 } from "../../utils/newsData";
 import "./News.css";
 
@@ -46,21 +43,12 @@ const getPublicationSearchQuery = (item) => {
 };
 
 function News() {
-    const [selectedType, setSelectedType] = useState("all");
-    const allNewsItems = useMemo(() => getAllNewsItems(), []);
-
-    const filteredNewsItems = useMemo(() => {
-        if (selectedType === "all") {
-            return allNewsItems;
-        }
-
-        return allNewsItems.filter((item) => item.type === selectedType);
-    }, [allNewsItems, selectedType]);
+    const publicationNewsItems = useMemo(() => getPublicationNewsItems(), []);
 
     const groupedByYear = useMemo(() => {
         const groups = new Map();
 
-        filteredNewsItems.forEach((item) => {
+        publicationNewsItems.forEach((item) => {
             const yearLabel = String(
                 item.year || new Date(item.date).getFullYear(),
             );
@@ -75,86 +63,41 @@ function News() {
             year,
             items,
         }));
-    }, [filteredNewsItems]);
+    }, [publicationNewsItems]);
     const yearOptions = useMemo(
         () => groupedByYear.map((group) => group.year),
         [groupedByYear],
     );
-
-    const typeOptions = useMemo(() => getNewsTypes(), []);
 
     return (
         <section data-reveal data-reveal-load-delay="60" className="news-page">
             <div data-reveal className="tab-header page-head page-head--news">
                 <h1>News</h1>
                 <p className="page-head__summary">
-                    Archive of papers, seminars, member updates, infrastructure
-                    milestones, and collaboration activities.
+                    Publication announcements from the five AAIG laboratories.
                 </p>
             </div>
 
-            <div
-                data-reveal
-                className="news-page__controls page-panel page-panel--compact page-panel--section-start page-controls"
-                aria-label="Browse news archive">
-                <div className="news-page__controls-grid page-controls__grid">
-                    <section className="news-page__controls-group page-controls__group">
-                        <div className="news-page__controls-head">
-                            <p className="news-page__controls-label page-controls__label">
-                                Filter by type
-                            </p>
-                        </div>
-                        <div
-                            className="news-page__filters page-controls__actions"
-                            role="group"
-                            aria-label="Filter news by type">
-                            {typeOptions.map((type) => (
-                                <button
-                                    key={type}
-                                    type="button"
-                                    className={`news-page__filter-btn btn btn--secondary btn--sm interactive-button ${selectedType === type ? "is-active" : ""}`}
-                                    onClick={() => setSelectedType(type)}
-                                    aria-pressed={selectedType === type}>
-                                    {getNewsTypeMeta(type).label}
-                                </button>
-                            ))}
-                        </div>
-                    </section>
-                    {yearOptions.length > 0 ? (
-                        <nav
-                            id="news-year-nav"
-                            className="news-page__controls-group page-controls__group"
-                            aria-label="Jump to news year">
-                            <div className="news-page__controls-head">
-                                <p className="news-page__controls-label page-controls__label">
-                                    Jump to year
-                                </p>
-                            </div>
-                            <div className="news-page__year-nav-list page-controls__actions">
-                                {yearOptions.map((year) => (
-                                    <a
-                                        key={year}
-                                        href={`#news-year-${year}`}
-                                        className="news-page__year-link btn btn--secondary btn--sm interactive-button"
-                                        aria-label={`Jump to ${year} news`}>
-                                        {year}
-                                    </a>
-                                ))}
-                            </div>
-                        </nav>
-                    ) : (
-                        <section
-                            className="news-page__controls-group page-controls__group"
-                            aria-live="polite">
-                            <div className="news-page__controls-head">
-                                <p className="news-page__controls-label page-controls__label">
-                                    Jump to year
-                                </p>
-                            </div>
-                        </section>
-                    )}
-                </div>
-            </div>
+            {yearOptions.length > 0 ? (
+                <nav
+                    data-reveal
+                    id="news-year-nav"
+                    className="news-page__year-nav"
+                    aria-label="Jump to publication news year">
+                    <span>Browse by year</span>
+                    <div>
+                        {yearOptions.map((year) => (
+                            <a
+                                key={year}
+                                href={`#news-year-${year}`}
+                                className="news-page__year-link btn btn--secondary btn--sm interactive-button"
+                                aria-label={`Jump to ${year} publication news`}>
+                                {year}
+                            </a>
+                        ))}
+                    </div>
+                </nav>
+            ) : null}
 
             <div id="news-archive-title" className="news-page__archive">
                 {groupedByYear.map((group, groupIndex) => (
@@ -171,26 +114,12 @@ function News() {
                         </h2>
                         <div className="news-page__list">
                             {group.items.map((item, index) => {
-                                const isPaperAccepted =
-                                    item.type === "paper_accepted";
-                                const hasExternalLink =
-                                    !isPaperAccepted &&
-                                    item.is_external &&
-                                    isValidExternalUrl(item.external_url);
-                                const hasAction =
-                                    isPaperAccepted || hasExternalLink;
                                 const publicationQuery =
                                     getPublicationSearchQuery(item);
                                 const publicationTarget = publicationQuery
                                     ? `/publication?q=${encodeURIComponent(publicationQuery)}&scope=title-authors-venue`
                                     : "/publication";
-                                const newsTypeMeta = getNewsTypeMeta(item.type);
-                                const details = [
-                                    item.venue,
-                                    item.related_person,
-                                ]
-                                    .filter(Boolean)
-                                    .join(", ");
+                                const details = item.venue;
 
                                 return (
                                     <article
@@ -201,16 +130,11 @@ function News() {
                                         style={{
                                             "--reveal-delay": `${Math.min(index, 5) * 60}ms`,
                                         }}
-                                        className={`news-page__item ${hasAction ? "news-page__item--with-action" : "news-page__item--plain"}`}>
+                                        className="news-page__item news-page__item--with-action">
                                         <p className="news-page__date">
                                             {formatNewsDate(item.date)}
                                         </p>
                                         <div className="news-page__content">
-                                            <div className="news-page__badges">
-                                                <p className="news-page__badge news-page__badge--type">
-                                                    {newsTypeMeta.label}
-                                                </p>
-                                            </div>
                                             <h3 className="news-page__title">
                                                 {item.title}
                                             </h3>
@@ -223,33 +147,14 @@ function News() {
                                                 </p>
                                             ) : null}
                                         </div>
-                                        {hasAction ? (
-                                            <div className="news-page__action">
-                                                {isPaperAccepted ? (
-                                                    <Link
-                                                        to={publicationTarget}
-                                                        className="news-page__action-link btn btn--tertiary animated-underline">
-                                                        <span>
-                                                            Publications
-                                                        </span>
-                                                        <span className="news-page__action-arrow">
-                                                            →
-                                                        </span>
-                                                    </Link>
-                                                ) : (
-                                                    <a
-                                                        href={item.external_url}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="news-page__action-link btn btn--tertiary animated-underline">
-                                                        <span>Open</span>
-                                                        <span className="news-page__action-arrow">
-                                                            ↗
-                                                        </span>
-                                                    </a>
-                                                )}
-                                            </div>
-                                        ) : null}
+                                        <div className="news-page__action">
+                                            <Link
+                                                to={publicationTarget}
+                                                className="news-page__action-link btn btn--tertiary animated-underline">
+                                                <span>Publications</span>
+                                                <span className="news-page__action-arrow">→</span>
+                                            </Link>
+                                        </div>
                                     </article>
                                 );
                             })}

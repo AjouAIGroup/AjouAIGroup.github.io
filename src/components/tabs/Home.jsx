@@ -165,8 +165,8 @@ function Home() {
                     Publication Summary {publicationSnapshot.year}
                 </h2>
                 <p>
-                    A quick view of publications currently listed in the AAIG
-                    archive.
+                    A quick view of regular conference papers currently listed
+                    in the AAIG archive.
                 </p>
                 <Link to="/publication" className="home-publication-snapshot__link">
                     View all publications ↗
@@ -178,7 +178,7 @@ function Home() {
                     <span>papers</span>
                 </p>
                 {publicationSnapshot.venues.length ? (
-                    <ul className="home-publication-snapshot__venues" aria-label={`${publicationSnapshot.year} publication counts by venue`}>
+                    <ul className="home-publication-snapshot__venues" aria-label={`${publicationSnapshot.year} regular conference paper counts by venue`}>
                         {publicationSnapshot.venues.map(({ venue, count }) => (
                             <li key={venue}>
                                 <span>{venue}</span>

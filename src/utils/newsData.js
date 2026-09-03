@@ -196,13 +196,14 @@ export const getAllNewsItems = () =>
             return normalizedItem;
         });
 
-// AAIG News is a publication archive. The ingestion pipeline may retain other
-// lab updates for future use, but only paper announcements are published here.
-export const getPublicationNewsItems = () =>
-    getAllNewsItems().filter((item) => item.type === "paper_accepted");
+// Keep publication announcements in the content archive for the publication
+// page and future editorial use, but do not surface them in the News feed.
+// The News page is reserved for lab activity, awards, people, and notices.
+export const getVisibleNewsItems = () =>
+    getAllNewsItems().filter((item) => item.type !== "paper_accepted");
 
 export const getLatestNewsItems = (limit = 5) =>
-    getPublicationNewsItems().slice(0, limit);
+    getVisibleNewsItems().slice(0, limit);
 
 export const getNewsTypes = () => {
     return ["all", ...NEWS_TYPE_ORDER];

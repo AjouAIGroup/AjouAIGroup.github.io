@@ -18,7 +18,10 @@ const REQUEST_TIMEOUT_MS = 20_000;
 const USER_AGENT = "AAIG-Content-Refresh/1.0 (+https://ajouaigroup.github.io/)";
 
 const VENUE_ALIASES = [
-    ["Findings of EMNLP", "EMNLP"],
+    // Findings is a distinct archival track, rather than a regular EMNLP
+    // paper. Preserve that distinction in the public bibliography and keep it
+    // out of the regular-conference-only home summary.
+    ["Findings of EMNLP", "Findings of EMNLP"],
     ["Winter Conference on Applications of Computer Vision", "WACV"],
     ["Computer Vision and Pattern Recognition", "CVPR"],
     ["International Conference on Machine Learning", "ICML"],
@@ -36,6 +39,9 @@ const VENUE_ALIASES = [
     ["Conference on Robot Learning", "CoRL"],
     ["Interspeech", "Interspeech"],
     ["Conference on Artificial Intelligence", "AAAI"],
+    ["International Conference on Data Mining", "ICDM"],
+    ["ACM International Conference on Information and Knowledge Management", "CIKM"],
+    ["ACM Conference on Multimedia", "ACM MM"],
     ["International Conference on Data Engineering", "ICDE"],
     ["IEEE Transactions on Knowledge and Data Engineering", "TKDE"],
     ["IEEE Access", "IEEE Access"],
@@ -64,6 +70,9 @@ const VENUE_ALIASES = [
     ["EMNLP", "EMNLP"],
     ["NAACL", "NAACL"],
     ["AAAI", "AAAI"],
+    ["ICDM", "ICDM"],
+    ["CIKM", "CIKM"],
+    ["ACM MM", "ACM MM"],
     ["ICDE", "ICDE"],
     ["ICASSP", "ICASSP"],
     ["NeurIPS", "NeurIPS"],

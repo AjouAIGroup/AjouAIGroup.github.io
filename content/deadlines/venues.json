@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "CVL-Lab conference deadlines",
-    "updated_at": "2026-08-26T00:00:00+09:00",
+    "updated_at": "2026-09-03T07:14:31.797Z",
     "display_timezone": "Asia/Seoul",
     "area_order": [
       "computer-vision",
@@ -21,10 +21,12 @@
       "id": "cvpr",
       "name": "CVPR",
       "full_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://cvpr.thecvf.com/",
       "cfp_url": "https://cvpr.thecvf.com/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "June 20-24, 2027",
         "location": "Seattle, Washington, USA",
@@ -32,16 +34,19 @@
         "source_url": "https://www.thecvf.com/?p=137",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.455Z"
     },
     {
       "id": "iccv",
       "name": "ICCV",
       "full_name": "IEEE/CVF International Conference on Computer Vision",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://iccv.thecvf.com/",
       "cfp_url": "https://iccv.thecvf.com/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "October 2-8, 2027",
         "location": "Hong Kong",
@@ -49,13 +54,16 @@
         "source_url": "https://www.thecvf.com/?p=137",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.457Z"
     },
     {
       "id": "eccv",
       "name": "ECCV",
       "full_name": "European Conference on Computer Vision",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://eccv.ecva.net/",
       "cfp_url": "https://eccv.ecva.net/Conferences/2026/CallForPapers",
       "status": "verified",
@@ -144,7 +152,9 @@
       "id": "wacv",
       "name": "WACV 2027",
       "full_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://wacv.thecvf.com/",
       "cfp_url": "https://wacv.thecvf.com/",
       "status": "verified",
@@ -216,7 +226,9 @@
       "id": "bmvc",
       "name": "BMVC",
       "full_name": "British Machine Vision Conference",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://bmvc2026.org/",
       "cfp_url": "https://bmvc2026.org/",
       "status": "awaiting_cfp",
@@ -233,7 +245,9 @@
       "id": "accv",
       "name": "ACCV",
       "full_name": "Asian Conference on Computer Vision",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://accv2026.org/",
       "cfp_url": "https://accv2026.org/",
       "status": "verified",
@@ -305,7 +319,9 @@
       "id": "3dv",
       "name": "3DV",
       "full_name": "International Conference on 3D Vision",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://3dvconf.github.io/2027/",
       "cfp_url": "https://3dvconf.github.io/2027/",
       "status": "verified",
@@ -369,7 +385,9 @@
       "id": "miccai",
       "name": "MICCAI",
       "full_name": "Medical Image Computing and Computer Assisted Intervention",
-      "areas": ["computer-vision"],
+      "areas": [
+        "computer-vision"
+      ],
       "official_url": "https://conferences.miccai.org/",
       "cfp_url": "https://conferences.miccai.org/2026/en/IMPORTANT-DATES.html",
       "status": "verified",
@@ -428,7 +446,10 @@
       "id": "neurips",
       "name": "NeurIPS",
       "full_name": "Conference on Neural Information Processing Systems",
-      "areas": ["machine-learning", "llm-nlp"],
+      "areas": [
+        "machine-learning",
+        "llm-nlp"
+      ],
       "official_url": "https://neurips.cc/",
       "cfp_url": "https://neurips.cc/Conferences/2026/Dates",
       "status": "verified",
@@ -500,10 +521,12 @@
       "id": "icml",
       "name": "ICML",
       "full_name": "International Conference on Machine Learning",
-      "areas": ["machine-learning"],
+      "areas": [
+        "machine-learning"
+      ],
       "official_url": "https://icml.cc/",
       "cfp_url": "https://icml.cc/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "July 6-11, 2026",
         "location": "Seoul, South Korea",
@@ -511,13 +534,18 @@
         "source_url": "https://icml.cc/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.461Z"
     },
     {
       "id": "iclr",
       "name": "ICLR 2027",
       "full_name": "International Conference on Learning Representations",
-      "areas": ["machine-learning", "llm-nlp", "robotics"],
+      "areas": [
+        "machine-learning",
+        "llm-nlp",
+        "robotics"
+      ],
       "official_url": "https://iclr.cc/",
       "cfp_url": "https://iclr.cc/Conferences/2027/AuthorGuidelines",
       "status": "verified",
@@ -581,7 +609,11 @@
       "id": "aaai",
       "name": "AAAI",
       "full_name": "AAAI Conference on Artificial Intelligence",
-      "areas": ["machine-learning", "llm-nlp", "robotics"],
+      "areas": [
+        "machine-learning",
+        "llm-nlp",
+        "robotics"
+      ],
       "official_url": "https://aaai.org/conference/aaai/aaai-27/",
       "cfp_url": "https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/",
       "status": "verified",
@@ -658,7 +690,9 @@
       "id": "aistats",
       "name": "AISTATS",
       "full_name": "International Conference on Artificial Intelligence and Statistics",
-      "areas": ["machine-learning"],
+      "areas": [
+        "machine-learning"
+      ],
       "official_url": "https://aistats.org/",
       "cfp_url": "https://aistats.org/",
       "status": "awaiting_cfp",
@@ -675,7 +709,9 @@
       "id": "uai",
       "name": "UAI",
       "full_name": "Conference on Uncertainty in Artificial Intelligence",
-      "areas": ["machine-learning"],
+      "areas": [
+        "machine-learning"
+      ],
       "official_url": "https://www.auai.org/uai/",
       "cfp_url": "https://www.auai.org/uai/",
       "status": "awaiting_cfp",
@@ -692,7 +728,9 @@
       "id": "acl",
       "name": "ACL",
       "full_name": "Annual Meeting of the Association for Computational Linguistics",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://www.aclweb.org/portal/",
       "cfp_url": "https://www.aclweb.org/portal/",
       "status": "awaiting_cfp",
@@ -709,7 +747,9 @@
       "id": "emnlp",
       "name": "EMNLP",
       "full_name": "Conference on Empirical Methods in Natural Language Processing",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://2026.emnlp.org/",
       "cfp_url": "https://2026.emnlp.org/calls/main_conference_papers/",
       "status": "verified",
@@ -781,7 +821,9 @@
       "id": "naacl",
       "name": "NAACL",
       "full_name": "North American Chapter of the Association for Computational Linguistics",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://2027.naacl.org/",
       "cfp_url": "https://2027.naacl.org/",
       "status": "verified",
@@ -814,7 +856,9 @@
       "id": "eacl",
       "name": "EACL",
       "full_name": "European Chapter of the Association for Computational Linguistics",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://2027.eacl.org/",
       "cfp_url": "https://2027.eacl.org/calls/papers/",
       "status": "verified",
@@ -869,7 +913,9 @@
       "id": "aacl",
       "name": "AACL",
       "full_name": "Asia-Pacific Chapter of the Association for Computational Linguistics",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://2026.aaclnet.org/",
       "cfp_url": "https://2026.aaclnet.org/calls/main_conference_papers/",
       "status": "verified",
@@ -954,10 +1000,12 @@
       "id": "coling",
       "name": "COLING",
       "full_name": "International Conference on Computational Linguistics",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://coling2025.org/",
       "cfp_url": "https://coling2025.org/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "May 9-14, 2027",
         "location": "Macau, China",
@@ -965,13 +1013,16 @@
         "source_url": "https://2027.coling-iccl.org/about/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.464Z"
     },
     {
       "id": "conll",
       "name": "CoNLL",
       "full_name": "Conference on Computational Natural Language Learning",
-      "areas": ["llm-nlp"],
+      "areas": [
+        "llm-nlp"
+      ],
       "official_url": "https://www.conll.org/",
       "cfp_url": "https://www.conll.org/",
       "status": "awaiting_cfp",
@@ -988,7 +1039,9 @@
       "id": "icra",
       "name": "ICRA",
       "full_name": "IEEE International Conference on Robotics and Automation",
-      "areas": ["robotics"],
+      "areas": [
+        "robotics"
+      ],
       "official_url": "https://2027.ieee-icra.org/",
       "cfp_url": "https://2027.ieee-icra.org/announcements/call-for-technical-papers/",
       "status": "verified",
@@ -1030,7 +1083,9 @@
       "id": "iros",
       "name": "IROS",
       "full_name": "IEEE/RSJ International Conference on Intelligent Robots and Systems",
-      "areas": ["robotics"],
+      "areas": [
+        "robotics"
+      ],
       "official_url": "https://www.ieee-ras.org/event/2027-ieee-rsj-international-conference-on-intelligent-robots-and-systems-iros-70525/",
       "cfp_url": "https://www.ieee-ras.org/event/2027-ieee-rsj-international-conference-on-intelligent-robots-and-systems-iros-70525/",
       "status": "verified",
@@ -1063,7 +1118,9 @@
       "id": "rss",
       "name": "RSS",
       "full_name": "Robotics: Science and Systems",
-      "areas": ["robotics"],
+      "areas": [
+        "robotics"
+      ],
       "official_url": "https://roboticsconference.org/",
       "cfp_url": "https://roboticsconference.org/",
       "status": "verified",
@@ -1139,7 +1196,10 @@
       "id": "corl",
       "name": "CoRL",
       "full_name": "Conference on Robot Learning",
-      "areas": ["robotics", "machine-learning"],
+      "areas": [
+        "robotics",
+        "machine-learning"
+      ],
       "official_url": "https://www.corl.org/",
       "cfp_url": "https://openreview.net/group?id=robot-learning.org%2FCoRL%2F2026%2FConference",
       "status": "verified",
@@ -1200,7 +1260,9 @@
       "id": "humanoids",
       "name": "Humanoids",
       "full_name": "IEEE-RAS International Conference on Humanoid Robots",
-      "areas": ["robotics"],
+      "areas": [
+        "robotics"
+      ],
       "official_url": "https://www.ieee-ras.org/conferences-workshops/financially-co-sponsored/humanoids",
       "cfp_url": "https://www.ieee-ras.org/event/2026-ieee-ras-25th-international-conference-on-humanoid-robots-humanoids-68892/",
       "status": "verified",

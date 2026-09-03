@@ -223,8 +223,10 @@ export const getLatestPublications = (limit = 3) =>
 const VENUE_SHORT_NAMES = [
     "AAAI",
     "ACCV",
+    "ACM MM",
     "ACL",
     "BMVC",
+    "CIKM",
     "CoRL",
     "CVPR",
     "ECCV",
@@ -232,6 +234,7 @@ const VENUE_SHORT_NAMES = [
     "ICASSP",
     "ICCV",
     "ICDE",
+    "ICDM",
     "ICLR",
     "ICML",
     "ICRA",
@@ -248,23 +251,28 @@ const VENUE_SHORT_NAMES = [
 ];
 
 // Manually curated regular-conference allowlist for the home summary. Do not
-// infer a main track from a venue string: journals, workshops, and Findings
-// tracks remain in the full archive until a person explicitly reviews a venue.
+// infer a main track from a venue string: journals and workshops remain in the
+// full archive until a person explicitly reviews a venue. Findings of EMNLP is
+// explicitly included below at the team's request.
 // For example, "RSS Workshop" is excluded because only the exact "RSS" venue
 // appears here.
 const SUMMARY_REGULAR_CONFERENCE_VENUES = new Set(
     [
         "AAAI",
         "ACCV",
+        "ACM MM",
         "ACL",
         "BMVC",
+        "CIKM",
         "CoRL",
         "CVPR",
         "ECCV",
         "EMNLP",
+        "Findings of EMNLP",
         "ICASSP",
         "ICCV",
         "ICDE",
+        "ICDM",
         "ICLR",
         "ICML",
         "ICRA",

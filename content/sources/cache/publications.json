@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-09-02T03:57:29.794Z"
+    "generated_at": "2026-09-03T07:14:24.260Z"
   },
   "items": [
     {
@@ -10,7 +10,7 @@
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Analyzing to Discover Origins of CNNs and ViT Architectures in Medical Images",
-      "summary": "Sci Rep 2024 publication from CVL Lab.",
+      "summary": "Sci Rep 2024 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Namkug Kim, Jongbin Ryu",
@@ -18,7 +18,7 @@
         "published_date": "2024-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -28,14 +28,14 @@
         "paper_link": "https://www.nature.com/articles/s41598-024-58382-3"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-channel-propagation-networks-for-refreshable-vision-transformer",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Channel Propagation Networks for Refreshable Vision Transformer",
-      "summary": "WACV 2025 publication from CVL Lab.",
+      "summary": "WACV 2025 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Junhyung Ko, Jongbin Ryu",
@@ -43,7 +43,7 @@
         "published_date": "2025-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -53,14 +53,14 @@
         "paper_link": "https://openaccess.thecvf.com/content/WACV2025/papers/Go_Channel_Propagation_Networks_for_Refreshable_Vision_Transformer_WACV_2025_paper.pdf"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-colla-q-toward-collaborative-experts-in-moe-quantization-via-minimax-precision-balancing",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Colla-Q: Toward Collaborative Experts in MoE Quantization via Minimax Precision Balancing",
-      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "EunJu Shin, Jongbin Ryu",
@@ -68,24 +68,24 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-do-your-best-and-get-enough-rest-for-continual-learning",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Do Your Best and Get Enough Rest for Continual Learning",
-      "summary": "CVPR 2025 publication from CVL Lab.",
+      "summary": "CVPR 2025 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Hankyul Kang, Gregor Seifer, Donghyun Lee, Jongbin Ryu",
@@ -93,7 +93,7 @@
         "published_date": "2025-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -103,14 +103,14 @@
         "paper_link": "https://openaccess.thecvf.com/content/CVPR2025/html/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.html"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-enriching-local-patterns-with-multi-token-attention-for-broad-sight-neural-networks",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Enriching Local Patterns with Multi-Token Attention for Broad-Sight Neural Networks",
-      "summary": "WACV 2025 publication from CVL Lab.",
+      "summary": "WACV 2025 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Hankyul Kang, Jongbin Ryu",
@@ -118,7 +118,7 @@
         "published_date": "2025-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -128,14 +128,14 @@
         "paper_link": "https://openaccess.thecvf.com/content/WACV2025/papers/Kang_Enriching_Local_Patterns_with_Multi-Token_Attention_for_Broad-Sight_Neural_Networks_WACV_2025_paper.pdf"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-generative-self-supervised-learning-for-medical-image-classification",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Generative Self-Supervised Learning for Medical Image Classification",
-      "summary": "ACCV 2024 publication from CVL Lab.",
+      "summary": "ACCV 2024 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Inhyuk Park, Sungeun Kim, Jongbin Ryu",
@@ -143,7 +143,7 @@
         "published_date": "2024-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -153,14 +153,14 @@
         "paper_link": "https://openaccess.thecvf.com/content/ACCV2024/html/Park_Generative_Self-Supervised_Learning_for_Medical_Image_Classification_ACCV_2024_paper.html"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-layer-wise-curriculum-learning-for-efficient-llm-compression",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Layer-wise Curriculum Learning for Efficient LLM Compression",
-      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Donggeon Lee, Dooyeon Na, Seungmin Oh, Jongbin Ryu",
@@ -168,24 +168,24 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-neural-substitution-for-branch-level-network-re-parameterization",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Neural Substitution for Branch-level Network Re-parameterization",
-      "summary": "ACCV 2024 publication from CVL Lab.",
+      "summary": "ACCV 2024 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Jongbin Ryu",
@@ -193,7 +193,7 @@
         "published_date": "2024-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -203,14 +203,14 @@
         "paper_link": "https://openaccess.thecvf.com/content/ACCV2024/papers/Oh_Neural_Substitution_for_Branch-level_Network_Re-parameterization_ACCV_2024_paper.pdf"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-re-calibrated-contrastive-loss-for-transformation-aware-prompt-conditioning-in-vision-language-models",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Re-calibrated Contrastive Loss for Transformation-Aware Prompt Conditioning in Vision-Language Models",
-      "summary": "BMVC 2026 publication from CVL Lab.",
+      "summary": "BMVC 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Seunghun Kang, Jongbin Ryu",
@@ -218,24 +218,24 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-robust-asymmetric-loss-for-multi-label-long-tailed-learning",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Robust Asymmetric Loss for Multi-Label Long-Tailed Learning",
-      "summary": "ICCVW 2023 publication from CVL Lab.",
+      "summary": "ICCVW 2023 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Wongi Park, Inhyuk Park, Sungeun Kim, Jongbin Ryu",
@@ -243,7 +243,7 @@
         "published_date": "2023-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -253,14 +253,14 @@
         "paper_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-towards-long-tailed-multi-label-disease-classification-from-chest-x-ray-overview-of-the-cxr-lt-challenge",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Towards long-tailed, multi-label disease classification from chest X-ray: Overview of the CXR-LT challenge",
-      "summary": "MedIA 2024 publication from CVL Lab.",
+      "summary": "MedIA 2024 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "CVAMD participants including Jongbin Ryu",
@@ -268,7 +268,7 @@
         "published_date": "2024-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -278,14 +278,14 @@
         "paper_link": "https://www.sciencedirect.com/science/article/abs/pii/S136184152400149X"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-train-overcomplete-deploy-compact-scaling-recovery-capacity-for-structured-llm-pruning",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Train Overcomplete, Deploy Compact: Scaling Recovery Capacity for Structured LLM Pruning",
-      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Donggeon Lee, Jongbin Ryu",
@@ -293,24 +293,24 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "cvl-publications-unsupervised-hashing-network-with-hyper-quantization-tree",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Unsupervised Hashing Network with Hyper Quantization Tree",
-      "summary": "BMVC 2024 publication from CVL Lab.",
+      "summary": "BMVC 2024 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Sungeun Kim, Jongbin Ryu",
@@ -318,7 +318,7 @@
         "published_date": "2024-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
@@ -328,7 +328,7 @@
         "paper_link": "https://bmva-archive.org.uk/bmvc/2024/papers/Paper_482/paper.pdf"
       },
       "source_id": "cvl-publications",
-      "source_url": "https://cvl-lab.github.io/publication/"
+      "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
       "id": "hei-publications-attend-what-you-need-motion-appearance-synergistic-networks-for-video-question-answering",
@@ -681,6 +681,31 @@
       "source_url": "https://heilaboratory.github.io/publications/"
     },
     {
+      "id": "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
+      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Soyeon Hong, Heegyu Kim, Ji Hoon Hong, Jindong Hwang, Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
+        "published_place": "Findings of EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
       "id": "iknow-publications-can-large-language-models-be-good-emotional-supporter-mitigating-preference-bias-on-emotional-support-conversation",
       "category": "efficient_learning_for_llms",
       "status": "published",
@@ -691,6 +716,56 @@
         "author": "{Dongjin Kang, Sunghwan Kim}, Taeyoon Kwon, Seungjun Moon, Hyunsouk Cho , Youngjae Yu, Dongha Lee, Jinyoung Yeo",
         "published_place": "ACL 2024",
         "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
+      "id": "iknow-publications-cascade-constraint-aware-scaffolded-decomposition-for-logical-anomaly-detection",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "CASCADE: Constraint-Aware Scaffolded Decomposition for Logical Anomaly Detection",
+      "summary": "ICDM 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jinchan Kim, Jinhee Im, and Hyunsouk Cho",
+        "published_place": "ICDM 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
+      "id": "iknow-publications-cities-contextual-inference-of-tail-item-embeddings-for-sequential-recommendation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "CITIES: Contextual Inference of Tail-item Embeddings for Sequential Recommendation",
+      "summary": "ICDM 2020 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seongwon Jang, Hoyeop Lee, Hyunsouk Cho , Sehee Chung",
+        "published_place": "ICDM 2020",
+        "published_date": "2020-01-01",
         "keywords": [],
         "labs": [
           "iKnow Lab"
@@ -806,6 +881,31 @@
       "source_url": "https://iknow.ajou.ac.kr/publications/"
     },
     {
+      "id": "iknow-publications-event-grounding-from-multimodal-social-network-fusion",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Event Grounding from Multimodal Social Network Fusion",
+      "summary": "ICDM 2016 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "{ Hyunsouk Cho , Jingyoung Yeo}, Seung-won Hwang",
+        "published_place": "ICDM 2016",
+        "published_date": "2016-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
       "id": "iknow-publications-exploring-the-side-information-fusion-for-sequential-recommendation",
       "category": "efficient_learning_for_llms",
       "status": "published",
@@ -816,6 +916,31 @@
         "author": "Seunghwan Choi, Donghoon Lee, Hyeoungguk Kang, Hyunsouk Cho",
         "published_place": "IEEE Access 2025",
         "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
+      "id": "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
+      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jooyeong Na, Wansik Jo, Hyunsouk Cho",
+        "published_place": "Findings of EMNLP 2026",
+        "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
           "iKnow Lab"
@@ -885,11 +1010,11 @@
       "category": "efficient_learning_for_llms",
       "status": "published",
       "title": "GTA: Gated Toxicity Avoidance for LM Performance Preservation",
-      "summary": "EMNLP 2023 publication from iKnow Lab.",
+      "summary": "Findings of EMNLP 2023 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
         "author": "Heegyu Kim, Hyunsouk Cho",
-        "published_place": "EMNLP 2023",
+        "published_place": "Findings of EMNLP 2023",
         "published_date": "2023-01-01",
         "keywords": [],
         "labs": [
@@ -981,6 +1106,31 @@
       "source_url": "https://iknow.ajou.ac.kr/publications/"
     },
     {
+      "id": "iknow-publications-omnistitch-depth-aware-stitching-framework-for-omnidirectional-vision-with-multiple-cameras",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "OmniStitch: Depth-Aware Stitching Framework for Omnidirectional Vision with Multiple Cameras",
+      "summary": "ACM MM 2024 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "{Soo-ho Kim, Soyeon Hong}, Kyungsoo Park, Hyunsouk Cho , Kyung-Ah Sohn",
+        "published_place": "ACM MM 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
       "id": "iknow-publications-one-step-pixel-level-perturbation-based-saliency-detector",
       "category": "efficient_learning_for_llms",
       "status": "published",
@@ -991,6 +1141,31 @@
         "author": "Vinnam Kim, Hyunsouk Cho , Sehee Chung",
         "published_place": "BMVC 2021",
         "published_date": "2021-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
+      "id": "iknow-publications-rethinking-the-training-paradigm-of-discrete-token-based-multimodal-llms-an-analysis-of-text-centric-bias",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Rethinking the Training Paradigm of Discrete Token-Based Multimodal LLMs: An Analysis of Text-Centric Bias",
+      "summary": "CIKM 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Wansik Jo, Jooyeong Na, Soyeon Hong, Seungtaek Choi, Hyunsouk Cho",
+        "published_place": "CIKM 2025",
+        "published_date": "2025-01-01",
         "keywords": [],
         "labs": [
           "iKnow Lab"
@@ -1076,6 +1251,31 @@
         "project_link": "https://soyeonhh.github.io/TextME/",
         "source_code_link": "",
         "paper_link": "https://soyeonhh.github.io/TextME/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
+      "id": "iknow-publications-towards-fully-automated-materials-discovery-via-large-scale-synthesis-dataset-and-expert-level-llm-as-a-judge",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Towards Fully-Automated Materials Discovery via Large-Scale Synthesis Dataset and Expert-Level LLM-as-a-Judge",
+      "summary": "CIKM 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Heegyu Kim, Taeyang Jeon, Seungtaek Choi, Ji Hoon Hong, Dong Won Jeon, Ga-Yeon Baek, Gyeong-Won Kwak, Dong-Hee Lee, Jisu Bae, Chihoon Lee, Yunseo Kim, Seon-Jin Choi, Jin-Seong Park, Sung Beom Cho, Hyunsouk Cho",
+        "published_place": "CIKM 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
       },
       "source_id": "iknow-publications",
       "source_url": "https://iknow.ajou.ac.kr/publications/"

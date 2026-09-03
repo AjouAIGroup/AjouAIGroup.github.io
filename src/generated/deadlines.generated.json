@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "CVL-Lab conference deadlines",
-    "updated_at": "2026-08-26T00:00:00+09:00",
+    "updated_at": "2026-09-03T07:14:31.797Z",
     "display_timezone": "Asia/Seoul",
     "area_order": [
       "computer-vision",
@@ -26,7 +26,7 @@
       ],
       "official_url": "https://cvpr.thecvf.com/",
       "cfp_url": "https://cvpr.thecvf.com/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "June 20-24, 2027",
         "location": "Seattle, Washington, USA",
@@ -35,6 +35,7 @@
         "status": "official"
       },
       "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.455Z",
       "source_check": null
     },
     {
@@ -46,7 +47,7 @@
       ],
       "official_url": "https://iccv.thecvf.com/",
       "cfp_url": "https://iccv.thecvf.com/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "October 2-8, 2027",
         "location": "Hong Kong",
@@ -55,6 +56,7 @@
         "status": "official"
       },
       "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.457Z",
       "source_check": null
     },
     {
@@ -533,7 +535,7 @@
       ],
       "official_url": "https://icml.cc/",
       "cfp_url": "https://icml.cc/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "July 6-11, 2026",
         "location": "Seoul, South Korea",
@@ -542,6 +544,7 @@
         "status": "official"
       },
       "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.461Z",
       "source_check": null
     },
     {
@@ -1021,7 +1024,7 @@
       ],
       "official_url": "https://coling2025.org/",
       "cfp_url": "https://coling2025.org/",
-      "status": "awaiting_cfp",
+      "status": "needs_review",
       "event": {
         "dates": "May 9-14, 2027",
         "location": "Macau, China",
@@ -1030,6 +1033,7 @@
         "status": "official"
       },
       "milestones": [],
+      "source_checked_at": "2026-09-03T07:14:26.464Z",
       "source_check": null
     },
     {

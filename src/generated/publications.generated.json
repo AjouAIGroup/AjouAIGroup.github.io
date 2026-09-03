@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.1",
-    "generated_at": "2026-09-02T04:01:40.013Z",
+    "generated_at": "2026-09-03T07:15:32.421Z",
     "source": "content/publications",
     "categories": [
       "computer_vision_and_learning_algorithms",
@@ -22,7 +22,7 @@
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Colla-Q: Toward Collaborative Experts in MoE Quantization via Minimax Precision Balancing",
-      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "EunJu Shin, Jongbin Ryu",
@@ -30,14 +30,14 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "content": {
         "problem": "",
@@ -51,7 +51,7 @@
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Layer-wise Curriculum Learning for Efficient LLM Compression",
-      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Donggeon Lee, Dooyeon Na, Seungmin Oh, Jongbin Ryu",
@@ -59,14 +59,14 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "content": {
         "problem": "",
@@ -80,7 +80,7 @@
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Re-calibrated Contrastive Loss for Transformation-Aware Prompt Conditioning in Vision-Language Models",
-      "summary": "BMVC 2026 publication from CVL Lab.",
+      "summary": "BMVC 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Seunghun Kang, Jongbin Ryu",
@@ -88,14 +88,14 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "content": {
         "problem": "",
@@ -109,7 +109,7 @@
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
       "title": "Train Overcomplete, Deploy Compact: Scaling Recovery Capacity for Structured LLM Pruning",
-      "summary": "EMNLP 2026 publication from CVL Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
         "author": "Seungmin Oh, Donggeon Lee, Jongbin Ryu",
@@ -117,14 +117,14 @@
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
-          "CVL Lab"
+          "MMAI Lab"
         ],
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://cvl-lab.github.io/publication/",
+        "project_link": "https://mmai-laboratory.github.io/publication",
         "source_code_link": "",
-        "paper_link": "https://cvl-lab.github.io/publication/"
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "content": {
         "problem": "",
@@ -273,6 +273,93 @@
           "Text Descriptions",
           "Representation Learning"
         ],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
+      "key": "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
+      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Soyeon Hong, Heegyu Kim, Ji Hoon Hong, Jindong Hwang, Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
+        "published_place": "Findings of EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-cascade-constraint-aware-scaffolded-decomposition-for-logical-anomaly-detection",
+      "key": "iknow-publications-cascade-constraint-aware-scaffolded-decomposition-for-logical-anomaly-detection",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "CASCADE: Constraint-Aware Scaffolded Decomposition for Logical Anomaly Detection",
+      "summary": "ICDM 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jinchan Kim, Jinhee Im, and Hyunsouk Cho",
+        "published_place": "ICDM 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
+      "key": "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
+      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jooyeong Na, Wansik Jo, Hyunsouk Cho",
+        "published_place": "Findings of EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
         "labs": [
           "iKnow Lab"
         ],
@@ -701,6 +788,64 @@
       "research_meta": {
         "author": "Seunghwan Choi, Donghoon Lee, Hyeoungguk Kang, Hyunsouk Cho",
         "published_place": "IEEE Access 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-rethinking-the-training-paradigm-of-discrete-token-based-multimodal-llms-an-analysis-of-text-centric-bias",
+      "key": "iknow-publications-rethinking-the-training-paradigm-of-discrete-token-based-multimodal-llms-an-analysis-of-text-centric-bias",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Rethinking the Training Paradigm of Discrete Token-Based Multimodal LLMs: An Analysis of Text-Centric Bias",
+      "summary": "CIKM 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Wansik Jo, Jooyeong Na, Soyeon Hong, Seungtaek Choi, Hyunsouk Cho",
+        "published_place": "CIKM 2025",
+        "published_date": "2025-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-towards-fully-automated-materials-discovery-via-large-scale-synthesis-dataset-and-expert-level-llm-as-a-judge",
+      "key": "iknow-publications-towards-fully-automated-materials-discovery-via-large-scale-synthesis-dataset-and-expert-level-llm-as-a-judge",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Towards Fully-Automated Materials Discovery via Large-Scale Synthesis Dataset and Expert-Level LLM-as-a-Judge",
+      "summary": "CIKM 2025 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Heegyu Kim, Taeyang Jeon, Seungtaek Choi, Ji Hoon Hong, Dong Won Jeon, Ga-Yeon Baek, Gyeong-Won Kwak, Dong-Hee Lee, Jisu Bae, Chihoon Lee, Yunseo Kim, Seon-Jin Choi, Jin-Seong Park, Sung Beom Cho, Hyunsouk Cho",
+        "published_place": "CIKM 2025",
         "published_date": "2025-01-01",
         "keywords": [],
         "labs": [
@@ -1191,6 +1336,35 @@
       }
     },
     {
+      "id": "iknow-publications-omnistitch-depth-aware-stitching-framework-for-omnidirectional-vision-with-multiple-cameras",
+      "key": "iknow-publications-omnistitch-depth-aware-stitching-framework-for-omnidirectional-vision-with-multiple-cameras",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "OmniStitch: Depth-Aware Stitching Framework for Omnidirectional Vision with Multiple Cameras",
+      "summary": "ACM MM 2024 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "{Soo-ho Kim, Soyeon Hong}, Kyungsoo Park, Hyunsouk Cho , Kyung-Ah Sohn",
+        "published_place": "ACM MM 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
       "id": "lamda-publications-regularization-using-noise-samples-identified-by-the-feature-norm-for-face-recognition",
       "key": "lamda-publications-regularization-using-noise-samples-identified-by-the-feature-norm-for-face-recognition",
       "category": "industrial_and_medical_ai",
@@ -1349,11 +1523,11 @@
       "category": "efficient_learning_for_llms",
       "status": "published",
       "title": "GTA: Gated Toxicity Avoidance for LM Performance Preservation",
-      "summary": "EMNLP 2023 publication from iKnow Lab.",
+      "summary": "Findings of EMNLP 2023 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
         "author": "Heegyu Kim, Hyunsouk Cho",
-        "published_place": "EMNLP 2023",
+        "published_place": "Findings of EMNLP 2023",
         "published_date": "2023-01-01",
         "keywords": [],
         "labs": [
@@ -1547,6 +1721,35 @@
       }
     },
     {
+      "id": "iknow-publications-cities-contextual-inference-of-tail-item-embeddings-for-sequential-recommendation",
+      "key": "iknow-publications-cities-contextual-inference-of-tail-item-embeddings-for-sequential-recommendation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "CITIES: Contextual Inference of Tail-item Embeddings for Sequential Recommendation",
+      "summary": "ICDM 2020 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seongwon Jang, Hoyeop Lee, Hyunsouk Cho , Sehee Chung",
+        "published_place": "ICDM 2020",
+        "published_date": "2020-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
       "id": "iknow-publications-squad2-cr-semi-supervised-annotation-for-cause-and-rationales-for-unanswerability-in-squad-2-0",
       "key": "iknow-publications-squad2-cr-semi-supervised-annotation-for-cause-and-rationales-for-unanswerability-in-squad-2-0",
       "category": "efficient_learning_for_llms",
@@ -1645,6 +1848,35 @@
         "author": "Jinyoung Yeo, Geongbok Lee, Gengyu Wang, Seungtaek Choi, Hyunsouk Cho , Reinald Kim Amplayo, Seung-won Hwang",
         "published_place": "LREC 2018",
         "published_date": "2018-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "iknow-publications-event-grounding-from-multimodal-social-network-fusion",
+      "key": "iknow-publications-event-grounding-from-multimodal-social-network-fusion",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Event Grounding from Multimodal Social Network Fusion",
+      "summary": "ICDM 2016 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "{ Hyunsouk Cho , Jingyoung Yeo}, Seung-won Hwang",
+        "published_place": "ICDM 2016",
+        "published_date": "2016-01-01",
         "keywords": [],
         "labs": [
           "iKnow Lab"

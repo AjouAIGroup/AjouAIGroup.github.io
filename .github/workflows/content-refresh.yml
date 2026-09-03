@@ -3,6 +3,13 @@ name: Refresh External Content
 on:
   schedule:
     - cron: "20 3 * * 3"
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/content-refresh.yml"
+      - "scripts/content/**"
+      - "package.json"
+      - "package-lock.json"
   workflow_dispatch:
 
 permissions:

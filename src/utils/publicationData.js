@@ -241,6 +241,7 @@ const VENUE_SHORT_NAMES = [
     "IJCAI",
     "Interspeech",
     "IROS",
+    "KDD",
     "LREC",
     "MLHC",
     "NeurIPS",
@@ -248,6 +249,7 @@ const VENUE_SHORT_NAMES = [
     "RSS",
     "SIGIR",
     "WACV",
+    "VLDB",
 ];
 
 // Manually curated regular-conference allowlist for the home summary. Do not
@@ -279,6 +281,7 @@ const SUMMARY_REGULAR_CONFERENCE_VENUES = new Set(
         "IJCAI",
         "Interspeech",
         "IROS",
+        "KDD",
         "LREC",
         "MLHC",
         "NAACL",
@@ -286,6 +289,7 @@ const SUMMARY_REGULAR_CONFERENCE_VENUES = new Set(
         "RSS",
         "SIGIR",
         "WACV",
+        "VLDB",
     ].map((venue) => venue.toLowerCase()),
 );
 

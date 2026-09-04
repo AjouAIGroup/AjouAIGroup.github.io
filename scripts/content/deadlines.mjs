@@ -409,7 +409,9 @@ const buildGeneratedData = (data, sourceChecks = {}) => ({
                 new Date(left.deadline_at).getTime() -
                 new Date(right.deadline_at).getTime(),
         ),
-        source_check: sourceChecks[venue.id] ?? null,
+        ...(sourceChecks[venue.id]
+            ? { source_check: sourceChecks[venue.id] }
+            : {}),
     })),
 });
 
@@ -491,9 +493,15 @@ export const syncDeadlineContent = async ({
     }
 
     const generated = buildGeneratedData(data, sourceChecks);
-    if (!validateOnly) {
-        await writeJsonFile(DEADLINE_GENERATED_FILE, generated);
+    if (validateOnly) {
+        console.log(`[deadlines] validated ${generated.venues.length} venues`);
+        return generated;
     }
+
+    await writeJsonFile(DEADLINE_GENERATED_FILE, generated);
+    console.log(
+        `[deadlines] synced ${generated.venues.length} venues -> ${path.relative(ROOT_DIR, DEADLINE_GENERATED_FILE)}`,
+    );
 
     return generated;
 };
@@ -506,14 +514,12 @@ if (isExecutedDirectly) {
     const validateOnly = process.argv.includes("--validate-only");
     const persistSourceRefresh = process.argv.includes("--persist");
 
-    syncDeadlineContent({ validateOnly, refreshSources, persistSourceRefresh })
-        .then((data) => {
-            console.log(
-                `[deadlines] ${validateOnly ? "validation" : refreshSources ? "source refresh" : "sync"} completed for ${data.venues.length} venues.`,
-            );
-        })
-        .catch((error) => {
-            console.error(error.message || error);
-            process.exit(1);
-        });
+    syncDeadlineContent({
+        validateOnly,
+        refreshSources,
+        persistSourceRefresh,
+    }).catch((error) => {
+        console.error(error.message || error);
+        process.exit(1);
+    });
 }

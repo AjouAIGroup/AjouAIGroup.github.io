@@ -1,14 +1,18 @@
-import { useMemo } from "react";
 import { LABORATORIES } from "../../data/laboratories";
-import { shuffleItems } from "../../utils/collections";
+import useShuffledOrder from "../../hooks/useShuffledOrder";
 import "./Research.css";
 
 function Research() {
-    const orderedResearchAreas = useMemo(() => shuffleItems(LABORATORIES), []);
+    const orderedResearchAreas = useShuffledOrder(LABORATORIES);
 
     return (
-        <div data-reveal data-reveal-load-delay="60" className="research-wrapper aaig-research">
-            <header data-reveal className="tab-header page-head page-head--research">
+        <div
+            data-reveal
+            data-reveal-load-delay="60"
+            className="research-wrapper aaig-research">
+            <header
+                data-reveal
+                className="tab-header page-head page-head--research">
                 <h1>Research</h1>
                 <p className="page-head__summary">
                     AAIG connects five labs working across vision, speech,
@@ -16,9 +20,13 @@ function Research() {
                 </p>
             </header>
 
-            <section className="aaig-research__areas" aria-labelledby="research-area-details-title">
+            <section
+                className="aaig-research__areas"
+                aria-labelledby="research-area-details-title">
                 <div className="aaig-research__head">
-                    <h2 id="research-area-details-title">Research by Laboratory</h2>
+                    <h2 id="research-area-details-title">
+                        Research by Laboratory
+                    </h2>
                 </div>
 
                 <div className="aaig-research__grid">
@@ -38,15 +46,20 @@ function Research() {
                                 />
                             </figure>
                             <div className="aaig-research__copy">
-                                <div className={`aaig-research__identity aaig-research__identity--${area.key}`}>
+                                <div
+                                    className={`aaig-research__identity aaig-research__identity--${area.key}`}>
                                     {area.logo ? (
                                         <img
                                             className="aaig-research__lab-logo"
                                             src={area.logo}
                                             alt={area.logoAlt}
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                     ) : (
-                                        <p className="aaig-research__lab-wordmark">{area.shortName}</p>
+                                        <p className="aaig-research__lab-wordmark">
+                                            {area.shortName}
+                                        </p>
                                     )}
                                 </div>
                                 <h3>{area.researchTitle}</h3>
@@ -59,7 +72,10 @@ function Research() {
                                         </div>
                                     ))}
                                 </dl>
-                                <a href={area.href} target="_blank" rel="noreferrer">
+                                <a
+                                    href={area.href}
+                                    target="_blank"
+                                    rel="noreferrer">
                                     Visit {area.shortName} ↗
                                 </a>
                             </div>

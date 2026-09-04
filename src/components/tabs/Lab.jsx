@@ -6,7 +6,7 @@ import LamdaPortrait from "../../assets/images/laboratories/lamda-kyung-ah-sohn.
 import SailPortrait from "../../assets/images/laboratories/sail-sanghoon-lee.jpg";
 import { LABORATORIES } from "../../data/laboratories";
 import { STUDENT_REPRESENTATIVES } from "../../data/contactDirectory";
-import { shuffleItems } from "../../utils/collections";
+import useShuffledOrder from "../../hooks/useShuffledOrder";
 import "./Lab.css";
 
 const FACULTY = [
@@ -15,7 +15,8 @@ const FACULTY = [
         koreanName: "유종빈",
         lab: "MMAI Lab",
         role: "Associate Professor",
-        department: "Department of Software and Computer Engineering, Ajou University",
+        department:
+            "Department of Software and Computer Engineering, Ajou University",
         email: "jongbinryu@ajou.ac.kr",
         interests: "Deep Learning · Computer Vision · Machine Learning",
         href: "https://mmai-laboratory.github.io/",
@@ -80,14 +81,15 @@ function ExternalLink({ href, children, className }) {
 
 function Lab() {
     // A fresh page load creates a new lab order; faculty follows that same order.
-    const orderedLabs = useMemo(() => shuffleItems(LABORATORIES), []);
+    const orderedLabs = useShuffledOrder(LABORATORIES);
     const orderedRepresentatives = useMemo(() => {
         const labOrder = new Map(
             orderedLabs.map((lab, index) => [lab.shortName, index]),
         );
 
         return [...STUDENT_REPRESENTATIVES].sort(
-            (first, second) => labOrder.get(first.lab) - labOrder.get(second.lab),
+            (first, second) =>
+                labOrder.get(first.lab) - labOrder.get(second.lab),
         );
     }, [orderedLabs]);
     const facultyByLab = useMemo(
@@ -106,7 +108,9 @@ function Lab() {
                 </p>
             </header>
 
-            <section className="lab-page__directory" aria-label="Laboratory directory">
+            <section
+                className="lab-page__directory"
+                aria-label="Laboratory directory">
                 <div className="lab-page__grid">
                     {orderedLabs.map((lab) => {
                         const faculty = facultyByLab.get(lab.shortName);
@@ -115,65 +119,85 @@ function Lab() {
                             <article
                                 key={lab.key}
                                 className={`lab-page__item lab-page__item--${lab.key}`}>
-                            <div className="lab-page__item-head">
-                                <div className="lab-page__identity">
-                                    {lab.logo ? (
-                                        <img
-                                            className="lab-page__logo"
-                                            src={lab.logo}
-                                            alt={lab.logoAlt}
-                                        />
-                                    ) : (
-                                        <p className="lab-page__wordmark">{lab.shortName}</p>
-                                    )}
+                                <div className="lab-page__item-head">
+                                    <div className="lab-page__identity">
+                                        {lab.logo ? (
+                                            <img
+                                                className="lab-page__logo"
+                                                src={lab.logo}
+                                                alt={lab.logoAlt}
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        ) : (
+                                            <p className="lab-page__wordmark">
+                                                {lab.shortName}
+                                            </p>
+                                        )}
+                                    </div>
+                                    {faculty ? (
+                                        <a
+                                            className="lab-page__faculty-identity"
+                                            href={`mailto:${faculty.email}`}
+                                            aria-label={`Email ${faculty.name}`}>
+                                            <img
+                                                src={faculty.portrait}
+                                                alt={`${faculty.name} portrait`}
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                            <span>
+                                                <strong>{faculty.name}</strong>
+                                                <small>
+                                                    {faculty.koreanName}
+                                                </small>
+                                            </span>
+                                        </a>
+                                    ) : null}
                                 </div>
-                                {faculty ? (
-                                    <a
-                                        className="lab-page__faculty-identity"
-                                        href={`mailto:${faculty.email}`}
-                                        aria-label={`Email ${faculty.name}`}>
-                                        <img
-                                            src={faculty.portrait}
-                                            alt={`${faculty.name} portrait`}
-                                        />
-                                        <span>
-                                            <strong>{faculty.name}</strong>
-                                            <small>{faculty.koreanName}</small>
-                                        </span>
-                                    </a>
-                                ) : null}
-                            </div>
-                            <h3>{lab.name}</h3>
-                            <p>{lab.summary}</p>
-                            <ul className="lab-page__topics" aria-label={`${lab.name} research topics`}>
-                                {lab.topics.map((topic) => (
-                                    <li key={topic}>{topic}</li>
-                                ))}
-                            </ul>
-                            <ExternalLink href={lab.href} className="lab-page__link">
-                                Visit lab website ↗
-                            </ExternalLink>
-                        </article>
+                                <h3>{lab.name}</h3>
+                                <p>{lab.summary}</p>
+                                <ul
+                                    className="lab-page__topics"
+                                    aria-label={`${lab.name} research topics`}>
+                                    {lab.topics.map((topic) => (
+                                        <li key={topic}>{topic}</li>
+                                    ))}
+                                </ul>
+                                <ExternalLink
+                                    href={lab.href}
+                                    className="lab-page__link">
+                                    Visit lab website ↗
+                                </ExternalLink>
+                            </article>
                         );
                     })}
                 </div>
             </section>
 
-            <section className="lab-page__representatives" aria-labelledby="representatives-title">
+            <section
+                className="lab-page__representatives"
+                aria-labelledby="representatives-title">
                 <div className="lab-page__directory-head">
                     <h2 id="representatives-title">Student Representatives</h2>
                 </div>
                 <div className="lab-page__representative-grid">
                     {orderedRepresentatives.map((member) => (
-                        <article key={member.lab} className="lab-page__representative">
+                        <article
+                            key={member.lab}
+                            className="lab-page__representative">
                             <p className="lab-page__number">{member.lab}</p>
                             <h3>
                                 {member.name}
                                 <span>{member.koreanName}</span>
                             </h3>
-                            <p className="lab-page__faculty-role">{member.role}</p>
+                            <p className="lab-page__faculty-role">
+                                {member.role}
+                            </p>
                             {member.email ? (
-                                <a className="lab-page__email" href={`mailto:${member.email}`}>
+                                <a
+                                    className="lab-page__email"
+                                    href={`mailto:${member.email}`}>
                                     {member.email}
                                 </a>
                             ) : null}

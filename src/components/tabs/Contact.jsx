@@ -1,12 +1,18 @@
 import { CONTACT_LABS } from "../../data/contactDirectory";
 import { Link } from "react-router-dom";
+import useShuffledOrder from "../../hooks/useShuffledOrder";
 import "./Contact.css";
 
 function ContactIdentity({ lab }) {
     return (
         <div className="contact-page__identity">
             {lab.logo ? (
-                <img src={lab.logo} alt={lab.logoAlt} />
+                <img
+                    src={lab.logo}
+                    alt={lab.logoAlt}
+                    loading="lazy"
+                    decoding="async"
+                />
             ) : (
                 <p>{lab.shortName}</p>
             )}
@@ -15,13 +21,18 @@ function ContactIdentity({ lab }) {
 }
 
 function Contact() {
+    const orderedLabs = useShuffledOrder(CONTACT_LABS);
+
     return (
         <div data-reveal data-reveal-load-delay="60" className="contact-page">
-            <header data-reveal className="tab-header page-head contact-page__head">
+            <header
+                data-reveal
+                className="tab-header page-head contact-page__head">
                 <h1>Apply</h1>
                 <p className="page-head__summary">
                     Find the lab that matches your interests, prepare a concise
-                    application note, and contact the appropriate research group.
+                    application note, and contact the appropriate research
+                    group.
                 </p>
             </header>
 
@@ -29,7 +40,9 @@ function Contact() {
                 className="contact-page__introduction"
                 aria-labelledby="apply-introduction-title">
                 <div>
-                    <h2 id="apply-introduction-title">We welcome motivated students.</h2>
+                    <h2 id="apply-introduction-title">
+                        We welcome motivated students.
+                    </h2>
                 </div>
                 <div className="contact-page__introduction-copy">
                     <p>
@@ -41,15 +54,17 @@ function Contact() {
                 </div>
             </section>
 
-            <section className="contact-page__directory" aria-labelledby="apply-labs-title">
+            <section
+                className="contact-page__directory"
+                aria-labelledby="apply-labs-title">
                 <div className="contact-page__section-head">
                     <h2 id="apply-labs-title">Open laboratories</h2>
                     <p>
-                        Contact each laboratory directly to confirm current openings,
-                        application timing, and required materials.
+                        Contact each laboratory directly to confirm current
+                        openings, application timing, and required materials.
                     </p>
                 </div>
-                {CONTACT_LABS.map((lab) => (
+                {orderedLabs.map((lab) => (
                     <article key={lab.key} className="contact-page__lab">
                         <div className="contact-page__lab-primary">
                             <div className="contact-page__lab-heading">
@@ -59,7 +74,8 @@ function Contact() {
                             <div className="contact-page__fit">
                                 <h3>Research fit</h3>
                                 <p>{lab.researchTitle}</p>
-                                <ul aria-label={`${lab.shortName} research topics`}>
+                                <ul
+                                    aria-label={`${lab.shortName} research topics`}>
                                     {lab.topics.map((topic) => (
                                         <li key={topic}>{topic}</li>
                                     ))}
@@ -68,7 +84,11 @@ function Contact() {
                             <div className="contact-page__guidance">
                                 <h3>What to send</h3>
                                 <p>{lab.guidance}</p>
-                                {lab.note ? <p className="contact-page__note">{lab.note}</p> : null}
+                                {lab.note ? (
+                                    <p className="contact-page__note">
+                                        {lab.note}
+                                    </p>
+                                ) : null}
                             </div>
                         </div>
                         <div className="contact-page__lab-secondary">
@@ -78,9 +98,13 @@ function Contact() {
                             </div>
                             <div className="contact-page__contact">
                                 <h3>Contact</h3>
-                                <p className="contact-page__contact-name">{lab.contactName}</p>
+                                <p className="contact-page__contact-name">
+                                    {lab.contactName}
+                                </p>
                                 <p>{lab.contactRole}</p>
-                                <a href={`mailto:${lab.contactEmail}`}>{lab.contactEmail}</a>
+                                <a href={`mailto:${lab.contactEmail}`}>
+                                    {lab.contactEmail}
+                                </a>
                                 <a
                                     className="contact-page__website"
                                     href={lab.href}

@@ -29,6 +29,10 @@ function Footer() {
                     className="footer__university-logo"
                     src={AjouUniversityLogo}
                     alt="Ajou University"
+                    width={218}
+                    height={56}
+                    loading="lazy"
+                    decoding="async"
                 />
             </div>
         </footer>

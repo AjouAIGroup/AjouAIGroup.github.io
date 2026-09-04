@@ -1,12 +1,11 @@
 import "./AAIG.css";
-import { useMemo } from "react";
 import AAIG_HERO from "../../assets/brand/aaig-hero-campus-v2.webp";
 import { SITE } from "../../config/site";
 import { LABORATORIES } from "../../data/laboratories";
-import { shuffleItems } from "../../utils/collections";
+import useShuffledOrder from "../../hooks/useShuffledOrder";
 
 function AaigHero({ isHome }) {
-    const laboratories = useMemo(() => shuffleItems(LABORATORIES), []);
+    const laboratories = useShuffledOrder(LABORATORIES);
 
     if (isHome) {
         return (
@@ -16,6 +15,7 @@ function AaigHero({ isHome }) {
                     src={AAIG_HERO}
                     alt=""
                     decoding="async"
+                    fetchPriority="high"
                 />
                 <div className="aaig-hero__veil" aria-hidden="true" />
                 <div className="aaig-hero__identity">
@@ -25,17 +25,23 @@ function AaigHero({ isHome }) {
                     <div className="aaig-hero__wordmark" aria-hidden="true">
                         <div>Ajou</div>
                         <div>Artificial</div>
-                        <div className="aaig-hero__wordmark-intelligence">Intelligence</div>
+                        <div className="aaig-hero__wordmark-intelligence">
+                            Intelligence
+                        </div>
                         <div>Group</div>
                     </div>
                     <p>Ajou University</p>
                 </div>
-                <section className="aaig-hero__laboratories" aria-label="Laboratories">
+                <section
+                    className="aaig-hero__laboratories"
+                    aria-label="Laboratories">
                     {laboratories.map((lab, index) => (
                         <a
                             key={lab.key}
                             className={`aaig-hero__laboratory aaig-hero__laboratory--${lab.key}`}
-                            style={{ "--laboratory-enter-delay": `${280 + index * 90}ms` }}
+                            style={{
+                                "--laboratory-enter-delay": `${280 + index * 90}ms`,
+                            }}
                             href={lab.href}
                             target="_blank"
                             rel="noreferrer">
@@ -51,11 +57,17 @@ function AaigHero({ isHome }) {
                                 )}
                             </div>
                             <div className="aaig-hero__laboratory-copy">
-                                <p className="aaig-hero__laboratory-label">{lab.shortName}</p>
+                                <p className="aaig-hero__laboratory-label">
+                                    {lab.shortName}
+                                </p>
                                 <h2>{lab.heroTitle ?? lab.name}</h2>
-                                <p className="aaig-hero__laboratory-summary">{lab.heroSummary ?? lab.summary}</p>
+                                <p className="aaig-hero__laboratory-summary">
+                                    {lab.heroSummary ?? lab.summary}
+                                </p>
                             </div>
-                            <ul className="aaig-hero__laboratory-topics" aria-label={`${lab.shortName} research topics`}>
+                            <ul
+                                className="aaig-hero__laboratory-topics"
+                                aria-label={`${lab.shortName} research topics`}>
                                 {lab.topics.slice(0, 2).map((topic) => (
                                     <li key={topic}>{topic}</li>
                                 ))}

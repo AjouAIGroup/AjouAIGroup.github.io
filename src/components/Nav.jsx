@@ -4,17 +4,11 @@ import NavButton from "./Nav.Button";
 import { resolveTabFromPath } from "../routes/routeUtils";
 import { scrollWindowTo } from "../utils/scrollMotion";
 import { NAV_ITEMS } from "../config/site";
+import { isPrimaryPlainClick } from "../utils/pointerEvents";
 import AJOU_AI_GROUP_LOGO from "../assets/brand/ajou-ai-group-logo.png";
 import "./Nav.css";
 
 const MOBILE_NAV_QUERY = "(max-width: 57rem)";
-
-const isPrimaryPlainClick = (event) =>
-    (event.button === undefined || event.button === 0) &&
-    !event.metaKey &&
-    !event.altKey &&
-    !event.ctrlKey &&
-    !event.shiftKey;
 
 export default function Nav() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -126,7 +120,11 @@ export default function Nav() {
 
     return (
         <>
-            <div className="nav__scroll-sentinel" data-nav-scroll-sentinel aria-hidden="true" />
+            <div
+                className="nav__scroll-sentinel"
+                data-nav-scroll-sentinel
+                aria-hidden="true"
+            />
             {isMobileNav ? (
                 <div
                     className={`nav__overlay ${isMenuOpen ? "is-visible" : ""}`}
@@ -145,6 +143,8 @@ export default function Nav() {
                             className="nav__brand-mark"
                             src={AJOU_AI_GROUP_LOGO}
                             alt="Ajou AI Group"
+                            width={1600}
+                            height={516}
                         />
                     </Link>
                     {isMobileNav ? (

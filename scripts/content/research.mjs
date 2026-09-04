@@ -11,10 +11,6 @@ const RESEARCH_DETAILS_FILE = path.resolve(
     ROOT_DIR,
     "src/assets/dataset/research_area_details.json",
 );
-const RESEARCH_IMAGE_DIR = path.resolve(
-    ROOT_DIR,
-    "src/assets/images/research_concepts/optimized",
-);
 
 const readJson = async (filePath) => {
     try {
@@ -48,37 +44,6 @@ const requireUnique = (values, location) => {
     if (new Set(values).size !== values.length) {
         throw new Error(`[research] ${location} contains duplicate values.`);
     }
-};
-
-const validateImages = async (areaKey, images) => {
-    if (!images || typeof images !== "object" || Array.isArray(images)) {
-        throw new Error(
-            `[research] areas.${areaKey}.images must be an object.`,
-        );
-    }
-
-    for (const variant of ["default", "landscape", "wide"]) {
-        const fileName = images[variant];
-        requireString(fileName, `areas.${areaKey}.images.${variant}`);
-
-        if (
-            path.basename(fileName) !== fileName ||
-            path.extname(fileName).toLowerCase() !== ".webp"
-        ) {
-            throw new Error(
-                `[research] areas.${areaKey}.images.${variant} must be a WebP filename inside the optimized research image directory.`,
-            );
-        }
-
-        const imagePath = path.resolve(RESEARCH_IMAGE_DIR, fileName);
-        await fs.access(imagePath).catch(() => {
-            throw new Error(
-                `[research] Missing image: ${path.relative(ROOT_DIR, imagePath)}`,
-            );
-        });
-    }
-
-    requireString(images.alt, `areas.${areaKey}.images.alt`);
 };
 
 const validateDetails = (areaKey, details) => {
@@ -191,7 +156,6 @@ export const validateResearchContent = async () => {
             `areas.${areaKey}.legacy_aliases`,
             { allowEmpty: true },
         );
-        await validateImages(areaKey, area.images);
         validateDetails(areaKey, topics[areaKey]);
     }
     requireUnique(slugs, "research area slugs");

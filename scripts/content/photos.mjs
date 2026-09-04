@@ -1,14 +1,13 @@
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import {
-  PHOTOS_CONTENT_DIR,
   PHOTOS_GENERATED_FILE,
   PHOTOS_METADATA_FILE,
   PHOTOS_RAW_DIR,
   PHOTO_UPLOADS_DIR,
+  PUBLIC_DIR,
   commandExists,
   ensureDir,
-  getNowIso,
   inferDateFromText,
   isIsoDate,
   listImageFiles,
@@ -201,6 +200,7 @@ const processImageFiles = async (files, metadataMap, defaults, validateOnly) => 
   }
 
   const items = [];
+  const usedOutputPaths = new Set();
 
   for (const [index, filePath] of files.entries()) {
     const relativePath = toPosixPath(path.relative(PHOTOS_RAW_DIR, filePath));
@@ -241,12 +241,19 @@ const processImageFiles = async (files, metadataMap, defaults, validateOnly) => 
     const inferredCaption = normalizeText(metadata.caption) || inferredTitle;
     const inferredAlt = normalizeText(metadata.alt) || inferredCaption;
 
-    const outputPaths = getOutputPaths(
-      inferredCategory,
-      inferredDate,
-      inferredSlug,
-      `${baseName}-${String(index + 1).padStart(2, "0")}`,
-    );
+    // The output name is derived from the raw file name alone. Using the scan
+    // index here would rename every later photo whenever one is added, which
+    // busts caches for untouched images and leaves the old files behind.
+    let outputPaths = getOutputPaths(inferredCategory, inferredDate, inferredSlug, baseName);
+    for (let attempt = 2; usedOutputPaths.has(outputPaths.largeAbsolutePath); attempt += 1) {
+      outputPaths = getOutputPaths(
+        inferredCategory,
+        inferredDate,
+        inferredSlug,
+        `${baseName}-${attempt}`,
+      );
+    }
+    usedOutputPaths.add(outputPaths.largeAbsolutePath);
 
     if (!validateOnly) {
       await ensureDir(outputPaths.outputDir);
@@ -294,6 +301,71 @@ const processImageFiles = async (files, metadataMap, defaults, validateOnly) => 
   return items;
 };
 
+const listOutputFiles = async (dir) => {
+  const found = [];
+  let entries;
+
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch (error) {
+    if (error?.code === "ENOENT") return found;
+    throw error;
+  }
+
+  for (const entry of entries) {
+    const absolutePath = path.resolve(dir, entry.name);
+    if (entry.isDirectory()) {
+      found.push(...(await listOutputFiles(absolutePath)));
+    } else if (entry.isFile()) {
+      found.push(absolutePath);
+    }
+  }
+
+  return found;
+};
+
+const removeEmptyDirs = async (dir) => {
+  let entries;
+
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch (error) {
+    if (error?.code === "ENOENT") return true;
+    throw error;
+  }
+
+  let isEmpty = true;
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      const removed = await removeEmptyDirs(path.resolve(dir, entry.name));
+      if (!removed) isEmpty = false;
+    } else {
+      isEmpty = false;
+    }
+  }
+
+  if (isEmpty && path.resolve(dir) !== path.resolve(PHOTO_UPLOADS_DIR)) {
+    await fs.rmdir(dir);
+    return true;
+  }
+
+  return isEmpty;
+};
+
+// Renaming an event folder under content/photos/raw changes the derived output
+// path, so the previous renders would otherwise stay in public/ forever and
+// ship with every deploy. Anything this run did not write is no longer
+// reachable from the manifest and gets removed.
+const pruneUploads = async (keptPaths) => {
+  const existing = await listOutputFiles(PHOTO_UPLOADS_DIR);
+  const stale = existing.filter((filePath) => !keptPaths.has(filePath));
+
+  await Promise.all(stale.map((filePath) => fs.rm(filePath, { force: true })));
+  await removeEmptyDirs(PHOTO_UPLOADS_DIR);
+
+  return stale.length;
+};
+
 export const syncPhotoContent = async ({ validateOnly = false } = {}) => {
   const imageFiles = await listImageFiles(PHOTOS_RAW_DIR);
   if (imageFiles.length === 0) {
@@ -313,10 +385,17 @@ export const syncPhotoContent = async ({ validateOnly = false } = {}) => {
     return items;
   }
 
+  const keptPaths = new Set(
+    items.flatMap((item) => [
+      path.resolve(PUBLIC_DIR, item.full),
+      path.resolve(PUBLIC_DIR, item.thumbnail),
+    ]),
+  );
+  const prunedCount = await pruneUploads(keptPaths);
+
   await writeJsonFile(PHOTOS_GENERATED_FILE, {
     meta: {
       schema_version: "1.0",
-      generated_at: getNowIso(),
       source: "content/photos/raw",
       output_dir: "public/uploads/photos",
       sizes: {
@@ -330,6 +409,9 @@ export const syncPhotoContent = async ({ validateOnly = false } = {}) => {
   console.log(
     `[photos] synced ${items.length} entries -> ${relativeFromRoot(PHOTOS_GENERATED_FILE)}`,
   );
+  if (prunedCount > 0) {
+    console.log(`[photos] pruned ${prunedCount} stale files from ${relativeFromRoot(PHOTO_UPLOADS_DIR)}`);
+  }
   return items;
 };
 

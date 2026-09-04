@@ -22,10 +22,14 @@ function AppRoutes() {
                     element={<Navigate to={route.to} replace />}
                 />
             ))}
+            {/* The page has always been the Apply page; only its address was
+                still /contact. Both older paths stay routable so existing
+                links and indexed results land on it instead of the home page. */}
             <Route
                 path="/prospective"
-                element={<Navigate to="/contact" replace />}
+                element={<Navigate to="/apply" replace />}
             />
+            <Route path="/contact" element={<Navigate to="/apply" replace />} />
             <Route
                 path="/research/*"
                 element={<Navigate to="/research" replace />}

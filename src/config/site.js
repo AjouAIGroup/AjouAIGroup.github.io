@@ -14,5 +14,5 @@ export const NAV_ITEMS = [
     { key: "publication", label: "Publications" },
     { key: "calendar", label: "Calendar" },
     { key: "lab", label: "Labs" },
-    { key: "contact", label: "Apply" },
+    { key: "apply", label: "Apply" },
 ];

@@ -97,10 +97,10 @@
     --tab-identity-accent: var(--tab-news-accent);
 }
 
-.main-content__body--contact {
-    --tab-identity-tint: var(--tab-contact-tint);
-    --tab-identity-border: var(--tab-contact-border);
-    --tab-identity-accent: var(--tab-contact-accent);
+.main-content__body--apply {
+    --tab-identity-tint: var(--tab-apply-tint);
+    --tab-identity-border: var(--tab-apply-border);
+    --tab-identity-accent: var(--tab-apply-accent);
 }
 
 .main-content__body--photo {

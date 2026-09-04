@@ -50,8 +50,8 @@ export const ROUTE_DEFINITIONS = [
             "The five laboratories and faculty of the Ajou Artificial Intelligence Group.",
     },
     {
-        path: "/contact",
-        tabKey: "contact",
+        path: "/apply",
+        tabKey: "apply",
         title: "Apply",
         description:
             "How to contact each Ajou Artificial Intelligence Group laboratory about graduate study and research positions.",

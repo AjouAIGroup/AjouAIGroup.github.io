@@ -181,9 +181,9 @@
     --tab-photo-border: #d2e8e5;
     --tab-photo-accent: var(--identity-photo-accent);
 
-    --tab-contact-tint: var(--identity-contact-soft);
-    --tab-contact-border: #f3dbe5;
-    --tab-contact-accent: var(--identity-contact-accent);
+    --tab-apply-tint: var(--identity-contact-soft);
+    --tab-apply-border: #f3dbe5;
+    --tab-apply-accent: var(--identity-contact-accent);
 
     --tab-deadlines-tint: var(--identity-deadlines-soft);
     --tab-deadlines-border: #d0def4;
@@ -409,7 +409,7 @@
     --tab-publication-border: #5f4a34;
     --tab-people-border: #544076;
     --tab-photo-border: #3d6166;
-    --tab-contact-border: #6d4260;
+    --tab-apply-border: #6d4260;
     --tab-deadlines-border: #3b5d92;
     --tab-resources-border: #3d4f63;
     --backdrop-line: rgba(154, 192, 255, 0.11);

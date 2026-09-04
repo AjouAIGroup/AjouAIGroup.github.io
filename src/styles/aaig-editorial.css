@@ -53,7 +53,7 @@
     --tab-publication-tint: transparent;
     --tab-people-tint: transparent;
     --tab-photo-tint: transparent;
-    --tab-contact-tint: transparent;
+    --tab-apply-tint: transparent;
     --tab-deadlines-tint: transparent;
     --tab-home-border: rgba(23, 23, 23, 0.18);
     --tab-news-border: rgba(23, 23, 23, 0.18);
@@ -62,7 +62,7 @@
     --tab-publication-border: rgba(23, 23, 23, 0.18);
     --tab-people-border: rgba(23, 23, 23, 0.18);
     --tab-photo-border: rgba(23, 23, 23, 0.18);
-    --tab-contact-border: rgba(23, 23, 23, 0.18);
+    --tab-apply-border: rgba(23, 23, 23, 0.18);
     --tab-deadlines-border: rgba(23, 23, 23, 0.18);
     --tab-home-accent: var(--aaig-ink);
     --tab-news-accent: var(--aaig-ink);
@@ -71,7 +71,7 @@
     --tab-publication-accent: var(--aaig-ink);
     --tab-people-accent: var(--aaig-ink);
     --tab-photo-accent: var(--aaig-ink);
-    --tab-contact-accent: var(--aaig-ink);
+    --tab-apply-accent: var(--aaig-ink);
     --tab-deadlines-accent: var(--aaig-ink);
     font-family: var(--font-sans);
 }

@@ -12,7 +12,7 @@ const PAGE_COMPONENTS = {
     news: NewsPage,
     research: ResearchPage,
     lab: LabPage,
-    contact: ContactPage,
+    apply: ContactPage,
     publication: PublicationPage,
     calendar: CalendarPage,
 };

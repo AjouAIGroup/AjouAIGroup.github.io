@@ -9,14 +9,6 @@ const DEFAULT_NEWS_TYPE_META = {
     notice: { label: "Notice" },
 };
 
-const NEWS_TYPE_ORDER = [
-    "paper_accepted",
-    "new_member",
-    "graduation",
-    "award",
-    "notice",
-];
-
 const normalizeNewsType = (value) => {
     const raw = normalizeText(value).toLowerCase();
 
@@ -123,7 +115,8 @@ const normalizeStructuredNewsItems = (items) =>
             id: normalizeText(item?.id) || `news-${index + 1}`,
             type: normalizeNewsType(item?.type),
             title: normalizeText(item?.title) || "Lab Update",
-            summary: normalizeLabBranding(item?.summary) || "Update from MMAI Lab.",
+            summary:
+                normalizeLabBranding(item?.summary) || "Update from MMAI Lab.",
             date: normalizeText(item?.date) || "1970-01-01",
             year: extractYear(item?.year, parsedDate),
             related_person: normalizeLabBranding(item?.related_person),
@@ -151,7 +144,7 @@ const toNewsItems = () => {
 
 const typeMetaFromDataset = NEWS_DATA?.meta?.type_labels ?? {};
 
-export const NEWS_TYPE_META = {
+const NEWS_TYPE_META = {
     ...DEFAULT_NEWS_TYPE_META,
     ...Object.entries(typeMetaFromDataset).reduce((acc, [key, label]) => {
         const normalizedType = normalizeNewsType(key);
@@ -173,21 +166,7 @@ export const getNewsTypeMeta = (type) =>
             .join(" "),
     };
 
-export const isValidExternalUrl = (value) => {
-    const url = normalizeText(value);
-    if (!url) {
-        return false;
-    }
-
-    try {
-        const parsed = new URL(url);
-        return parsed.protocol === "https:" || parsed.protocol === "http:";
-    } catch {
-        return false;
-    }
-};
-
-export const getAllNewsItems = () =>
+const getAllNewsItems = () =>
     toNewsItems()
         .sort((a, b) => b._parsedDate - a._parsedDate)
         .map((item) => {
@@ -203,10 +182,6 @@ export const getPublicationNewsItems = () =>
 
 export const getLatestNewsItems = (limit = 5) =>
     getPublicationNewsItems().slice(0, limit);
-
-export const getNewsTypes = () => {
-    return ["all", ...NEWS_TYPE_ORDER];
-};
 
 export const formatNewsDate = (date) =>
     new Intl.DateTimeFormat("en-US", {

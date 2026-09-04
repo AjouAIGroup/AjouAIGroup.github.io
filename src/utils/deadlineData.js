@@ -12,7 +12,7 @@ export const DEADLINE_AREAS = (DEADLINE_DATA.meta?.area_order ?? []).map(
 export const DEADLINE_DISPLAY_TIMEZONE =
     DEADLINE_DATA.meta?.display_timezone ?? "Asia/Seoul";
 
-export const DEADLINE_STATUS_META = {
+const DEADLINE_STATUS_META = {
     verified: { label: "Official CFP verified", tone: "verified" },
     awaiting_cfp: { label: "Awaiting current CFP", tone: "awaiting" },
     needs_review: { label: "Source needs review", tone: "review" },
@@ -54,7 +54,8 @@ export const getAllVenues = () =>
             ...venue,
             milestones: [...(venue.milestones ?? [])].sort(
                 (left, right) =>
-                    Date.parse(left.deadline_at) - Date.parse(right.deadline_at),
+                    Date.parse(left.deadline_at) -
+                    Date.parse(right.deadline_at),
             ),
         }))
         .sort((left, right) => {
@@ -128,20 +129,6 @@ export const formatDeadlineInDisplayTimezone = (deadlineAt) => {
     return new Intl.DateTimeFormat("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
-        timeZone: DEADLINE_DISPLAY_TIMEZONE,
-    }).format(date);
-};
-
-export const formatSourceCheckedAt = (checkedAt) => {
-    const date = asDate(checkedAt);
-    if (!date) {
-        return "Not checked yet";
-    }
-
-    return new Intl.DateTimeFormat("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
         timeZone: DEADLINE_DISPLAY_TIMEZONE,
     }).format(date);
 };

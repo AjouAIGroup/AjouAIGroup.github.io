@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { scrollWindowTo } from "../utils/scrollMotion";
-
-const isPrimaryPlainClick = (event) =>
-    (event.button === undefined || event.button === 0) &&
-    !event.metaKey &&
-    !event.altKey &&
-    !event.ctrlKey &&
-    !event.shiftKey;
+import { isPrimaryPlainClick } from "../utils/pointerEvents";
 
 export default function NavButton({ children, tabKey, isSelected, onSelect }) {
     const to = tabKey === "home" ? "/" : `/${tabKey}`;

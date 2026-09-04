@@ -125,38 +125,6 @@ export const parseMarkdownFrontmatter = (rawContent, filePath) => {
     return { data, body };
 };
 
-const serializeValue = (value) => {
-    if (Array.isArray(value)) {
-        return `[${value.map((item) => serializeValue(item)).join(", ")}]`;
-    }
-
-    if (value === null || value === undefined) {
-        return "null";
-    }
-
-    if (typeof value === "boolean" || typeof value === "number") {
-        return String(value);
-    }
-
-    const text = String(value);
-    if (text.length === 0) {
-        return '""';
-    }
-
-    if (/^[a-zA-Z0-9._/-]+$/.test(text)) {
-        return text;
-    }
-
-    return JSON.stringify(text);
-};
-
-export const serializeFrontmatterMarkdown = (data, body = "") => {
-    const lines = Object.entries(data).map(
-        ([key, value]) => `${key}: ${serializeValue(value)}`,
-    );
-    return `${FRONTMATTER_BOUNDARY}\n${lines.join("\n")}\n${FRONTMATTER_BOUNDARY}\n\n${body.trim()}\n`;
-};
-
 export const listMarkdownFiles = async (rootDir) => {
     const files = [];
 

@@ -409,6 +409,15 @@
         align-self: flex-end;
     }
 
+    /* The 3 + 2 desktop composition is explicit column placement. Left in
+       place it lands the stacked cards in implicit columns instead of the
+       single column below, splitting them in half and clipping their copy. */
+    .aaig-hero__laboratory,
+    .aaig-hero__laboratory:nth-child(4),
+    .aaig-hero__laboratory:nth-child(5) {
+        grid-column: auto;
+    }
+
     .aaig-hero__laboratory {
         aspect-ratio: auto;
         min-height: 7rem;

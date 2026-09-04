@@ -96,7 +96,7 @@
     right: 0;
     bottom: clamp(1.5rem, 5.2vw, 4.75rem);
     box-sizing: border-box;
-    width: min(50%, 58rem);
+    width: min(54%, 62rem);
     display: grid;
     /* A six-column frame centers five equal cards as a balanced 3 + 2
        composition. It avoids treating the fifth laboratory as a wider,
@@ -118,10 +118,10 @@
     min-height: 0;
     container-type: inline-size;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    align-content: stretch;
+    grid-template-rows: auto auto auto;
+    align-content: start;
     gap: clamp(0.45rem, 0.85vw, 0.75rem);
-    padding: clamp(1rem, 1.8vw, 1.55rem);
+    padding: clamp(1rem, 1.8vw, 1.55rem) clamp(0.85rem, 1.25vw, 1.15rem);
     overflow: hidden;
     color: #171717;
     border: 1px solid rgba(255, 255, 255, 0.48);
@@ -168,15 +168,9 @@
 .aaig-hero__laboratory-identity img {
     display: block;
     width: min(14rem, 100%);
-    max-height: 4.15rem;
+    max-height: 5.5rem;
     object-fit: contain;
     object-position: left center;
-    transform: scale(var(--aaig-hero-logo-scale, 1));
-    transform-origin: left center;
-}
-
-.aaig-hero__laboratory-logo--iknow {
-    --aaig-hero-logo-scale: 1.35;
 }
 
 .aaig-hero__laboratory-identity span {
@@ -188,7 +182,7 @@
 
 .aaig-hero__laboratory--lamda .aaig-hero__laboratory-identity span {
     font-family: var(--font-sans);
-    font-size: clamp(1.55rem, 2.6cqw, 2.7rem);
+    font-size: clamp(1.9rem, 3.2cqw, 3rem);
     font-weight: 700;
     letter-spacing: -0.075em;
 }
@@ -250,7 +244,7 @@
 }
 
 .aaig-hero__laboratory-topics {
-    display: none;
+    display: flex;
     flex-wrap: wrap;
     gap: 0.15rem 0.4rem;
     padding: 0;
@@ -276,14 +270,14 @@
         max-height: 3.1rem;
     }
 
-    .aaig-hero__laboratory-logo--iknow {
-        --aaig-hero-logo-scale: 1.18;
-    }
-
     .aaig-hero__laboratory-summary {
         display: none;
     }
+}
 
+/* The keyword list is the last thing worth dropping, so it survives the width
+   that retires the summary and only goes once the card cannot hold a line. */
+@container (max-width: 9.5rem) {
     .aaig-hero__laboratory-topics {
         display: none;
     }
@@ -301,11 +295,11 @@
     }
 
     .aaig-hero__laboratory-identity img {
-        max-height: 2.7rem;
+        max-height: 4.6rem;
     }
 
     .aaig-hero__laboratory-identity span {
-        font-size: clamp(1.75rem, 3cqw, 2.6rem);
+        font-size: clamp(2rem, 3.4cqw, 3rem);
     }
 }
 
@@ -422,9 +416,20 @@
         aspect-ratio: auto;
         min-height: 7rem;
         grid-template-columns: minmax(7rem, 0.72fr) minmax(0, 1.28fr);
-        grid-template-rows: 1fr;
-        gap: 0.9rem;
+        grid-template-rows: auto auto;
+        gap: 0.5rem 0.9rem;
         padding: 0.95rem 1rem;
+    }
+
+    /* The logo keeps the left column to itself while the copy and the keyword
+       list stack down the right, so the keywords read at the width of the
+       text rather than squeezed under the logo. */
+    .aaig-hero__laboratory-identity {
+        grid-row: 1 / -1;
+    }
+
+    .aaig-hero__laboratory-topics {
+        grid-column: 2;
     }
 
     .aaig-hero__laboratory-identity img {
@@ -443,8 +448,7 @@
         font-size: 0.74rem;
     }
 
-    .aaig-hero__laboratory-summary,
-    .aaig-hero__laboratory-topics {
+    .aaig-hero__laboratory-summary {
         display: none;
     }
 }

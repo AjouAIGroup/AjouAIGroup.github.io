@@ -68,7 +68,7 @@ function AaigHero({ isHome }) {
                             <ul
                                 className="aaig-hero__laboratory-topics"
                                 aria-label={`${lab.shortName} research topics`}>
-                                {lab.topics.slice(0, 2).map((topic) => (
+                                {lab.topics.slice(0, 3).map((topic) => (
                                     <li key={topic}>{topic}</li>
                                 ))}
                             </ul>

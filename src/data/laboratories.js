@@ -20,7 +20,7 @@ export const LABORATORIES = [
         heroTitle: "Multi-Modal AI",
         summary:
             "Multi-modal AI research connecting vision, language, and diverse signals for real-world impact.",
-        topics: ["Computer Vision", "Robot Learning", "Efficient LLMs"],
+        topics: ["Computer Vision", "Efficient LLMs", "Robot Learning"],
         href: "https://mmai-laboratory.github.io/",
         logo: MmaiLogo,
         logoAlt: "MMAI Lab logo",

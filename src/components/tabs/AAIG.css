@@ -102,10 +102,11 @@
        composition. It avoids treating the fifth laboratory as a wider,
        visually different card. */
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    /* Rows size to their tallest card instead of splitting a fixed block in
-       half, which used to leave most of each card empty. The cap keeps the
-       composition inside the viewport on short screens. */
-    grid-template-rows: repeat(2, auto);
+    /* The container is sized by its content, so fr tracks equalise the two
+       rows at their tallest card rather than splitting a fixed block in half
+       the way the old fixed height did. The cap keeps the composition inside
+       the viewport on short screens. */
+    grid-template-rows: repeat(2, 1fr);
     gap: clamp(0.5rem, 0.9vw, 0.75rem);
     max-height: min(43rem, calc(100svh - 7.25rem));
     padding-inline: clamp(1.25rem, 3.8vw, 4.5rem);
@@ -113,13 +114,14 @@
 }
 
 .aaig-hero__laboratory {
+    --aaig-hero-logo-band: 5.5rem;
     grid-column: span 2;
     aspect-ratio: auto;
     min-height: 0;
     container-type: inline-size;
     display: grid;
-    grid-template-rows: auto auto auto;
-    align-content: start;
+    grid-template-rows: auto 1fr auto;
+    align-content: stretch;
     gap: clamp(0.45rem, 0.85vw, 0.75rem);
     padding: clamp(1rem, 1.8vw, 1.55rem) clamp(0.85rem, 1.25vw, 1.15rem);
     overflow: hidden;
@@ -160,29 +162,30 @@
 
 .aaig-hero__laboratory-identity {
     display: flex;
+    height: var(--aaig-hero-logo-band);
     min-width: 0;
     min-height: 0;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .aaig-hero__laboratory-identity img {
     display: block;
     width: min(14rem, 100%);
-    max-height: 5.5rem;
+    max-height: 100%;
     object-fit: contain;
     object-position: left center;
 }
 
 .aaig-hero__laboratory-identity span {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 3.4vw, 3.5rem);
+    font-size: clamp(2.6rem, 3.4vw, 3.5rem);
     letter-spacing: -0.055em;
     line-height: 0.9;
 }
 
 .aaig-hero__laboratory--lamda .aaig-hero__laboratory-identity span {
     font-family: var(--font-sans);
-    font-size: clamp(1.9rem, 3.2cqw, 3rem);
+    font-size: clamp(2.3rem, 3.2cqw, 3rem);
     font-weight: 700;
     letter-spacing: -0.075em;
 }
@@ -266,8 +269,8 @@
         padding: 0.85rem;
     }
 
-    .aaig-hero__laboratory-identity img {
-        max-height: 3.1rem;
+    .aaig-hero__laboratory {
+        --aaig-hero-logo-band: 3.4rem;
     }
 
     .aaig-hero__laboratory-summary {
@@ -290,16 +293,13 @@
     }
 
     .aaig-hero__laboratory {
+        --aaig-hero-logo-band: 4.6rem;
         gap: 0.4rem;
         padding: 0.8rem;
     }
 
-    .aaig-hero__laboratory-identity img {
-        max-height: 4.6rem;
-    }
-
     .aaig-hero__laboratory-identity span {
-        font-size: clamp(2rem, 3.4cqw, 3rem);
+        font-size: clamp(2.3rem, 3.4cqw, 3rem);
     }
 }
 
@@ -414,6 +414,7 @@
 
     .aaig-hero__laboratory {
         aspect-ratio: auto;
+        --aaig-hero-logo-band: 3rem;
         min-height: 7rem;
         grid-template-columns: minmax(7rem, 0.72fr) minmax(0, 1.28fr);
         grid-template-rows: auto auto;
@@ -433,11 +434,17 @@
     }
 
     .aaig-hero__laboratory-identity img {
-        max-height: 2.8rem;
+        max-height: 100%;
     }
 
     .aaig-hero__laboratory-identity span {
         font-size: 2.2rem;
+    }
+
+    /* "LAMDA Lab" is the one wordmark that wraps in the narrow logo column,
+       which pushed it past the shared band. */
+    .aaig-hero__laboratory--lamda .aaig-hero__laboratory-identity span {
+        font-size: 1.5rem;
     }
 
     .aaig-hero__laboratory h2 {

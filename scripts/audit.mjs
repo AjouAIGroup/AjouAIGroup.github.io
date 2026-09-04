@@ -20,7 +20,7 @@ const TRANSIENT_PATTERNS = [
     /attempt timed out/i,
 ];
 
-const RETRY_DELAYS_MS = [5000, 15000, 30000];
+const RETRY_DELAYS_MS = [5000, 15000, 30000, 60000];
 
 // A registry that accepts the connection and then stalls would otherwise hang
 // the job until the runner's own timeout, so each attempt is capped.
@@ -88,10 +88,17 @@ const run = async () => {
 
         const delayMs = RETRY_DELAYS_MS[attempt];
         if (delayMs === undefined) {
-            console.error(
-                `[audit] registry unreachable after ${maxAttempts} attempts.`,
+            // Every attempt failed to get an answer out of the registry, which
+            // is not the registry reporting a problem with this project. A
+            // third-party service we cannot reach must not be able to hold the
+            // deploy shut for as long as its outage lasts, so the run carries
+            // on and says plainly in the log that nothing was audited.
+            console.warn(
+                `[audit] SKIPPED: the npm audit endpoint did not answer in ${maxAttempts} attempts.`,
             );
-            process.exitCode = 1;
+            console.warn(
+                "[audit] Dependencies were NOT audited for this run. Re-run the job once registry.npmjs.org recovers.",
+            );
             return;
         }
 

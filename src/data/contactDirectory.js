@@ -2,12 +2,12 @@ import { LABORATORIES } from "./laboratories";
 
 const CONTACT_DETAILS = {
     cvl: {
-        contactName: "Donggeon Lee",
-        contactRole: "Ph.D. Student and student representative",
-        contactEmail: "donggeon_lee@ajou.ac.kr",
+        contactName: "Jongbin Ryu",
+        contactRole: "Associate Professor",
+        contactEmail: "jongbinryu@ajou.ac.kr",
         guidance:
             "Start by reviewing the lab's research areas. Send a short email with your CV, research interests, and any available academic record to discuss fit and current opportunities.",
-        note: "Donggeon Lee is the current first contact for prospective students.",
+        note: "Donggeon Lee, the student representative, can answer questions about day-to-day lab life.",
         studentProfile:
             "The laboratory will add its preferred background, skills, and research interests here.",
     },
@@ -33,10 +33,18 @@ const CONTACT_DETAILS = {
         contactName: "Hyunsouk Cho",
         contactRole: "Associate Professor",
         contactEmail: "hyunsouk@ajou.ac.kr",
+        // Supplied by the lab for the Apply page. This is what iKnow is
+        // recruiting for, which is narrower than the topics listed for the
+        // lab elsewhere on the site, so it overrides them here only.
+        topics: [
+            "Multimodal Understanding",
+            "LLM-based Evaluation",
+            "AI4Science",
+        ],
         guidance:
-            "Review the lab's research in knowledge-centered AI, then email an introduction with your CV and relevant interests. The lab can confirm its current application process and available positions.",
+            "Simply come with a research topic you would like to explore, then contact the professor by email.",
         studentProfile:
-            "The laboratory will add its preferred background, skills, and research interests here.",
+            "The lab is looking for students who are kind, sincere, and hardworking.",
     },
     lamda: {
         contactName: "Kyung-Ah Sohn",

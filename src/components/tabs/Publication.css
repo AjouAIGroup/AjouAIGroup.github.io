@@ -185,7 +185,8 @@
 .publication__year-heading {
     margin: 0;
     padding-bottom: 0.56rem;
-    border-bottom: 1px solid var(--editorial-rule, var(--tab-identity-border, var(--outline-color)));
+    border-bottom: 1px solid
+        var(--editorial-rule, var(--tab-identity-border, var(--outline-color)));
     color: var(--text-primary);
     font-family: var(--font-serif);
     font-size: var(--group-title-size);

@@ -1,9 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import {
-    formatNewsDate,
-    getPublicationNewsItems,
-} from "../../utils/newsData";
+import { formatNewsDate, getPublicationNewsItems } from "../../utils/newsData";
 import "./News.css";
 
 const PAPER_ACCEPTED_TITLE_PATTERN = /^paper\s+accepted\b/i;
@@ -152,7 +149,9 @@ function News() {
                                                 to={publicationTarget}
                                                 className="news-page__action-link btn btn--tertiary animated-underline">
                                                 <span>Publications</span>
-                                                <span className="news-page__action-arrow">→</span>
+                                                <span className="news-page__action-arrow">
+                                                    →
+                                                </span>
                                             </Link>
                                         </div>
                                     </article>

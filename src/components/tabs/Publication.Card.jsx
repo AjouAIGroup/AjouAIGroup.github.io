@@ -27,23 +27,33 @@ function PublicationCard({
             style={{ "--reveal-delay": revealDelay }}
             className="publication__card">
             <div className="publication__card-main">
-                <div className="publication__card-taxonomy" aria-label="Publication classification">
+                <div
+                    className="publication__card-taxonomy"
+                    aria-label="Publication classification">
                     <p className="publication__card-taxonomy-item">
-                        <span className="publication__card-taxonomy-label">Area</span>
+                        <span className="publication__card-taxonomy-label">
+                            Area
+                        </span>
                         <span
                             className={`publication__card-taxonomy-value publication__card-taxonomy-value--${area}`}>
                             {areaLabel}
                         </span>
                     </p>
                     <p className="publication__card-taxonomy-item">
-                        <span className="publication__card-taxonomy-label">Year</span>
+                        <span className="publication__card-taxonomy-label">
+                            Year
+                        </span>
                         <span className="publication__card-taxonomy-value publication__card-taxonomy-value--year">
                             {yearText}
                         </span>
                     </p>
                     {(meta.labs ?? []).map((lab) => (
-                        <p key={lab} className="publication__card-taxonomy-item">
-                            <span className="publication__card-taxonomy-label">Lab</span>
+                        <p
+                            key={lab}
+                            className="publication__card-taxonomy-item">
+                            <span className="publication__card-taxonomy-label">
+                                Lab
+                            </span>
                             <span className="publication__card-taxonomy-value publication__card-taxonomy-value--lab">
                                 {lab}
                             </span>

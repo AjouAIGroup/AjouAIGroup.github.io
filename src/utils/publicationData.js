@@ -87,7 +87,9 @@ const PUBLICATION_AREA_BY_LAB = {
 };
 
 const normalizeAreaKey = (value) =>
-    normalizeText(value).toLowerCase().replace(/[\s_]+/g, "-");
+    normalizeText(value)
+        .toLowerCase()
+        .replace(/[\s_]+/g, "-");
 
 export const resolvePublicationAreaKey = (value) => {
     const normalized = normalizeAreaKey(value);
@@ -100,7 +102,9 @@ export const resolvePublicationAreaKey = (value) => {
         return normalized;
     }
 
-    const legacyMatch = Object.entries(PUBLICATION_AREA_BY_LEGACY_CATEGORY).find(
+    const legacyMatch = Object.entries(
+        PUBLICATION_AREA_BY_LEGACY_CATEGORY,
+    ).find(
         ([legacyCategory]) => normalizeAreaKey(legacyCategory) === normalized,
     );
 
@@ -312,9 +316,7 @@ const getVenueShortName = (venue = "") => {
 };
 
 const isSummaryEligiblePublication = (publication) => {
-    const venue = getVenueBaseName(
-        publication?.research_meta?.published_place,
-    );
+    const venue = getVenueBaseName(publication?.research_meta?.published_place);
 
     return SUMMARY_REGULAR_CONFERENCE_VENUES.has(venue.toLowerCase());
 };
@@ -336,11 +338,13 @@ export const getPublicationYearSnapshot = (year = new Date().getFullYear()) => {
     return {
         year: targetYear,
         total: publications.length,
-        venues: Array.from(venueCounts, ([venue, count]) => ({ venue, count }))
-            .sort((first, second) =>
-                second.count === first.count
-                    ? first.venue.localeCompare(second.venue)
-                    : second.count - first.count,
-            ),
+        venues: Array.from(venueCounts, ([venue, count]) => ({
+            venue,
+            count,
+        })).sort((first, second) =>
+            second.count === first.count
+                ? first.venue.localeCompare(second.venue)
+                : second.count - first.count,
+        ),
     };
 };

@@ -151,7 +151,10 @@
     line-height: 1;
 }
 
-.app:not(.app--home) .main-content__body .lab-page__item--sail p.lab-page__wordmark {
+.app:not(.app--home)
+    .main-content__body
+    .lab-page__item--sail
+    p.lab-page__wordmark {
     /* SAIL has no supplied image mark, so its typographic mark occupies the
        same visual territory as the adjacent laboratory logos. */
     padding: 0.1em 0 0.16em;
@@ -162,7 +165,10 @@
     line-height: 0.8 !important;
 }
 
-.app:not(.app--home) .main-content__body .lab-page__item--lamda p.lab-page__wordmark {
+.app:not(.app--home)
+    .main-content__body
+    .lab-page__item--lamda
+    p.lab-page__wordmark {
     padding: 0.12em 0 0.18em;
     font-family: var(--font-sans) !important;
     font-size: clamp(2.4rem, 4.5vw, 4.1rem) !important;

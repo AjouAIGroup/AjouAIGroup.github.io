@@ -65,7 +65,9 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-150%);
-    transition: transform var(--dur-fast) var(--ease-standard), opacity var(--dur-fast) var(--ease-standard);
+    transition:
+        transform var(--dur-fast) var(--ease-standard),
+        opacity var(--dur-fast) var(--ease-standard);
 }
 
 .skip-link:focus-visible {
@@ -128,13 +130,7 @@ section {
     width: 100%;
 }
 
-:where(
-    .home,
-    .news-page,
-    .research-wrapper,
-    .publication,
-    .photo-wrapper
-) {
+:where(.home, .news-page, .research-wrapper, .publication, .photo-wrapper) {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -537,12 +533,12 @@ a:focus-visible {
 }
 
 :where(
-        .section-start-head,
-        .publication__section-head,
-        .research__section-head,
-        .page-controls__intro,
-        .news-page__year-head
-    ).scroll-target-highlight {
+    .section-start-head,
+    .publication__section-head,
+    .research__section-head,
+    .page-controls__intro,
+    .news-page__year-head
+).scroll-target-highlight {
     background-color: color-mix(
         in srgb,
         var(--tab-identity-tint, var(--surface-2)) 48%,
@@ -725,8 +721,8 @@ a:focus-visible {
     }
 
     [data-reveal] {
-        transition-property: opacity, border-color, background-color, color,
-            box-shadow !important;
+        transition-property:
+            opacity, border-color, background-color, color, box-shadow !important;
         transform: none !important;
         filter: none !important;
     }

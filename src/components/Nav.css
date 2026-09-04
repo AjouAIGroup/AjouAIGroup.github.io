@@ -10,7 +10,13 @@
     gap: 2rem;
     color: #111;
     font-family: var(--font-serif);
-    transition: top 220ms ease, left 220ms ease, right 220ms ease, padding 220ms ease, background-color 220ms ease, border-color 220ms ease;
+    transition:
+        top 220ms ease,
+        left 220ms ease,
+        right 220ms ease,
+        padding 220ms ease,
+        background-color 220ms ease,
+        border-color 220ms ease;
 }
 
 .nav__scroll-sentinel {
@@ -63,7 +69,9 @@
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
-    text-shadow: 0 1px 0 rgba(247, 245, 239, 0.72), 0 0 0.8rem rgba(247, 245, 239, 0.58);
+    text-shadow:
+        0 1px 0 rgba(247, 245, 239, 0.72),
+        0 0 0.8rem rgba(247, 245, 239, 0.58);
     transition: opacity 180ms ease;
 }
 

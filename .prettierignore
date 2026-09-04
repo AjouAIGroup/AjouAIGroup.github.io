@@ -1,0 +1,25 @@
+node_modules
+dist
+dist-ssr
+
+# Vendored agent skill definitions, tracked by skills-lock.json.
+.agents
+
+# Written by scripts/content/*.mjs and compared byte-for-byte by
+# scripts/content/check.mjs — reformatting these would break the drift check.
+src/generated
+public/uploads
+content/sources/cache
+
+# Authored content: the sync scripts parse this frontmatter, so it is kept
+# exactly as contributors wrote it.
+content
+
+# Vendored third-party stylesheet.
+src/normalize.css
+
+package-lock.json
+
+# Prettier never converges on this file: each run flips the indentation of the
+# YAML sample inside the frontmatter example, so --check can never pass.
+docs/publications/README.md

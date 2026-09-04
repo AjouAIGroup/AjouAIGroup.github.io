@@ -8,12 +8,12 @@
 
 ## 1) 먼저 알아야 할 source of truth
 
-| 목적 | 직접 수정하는 원본 |
-| --- | --- |
-| 영역 이름, 순서, URL, 요약, 키워드, 대표 이미지 | `src/assets/dataset/research_areas.json` |
-| Research Area Details | `src/assets/dataset/research_area_details.json` |
-| 영역 대표 이미지 | `src/assets/images/research_concepts/optimized/*.webp` |
-| Publication 원본 | `content/publications/<area_key>/*.md` |
+| 목적                                            | 직접 수정하는 원본                                     |
+| ----------------------------------------------- | ------------------------------------------------------ |
+| 영역 이름, 순서, URL, 요약, 키워드, 대표 이미지 | `src/assets/dataset/research_areas.json`               |
+| Research Area Details                           | `src/assets/dataset/research_area_details.json`        |
+| 영역 대표 이미지                                | `src/assets/images/research_concepts/optimized/*.webp` |
+| Publication 원본                                | `content/publications/<area_key>/*.md`                 |
 
 Lab Resources & Infrastructure 카드(`research_resources.json`)는 Resources tab 소관입니다. [`docs/resources/README.md`](../resources/README.md)를 참고하세요.
 
@@ -25,12 +25,12 @@ Lab Resources & Infrastructure 카드(`research_resources.json`)는 Resources ta
 
 영역 key는 화면 내용과 같은 의미의 영문 `snake_case`를 사용합니다. URL slug는 같은 key의 `_`를 `-`로 바꾼 값이어야 합니다.
 
-| canonical key | URL slug | 화면 제목 |
-| --- | --- | --- |
+| canonical key                             | URL slug                                  | 화면 제목                               |
+| ----------------------------------------- | ----------------------------------------- | --------------------------------------- |
 | `computer_vision_and_learning_algorithms` | `computer-vision-and-learning-algorithms` | Computer Vision and Learning Algorithms |
-| `efficient_learning_for_llms` | `efficient-learning-for-llms` | Efficient Learning for LLMs |
-| `robot_learning` | `robot-learning` | Robot Learning |
-| `industrial_and_medical_ai` | `industrial-and-medical-ai` | Industrial and Medical AI |
+| `efficient_learning_for_llms`             | `efficient-learning-for-llms`             | Efficient Learning for LLMs             |
+| `robot_learning`                          | `robot-learning`                          | Robot Learning                          |
+| `industrial_and_medical_ai`               | `industrial-and-medical-ai`               | Industrial and Medical AI               |
 
 예전 `core_ai`, `multi-modal_ai`, `application_ai`, `biomedical_ai` 같은 이름은 새 데이터 key로 사용하지 않습니다. 기존 링크 호환을 위한 `legacy_aliases`에만 남깁니다.
 
@@ -49,26 +49,26 @@ Lab Resources & Infrastructure 카드(`research_resources.json`)는 Resources ta
 
 ```json
 {
-  "meta": {
-    "schema_version": "2.0",
-    "area_order": ["new_research_area"]
-  },
-  "areas": {
-    "new_research_area": {
-      "slug": "new-research-area",
-      "title": "New Research Area",
-      "subtitle": ["Topic A", "Topic B"],
-      "explanation": "카드와 상세 상단에 사용하는 한두 문장 설명",
-      "tags": ["Topic A", "Topic B"],
-      "legacy_aliases": [],
-      "images": {
-        "default": "new-research-area.webp",
-        "landscape": "new-research-area-landscape.webp",
-        "wide": "new-research-area-wide.webp",
-        "alt": "이미지가 전달하는 연구 흐름을 설명하는 대체 텍스트"
-      }
+    "meta": {
+        "schema_version": "2.0",
+        "area_order": ["new_research_area"]
+    },
+    "areas": {
+        "new_research_area": {
+            "slug": "new-research-area",
+            "title": "New Research Area",
+            "subtitle": ["Topic A", "Topic B"],
+            "explanation": "카드와 상세 상단에 사용하는 한두 문장 설명",
+            "tags": ["Topic A", "Topic B"],
+            "legacy_aliases": [],
+            "images": {
+                "default": "new-research-area.webp",
+                "landscape": "new-research-area-landscape.webp",
+                "wide": "new-research-area-wide.webp",
+                "alt": "이미지가 전달하는 연구 흐름을 설명하는 대체 텍스트"
+            }
+        }
     }
-  }
 }
 ```
 
@@ -95,18 +95,18 @@ Lab Resources & Infrastructure 카드(`research_resources.json`)는 Resources ta
 
 ```json
 {
-  "topics": {
-    "new_research_area": {
-      "headline": "영역의 핵심 목표",
-      "abstract": "연구 범위와 문제의식을 설명하는 문단",
-      "focus_areas": [
-        {
-          "title": "Focus Area Title",
-          "description": "이 세부 연구 주제를 한 문장으로 설명"
+    "topics": {
+        "new_research_area": {
+            "headline": "영역의 핵심 목표",
+            "abstract": "연구 범위와 문제의식을 설명하는 문단",
+            "focus_areas": [
+                {
+                    "title": "Focus Area Title",
+                    "description": "이 세부 연구 주제를 한 문장으로 설명"
+                }
+            ]
         }
-      ]
     }
-  }
 }
 ```
 

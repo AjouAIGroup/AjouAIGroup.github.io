@@ -88,7 +88,10 @@
 .contact-page__lab-primary,
 .contact-page__lab-secondary {
     display: grid;
-    grid-template-columns: minmax(13rem, 0.78fr) minmax(12rem, 0.72fr) minmax(18rem, 1.2fr);
+    grid-template-columns: minmax(13rem, 0.78fr) minmax(12rem, 0.72fr) minmax(
+            18rem,
+            1.2fr
+        );
     gap: clamp(1.25rem, 3vw, 3.75rem);
 }
 

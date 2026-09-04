@@ -17,7 +17,23 @@
 }
 
 /* Keep supporting copy sans-serif without overriding display headings. */
-#root :is(p, li, dd, dt, address, label, a, button, input, textarea, select, option, small, span) {
+#root
+    :is(
+        p,
+        li,
+        dd,
+        dt,
+        address,
+        label,
+        a,
+        button,
+        input,
+        textarea,
+        select,
+        option,
+        small,
+        span
+    ) {
     font-family: var(--font-sans) !important;
 }
 
@@ -65,26 +81,30 @@
 }
 
 /* Keep the first content block—and every following section—on one editorial rhythm. */
-.app:not(.app--home) :is(
-    .news-page,
-    .aaig-research,
-    .lab-page,
-    .publication,
-    .contact-page,
-    .calendar
-) {
+.app:not(.app--home)
+    :is(
+        .news-page,
+        .aaig-research,
+        .lab-page,
+        .publication,
+        .contact-page,
+        .calendar
+    ) {
     --aaig-page-flow-gap: clamp(2.5rem, 4vw, 3.5rem);
     row-gap: 0 !important;
 }
 
-.app:not(.app--home) :is(
-    .news-page,
-    .aaig-research,
-    .lab-page,
-    .publication,
-    .contact-page,
-    .calendar
-) > * + * {
+.app:not(.app--home)
+    :is(
+        .news-page,
+        .aaig-research,
+        .lab-page,
+        .publication,
+        .contact-page,
+        .calendar
+    )
+    > *
+    + * {
     margin-block-start: var(--aaig-page-flow-gap);
 }
 
@@ -111,15 +131,16 @@
     border-bottom: 0 !important;
 }
 
-.app:not(.app--home) :is(
-    .tab-header h1,
-    .research__section-head h2,
-    .resources__section-head h2,
-    .publication__section-head h2,
-    .people__degree-header h2,
-    .photo-gallery__head h2,
-    .deadlines__section-head h2
-) {
+.app:not(.app--home)
+    :is(
+        .tab-header h1,
+        .research__section-head h2,
+        .resources__section-head h2,
+        .publication__section-head h2,
+        .people__degree-header h2,
+        .photo-gallery__head h2,
+        .deadlines__section-head h2
+    ) {
     max-width: 12ch;
     color: #171717;
     font-family: var(--font-serif) !important;
@@ -142,43 +163,42 @@
     line-height: 1.55 !important;
 }
 
-.app:not(.app--home) :is(
-    .page-panel,
-    .research__detail-panel,
-    .research__detail-focus-area,
-    .resources__card,
-    .publication__card,
-    .people__section,
-    .people__card,
-    .deadlines__venue,
-    .contact__panel,
-    .photo-gallery
-) {
+.app:not(.app--home)
+    :is(
+        .page-panel,
+        .research__detail-panel,
+        .research__detail-focus-area,
+        .resources__card,
+        .publication__card,
+        .people__section,
+        .people__card,
+        .deadlines__venue,
+        .contact__panel,
+        .photo-gallery
+    ) {
     border-color: rgba(23, 23, 23, 0.18) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
 }
 
-.app:not(.app--home) :is(
-    .resources__grid-section,
-    .research__details,
-    .publication__content,
-    .news-page__controls,
-    .news-page__year-group,
-    .people__section,
-    .contact__body,
-    .photo-gallery,
-    .deadlines__venue
-) {
+.app:not(.app--home)
+    :is(
+        .resources__grid-section,
+        .research__details,
+        .publication__content,
+        .news-page__controls,
+        .news-page__year-group,
+        .people__section,
+        .contact__body,
+        .photo-gallery,
+        .deadlines__venue
+    ) {
     padding: 1.4rem 0 0 !important;
     border-top: 1px solid var(--editorial-rule) !important;
 }
 
-.app:not(.app--home) :is(
-    .btn,
-    .interactive-button
-) {
+.app:not(.app--home) :is(.btn, .interactive-button) {
     min-height: var(--aaig-action-height) !important;
     padding: 0.5rem var(--aaig-action-padding-inline) !important;
     border: 1px solid rgba(23, 23, 23, 0.28) !important;
@@ -198,33 +218,32 @@
     transform: translateY(1px) scale(0.985) !important;
 }
 
-.app:not(.app--home) :is(
-    .btn,
-    .interactive-button
-):hover {
+.app:not(.app--home) :is(.btn, .interactive-button):hover {
     border-color: #171717 !important;
     background: rgba(234, 232, 225, 0.7) !important;
     opacity: 1;
 }
 
-.app:not(.app--home) :is(
-    .resources__card,
-    .research__detail-focus-area,
-    .publication__card,
-    .people__card
-):hover {
+.app:not(.app--home)
+    :is(
+        .resources__card,
+        .research__detail-focus-area,
+        .publication__card,
+        .people__card
+    ):hover {
     transform: none !important;
     box-shadow: none !important;
 }
 
-.app:not(.app--home) :is(
-    .resources__card img,
-    .research__detail-media img,
-    .research__detail-focus-media img,
-    .people__card img,
-    .publication__figure img,
-    .photo-gallery img
-) {
+.app:not(.app--home)
+    :is(
+        .resources__card img,
+        .research__detail-media img,
+        .research__detail-focus-media img,
+        .people__card img,
+        .publication__figure img,
+        .photo-gallery img
+    ) {
     border-radius: 0 !important;
 }
 
@@ -236,11 +255,7 @@
     border-left: 1px solid rgba(23, 23, 23, 0.18);
 }
 
-.app:not(.app--home) :is(
-    .resources__card,
-    .people__card,
-    .publication__card
-) {
+.app:not(.app--home) :is(.resources__card, .people__card, .publication__card) {
     padding: clamp(1rem, 2.1vw, 1.75rem) !important;
     border-top: 0 !important;
     border-left: 0 !important;
@@ -248,29 +263,31 @@
     border-bottom: 1px solid rgba(23, 23, 23, 0.18) !important;
 }
 
-.app:not(.app--home) :is(
-    .resources__card-value,
-    .publication__card-title,
-    .people__card-name,
-    .people__professor-name,
-    .research__detail-panel h3,
-    .deadlines__venue h2,
-    .contact__header h2
-) {
+.app:not(.app--home)
+    :is(
+        .resources__card-value,
+        .publication__card-title,
+        .people__card-name,
+        .people__professor-name,
+        .research__detail-panel h3,
+        .deadlines__venue h2,
+        .contact__header h2
+    ) {
     color: #171717 !important;
     font-family: var(--font-serif) !important;
     font-weight: 400 !important;
     letter-spacing: -0.04em !important;
 }
 
-.app:not(.app--home) :is(
-    .resources__card-label,
-    .research__detail-kicker,
-    .news-page__badge,
-    .deadlines__badge,
-    .publication__card-badge,
-    .contact__kicker
-) {
+.app:not(.app--home)
+    :is(
+        .resources__card-label,
+        .research__detail-kicker,
+        .news-page__badge,
+        .deadlines__badge,
+        .publication__card-badge,
+        .contact__kicker
+    ) {
     color: #67635b !important;
     border: 0 !important;
     background: transparent !important;
@@ -281,34 +298,37 @@
     text-transform: uppercase;
 }
 
-.app:not(.app--home) :is(
-    .research__detail-tab,
-    .deadlines__milestone-btn,
-    .news-page__filter-btn,
-    .news-page__year-link,
-    .publication__filter-btn
-) {
+.app:not(.app--home)
+    :is(
+        .research__detail-tab,
+        .deadlines__milestone-btn,
+        .news-page__filter-btn,
+        .news-page__year-link,
+        .publication__filter-btn
+    ) {
     border-bottom: 1px solid transparent !important;
     text-decoration: none !important;
 }
 
-.app:not(.app--home) :is(
-    .research__detail-tab,
-    .deadlines__milestone-btn,
-    .news-page__filter-btn,
-    .news-page__year-link,
-    .publication__filter-btn
-).is-active {
+.app:not(.app--home)
+    :is(
+        .research__detail-tab,
+        .deadlines__milestone-btn,
+        .news-page__filter-btn,
+        .news-page__year-link,
+        .publication__filter-btn
+    ).is-active {
     border-bottom-color: #171717 !important;
 }
 
-.app:not(.app--home) :is(
-    .research__detail-tabs,
-    .deadlines__milestone-tabs,
-    .news-page__filters,
-    .news-page__year-nav-list,
-    .publication__filters
-) {
+.app:not(.app--home)
+    :is(
+        .research__detail-tabs,
+        .deadlines__milestone-tabs,
+        .news-page__filters,
+        .news-page__year-nav-list,
+        .publication__filters
+    ) {
     gap: 1rem !important;
 }
 
@@ -365,56 +385,51 @@
     line-height: 1.62 !important;
 }
 
-.app:not(.app--home) :is(
-    .news-page__badge,
-    .deadlines__badge,
-    .publication__card-badge,
-    .resources__card-label,
-    .research__detail-kicker,
-    .contact__kicker
-) {
+.app:not(.app--home)
+    :is(
+        .news-page__badge,
+        .deadlines__badge,
+        .publication__card-badge,
+        .resources__card-label,
+        .research__detail-kicker,
+        .contact__kicker
+    ) {
     font-family: var(--font-sans) !important;
     font-size: 0.72rem !important;
     line-height: 1.3 !important;
 }
 
 /* Remove panel, card, image, and grid outlines; hierarchy comes from spacing. */
-.app:not(.app--home) :is(
-    .page-panel,
-    .research__details,
-    .research__detail-panel,
-    .research__detail-media,
-    .research__detail-focus-area,
-    .research__detail-focus-media,
-    .resources__grid-section,
-    .resources__card,
-    .publication__content,
-    .publication__card,
-    .people__section,
-    .people__card,
-    .deadlines__venue,
-    .contact__body,
-    .contact__panel,
-    .photo-gallery
-) {
+.app:not(.app--home)
+    :is(
+        .page-panel,
+        .research__details,
+        .research__detail-panel,
+        .research__detail-media,
+        .research__detail-focus-area,
+        .research__detail-focus-media,
+        .resources__grid-section,
+        .resources__card,
+        .publication__content,
+        .publication__card,
+        .people__section,
+        .people__card,
+        .deadlines__venue,
+        .contact__body,
+        .contact__panel,
+        .photo-gallery
+    ) {
     border: 0 !important;
     outline: 0 !important;
 }
 
-.app:not(.app--home) :is(
-    .resources__grid,
-    .people__card-grid,
-    .publication__grid
-) {
+.app:not(.app--home)
+    :is(.resources__grid, .people__card-grid, .publication__grid) {
     gap: clamp(1.25rem, 2.4vw, 2.5rem) !important;
     border: 0 !important;
 }
 
-.app:not(.app--home) :is(
-    .resources__card,
-    .people__card,
-    .publication__card
-) {
+.app:not(.app--home) :is(.resources__card, .people__card, .publication__card) {
     padding: 0 !important;
 }
 
@@ -430,18 +445,14 @@
     border-bottom: 1px solid var(--editorial-rule) !important;
 }
 
-.app:not(.app--home) :is(
-    .news-page__controls-grid,
-    .publication__controls-grid
-) {
+.app:not(.app--home)
+    :is(.news-page__controls-grid, .publication__controls-grid) {
     gap: clamp(1.5rem, 4vw, 4rem) !important;
 }
 
 /* Archive controls are a toolbar, not a second layer of cards. */
-.app:not(.app--home) :is(
-    .news-page__controls-group,
-    .publication__controls-group
-) {
+.app:not(.app--home)
+    :is(.news-page__controls-group, .publication__controls-group) {
     min-height: 0 !important;
     padding: 0 !important;
     border: 0 !important;
@@ -465,12 +476,13 @@
     gap: 0.7rem !important;
 }
 
-.app:not(.app--home) :is(
-    .news-page__controls-label,
-    .publication__controls-label,
-    .publication__search-label,
-    .publication__scope-label
-) {
+.app:not(.app--home)
+    :is(
+        .news-page__controls-label,
+        .publication__controls-label,
+        .publication__search-label,
+        .publication__scope-label
+    ) {
     color: #67635b !important;
     font-family: var(--font-sans) !important;
     font-size: 0.72rem !important;
@@ -480,23 +492,25 @@
     text-transform: uppercase !important;
 }
 
-.app:not(.app--home) :is(
-    .news-page__filter-btn,
-    .news-page__year-link,
-    .publication__button,
-    .publication__scope-btn
-) {
+.app:not(.app--home)
+    :is(
+        .news-page__filter-btn,
+        .news-page__year-link,
+        .publication__button,
+        .publication__scope-btn
+    ) {
     border-bottom: 1px solid transparent !important;
     color: #54514b !important;
     text-decoration: none !important;
 }
 
-.app:not(.app--home) :is(
-    .news-page__filter-btn,
-    .news-page__year-link,
-    .publication__button,
-    .publication__scope-btn
-).is-active {
+.app:not(.app--home)
+    :is(
+        .news-page__filter-btn,
+        .news-page__year-link,
+        .publication__button,
+        .publication__scope-btn
+    ).is-active {
     border-bottom-color: #171717 !important;
     color: #171717 !important;
 }
@@ -555,14 +569,15 @@
         padding: 0.9rem 0 !important;
     }
 
-    .app:not(.app--home) :is(
-        .news-page,
-        .aaig-research,
-        .lab-page,
-        .publication,
-        .contact-page,
-        .calendar
-    ) {
+    .app:not(.app--home)
+        :is(
+            .news-page,
+            .aaig-research,
+            .lab-page,
+            .publication,
+            .contact-page,
+            .calendar
+        ) {
         --aaig-page-flow-gap: clamp(2.25rem, 9vw, 2.75rem);
     }
 

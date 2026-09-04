@@ -10,9 +10,7 @@ import KnowledgeRecommendationImage from "../assets/images/home_research/knowled
 import AppliedAiImage from "../assets/images/home_research/applied-ai.webp";
 import DataCentricTrustworthyAiImage from "../assets/images/home_research/data-centric-trustworthy-ai.webp";
 
-const labsByKey = Object.fromEntries(
-    LABORATORIES.map((lab) => [lab.key, lab]),
-);
+const labsByKey = Object.fromEntries(LABORATORIES.map((lab) => [lab.key, lab]));
 
 const makeArea = (id, title, summary, labKeys, image) => ({
     id,

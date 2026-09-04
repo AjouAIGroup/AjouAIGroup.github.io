@@ -33,15 +33,27 @@ export const LABORATORIES = [
         researchDetails: [
             {
                 title: "Computer Vision & Learning Algorithms",
-                items: ["Visual Recognition", "Large-scale Models", "Meta Learning"],
+                items: [
+                    "Visual Recognition",
+                    "Large-scale Models",
+                    "Meta Learning",
+                ],
             },
             {
                 title: "Efficient Learning for LLMs",
-                items: ["Model Compression", "Efficient Learning", "System-level Optimization"],
+                items: [
+                    "Model Compression",
+                    "Efficient Learning",
+                    "System-level Optimization",
+                ],
             },
             {
                 title: "Robot Learning",
-                items: ["Vision-Language-Action", "Efficient Robotics", "3D Recognition"],
+                items: [
+                    "Vision-Language-Action",
+                    "Efficient Robotics",
+                    "3D Recognition",
+                ],
             },
             {
                 title: "Industrial & Medical AI",
@@ -60,14 +72,22 @@ export const LABORATORIES = [
             "Research on speech synthesis, speech language models, and generative models for audio, talking-head, and video generation.",
         heroSummary:
             "Speech, language, and generative models for audio and visual media.",
-        topics: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
+        topics: [
+            "Speech Synthesis",
+            "Speech Language Models",
+            "Generative Models",
+        ],
         href: "https://sites.google.com/view/speechailab",
         researchTitle: "Speech AI & Generative Models",
         researchSummary:
             "Speech synthesis, speech language models, and generative approaches for audio and visual media.",
         researchDescription:
             "We study speech synthesis, speech language models, and generative approaches for audio, talking-head, and video generation.",
-        themes: ["Speech Synthesis", "Speech Language Models", "Generative Models"],
+        themes: [
+            "Speech Synthesis",
+            "Speech Language Models",
+            "Generative Models",
+        ],
         researchDetails: [
             {
                 title: "Speech Synthesis",
@@ -75,11 +95,19 @@ export const LABORATORIES = [
             },
             {
                 title: "Speech Language Models",
-                items: ["Neural Codec", "Speech-to-Speech Translation", "Speech Editing"],
+                items: [
+                    "Neural Codec",
+                    "Speech-to-Speech Translation",
+                    "Speech Editing",
+                ],
             },
             {
                 title: "Generative AI",
-                items: ["Audio Generation", "Talking Head Generation", "Video Generation"],
+                items: [
+                    "Audio Generation",
+                    "Talking Head Generation",
+                    "Video Generation",
+                ],
             },
         ],
         homeResearchImage: SpeechGenerativeImage,
@@ -92,7 +120,11 @@ export const LABORATORIES = [
         heroTitle: "Human-Centered Embodied Intelligence",
         summary:
             "Building robots that learn, adapt, and interact with people through foundation models for robotics, human-robot interaction, and lifelong learning.",
-        topics: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
+        topics: [
+            "Robot Learning",
+            "Human-Robot Interaction",
+            "Lifelong Learning",
+        ],
         href: "https://heilaboratory.github.io/",
         logo: HeiLogo,
         logoAlt: "HEI Lab logo",
@@ -101,7 +133,11 @@ export const LABORATORIES = [
             "Foundation models and lifelong learning for robots that adapt and collaborate with people.",
         researchDescription:
             "We build adaptive robots through foundation models, human-robot interaction, and lifelong learning in changing physical environments.",
-        themes: ["Robot Learning", "Human-Robot Interaction", "Lifelong Learning"],
+        themes: [
+            "Robot Learning",
+            "Human-Robot Interaction",
+            "Lifelong Learning",
+        ],
         researchDetails: [
             {
                 title: "Foundation Models for Robotics",
@@ -113,7 +149,10 @@ export const LABORATORIES = [
             },
             {
                 title: "Lifelong Robot Learning",
-                items: ["Continuous Skill Acquisition", "Interactive Adaptation"],
+                items: [
+                    "Continuous Skill Acquisition",
+                    "Interactive Adaptation",
+                ],
             },
         ],
         homeResearchImage: EmbodiedIntelligenceImage,

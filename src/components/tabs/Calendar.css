@@ -98,11 +98,17 @@
     letter-spacing: -0.045em;
 }
 
-.calendar__list-heading h2 { font-size: clamp(2rem, 3.4vw, 3.4rem); }
+.calendar__list-heading h2 {
+    font-size: clamp(2rem, 3.4vw, 3.4rem);
+}
 .calendar__list-heading p,
 .calendar__venue-heading p,
 .calendar__event dd,
-.calendar__unannounced { margin: 0; color: #615e57; font: 0.92rem/1.5 var(--font-sans); }
+.calendar__unannounced {
+    margin: 0;
+    color: #615e57;
+    font: 0.92rem/1.5 var(--font-sans);
+}
 
 .calendar__venue {
     display: grid;
@@ -118,16 +124,54 @@
     gap: 1.5rem;
 }
 
-.calendar__venue-heading > div { display: grid; gap: 0.24rem; }
-.calendar__venue-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.48rem 0.65rem; }
-.calendar__venue-meta > span { display: inline-flex; align-items: center; }
-.calendar__venue-meta > span + span::before { content: ""; width: 1px; height: 0.75rem; margin-right: 0.65rem; background: rgba(23, 23, 23, 0.28); }
-.calendar__venue-cycle { color: #171717; font-weight: 800; }
-.calendar__venue-cycle--in-progress { color: #3d3a34; }
-.calendar__venue-cycle--closed { font-family: var(--font-serif); font-size: 0.78rem; letter-spacing: 0.02em; text-transform: none; }
-.calendar__venue-source { color: #77736b; font-size: 0.62rem; letter-spacing: 0.05em; }
-.calendar__venue h2 { font-size: clamp(1.65rem, 2.4vw, 2.45rem); line-height: 1; }
-.calendar__link { flex: 0 0 auto; color: #171717; font: 600 0.96rem/1.4 var(--font-sans); }
+.calendar__venue-heading > div {
+    display: grid;
+    gap: 0.24rem;
+}
+.calendar__venue-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.48rem 0.65rem;
+}
+.calendar__venue-meta > span {
+    display: inline-flex;
+    align-items: center;
+}
+.calendar__venue-meta > span + span::before {
+    content: "";
+    width: 1px;
+    height: 0.75rem;
+    margin-right: 0.65rem;
+    background: rgba(23, 23, 23, 0.28);
+}
+.calendar__venue-cycle {
+    color: #171717;
+    font-weight: 800;
+}
+.calendar__venue-cycle--in-progress {
+    color: #3d3a34;
+}
+.calendar__venue-cycle--closed {
+    font-family: var(--font-serif);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+.calendar__venue-source {
+    color: #77736b;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+}
+.calendar__venue h2 {
+    font-size: clamp(1.65rem, 2.4vw, 2.45rem);
+    line-height: 1;
+}
+.calendar__link {
+    flex: 0 0 auto;
+    color: #171717;
+    font: 600 0.96rem/1.4 var(--font-sans);
+}
 
 .calendar__event {
     display: grid;
@@ -139,38 +183,130 @@
     border-bottom: 1px solid rgba(23, 23, 23, 0.16);
 }
 
-.calendar__event div { min-width: 0; display: grid; gap: 0.25rem; }
-.calendar__event dd { margin: 0; }
-.calendar__location-flags { margin-right: 0.38rem; font-size: 0.98rem; letter-spacing: 0.08em; }
+.calendar__event div {
+    min-width: 0;
+    display: grid;
+    gap: 0.25rem;
+}
+.calendar__event dd {
+    margin: 0;
+}
+.calendar__location-flags {
+    margin-right: 0.38rem;
+    font-size: 0.98rem;
+    letter-spacing: 0.08em;
+}
 
-.calendar__deadline { display: grid; grid-template-columns: minmax(11rem, 0.66fr) minmax(0, 1.34fr); gap: 1.5rem; align-items: end; }
-.calendar__milestones { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.8rem; }
-.calendar__deadline-detail { display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
-.calendar__deadline-detail > div { display: grid; gap: 0.12rem; }
+.calendar__deadline {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.66fr) minmax(0, 1.34fr);
+    gap: 1.5rem;
+    align-items: end;
+}
+.calendar__milestones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.8rem;
+}
+.calendar__deadline-detail {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.calendar__deadline-detail > div {
+    display: grid;
+    gap: 0.12rem;
+}
 .calendar__deadline-detail p,
 .calendar__deadline-detail time,
-.calendar__deadline-detail small { margin: 0; }
-.calendar__deadline-detail p { font: 700 0.78rem/1.35 var(--font-sans); letter-spacing: 0.05em; text-transform: uppercase; }
-.calendar__deadline-detail time { color: #171717; font: clamp(1.12rem, 1.7vw, 1.45rem)/1.15 var(--font-serif); }
-.calendar__deadline-detail small { color: #69655d; font: 0.75rem/1.4 var(--font-sans); }
-.calendar__deadline-detail strong { flex: 0 0 auto; color: #171717; font: 700 clamp(1.3rem, 2vw, 1.8rem)/1 var(--font-serif); letter-spacing: -0.035em; white-space: nowrap; }
-.calendar__deadline-status { display: grid; justify-items: end; gap: 0.38rem; }
-.calendar__next-cfp { max-width: 18rem; margin: 0; color: #69655d; font: 0.72rem/1.42 var(--font-sans); text-align: right; }
-.calendar__next-cfp span { display: block; margin-bottom: 0.08rem; color: #171717; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.calendar__unannounced { padding-top: 0.2rem; }
-.calendar__empty { margin: 0; padding: 1.5rem 0; border-top: 1px solid rgba(23, 23, 23, 0.13); color: #615e57; font: 1rem/1.5 var(--font-sans); }
+.calendar__deadline-detail small {
+    margin: 0;
+}
+.calendar__deadline-detail p {
+    font: 700 0.78rem/1.35 var(--font-sans);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.calendar__deadline-detail time {
+    color: #171717;
+    font: clamp(1.12rem, 1.7vw, 1.45rem)/1.15 var(--font-serif);
+}
+.calendar__deadline-detail small {
+    color: #69655d;
+    font: 0.75rem/1.4 var(--font-sans);
+}
+.calendar__deadline-detail strong {
+    flex: 0 0 auto;
+    color: #171717;
+    font: 700 clamp(1.3rem, 2vw, 1.8rem)/1 var(--font-serif);
+    letter-spacing: -0.035em;
+    white-space: nowrap;
+}
+.calendar__deadline-status {
+    display: grid;
+    justify-items: end;
+    gap: 0.38rem;
+}
+.calendar__next-cfp {
+    max-width: 18rem;
+    margin: 0;
+    color: #69655d;
+    font: 0.72rem/1.42 var(--font-sans);
+    text-align: right;
+}
+.calendar__next-cfp span {
+    display: block;
+    margin-bottom: 0.08rem;
+    color: #171717;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.calendar__unannounced {
+    padding-top: 0.2rem;
+}
+.calendar__empty {
+    margin: 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(23, 23, 23, 0.13);
+    color: #615e57;
+    font: 1rem/1.5 var(--font-sans);
+}
 
 @media (max-width: 48rem) {
     .calendar__controls,
     .calendar__list-heading,
     .calendar__venue-heading,
     .calendar__deadline,
-    .calendar__deadline-detail { align-items: start; flex-direction: column; grid-template-columns: 1fr; }
-    .calendar__controls { display: grid; }
-    .calendar__search { width: min(100%, 24rem); }
-    .calendar__venue-heading { display: flex; }
-    .calendar__event { grid-template-columns: 1fr; gap: 0.65rem; }
-    .calendar__deadline-detail strong { font-size: 1.45rem; }
-    .calendar__deadline-status { justify-items: start; }
-    .calendar__next-cfp { max-width: none; text-align: left; }
+    .calendar__deadline-detail {
+        align-items: start;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+    }
+    .calendar__controls {
+        display: grid;
+    }
+    .calendar__search {
+        width: min(100%, 24rem);
+    }
+    .calendar__venue-heading {
+        display: flex;
+    }
+    .calendar__event {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+    }
+    .calendar__deadline-detail strong {
+        font-size: 1.45rem;
+    }
+    .calendar__deadline-status {
+        justify-items: start;
+    }
+    .calendar__next-cfp {
+        max-width: none;
+        text-align: left;
+    }
 }

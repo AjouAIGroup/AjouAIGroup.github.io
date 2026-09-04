@@ -30,7 +30,8 @@ function Publication() {
         const queryFromParams = params.get("q")?.trim() ?? "";
         const areaFromParams = params.get("area")?.trim() ?? "";
         const yearFromParams = params.get("year")?.trim() ?? "";
-        const normalizedAreaFromParams = resolvePublicationAreaKey(areaFromParams);
+        const normalizedAreaFromParams =
+            resolvePublicationAreaKey(areaFromParams);
 
         const hasValidArea = areaCategory.includes(normalizedAreaFromParams);
         const hasValidYear = publicationYears.includes(yearFromParams);

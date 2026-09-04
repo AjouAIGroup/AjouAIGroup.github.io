@@ -4,29 +4,29 @@
 
 ## 먼저 볼 것
 
-| 상황 | 이동할 문서 |
-| --- | --- |
-| 전체 운영 흐름을 알고 싶다 | `docs/pipeline/README.md` |
-| Research 영역, 상세 정보 또는 Lab Resources를 수정한다 | `docs/research/README.md` |
-| News를 추가하거나 수정한다 | `docs/news/README.md` |
-| 논문 정보를 추가하거나 수정한다 | `docs/publications/README.md` |
-| 사진을 추가하거나 정리한다 | `docs/photos/README.md` |
-| 구성원 정보를 수정한다 | `docs/people/README.md` |
-| 의존성 경고를 확인하거나 업데이트한다 | `docs/dependencies/README.md` |
-| 배포가 잘 됐는지 확인한다 | `docs/deployment/README.md` |
-| 오류가 났다 | `docs/troubleshooting/README.md` |
-| 예시 파일이 필요하다 | `docs/templates/README.md` |
+| 상황                                                   | 이동할 문서                      |
+| ------------------------------------------------------ | -------------------------------- |
+| 전체 운영 흐름을 알고 싶다                             | `docs/pipeline/README.md`        |
+| Research 영역, 상세 정보 또는 Lab Resources를 수정한다 | `docs/research/README.md`        |
+| News를 추가하거나 수정한다                             | `docs/news/README.md`            |
+| 논문 정보를 추가하거나 수정한다                        | `docs/publications/README.md`    |
+| 사진을 추가하거나 정리한다                             | `docs/photos/README.md`          |
+| 구성원 정보를 수정한다                                 | `docs/people/README.md`          |
+| 의존성 경고를 확인하거나 업데이트한다                  | `docs/dependencies/README.md`    |
+| 배포가 잘 됐는지 확인한다                              | `docs/deployment/README.md`      |
+| 오류가 났다                                            | `docs/troubleshooting/README.md` |
+| 예시 파일이 필요하다                                   | `docs/templates/README.md`       |
 
 ## 운영자가 자주 만지는 파일
 
-| 항목 | 원본 위치 | 사이트가 읽는 결과 |
-| --- | --- | --- |
-| Research | `src/assets/dataset/research_*.json`, Research WebP | 영역별 route, 상세 탭, Resource 카드 |
-| News | `content/news/*.md` | `src/generated/news.generated.json` |
-| Publication | `content/publications/**/*.md` | `src/generated/publications.generated.json` |
-| Photo | `content/photos/raw/**` | `src/generated/photos.generated.json`, `public/uploads/photos/**` |
-| People | `src/assets/dataset/people.json`, `src/assets/images/people/*` | 최적화된 WebP와 자동 생성 이미지 index |
-| Dependencies | `package.json` | `package-lock.json`의 재현 가능한 전체 graph |
+| 항목         | 원본 위치                                                      | 사이트가 읽는 결과                                                |
+| ------------ | -------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Research     | `src/assets/dataset/research_*.json`, Research WebP            | 영역별 route, 상세 탭, Resource 카드                              |
+| News         | `content/news/*.md`                                            | `src/generated/news.generated.json`                               |
+| Publication  | `content/publications/**/*.md`                                 | `src/generated/publications.generated.json`                       |
+| Photo        | `content/photos/raw/**`                                        | `src/generated/photos.generated.json`, `public/uploads/photos/**` |
+| People       | `src/assets/dataset/people.json`, `src/assets/images/people/*` | 최적화된 WebP와 자동 생성 이미지 index                            |
+| Dependencies | `package.json`                                                 | `package-lock.json`의 재현 가능한 전체 graph                      |
 
 `src/generated/*`, `public/uploads/photos/*`, People의 `optimized/*`와 이미지 index는 자동 생성 결과입니다. 직접 고치지 말고 원본을 수정한 뒤 스크립트를 다시 실행합니다.
 

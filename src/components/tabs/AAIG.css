@@ -52,7 +52,8 @@
     width: min(36rem, 54vw);
     margin: 0 0 clamp(1.5rem, 3.3vw, 3.6rem) clamp(4.5rem, 5.8vw, 6.4rem);
     color: #111;
-    animation: aaig-hero-identity-in 900ms 180ms cubic-bezier(0.2, 0.72, 0.18, 1) both;
+    animation: aaig-hero-identity-in 900ms 180ms
+        cubic-bezier(0.2, 0.72, 0.18, 1) both;
 }
 
 .aaig-hero__title {
@@ -127,8 +128,12 @@
     backdrop-filter: blur(4px) saturate(108%);
     -webkit-backdrop-filter: blur(4px) saturate(108%);
     text-decoration: none;
-    transition: transform 180ms ease, background-color 180ms ease;
-    animation: aaig-hero-laboratory-in 760ms var(--laboratory-enter-delay, 280ms) cubic-bezier(0.2, 0.72, 0.18, 1) both;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
+    animation: aaig-hero-laboratory-in 760ms
+        var(--laboratory-enter-delay, 280ms) cubic-bezier(0.2, 0.72, 0.18, 1)
+        both;
 }
 
 /* Center the second pair without creating an empty card or a different size. */
@@ -299,7 +304,6 @@
     .aaig-hero__laboratory-identity span {
         font-size: clamp(1.75rem, 3cqw, 2.6rem);
     }
-
 }
 
 .aaig-page-title {

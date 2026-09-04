@@ -100,11 +100,7 @@
     );
     --backdrop-line: rgba(100, 129, 176, 0.12);
     --backdrop-line-strong: rgba(100, 129, 176, 0.2);
-    --backdrop-band: color-mix(
-        in srgb,
-        var(--accent-ui-500) 8%,
-        transparent
-    );
+    --backdrop-band: color-mix(in srgb, var(--accent-ui-500) 8%, transparent);
     --backdrop-cursor: color-mix(
         in srgb,
         var(--accent-ui-500) 34%,
@@ -418,11 +414,7 @@
     --tab-resources-border: #3d4f63;
     --backdrop-line: rgba(154, 192, 255, 0.11);
     --backdrop-line-strong: rgba(154, 192, 255, 0.2);
-    --backdrop-band: color-mix(
-        in srgb,
-        var(--accent-ui-500) 11%,
-        transparent
-    );
+    --backdrop-band: color-mix(in srgb, var(--accent-ui-500) 11%, transparent);
     --backdrop-cursor: color-mix(
         in srgb,
         var(--accent-ui-500) 42%,

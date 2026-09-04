@@ -11,7 +11,7 @@
     "photos:sync": "node scripts/content/photos.mjs",
     "research:validate": "node scripts/content/research.mjs",
     "validate:content": "node scripts/content/validate.mjs",
-    "audit:dependencies": "better-npm-audit audit --level low",
+    "audit:dependencies": "node scripts/audit.mjs",
     "operator:verify": "npm run audit:dependencies && npm run content:sync && npm run build",
     "prebuild": "npm run validate:content",
     "build": "vite build",

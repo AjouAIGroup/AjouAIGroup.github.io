@@ -35,8 +35,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.455Z",
-      "source_check": null
+      "source_checked_at": "2026-09-03T07:14:26.455Z"
     },
     {
       "id": "iccv",
@@ -56,8 +55,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.457Z",
-      "source_check": null
+      "source_checked_at": "2026-09-03T07:14:26.457Z"
     },
     {
       "id": "eccv",
@@ -148,8 +146,7 @@
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "wacv",
@@ -223,8 +220,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "bmvc",
@@ -243,8 +239,7 @@
         "source_url": "https://www.bmva.org/bmvc",
         "status": "official"
       },
-      "milestones": [],
-      "source_check": null
+      "milestones": []
     },
     {
       "id": "accv",
@@ -318,8 +313,7 @@
             "timezone": "UTC"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "3dv",
@@ -385,8 +379,7 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "miccai",
@@ -447,8 +440,7 @@
           "timezone_label": "Pacific Time (PT)",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "neurips",
@@ -523,8 +515,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "icml",
@@ -544,8 +535,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.461Z",
-      "source_check": null
+      "source_checked_at": "2026-09-03T07:14:26.461Z"
     },
     {
       "id": "iclr",
@@ -613,8 +603,7 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "aaai",
@@ -695,8 +684,7 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "aistats",
@@ -715,8 +703,7 @@
         "source_url": "https://virtual.aistats.org/",
         "status": "official"
       },
-      "milestones": [],
-      "source_check": null
+      "milestones": []
     },
     {
       "id": "uai",
@@ -735,8 +722,7 @@
         "source_url": "https://www.auai.org/uai2026/",
         "status": "official"
       },
-      "milestones": [],
-      "source_check": null
+      "milestones": []
     },
     {
       "id": "acl",
@@ -755,8 +741,7 @@
         "source_url": "https://2027.aclweb.org/",
         "status": "official"
       },
-      "milestones": [],
-      "source_check": null
+      "milestones": []
     },
     {
       "id": "emnlp",
@@ -830,8 +815,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "naacl",
@@ -866,8 +850,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "eacl",
@@ -924,8 +907,7 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "aacl",
@@ -1012,8 +994,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "coling",
@@ -1033,8 +1014,7 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.464Z",
-      "source_check": null
+      "source_checked_at": "2026-09-03T07:14:26.464Z"
     },
     {
       "id": "conll",
@@ -1053,8 +1033,7 @@
         "source_url": "https://www.conll.org/2026",
         "status": "official"
       },
-      "milestones": [],
-      "source_check": null
+      "milestones": []
     },
     {
       "id": "icra",
@@ -1098,8 +1077,7 @@
           "timezone_label": "Pacific Time (PT)",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "iros",
@@ -1134,8 +1112,7 @@
             "timezone": "America/New_York"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "rss",
@@ -1213,8 +1190,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "corl",
@@ -1278,8 +1254,7 @@
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified"
         }
-      ],
-      "source_check": null
+      ]
     },
     {
       "id": "humanoids",
@@ -1318,8 +1293,7 @@
             "timezone": "AoE"
           }
         }
-      ],
-      "source_check": null
+      ]
     }
   ]
 }

@@ -4,7 +4,6 @@ import {
     NEWS_CONTENT_DIR,
     EXTERNAL_NEWS_FILE,
     NEWS_GENERATED_FILE,
-    getNowIso,
     isIsoDate,
     listMarkdownFiles,
     normalizeHttpUrl,
@@ -348,7 +347,6 @@ export const syncNewsContent = async ({
     await writeJsonFile(NEWS_GENERATED_FILE, {
         meta: {
             schema_version: "4.0",
-            generated_at: getNowIso(),
             default_sort: "date_desc",
             source: "content/news + publications(published)",
             type_labels: TYPE_LABELS,

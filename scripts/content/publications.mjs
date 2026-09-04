@@ -4,7 +4,6 @@ import {
     PUBLICATIONS_CONTENT_DIR,
     EXTERNAL_PUBLICATIONS_FILE,
     PUBLICATIONS_GENERATED_FILE,
-    getNowIso,
     isIsoDate,
     listMarkdownFiles,
     normalizeHttpUrl,
@@ -334,7 +333,6 @@ export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
     await writeJsonFile(PUBLICATIONS_GENERATED_FILE, {
         meta: {
             schema_version: "1.1",
-            generated_at: getNowIso(),
             source: "content/publications",
             categories,
             statuses: Array.from(PUBLICATION_STATUSES),

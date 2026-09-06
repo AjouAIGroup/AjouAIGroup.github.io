@@ -21,13 +21,14 @@ const CONTACT_DETAILS = {
             "The laboratory will add its preferred background, skills, and research interests here.",
     },
     hei: {
-        contactName: "Gicheon Kang",
+        contactName: "Gi-Cheon Kang",
         contactRole: "Assistant Professor",
         contactEmail: "gckang@ajou.ac.kr",
+        // Supplied by the lab for the Apply page.
         guidance:
-            "Read the lab's work in embodied intelligence and robotics before contacting the lab. Include a CV and a concise note about the research topics you would like to pursue.",
+            "CV, Academic Transcript, and English Score to the Professor.",
         studentProfile:
-            "The laboratory will add its preferred background, skills, and research interests here.",
+            "Our lab is looking for students excited to dive deep into cutting-edge Physical AI research.",
     },
     iknow: {
         contactName: "Hyunsouk Cho",

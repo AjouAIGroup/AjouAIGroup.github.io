@@ -34,7 +34,7 @@ const FACULTY = [
         portrait: SailPortrait,
     },
     {
-        name: "Gicheon Kang",
+        name: "Gi-Cheon Kang",
         koreanName: "강기천",
         lab: "HEI Lab",
         role: "Assistant Professor",

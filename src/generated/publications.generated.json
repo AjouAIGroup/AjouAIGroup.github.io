@@ -132,6 +132,39 @@
       }
     },
     {
+      "id": "hei-2026-latent-lookahead",
+      "key": "hei-2026-latent-lookahead",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
+      "summary": "Predicting domain-invariant latent lookahead to separate spurious correlations in vision-language-action models.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junghyun Kim*, Ngseo Kim*, ChungWoo Lee, Seoyeon Lee, Woo-Jeong Baek, Adam Zhou, Chip Huyen, Jun-Ki Lee†, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+        "published_place": "CoRL 2026",
+        "published_date": "2026-01-01",
+        "keywords": [
+          "Vision-Language-Action",
+          "Robot Learning",
+          "Domain Generalization"
+        ],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://heilaboratory.github.io/publications/",
+        "source_code_link": "",
+        "paper_link": "https://heilaboratory.github.io/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
       "id": "hei-2026-microvla",
       "key": "hei-2026-microvla",
       "category": "robot_learning",
@@ -186,35 +219,6 @@
         "project_link": "https://3d-llm-vla.github.io/",
         "source_code_link": "",
         "paper_link": "https://3d-llm-vla.github.io/"
-      },
-      "content": {
-        "problem": "",
-        "solve": "",
-        "expermental_result": ""
-      }
-    },
-    {
-      "id": "hei-publications-disentangling-spurious-correlations-in-vision-language-action-models-via-predicting-domain-invariant-latent-lookahead",
-      "key": "hei-publications-disentangling-spurious-correlations-in-vision-language-action-models-via-predicting-domain-invariant-latent-lookahead",
-      "category": "robot_learning",
-      "status": "published",
-      "title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
-      "summary": "RSS Workshop 2026 publication from HEI Lab.",
-      "featured": false,
-      "research_meta": {
-        "author": "Junghyun Kim*, Ngseo Kim*, ChungWoo Lee, Seoyeon Lee, Woo-Jeong Baek, Adam Zhou, Chip Huyen, Jun-Ki Lee†, Gi-Cheon Kang†, Byoung-Tak Zhang†",
-        "published_place": "RSS Workshop 2026",
-        "published_date": "2026-01-01",
-        "keywords": [],
-        "labs": [
-          "HEI Lab"
-        ],
-        "pdf_link": "",
-        "arxiv_link": "",
-        "github_link": "",
-        "project_link": "https://rcba-workshop.github.io/rss2026/accepted-papers.html",
-        "source_code_link": "",
-        "paper_link": "https://rcba-workshop.github.io/rss2026/accepted-papers.html"
       },
       "content": {
         "problem": "",

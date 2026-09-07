@@ -35,7 +35,16 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.455Z"
+      "source_checked_at": "2026-09-03T07:14:26.455Z",
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.522Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "3fa5a58e04547a43",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "iccv",
@@ -55,7 +64,16 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.457Z"
+      "source_checked_at": "2026-09-03T07:14:26.457Z",
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.523Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "ffdc2743faa8b73a",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "eccv",
@@ -146,7 +164,21 @@
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.524Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "a0ade250c9a266d3",
+        "extracted_milestones": {
+          "registration": "2026-02-26T23:00:00+01:00",
+          "paper": "2026-03-05T23:00:00+01:00",
+          "supplementary": "2026-03-12T23:00:00+01:00",
+          "rebuttal": "2026-05-11T23:00:00+02:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "wacv",
@@ -220,7 +252,18 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.524Z",
+        "state": "needs_review",
+        "http_status": 200,
+        "content_fingerprint": "b2c8912c6c596d88",
+        "extracted_milestones": {
+          "final-decision": "2026-10-09T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source changed or no longer contains the configured evidence."
+      }
     },
     {
       "id": "bmvc",
@@ -239,7 +282,15 @@
         "source_url": "https://www.bmva.org/bmvc",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.525Z",
+        "state": "unavailable",
+        "http_status": null,
+        "content_fingerprint": null,
+        "extracted_milestones": {},
+        "message": "Official source could not be checked: fetch failed."
+      }
     },
     {
       "id": "accv",
@@ -313,7 +364,21 @@
             "timezone": "UTC"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.526Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "f1b6ac90bc2d0568",
+        "extracted_milestones": {
+          "registration": "2026-07-03T23:59:00+00:00",
+          "paper": "2026-07-05T23:59:00+00:00",
+          "supplementary": "2026-07-08T23:59:00+00:00",
+          "decision": "2026-09-20T23:59:00+00:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "3dv",
@@ -379,7 +444,19 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.526Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "c01b4fda70cc7c46",
+        "extracted_milestones": {
+          "paper": "2026-08-28T23:59:00-12:00",
+          "supplementary": "2026-09-02T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "miccai",
@@ -440,7 +517,19 @@
           "timezone_label": "Pacific Time (PT)",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.527Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "cfea43fb4c00638c",
+        "extracted_milestones": {
+          "abstract": "2026-02-12T23:59:00-08:00",
+          "paper": "2026-02-26T23:59:00-08:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "neurips",
@@ -515,7 +604,21 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.527Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "383a1c540b20be86",
+        "extracted_milestones": {
+          "abstract": "2026-05-04T23:59:00-12:00",
+          "paper": "2026-05-06T23:59:00-12:00",
+          "reviews": "2026-07-22T23:59:00-12:00",
+          "decision": "2026-09-24T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "icml",
@@ -535,7 +638,16 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.461Z"
+      "source_checked_at": "2026-09-03T07:14:26.461Z",
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.527Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "458736ce3e8ba869",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "iclr",
@@ -603,7 +715,19 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.528Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "8d5814361271b414",
+        "extracted_milestones": {
+          "abstract": "2026-09-18T23:59:00-12:00",
+          "paper": "2026-09-25T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "aaai",
@@ -684,7 +808,20 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.528Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "faa3522d4376007e",
+        "extracted_milestones": {
+          "abstract": "2026-07-21T23:59:00-12:00",
+          "paper": "2026-07-28T23:59:00-12:00",
+          "supplementary": "2026-07-31T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "aistats",
@@ -703,7 +840,16 @@
         "source_url": "https://virtual.aistats.org/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.528Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "aefc4ff891adbe6d",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "uai",
@@ -722,7 +868,16 @@
         "source_url": "https://www.auai.org/uai2026/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.529Z",
+        "state": "needs_review",
+        "http_status": 404,
+        "content_fingerprint": "b8c1d648ac198b1e",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source returned HTTP 404."
+      }
     },
     {
       "id": "acl",
@@ -741,7 +896,16 @@
         "source_url": "https://2027.aclweb.org/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.529Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "bd9af1dbb1934ff4",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "emnlp",
@@ -815,7 +979,21 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.529Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "f7208fd823f34040",
+        "extracted_milestones": {
+          "arr-submission": "2026-05-25T23:59:00-12:00",
+          "commitment": "2026-08-02T23:59:00-12:00",
+          "decision": "2026-08-20T23:59:00-12:00",
+          "camera-ready": "2026-08-30T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "naacl",
@@ -850,7 +1028,18 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.530Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "276471f17525a78f",
+        "extracted_milestones": {
+          "arr-submission": "2026-10-12T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "eacl",
@@ -907,7 +1096,19 @@
           "timezone_label": "AoE",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.530Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "8a791c10e7b5976e",
+        "extracted_milestones": {
+          "arr-submission": "2026-08-03T23:59:00-12:00",
+          "commitment": "2026-10-11T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "aacl",
@@ -994,7 +1195,22 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.530Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "82d367ecfad2661c",
+        "extracted_milestones": {
+          "arr-submission": "2026-05-25T23:59:00-12:00",
+          "commitment": "2026-08-02T23:59:00-12:00",
+          "second-round-commitment": "2026-08-25T23:59:00-12:00",
+          "decision": "2026-09-07T23:59:00-12:00",
+          "camera-ready": "2026-09-30T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "coling",
@@ -1014,7 +1230,16 @@
         "status": "official"
       },
       "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.464Z"
+      "source_checked_at": "2026-09-03T07:14:26.464Z",
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.531Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "e2f1042455bb4ec8",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "conll",
@@ -1033,7 +1258,16 @@
         "source_url": "https://www.conll.org/2026",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.531Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "95348c1e4d2eb4e5",
+        "extracted_milestones": {},
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "icra",
@@ -1077,7 +1311,18 @@
           "timezone_label": "Pacific Time (PT)",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.531Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "ef4bb2e4c931a0ef",
+        "extracted_milestones": {
+          "paper": "2026-09-15T23:59:00-07:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "iros",
@@ -1112,7 +1357,18 @@
             "timezone": "America/New_York"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.532Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "b164f63a16a1a4cb",
+        "extracted_milestones": {
+          "paper": "2027-03-01T23:59:00-05:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "rss",
@@ -1190,7 +1446,21 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.532Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "5483dee7b62f2422",
+        "extracted_milestones": {
+          "abstract": "2026-01-23T23:59:00-12:00",
+          "paper": "2026-01-30T23:59:00-12:00",
+          "supplementary": "2026-02-06T23:59:00-12:00",
+          "decision": "2026-04-27T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "corl",
@@ -1254,7 +1524,19 @@
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified"
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.532Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "c5c15036cf76e54c",
+        "extracted_milestones": {
+          "abstract": "2026-05-26T11:59:00+00:00",
+          "paper": "2026-05-29T11:59:00+00:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     },
     {
       "id": "humanoids",
@@ -1293,7 +1575,18 @@
             "timezone": "AoE"
           }
         }
-      ]
+      ],
+      "source_check": {
+        "checked_at": "2026-09-07T05:43:37.532Z",
+        "state": "matched",
+        "http_status": 200,
+        "content_fingerprint": "4e36bd53ebc9241c",
+        "extracted_milestones": {
+          "paper": "2025-07-13T23:59:00-12:00"
+        },
+        "needs_milestone_discovery": false,
+        "message": "Official source matched the configured evidence."
+      }
     }
   ]
 }

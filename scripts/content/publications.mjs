@@ -20,6 +20,13 @@ const RESEARCH_AREAS_FILE = path.resolve(
 const PUBLICATION_STATUSES = new Set(["published", "working", "project"]);
 const PUBLICATION_VENUES = new Set([
     "ACCV",
+    "ACPR",
+    "ICPR",
+    "SMC",
+    "Neural Networks",
+    "IEEE TASLP",
+    "IEEE TNNLS",
+    "IEEE TAC",
     "BMVC",
     "BSPC",
     "JKMS",
@@ -30,7 +37,9 @@ const PUBLICATION_VENUES = new Set([
     "ESWA",
     "DASFAA",
     "FEIII",
+    "ICCV",
     "ICCVW",
+    "NeurIPS",
     "ICML",
     "IJS",
     "MedIA",

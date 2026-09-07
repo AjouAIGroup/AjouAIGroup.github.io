@@ -18,6 +18,14 @@ const REQUEST_TIMEOUT_MS = 20_000;
 const USER_AGENT = "AAIG-Content-Refresh/1.0 (+https://ajouaigroup.github.io/)";
 
 const VENUE_ALIASES = [
+    ["Neural Networks and Learning Systems", "IEEE TNNLS"],
+    ["Speech and Language Processing", "IEEE TASLP"],
+    ["Affective Computing", "IEEE TAC"],
+    ["Neural Networks", "Neural Networks"],
+    ["ICASSPW", "ICASSP Workshop"],
+    ["ACPR", "ACPR"],
+    ["ICPR", "ICPR"],
+    ["SMC", "SMC"],
     // Findings is a distinct archival track, rather than a regular EMNLP
     // paper. Preserve that distinction in the public bibliography and keep it
     // out of the regular-conference-only home summary.
@@ -182,6 +190,25 @@ const cleanVenue = (value, year) => {
     return `${matched[1]}${workshopSuffix} ${sourceYear}`;
 };
 
+const AREA_BY_VENUE = [
+    [
+        /^(?:CVPR|ICCV|ECCV|WACV|BMVC|ACCV|ICCVW|ICPR|ACPR|ICME|ACM MM|Pattern Recognition)\b/i,
+        "computer_vision_and_learning_algorithms",
+    ],
+    [
+        /^(?:ACL|EMNLP|NAACL|COLING|LREC|Findings of EMNLP|Interspeech|ICASSP|IEEE TASLP|SIGIR|CIKM|KDD|DASFAA|PAKDD|ICDM|ICDE|TKDE|VLDB|ASONAM|BigComp|FEIII)\b/i,
+        "efficient_learning_for_llms",
+    ],
+    [/^(?:CoRL|RSS|ICRA|IROS)\b/i, "robot_learning"],
+    [
+        /^(?:MedIA|MLHC|BSPC|CBM|CMPB|ESWA|IJS|Sci Rep|Int J Pharm|Advanced Materials|Nano Convergence|IEEE Access|JKMS|IEEE TNNLS|IEEE TAC|Neural Networks|SMC)\b/i,
+        "industrial_and_medical_ai",
+    ],
+];
+
+const areaForVenue = (venue, fallback) =>
+    AREA_BY_VENUE.find(([pattern]) => pattern.test(venue))?.[1] ?? fallback;
+
 const publicationItem = ({
     source,
     title,
@@ -189,7 +216,7 @@ const publicationItem = ({
     venueText,
     year,
     url,
-    category = source.category,
+    category,
     status = "published",
 }) => {
     const publicationYear = String(year);
@@ -200,7 +227,7 @@ const publicationItem = ({
     const normalizedUrl = normalizeHttpUrl(url || source.url) || source.url;
     return {
         id: `${source.id}-${normalizeSlug(title)}`,
-        category,
+        category: category ?? areaForVenue(venue, source.category),
         status,
         title,
         summary: `${venue} publication from ${source.lab}.`,
@@ -343,11 +370,6 @@ const firstAnchor = (html) => {
     };
 };
 
-const lamdaCategory = (venue) =>
-    /EMNLP|ACL|COLING|LREC|WASSA/i.test(venue)
-        ? "efficient_learning_for_llms"
-        : "industrial_and_medical_ai";
-
 const parseLamdaPublications = (html, source) =>
     getGoogleSiteListItems(html)
         .map((record) => {
@@ -384,7 +406,6 @@ const parseLamdaPublications = (html, source) =>
                 venueText,
                 year,
                 url: anchor.url || source.url,
-                category: lamdaCategory(venueText),
                 status: /\baccepted\b/i.test(venueText) ? "working" : "published",
             });
         })
@@ -426,12 +447,79 @@ const parseLamdaNews = (html, source) => {
         .filter(Boolean);
 };
 
+// SAIL lists one paper per Google Sites paragraph, shaped
+// "[C26] Title, Authors, Venue, Year. [Code]". The bracketed index separates
+// conference from journal entries and is not part of the citation, and the
+// trailing brackets are demo and code links.
+//
+// Author names are initials followed by a surname, which is what marks where
+// the title ends and where the venue begins. Splitting on commas instead would
+// break the journal names that contain one, such as "IEEE Trans. on Audio,
+// Speech and Language Processing".
+const SAIL_AUTHOR_PATTERN = /[A-Z]\.(?:-[A-Z]\.)?\s[A-Z][A-Za-z]+/g;
+
+const parseSailPublications = (html, source) => {
+    const dropped = [];
+    const items = getGoogleSiteParagraphs(html)
+        .map((paragraph) => {
+            // htmlToText turns every tag into a space, and Google Sites
+            // splits runs of digits across spans, so "[C26] ... 2026" arrives
+            // as "[C2 6 ] ... 202 6". Rejoin before anything reads a year.
+            const entry = paragraph
+                .replace(/(\d)\s+(?=\d)/g, "$1")
+                .replace(/\[\s*([CJ])\s*(\d+)\s*\]/gi, "[$1$2]")
+                // The lab bolds its own members, so their names arrive in
+                // their own span and leave a space before the comma.
+                .replace(/\s+([,.])/g, "$1")
+                .replace(/^\s*\[[CJ]\d+\]\s*/i, "")
+                .replace(/(?:\s*\[[^\]]*\])+\s*$/, "")
+                .trim();
+
+            const year = [...entry.matchAll(/\b(20\d{2})\b/g)].at(-1);
+            const authors = [...entry.matchAll(SAIL_AUTHOR_PATTERN)];
+            const firstAuthor = authors[0];
+            const lastAuthor = authors.at(-1);
+            if (!year || !firstAuthor || (firstAuthor.index ?? 0) === 0) {
+                dropped.push(paragraph);
+                return null;
+            }
+
+            const citation = entry.slice(0, year.index);
+            const lastAuthorEnd = (lastAuthor.index ?? 0) + lastAuthor[0].length;
+            const item = publicationItem({
+                source,
+                title: citation.slice(0, firstAuthor.index).replace(/[,\s]+$/, ""),
+                authors: citation.slice(firstAuthor.index, lastAuthorEnd),
+                venueText: citation.slice(lastAuthorEnd).replace(/^[,\s]+/, ""),
+                year: Number(year[1]),
+                url: source.url,
+            });
+            if (!item) {
+                dropped.push(paragraph);
+            }
+            return item;
+        })
+        .filter(Boolean);
+
+    // A venue missing from VENUE_ALIASES makes publicationItem return null, so
+    // without this the page could quietly lose papers as SAIL publishes in new
+    // places.
+    dropped.forEach((paragraph) => {
+        console.warn(
+            `[external] ${source.id}: skipped an entry with no recognised venue: ${paragraph.slice(0, 90)}`,
+        );
+    });
+
+    return items;
+};
+
 const ADAPTERS = {
     "cvl-publications": parseCvlPublications,
     "hei-publications": parseHeiPublications,
     "iknow-publications": parseIKnowPublications,
     "cvl-news": parseCvlNews,
     "lamda-publications": parseLamdaPublications,
+    "sail-publications": parseSailPublications,
     "lamda-news": parseLamdaNews,
 };
 

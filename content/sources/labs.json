@@ -41,6 +41,15 @@
       "enabled": true
     },
     {
+      "id": "sail-publications",
+      "lab": "SAIL",
+      "kind": "publication",
+      "adapter": "sail-publications",
+      "url": "https://sites.google.com/view/speechailab/publication",
+      "category": "efficient_learning_for_llms",
+      "enabled": true
+    },
+    {
       "id": "sail-news",
       "lab": "SAIL",
       "kind": "news",

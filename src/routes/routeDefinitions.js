@@ -76,6 +76,7 @@ export const ROUTE_DEFINITIONS = [
         title: "Admin",
         description: "Private operations workspace for AAIG administrators.",
         prerender: false,
+        robots: "noindex,nofollow,noarchive",
     },
 ];
 

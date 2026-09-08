@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import {
     buildPageTitle,
     PRERENDER_ROUTE_DEFINITIONS,
+    ROUTE_DEFINITIONS,
 } from "../src/routes/routeDefinitions.js";
 
 const ROOT_DIR = process.cwd();
@@ -89,6 +90,9 @@ const buildHead = (template, route, siteOrigin, basePath) => {
         "twitter:description",
         route.description,
     );
+    if (route.robots) {
+        html = replaceMetaContent(html, "name", "robots", route.robots);
+    }
 
     return html.replace(
         "</head>",
@@ -127,9 +131,25 @@ async function prerender() {
         renderedRoutes.push(route.path);
     }
 
+    const clientOnlyRoutes = ROUTE_DEFINITIONS.filter(
+        (route) => route.prerender === false,
+    );
+    for (const route of clientOnlyRoutes) {
+        const html = buildHead(template, route, siteOrigin, basePath);
+        const outputFile = toOutputFile(route.path);
+
+        await mkdir(path.dirname(outputFile), { recursive: true });
+        await writeFile(outputFile, html, "utf-8");
+    }
+
     await rm(SERVER_DIR, { recursive: true, force: true });
     console.log(
         `Prerendered ${renderedRoutes.length} routes: ${renderedRoutes.join(", ")}`,
+    );
+    console.log(
+        `Created ${clientOnlyRoutes.length} client-only route shells: ${clientOnlyRoutes
+            .map((route) => route.path)
+            .join(", ")}`,
     );
 }
 

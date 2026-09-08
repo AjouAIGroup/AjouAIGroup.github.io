@@ -365,6 +365,39 @@
     font-size: var(--type-h3-size);
 }
 
+.admin-breakdown--countries {
+    grid-column: 1 / -1;
+}
+
+.admin-breakdown__description {
+    margin: 0.25rem 0 0;
+    color: var(--text-muted);
+    font-size: var(--type-meta-size);
+}
+
+.admin-breakdown--countries ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+.admin-breakdown--countries strong {
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-breakdown--countries strong small {
+    color: var(--text-muted);
+    font-size: var(--type-meta-size);
+    font-weight: 500;
+}
+
+.admin-breakdown__empty {
+    margin: 0.75rem 0 0;
+    padding: 0.75rem 0;
+    color: var(--text-muted);
+    font-size: var(--type-support-size);
+}
+
 .admin-breakdowns ol {
     margin: 0.75rem 0 0;
     padding: 0;
@@ -483,6 +516,10 @@
         grid-template-columns: minmax(0, 1fr);
     }
 
+    .admin-breakdown--countries {
+        grid-column: auto;
+    }
+
     .admin-metric {
         border-right: 0;
         border-bottom: 1px solid var(--line);
@@ -513,6 +550,10 @@
 
     .admin-chart__day small {
         display: none;
+    }
+
+    .admin-breakdown--countries ol {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 

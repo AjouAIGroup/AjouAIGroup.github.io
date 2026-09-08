@@ -364,7 +364,7 @@ function AdminDashboard() {
                             <article>
                                 <h3>주요 유입 경로</h3>
                                 <ol>
-                                    {analytics.referrers
+                                    {(analytics.referrers ?? [])
                                         .slice(0, 6)
                                         .map((item) => (
                                             <li key={item.label}>
@@ -379,6 +379,38 @@ function AdminDashboard() {
                                             </li>
                                         ))}
                                 </ol>
+                            </article>
+                            <article className="admin-breakdown--countries">
+                                <h3>방문 국가</h3>
+                                <p className="admin-breakdown__description">
+                                    페이지뷰가 발생한 국가를 많은 순서대로
+                                    표시합니다.
+                                </p>
+                                {(analytics.countries ?? []).length > 0 ? (
+                                    <ol>
+                                        {analytics.countries
+                                            .slice(0, 10)
+                                            .map((item, index) => (
+                                                <li
+                                                    key={`${item.label}-${index}`}>
+                                                    <span>
+                                                        {item.label ||
+                                                            "알 수 없음"}
+                                                    </span>
+                                                    <strong>
+                                                        {formatNumber(
+                                                            item.pageViews,
+                                                        )}
+                                                        <small> 페이지뷰</small>
+                                                    </strong>
+                                                </li>
+                                            ))}
+                                    </ol>
+                                ) : (
+                                    <p className="admin-breakdown__empty">
+                                        선택한 기간의 국가 데이터가 없습니다.
+                                    </p>
+                                )}
                             </article>
                         </div>
                         <button

@@ -34,6 +34,10 @@ export const PUBLICATIONS_GENERATED_FILE = path.resolve(
     GENERATED_DIR,
     "publications.generated.json",
 );
+export const PUBLICATIONS_SHEET_SNAPSHOT_FILE = path.resolve(
+    PUBLICATIONS_CONTENT_DIR,
+    "sheet.snapshot.json",
+);
 export const PHOTOS_GENERATED_FILE = path.resolve(
     GENERATED_DIR,
     "photos.generated.json",

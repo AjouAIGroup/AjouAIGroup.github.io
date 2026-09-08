@@ -1,0 +1,79 @@
+name: Sync Publications from Google Sheets
+
+on:
+  schedule:
+    - cron: "15 2 * * *"
+  workflow_dispatch:
+    inputs:
+      allow_large_deletion:
+        description: Allow replacing the snapshot after deleting more than 25%
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: aaig-publications-sheet-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Pull publication sheet
+        run: npm run publications:pull
+        env:
+          PUBLICATIONS_SHEET_CSV_URL: ${{ vars.PUBLICATIONS_SHEET_CSV_URL }}
+          PUBLICATIONS_SHEET_URL: ${{ vars.PUBLICATIONS_SHEET_URL }}
+          ALLOW_LARGE_PUBLICATION_DELETION: ${{ inputs.allow_large_deletion || 'false' }}
+
+      - name: Sync generated content
+        run: npm run content:sync
+
+      - name: Validate content
+        run: npm run validate:content
+
+      - name: Build site
+        run: npm run build:static
+        env:
+          VITE_ADMIN_API_URL: ${{ vars.VITE_ADMIN_API_URL }}
+          VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ vars.VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN }}
+          VITE_PUBLICATIONS_SHEET_URL: ${{ vars.PUBLICATIONS_SHEET_URL }}
+
+      - name: Create review pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "content: sync publications from Google Sheets"
+          title: "content: sync publications from Google Sheets"
+          body: |
+            Google Sheets Publication 데이터의 검증된 동기화 결과입니다.
+
+            - Sheet 행 형식과 필수값 검증
+            - Publication 및 자동 News 재생성
+            - 전체 콘텐츠 검증과 정적 빌드 완료
+
+            변경 내용을 확인한 뒤 병합하면 홈페이지에 배포됩니다.
+          branch: automation/publications-sheet-sync
+          delete-branch: true
+          add-paths: |
+            content/publications/sheet.snapshot.json
+            src/generated/publications.generated.json
+            src/generated/news.generated.json

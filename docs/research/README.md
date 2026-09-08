@@ -13,7 +13,7 @@
 | 영역 이름, 순서, URL, 요약, 키워드, 대표 이미지 | `src/assets/dataset/research_areas.json`               |
 | Research Area Details                           | `src/assets/dataset/research_area_details.json`        |
 | 영역 대표 이미지                                | `src/assets/images/research_concepts/optimized/*.webp` |
-| Publication 원본                                | `content/publications/<area_key>/*.md`                 |
+| Publication 원본                                | Google Sheet의 `category` 열                           |
 
 Lab Resources & Infrastructure 카드(`research_resources.json`)는 Resources tab 소관입니다. [`docs/resources/README.md`](../resources/README.md)를 참고하세요.
 
@@ -164,10 +164,10 @@ src/assets/images/research_concepts/optimized/
   foundation-models-for-science-wide.webp
 ```
 
-6. 관련 Publication을 등록한다면 아래 폴더를 만들고 frontmatter의 `category`에도 같은 key를 사용합니다.
+6. 관련 Publication을 등록한다면 Google Sheet의 `category` 열에도 같은 key를 사용합니다.
 
 ```text
-content/publications/foundation_models_for_science/
+category: foundation_models_for_science
 ```
 
 7. 검증과 정적 build를 실행합니다.

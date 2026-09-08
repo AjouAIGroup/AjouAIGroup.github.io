@@ -1,20 +1,9 @@
 {
   "meta": {
-    "schema_version": "1.1",
-    "source": "google-sheets snapshot",
+    "schema_version": "1.0",
+    "source": "google-sheets",
     "source_url": "",
-    "source_synced_at": "2026-09-08T08:30:11.655Z",
-    "categories": [
-      "efficient_learning_for_llms",
-      "computer_vision_and_learning_algorithms",
-      "robot_learning",
-      "industrial_and_medical_ai"
-    ],
-    "statuses": [
-      "published",
-      "working",
-      "project"
-    ]
+    "synced_at": "2026-09-08T08:30:11.655Z"
   },
   "items": [
     {

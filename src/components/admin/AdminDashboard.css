@@ -428,6 +428,74 @@
     margin-top: 1rem;
 }
 
+.admin-publication-sync {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-left: 3px solid var(--accent-ui-500);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: var(--surface-2);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem 1rem;
+}
+
+.admin-publication-sync strong,
+.admin-publication-sync p {
+    margin: 0;
+}
+
+.admin-publication-sync p {
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+    font-size: var(--type-support-size);
+}
+
+.admin-publication-sync time {
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-publication-sync button {
+    min-height: 2.65rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--accent-ui-800);
+    border-radius: var(--radius-md);
+    color: var(--white);
+    background: var(--accent-ui-800);
+    font: inherit;
+    font-size: var(--type-button-size);
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform var(--dur-fast) var(--ease-standard),
+        opacity var(--dur-fast) var(--ease-standard);
+}
+
+.admin-publication-sync button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.admin-publication-sync__hint,
+.admin-publication-sync__status {
+    grid-column: 1 / -1;
+    margin-top: 0 !important;
+}
+
+.admin-publication-sync__status--success {
+    color: var(--green-800) !important;
+}
+
+.admin-publication-sync__status--error {
+    color: var(--red-800) !important;
+}
+
+.admin-publication-sync__status a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+}
+
 .admin-publication-search {
     margin-top: 1.1rem;
     display: grid;
@@ -506,6 +574,7 @@
     .admin-header,
     .admin-section__head,
     .admin-unlock,
+    .admin-publication-sync,
     .admin-publication-search {
         grid-template-columns: minmax(0, 1fr);
         align-items: start;

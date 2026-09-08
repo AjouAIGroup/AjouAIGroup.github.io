@@ -23,7 +23,7 @@
 | ------------ | -------------------------------------------------------------- | ----------------------------------------------------------------- |
 | Research     | `src/assets/dataset/research_*.json`, Research WebP            | 영역별 route, 상세 탭, Resource 카드                              |
 | News         | `content/news/*.md`                                            | `src/generated/news.generated.json`                               |
-| Publication  | `content/publications/**/*.md`                                 | `src/generated/publications.generated.json`                       |
+| Publication  | Google Sheet, `content/publications/sheet.snapshot.json`       | `src/generated/publications.generated.json`                       |
 | Photo        | `content/photos/raw/**`                                        | `src/generated/photos.generated.json`, `public/uploads/photos/**` |
 | People       | `src/assets/dataset/people.json`, `src/assets/images/people/*` | 최적화된 WebP와 자동 생성 이미지 index                            |
 | Dependencies | `package.json`                                                 | `package-lock.json`의 재현 가능한 전체 graph                      |
@@ -46,7 +46,7 @@ People 이미지만 다시 만들 때는 `npm run people:sync`를 사용할 수 
 
 ## GitHub에서 바로 수정할 때
 
-1. `content/...`, `src/assets/dataset/people.json` 또는 People 프로필 원본을 수정합니다.
+1. Google Sheet, `content/...`, `src/assets/dataset/people.json` 또는 People 프로필 원본을 수정합니다.
 2. PR을 만들거나 `main`에 반영합니다.
 3. GitHub Actions에서 `Content Build Check`가 통과하는지 확인합니다.
 4. `Deploy GitHub Pages`가 끝난 뒤 실제 사이트를 확인합니다.

@@ -3,7 +3,7 @@
 이 문서는 MMAI Lab 사이트를 **지속 운영**할 때 필요한 전체 흐름을 한 번에 설명합니다.
 목표는 “무엇을 수정하고, 어떤 명령을 실행하고, 무엇이 자동 생성되며, GitHub Pages에 어떻게 반영되는지”를 명확히 이해하는 것입니다.
 
-> 전제: 이 project는 **GitHub Pages 정적 사이트**입니다. server/DB/CMS 없이 파일 + build + GitHub Actions로 운영합니다.
+> 전제: 이 project는 **GitHub Pages 정적 사이트**입니다. Publication 원본은 Google Sheet이며, 나머지는 파일 + build + GitHub Actions로 운영합니다.
 
 ---
 
@@ -35,8 +35,9 @@
     - `src/assets/images/research_concepts/optimized/*.webp`
 2. News 원본
     - `content/news/*.md`
-3. Publication 원본
-    - `content/publications/**/*.md`
+3. Publication 원본과 배포 스냅샷
+    - 관리자용 Google Sheet
+    - `content/publications/sheet.snapshot.json` (직접 편집 금지)
 4. Photo 원본 + 선택 metadata
     - `content/photos/raw/**`
     - `content/photos/metadata.json` (선택)
@@ -82,7 +83,7 @@ Research route 목록과 category label도 component에 중복 입력하지 않�
 2. News 추가/수정
     - `content/news/*.md`
 3. Publication 추가/수정
-    - `content/publications/**/*.md`
+    - Google Sheet 수정 후 관리자 페이지에서 동기화 PR 생성
 4. Photo 원본 추가
     - `content/photos/raw/<category>/<YYYY-MM-DD>__<slug>/...`
 5. People 정보 수정
@@ -269,11 +270,11 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 
 ## 9-3. Publication 추가 체크리스트
 
-1. `content/publications/<category>/*.md` 추가
+1. Google Sheet에 행 추가
 2. `category` 허용값 확인
-3. 필수 필드 입력
-4. `npm run content:sync`
-5. `npm run validate:content`
+3. 필수 필드와 `labs` 입력
+4. `/admin`에서 `동기화 PR 만들기` 실행
+5. 검증된 PR을 병합하고 배포 확인
 
 ## 9-4. Photo 추가 체크리스트
 

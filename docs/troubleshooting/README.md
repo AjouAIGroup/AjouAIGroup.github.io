@@ -7,7 +7,7 @@
 
 ## 1) 가장 먼저 하는 공통 점검 5단계
 
-1. 수정한 파일이 `content/...` 아래에 있는지 확인  
+1. 수정한 항목이 Google Sheet 또는 `content/...` 아래에 있는지 확인
    (`src/generated/...` 수정은 반영되지 않습니다)
 2. 파일명/폴더명 규칙이 맞는지 확인
 3. 날짜 형식이 `YYYY-MM-DD`인지 확인
@@ -39,10 +39,11 @@
 
 1. 파일 경로 확인
     - News: `content/news/*.md`
-    - Publication: `content/publications/<category>/*.md`
-2. frontmatter 구분자 `---`가 맨 위/아래에 정확히 있는지 확인
-3. `npm run validate:content` 실행 후 오류 메시지 확인
-4. 수정 후 `npm run content:sync` 다시 실행
+    - Publication: Google Sheet와 `content/publications/sheet.snapshot.json`
+2. Publication은 관리자 페이지의 동기화 실행 결과에서 `sheet row N` 오류를 확인
+3. News는 frontmatter 구분자 `---`가 맨 위/아래에 정확히 있는지 확인
+4. `npm run validate:content` 실행 후 오류 메시지 확인
+5. 수정 후 `npm run content:sync` 다시 실행
 
 ---
 
@@ -95,7 +96,7 @@
 
 1. template 파일을 복사해 붙여넣은 뒤 값만 수정합니다.
     - `content/news/_template.md`
-    - `content/publications/_template.md`
+    - `docs/publications/publications-sheet-import.csv`
     - `content/photos/metadata.template.json`
 2. 파일 인코딩은 UTF-8 권장
 

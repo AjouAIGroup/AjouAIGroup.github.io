@@ -7,7 +7,7 @@ const jsonResponse = (request, env, payload, status = 200) =>
         status,
         headers: {
             "Access-Control-Allow-Headers": "Authorization, Content-Type",
-            "Access-Control-Allow-Methods": "GET, OPTIONS",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
             "Access-Control-Allow-Origin": getAllowedOrigin(request, env),
             "Cache-Control": "no-store",
             "Content-Type": "application/json; charset=utf-8",
@@ -151,6 +151,55 @@ const hasCloudflareConfiguration = (env) =>
         env.ADMIN_ORIGIN,
     );
 
+const hasPublicationSyncConfiguration = (env) =>
+    Boolean(
+        env.GITHUB_ACTIONS_TOKEN &&
+        env.GITHUB_OWNER &&
+        env.GITHUB_REPO &&
+        env.GITHUB_REF &&
+        env.GITHUB_WORKFLOW_ID &&
+        env.ADMIN_TOKEN &&
+        env.ADMIN_ORIGIN,
+    );
+
+const dispatchPublicationSync = async (env) => {
+    const owner = encodeURIComponent(env.GITHUB_OWNER);
+    const repository = encodeURIComponent(env.GITHUB_REPO);
+    const workflow = encodeURIComponent(env.GITHUB_WORKFLOW_ID);
+    const response = await fetch(
+        `https://api.github.com/repos/${owner}/${repository}/actions/workflows/${workflow}/dispatches`,
+        {
+            method: "POST",
+            headers: {
+                Accept: "application/vnd.github+json",
+                Authorization: `Bearer ${env.GITHUB_ACTIONS_TOKEN}`,
+                "Content-Type": "application/json",
+                "User-Agent": "AAIG-Admin-Worker",
+                "X-GitHub-Api-Version": "2026-03-10",
+            },
+            body: JSON.stringify({
+                ref: env.GITHUB_REF,
+                inputs: { allow_large_deletion: "false" },
+            }),
+        },
+    );
+
+    if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(
+            payload.message || `GitHub API returned ${response.status}`,
+        );
+    }
+
+    const payload = await response.json().catch(() => ({}));
+    return {
+        message: "Publication 동기화 요청을 접수했습니다.",
+        runUrl:
+            payload.html_url ||
+            `https://github.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/actions/workflows/${env.GITHUB_WORKFLOW_ID}`,
+    };
+};
+
 export default {
     async fetch(request, env) {
         if (!isAllowedOrigin(request, env)) {
@@ -171,52 +220,97 @@ export default {
             return jsonResponse(request, env, {
                 ok: true,
                 configured: hasCloudflareConfiguration(env),
+                publicationSyncConfigured: hasPublicationSyncConfiguration(env),
             });
         }
 
-        if (request.method !== "GET" || url.pathname !== "/v1/analytics") {
-            return jsonResponse(
-                request,
-                env,
-                { error: "요청 경로를 찾을 수 없습니다." },
-                404,
-            );
+        if (request.method === "GET" && url.pathname === "/v1/analytics") {
+            if (!hasCloudflareConfiguration(env)) {
+                return jsonResponse(
+                    request,
+                    env,
+                    { error: "Worker 환경변수 설정이 필요합니다." },
+                    503,
+                );
+            }
+
+            if (!hasValidToken(request, env)) {
+                return jsonResponse(
+                    request,
+                    env,
+                    { error: "관리자 접근 키를 확인해주세요." },
+                    401,
+                );
+            }
+
+            const requestedDays = Number(url.searchParams.get("days") || 30);
+            const days = ALLOWED_PERIODS.has(requestedDays)
+                ? requestedDays
+                : 30;
+
+            try {
+                const analytics = await fetchAnalytics(env, days);
+                return jsonResponse(request, env, analytics);
+            } catch (error) {
+                return jsonResponse(
+                    request,
+                    env,
+                    {
+                        error: "Cloudflare 통계를 불러오지 못했습니다.",
+                        detail: error.message,
+                    },
+                    502,
+                );
+            }
         }
 
-        if (!hasCloudflareConfiguration(env)) {
-            return jsonResponse(
-                request,
-                env,
-                { error: "Worker 환경변수 설정이 필요합니다." },
-                503,
-            );
+        if (
+            request.method === "POST" &&
+            url.pathname === "/v1/publications/sync"
+        ) {
+            if (!hasPublicationSyncConfiguration(env)) {
+                return jsonResponse(
+                    request,
+                    env,
+                    { error: "Publication 동기화 설정이 필요합니다." },
+                    503,
+                );
+            }
+
+            if (!hasValidToken(request, env)) {
+                return jsonResponse(
+                    request,
+                    env,
+                    { error: "관리자 접근 키를 확인해주세요." },
+                    401,
+                );
+            }
+
+            try {
+                return jsonResponse(
+                    request,
+                    env,
+                    await dispatchPublicationSync(env),
+                    202,
+                );
+            } catch (error) {
+                return jsonResponse(
+                    request,
+                    env,
+                    {
+                        error: "Publication 동기화를 시작하지 못했습니다.",
+                        detail: error.message,
+                    },
+                    502,
+                );
+            }
         }
 
-        if (!hasValidToken(request, env)) {
-            return jsonResponse(
-                request,
-                env,
-                { error: "관리자 접근 키를 확인해주세요." },
-                401,
-            );
-        }
-
-        const requestedDays = Number(url.searchParams.get("days") || 30);
-        const days = ALLOWED_PERIODS.has(requestedDays) ? requestedDays : 30;
-
-        try {
-            const analytics = await fetchAnalytics(env, days);
-            return jsonResponse(request, env, analytics);
-        } catch (error) {
-            return jsonResponse(
-                request,
-                env,
-                {
-                    error: "Cloudflare 통계를 불러오지 못했습니다.",
-                    detail: error.message,
-                },
-                502,
-            );
-        }
+        return jsonResponse(
+            request,
+            env,
+            { error: "요청 경로를 찾을 수 없습니다." },
+            404,
+        );
     },
 };

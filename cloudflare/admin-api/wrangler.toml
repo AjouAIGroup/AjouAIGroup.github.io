@@ -4,6 +4,14 @@ compatibility_date = "2026-09-08"
 
 [vars]
 ADMIN_ORIGIN = "https://ajouaigroup.github.io"
+GITHUB_OWNER = "AjouAIGroup"
+GITHUB_REPO = "AjouAIGroup.github.io"
+GITHUB_REF = "main"
+GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
 
 [env.dev.vars]
 ADMIN_ORIGIN = "https://ajouaigroup.github.io,http://localhost:5173"
+GITHUB_OWNER = "AjouAIGroup"
+GITHUB_REPO = "AjouAIGroup.github.io"
+GITHUB_REF = "main"
+GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"

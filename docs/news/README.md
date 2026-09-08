@@ -116,7 +116,7 @@ npm run validate:content
 
 `status: published` publication을 추가하면 `content:sync` 시 `paper_accepted` news가 자동 생성됩니다.
 
-- source: `content/publications/**/*.md`
+- source: `content/publications/sheet.snapshot.json`
 - output 포함 위치: `src/generated/news.generated.json`
 - 생성되는 항목 특징:
     - `type: paper_accepted`

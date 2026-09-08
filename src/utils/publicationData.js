@@ -1,5 +1,7 @@
 import PUBLICATION_DATA from "../generated/publications.generated.json";
 
+export const PUBLICATION_DATA_META = PUBLICATION_DATA.meta ?? {};
+
 const parseDateSafe = (value) => {
     const text = typeof value === "string" ? value.trim() : "";
     if (!text) {

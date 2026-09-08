@@ -4,11 +4,13 @@ import {
     PUBLICATIONS_CONTENT_DIR,
     EXTERNAL_PUBLICATIONS_FILE,
     PUBLICATIONS_GENERATED_FILE,
+    PUBLICATIONS_SHEET_SNAPSHOT_FILE,
     isIsoDate,
     listMarkdownFiles,
     normalizeHttpUrl,
     normalizeSlug,
     parseMarkdownFrontmatter,
+    pathExists,
     readJsonFile,
     relativeFromRoot,
     writeJsonFile,
@@ -206,7 +208,10 @@ const parsePublicationFile = async (filePath, publicationCategories) => {
     };
 };
 
-const parseExternalPublicationItem = (rawItem, publicationCategories) => {
+export const parseStructuredPublicationItem = (
+    rawItem,
+    publicationCategories,
+) => {
     const id = normalizeText(rawItem?.id);
     const category = normalizeText(rawItem?.category);
     const status = normalizeText(rawItem?.status || "published");
@@ -267,8 +272,24 @@ const loadExternalPublicationItems = async (publicationCategories) => {
     }
 
     return data.items.map((item) =>
-        parseExternalPublicationItem(item, publicationCategories),
+        parseStructuredPublicationItem(item, publicationCategories),
     );
+};
+
+const loadSheetPublicationItems = async (publicationCategories) => {
+    const data = await readJsonFile(PUBLICATIONS_SHEET_SNAPSHOT_FILE, null);
+    if (!Array.isArray(data?.items) || data.items.length === 0) {
+        throw new Error(
+            `[publications] Google Sheet snapshot must contain a non-empty items array: ${relativeFromRoot(PUBLICATIONS_SHEET_SNAPSHOT_FILE)}`,
+        );
+    }
+
+    return {
+        items: data.items.map((item) =>
+            parseStructuredPublicationItem(item, publicationCategories),
+        ),
+        meta: data.meta ?? {},
+    };
 };
 
 export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
@@ -283,34 +304,49 @@ export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
         );
     }
 
-    const markdownFiles = (
-        await listMarkdownFiles(PUBLICATIONS_CONTENT_DIR)
-    ).filter((filePath) => !path.basename(filePath).startsWith("_"));
-
-    if (markdownFiles.length === 0) {
-        throw new Error(
-            `[publications] No markdown files found in ${relativeFromRoot(PUBLICATIONS_CONTENT_DIR)}. Add content before syncing.`,
-        );
-    }
-
     const manualItems = [];
     const seenIds = new Set();
+    let sheetSnapshotMeta = {};
+    const hasSheetSnapshot = await pathExists(
+        PUBLICATIONS_SHEET_SNAPSHOT_FILE,
+    );
 
-    for (const filePath of markdownFiles) {
-        const item = await parsePublicationFile(
-            filePath,
+    if (hasSheetSnapshot) {
+        const sheetSnapshot = await loadSheetPublicationItems(
             publicationCategories,
         );
+        manualItems.push(...sheetSnapshot.items);
+        sheetSnapshotMeta = sheetSnapshot.meta;
+    } else {
+        const markdownFiles = (
+            await listMarkdownFiles(PUBLICATIONS_CONTENT_DIR)
+        ).filter((filePath) => !path.basename(filePath).startsWith("_"));
+
+        if (markdownFiles.length === 0) {
+            throw new Error(
+                `[publications] No publication sources found in ${relativeFromRoot(PUBLICATIONS_CONTENT_DIR)}.`,
+            );
+        }
+
+        for (const filePath of markdownFiles) {
+            manualItems.push(
+                await parsePublicationFile(filePath, publicationCategories),
+            );
+        }
+    }
+
+    for (const item of manualItems) {
         if (seenIds.has(item.id)) {
             throw new Error(
-                `[publications] Duplicate id "${item.id}" in ${relativeFromRoot(filePath)}`,
+                `[publications] Duplicate id "${item.id}" in the active publication source.`,
             );
         }
         seenIds.add(item.id);
-        manualItems.push(item);
     }
 
-    const externalItems = await loadExternalPublicationItems(publicationCategories);
+    const externalItems = hasSheetSnapshot
+        ? []
+        : await loadExternalPublicationItems(publicationCategories);
     const seenTitles = new Set(manualItems.map((item) => normalizeSlug(item.title)));
     const items = [...manualItems];
     externalItems.forEach((item) => {
@@ -342,7 +378,15 @@ export const syncPublicationContent = async ({ validateOnly = false } = {}) => {
     await writeJsonFile(PUBLICATIONS_GENERATED_FILE, {
         meta: {
             schema_version: "1.1",
-            source: "content/publications",
+            source: hasSheetSnapshot
+                ? "google-sheets snapshot"
+                : "content/publications",
+            source_url: hasSheetSnapshot
+                ? normalizeText(sheetSnapshotMeta.source_url)
+                : "",
+            source_synced_at: hasSheetSnapshot
+                ? normalizeText(sheetSnapshotMeta.synced_at)
+                : "",
             categories,
             statuses: Array.from(PUBLICATION_STATUSES),
         },

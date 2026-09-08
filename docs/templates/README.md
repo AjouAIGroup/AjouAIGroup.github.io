@@ -1,10 +1,10 @@
 # Operations Templates (복사 사용 가이드)
 
-이 폴더는 운영자가 새 content를 추가할 때 바로 복사해 사용할 수 있는 예시를 제공합니다.  
+이 폴더는 운영자가 새 content를 추가할 때 바로 복사해 사용할 수 있는 예시를 제공합니다.
 실제 운영 시에는 아래 원본 template도 함께 참고하세요.
 
 - News 원본 template: `content/news/_template.md`
-- Publication 원본 template: `content/publications/_template.md`
+- Publication Sheet 가져오기 CSV: `docs/publications/publications-sheet-import.csv`
 - Photo metadata template: `content/photos/metadata.template.json`
 - People 데이터 template(운영 참고): `docs/templates/people.entry.template.json`
 - Research 영역과 Resource 예시: `docs/research/README.md`
@@ -28,7 +28,7 @@ npm run validate:content
 ## 2) template 파일 목록
 
 1. News: `docs/templates/news.template.md`
-2. Publication: `docs/templates/publication.template.md`
+2. Publication: `docs/publications/publications-sheet-import.csv`
 3. Photo metadata: `docs/templates/photos.metadata.template.json`
 4. People entry 샘플: `docs/templates/people.entry.template.json`
 

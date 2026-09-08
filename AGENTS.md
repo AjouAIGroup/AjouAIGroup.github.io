@@ -16,7 +16,9 @@ files and generated JSON.
 - Treat `package.json` scripts and the current implementation as authoritative
   when older documentation disagrees with them.
 - Edit News in `content/news/*.md`.
-- Edit Publications in `content/publications/**/*.md`.
+- Edit Publications in the configured Google Sheet. The tracked
+  `content/publications/sheet.snapshot.json` is its read-only deployment
+  snapshot and must be refreshed with `npm run publications:pull`.
 - Edit conference deadlines in `content/deadlines/venues.json`.
 - Edit research data in `src/assets/dataset/research_*.json`.
 - Follow `content/photos/_README.md` when changing photos.

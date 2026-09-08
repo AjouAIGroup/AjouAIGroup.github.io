@@ -27,10 +27,6 @@ function CloudflareAnalytics() {
         script.src = "https://static.cloudflareinsights.com/beacon.min.js";
         script.dataset.cfBeacon = JSON.stringify({ token });
         document.body.appendChild(script);
-
-        return () => {
-            script.remove();
-        };
     }, [token]);
 
     return null;

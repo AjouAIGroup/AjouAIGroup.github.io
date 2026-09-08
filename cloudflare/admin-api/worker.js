@@ -2,18 +2,24 @@ const CLOUDFLARE_GRAPHQL_ENDPOINT =
     "https://api.cloudflare.com/client/v4/graphql";
 const ALLOWED_PERIODS = new Set([7, 30]);
 
-const jsonResponse = (request, env, payload, status = 200) =>
-    new Response(status === 204 ? null : JSON.stringify(payload), {
+const jsonResponse = (request, env, payload, status = 200) => {
+    const headers = {
+        "Access-Control-Allow-Headers": "Authorization, Content-Type",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json; charset=utf-8",
+        Vary: "Origin",
+    };
+    const allowedOrigin = getAllowedOrigin(request, env);
+    if (allowedOrigin) {
+        headers["Access-Control-Allow-Origin"] = allowedOrigin;
+    }
+
+    return new Response(status === 204 ? null : JSON.stringify(payload), {
         status,
-        headers: {
-            "Access-Control-Allow-Headers": "Authorization, Content-Type",
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Origin": getAllowedOrigin(request, env),
-            "Cache-Control": "no-store",
-            "Content-Type": "application/json; charset=utf-8",
-            Vary: "Origin",
-        },
+        headers,
     });
+};
 
 const getAllowedOrigins = (env) =>
     String(env.ADMIN_ORIGIN || "")
@@ -24,7 +30,7 @@ const getAllowedOrigins = (env) =>
 const getAllowedOrigin = (request, env) => {
     const requestOrigin = request.headers.get("Origin") || "";
     const allowedOrigins = getAllowedOrigins(env);
-    return allowedOrigins.includes(requestOrigin) ? requestOrigin : "null";
+    return allowedOrigins.includes(requestOrigin) ? requestOrigin : "";
 };
 
 const isAllowedOrigin = (request, env) => {
@@ -35,7 +41,15 @@ const isAllowedOrigin = (request, env) => {
 const hasValidToken = (request, env) => {
     const expected = String(env.ADMIN_TOKEN || "");
     const received = request.headers.get("Authorization") || "";
-    return Boolean(expected) && received === `Bearer ${expected}`;
+    if (!expected) return false;
+
+    const encoder = new TextEncoder();
+    const expectedBytes = encoder.encode(`Bearer ${expected}`);
+    const receivedBytes = encoder.encode(received);
+    return (
+        expectedBytes.byteLength === receivedBytes.byteLength &&
+        crypto.subtle.timingSafeEqual(expectedBytes, receivedBytes)
+    );
 };
 
 const toIsoDate = (date) => date.toISOString().slice(0, 10);

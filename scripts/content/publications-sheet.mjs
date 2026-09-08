@@ -388,14 +388,20 @@ const pull = async () => {
         );
     }
 
-    if (JSON.stringify(current.items ?? []) === JSON.stringify(items)) {
+    const publicSheetUrl = normalizeCell(
+        process.env.PUBLICATIONS_SHEET_URL ?? csvUrl,
+    );
+    const itemsAreUnchanged =
+        JSON.stringify(current.items ?? []) === JSON.stringify(items);
+    const sourceIsConfigured =
+        current.meta?.source === "google-sheets" &&
+        current.meta?.source_url === publicSheetUrl;
+
+    if (itemsAreUnchanged && sourceIsConfigured) {
         console.log(`[sheet] no publication changes (${items.length} rows)`);
         return;
     }
 
-    const publicSheetUrl = normalizeCell(
-        process.env.PUBLICATIONS_SHEET_URL ?? csvUrl,
-    );
     await writeJsonFile(
         PUBLICATIONS_SHEET_SNAPSHOT_FILE,
         snapshotFor(items, publicSheetUrl, new Date().toISOString()),

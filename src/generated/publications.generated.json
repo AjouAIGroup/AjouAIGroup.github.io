@@ -2,8 +2,8 @@
   "meta": {
     "schema_version": "1.1",
     "source": "google-sheets snapshot",
-    "source_url": "",
-    "source_synced_at": "2026-09-08T08:30:11.655Z",
+    "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
+    "source_synced_at": "2026-09-08T10:03:54.737Z",
     "categories": [
       "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",

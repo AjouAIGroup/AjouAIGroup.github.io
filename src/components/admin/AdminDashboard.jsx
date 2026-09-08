@@ -13,21 +13,13 @@ const ADMIN_API_URL = (import.meta.env.VITE_ADMIN_API_URL ?? "").replace(
 const REPOSITORY_URL = "https://github.com/AjouAIGroup/AjouAIGroup.github.io";
 const PUBLICATION_DIRECTORY_URL = `${REPOSITORY_URL}/tree/main/content/publications`;
 const PUBLICATIONS_SHEET_URL =
-    import.meta.env.VITE_PUBLICATIONS_SHEET_URL ?? "";
+    import.meta.env.VITE_PUBLICATIONS_SHEET_URL ??
+    PUBLICATION_DATA_META.source_url ??
+    "";
 const PUBLICATIONS = getAllPublications();
 
 const numberFormatter = new Intl.NumberFormat("ko-KR");
-const dateTimeFormatter = new Intl.DateTimeFormat("ko-KR", {
-    dateStyle: "medium",
-    timeStyle: "short",
-});
 const formatNumber = (value) => numberFormatter.format(Number(value) || 0);
-const formatDateTime = (value) => {
-    const date = new Date(value);
-    return Number.isNaN(date.getTime())
-        ? "아직 기록 없음"
-        : dateTimeFormatter.format(date);
-};
 
 const buildPublicationSearchUrl = (publicationId) =>
     `${REPOSITORY_URL}/search?q=${encodeURIComponent(publicationId)}&type=code`;
@@ -84,11 +76,6 @@ function AdminDashboard() {
     const [analyticsError, setAnalyticsError] = useState("");
     const [retryRequest, setRetryRequest] = useState(0);
     const [publicationQuery, setPublicationQuery] = useState("");
-    const [publicationSync, setPublicationSync] = useState({
-        status: "idle",
-        message: "",
-        runUrl: "",
-    });
 
     useEffect(() => {
         const previousTitle = document.title;
@@ -188,47 +175,6 @@ function AdminDashboard() {
 
     const handleRetry = () => {
         setRetryRequest((requestNumber) => requestNumber + 1);
-    };
-
-    const handlePublicationSync = async () => {
-        if (!ADMIN_API_URL || !accessToken) return;
-
-        setPublicationSync({
-            status: "loading",
-            message: "Google Sheet 동기화를 요청하고 있습니다.",
-            runUrl: "",
-        });
-
-        try {
-            const response = await fetch(
-                `${ADMIN_API_URL}/v1/publications/sync`,
-                {
-                    method: "POST",
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                },
-            );
-            const payload = await response.json().catch(() => ({}));
-            if (!response.ok) {
-                throw new Error(
-                    payload.error ||
-                        "Publication 동기화를 시작하지 못했습니다.",
-                );
-            }
-
-            setPublicationSync({
-                status: "success",
-                message:
-                    payload.message ||
-                    "동기화 요청을 접수했습니다. 검증 후 PR이 생성됩니다.",
-                runUrl: payload.runUrl || "",
-            });
-        } catch (error) {
-            setPublicationSync({
-                status: "error",
-                message: error.message,
-                runUrl: "",
-            });
-        }
     };
 
     return (
@@ -524,65 +470,6 @@ function AdminDashboard() {
                         value={formatNumber(publicationSummary.years)}
                         detail="연도별 아카이브 범위"
                     />
-                </div>
-
-                <div className="admin-publication-sync">
-                    <div>
-                        <strong>Sheet 변경사항 가져오기</strong>
-                        <p>
-                            데이터를 검사한 뒤 검토용 Pull Request를 만듭니다.
-                            마지막 스냅샷:{" "}
-                            <time
-                                dateTime={
-                                    PUBLICATION_DATA_META.source_synced_at ||
-                                    undefined
-                                }>
-                                {formatDateTime(
-                                    PUBLICATION_DATA_META.source_synced_at,
-                                )}
-                            </time>
-                        </p>
-                    </div>
-                    <button
-                        type="button"
-                        disabled={
-                            !ADMIN_API_URL ||
-                            !accessToken ||
-                            publicationSync.status === "loading"
-                        }
-                        onClick={handlePublicationSync}>
-                        {publicationSync.status === "loading"
-                            ? "요청 중"
-                            : "동기화 PR 만들기"}
-                    </button>
-                    {!accessToken ? (
-                        <p className="admin-publication-sync__hint">
-                            접속 통계에서 관리자 접근 키를 입력하면 동기화
-                            버튼이 활성화됩니다.
-                        </p>
-                    ) : null}
-                    {publicationSync.status !== "idle" ? (
-                        <p
-                            className={`admin-publication-sync__status admin-publication-sync__status--${publicationSync.status}`}
-                            role={
-                                publicationSync.status === "error"
-                                    ? "alert"
-                                    : "status"
-                            }>
-                            {publicationSync.message}
-                            {publicationSync.runUrl ? (
-                                <>
-                                    {" "}
-                                    <a
-                                        href={publicationSync.runUrl}
-                                        target="_blank"
-                                        rel="noreferrer">
-                                        실행 상태 보기
-                                    </a>
-                                </>
-                            ) : null}
-                        </p>
-                    ) : null}
                 </div>
 
                 <div className="admin-publication-search">

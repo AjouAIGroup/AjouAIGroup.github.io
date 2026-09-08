@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
 import RouteScrollManager from "./components/RouteScrollManager";
+import CloudflareAnalytics from "./components/CloudflareAnalytics";
 import AppRoutes from "./routes/AppRoutes";
 import { resolveTabFromPath } from "./routes/routeUtils";
 import "./App.css";
@@ -22,6 +23,7 @@ export function createAppShell(HeroComponent, RoutesComponent) {
                 className={`app app--${selectedTab || "home"}`}
                 data-rendered-route={location.pathname}>
                 <RouteScrollManager />
+                <CloudflareAnalytics />
                 <a className="skip-link" href="#site-content">
                     Skip to content
                 </a>

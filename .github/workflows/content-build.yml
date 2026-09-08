@@ -44,3 +44,6 @@ jobs:
 
       - name: Build Site
         run: npm run build
+        env:
+          VITE_ADMIN_API_URL: ${{ vars.VITE_ADMIN_API_URL }}
+          VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ vars.VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN }}

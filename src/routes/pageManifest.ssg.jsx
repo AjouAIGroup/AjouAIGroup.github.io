@@ -1,4 +1,7 @@
-import { ROUTE_DEFINITIONS, SSG_ROUTE_PATHS } from "./routeDefinitions";
+import {
+    PRERENDER_ROUTE_DEFINITIONS,
+    SSG_ROUTE_PATHS,
+} from "./routeDefinitions";
 import HomePage from "../pages/HomePage";
 import NewsPage from "../pages/NewsPage";
 import ResearchPage from "../pages/ResearchPage";
@@ -17,7 +20,7 @@ const PAGE_COMPONENTS = {
     calendar: CalendarPage,
 };
 
-export const PAGE_MANIFEST_SSG = ROUTE_DEFINITIONS.map((route) => ({
+export const PAGE_MANIFEST_SSG = PRERENDER_ROUTE_DEFINITIONS.map((route) => ({
     ...route,
     component: PAGE_COMPONENTS[route.tabKey],
 }));

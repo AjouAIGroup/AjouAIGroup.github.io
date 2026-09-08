@@ -1,0 +1,9 @@
+name = "aaig-admin-api"
+main = "worker.js"
+compatibility_date = "2026-09-08"
+
+[vars]
+ADMIN_ORIGIN = "https://ajouaigroup.github.io"
+
+[env.dev.vars]
+ADMIN_ORIGIN = "https://ajouaigroup.github.io,http://localhost:5173"

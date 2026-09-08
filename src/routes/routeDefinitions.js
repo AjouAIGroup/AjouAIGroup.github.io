@@ -2,8 +2,8 @@ import RESEARCH_CATALOG from "../assets/dataset/research_areas.json" with { type
 
 const SITE_NAME = "AAIG";
 
-// Every route is prerendered into its own HTML file, so each one needs its own
-// head copy. Without this the whole site is indexed and shared as one page.
+// Every public route is prerendered into its own HTML file, so each one needs
+// its own head copy. Private client-only routes opt out with prerender: false.
 export const buildPageTitle = (pageTitle) =>
     pageTitle ? `${pageTitle} · ${SITE_NAME}` : SITE_NAME;
 
@@ -70,6 +70,19 @@ export const ROUTE_DEFINITIONS = [
         description:
             "Official AI conference submission deadlines tracked by the Ajou Artificial Intelligence Group, shown in Korea Standard Time.",
     },
+    {
+        path: "/admin",
+        tabKey: "admin",
+        title: "Admin",
+        description: "Private operations workspace for AAIG administrators.",
+        prerender: false,
+    },
 ];
 
-export const SSG_ROUTE_PATHS = ROUTE_DEFINITIONS.map((item) => item.path);
+export const PRERENDER_ROUTE_DEFINITIONS = ROUTE_DEFINITIONS.filter(
+    (route) => route.prerender !== false,
+);
+
+export const SSG_ROUTE_PATHS = PRERENDER_ROUTE_DEFINITIONS.map(
+    (item) => item.path,
+);

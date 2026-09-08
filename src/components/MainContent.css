@@ -91,6 +91,12 @@
     --tab-identity-accent: var(--tab-publication-accent);
 }
 
+.main-content__body--admin {
+    --tab-identity-tint: var(--accent-ui-100);
+    --tab-identity-border: var(--tab-admin-border);
+    --tab-identity-accent: var(--accent-ui-500);
+}
+
 .main-content__body--news {
     --tab-identity-tint: var(--tab-news-tint);
     --tab-identity-border: var(--tab-news-border);

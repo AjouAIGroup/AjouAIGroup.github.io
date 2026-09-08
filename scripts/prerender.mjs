@@ -3,7 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import {
     buildPageTitle,
-    ROUTE_DEFINITIONS,
+    PRERENDER_ROUTE_DEFINITIONS,
 } from "../src/routes/routeDefinitions.js";
 
 const ROOT_DIR = process.cwd();
@@ -114,7 +114,7 @@ async function prerender() {
 
     const renderedRoutes = [];
 
-    for (const route of ROUTE_DEFINITIONS) {
+    for (const route of PRERENDER_ROUTE_DEFINITIONS) {
         const appHtml = serverModule.render(route.path);
         const html = buildHead(template, route, siteOrigin, basePath).replace(
             ROOT_CONTAINER_PATTERN,

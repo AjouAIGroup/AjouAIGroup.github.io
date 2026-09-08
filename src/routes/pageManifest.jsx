@@ -9,6 +9,7 @@ const pageComponents = {
     apply: lazy(() => import("../pages/ContactPage")),
     publication: lazy(() => import("../pages/PublicationPage")),
     calendar: lazy(() => import("../pages/CalendarPage")),
+    admin: lazy(() => import("../pages/AdminPage")),
 };
 
 export const PAGE_MANIFEST = ROUTE_DEFINITIONS.map((route) => ({

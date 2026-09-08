@@ -7,7 +7,7 @@ date: 2024-01-01
 authors: "CVAMD participants including Jongbin Ryu"
 venue: MedIA 2024
 keywords: [Long-tailed Learning, Multi-label Classification, Chest X-ray]
-labs: [CVL Lab]
+labs: [MMAI Lab]
 paper_url: "https://www.sciencedirect.com/science/article/abs/pii/S136184152400149X"
 source_code_url: ""
 featured: false

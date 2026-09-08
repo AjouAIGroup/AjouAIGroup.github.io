@@ -339,7 +339,7 @@ const checkOfficialSource = async (venue) => {
     try {
         const response = await fetch(venue.cfp_url, {
             headers: {
-                "user-agent": "CVL-Lab-Deadline-Monitor/1.0 (+https://cvl-lab.github.io)",
+                "user-agent": "MMAI-Lab-Deadline-Monitor/1.0 (+https://mmai-laboratory.github.io)",
                 accept: "text/html,application/xhtml+xml",
             },
             redirect: "follow",

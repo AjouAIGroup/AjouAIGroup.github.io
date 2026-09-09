@@ -1,6 +1,7 @@
 import MmaiLogo from "../assets/images/laboratories/mmai-logo.svg";
 import HeiLogo from "../assets/images/laboratories/hei-logo.png";
 import IknowLogo from "../assets/images/laboratories/iknow-logo.png";
+import LamdaLogo from "../assets/images/laboratories/lamda-logo.png";
 import VisionLearningImage from "../assets/images/research_areas/aaig-vision-learning.webp";
 import SpeechGenerativeImage from "../assets/images/research_areas/aaig-speech-generative.webp";
 import EmbodiedIntelligenceImage from "../assets/images/research_areas/aaig-embodied-intelligence.webp";
@@ -24,6 +25,8 @@ export const LABORATORIES = [
         href: "https://mmai-laboratory.github.io/",
         logo: MmaiLogo,
         logoAlt: "MMAI Lab logo",
+        logoWidth: 694,
+        logoHeight: 191,
         researchTitle: "Multi-Modal AI",
         researchSummary:
             "Vision, language, and multimodal learning systems for reliable real-world intelligence.",
@@ -128,6 +131,8 @@ export const LABORATORIES = [
         href: "https://heilaboratory.github.io/",
         logo: HeiLogo,
         logoAlt: "HEI Lab logo",
+        logoWidth: 704,
+        logoHeight: 239,
         researchTitle: "Embodied Intelligence",
         researchSummary:
             "Foundation models and lifelong learning for robots that adapt and collaborate with people.",
@@ -169,6 +174,8 @@ export const LABORATORIES = [
         href: "https://iknow.ajou.ac.kr/",
         logo: IknowLogo,
         logoAlt: "iKnow Lab logo",
+        logoWidth: 1623,
+        logoHeight: 1290,
         researchTitle: "Knowledge-Centered AI",
         researchSummary:
             "Recommendation, multimodal understanding, large language models, and federated learning.",
@@ -199,7 +206,7 @@ export const LABORATORIES = [
     {
         key: "lamda",
         shortName: "LAMDA Lab",
-        name: "Learning and Mining from DAta Lab",
+        name: "Learning and Mining from Data Lab",
         heroTitle: "Learning & Mining from Data",
         summary:
             "Multimodal, self-supervised, explainable, and trustworthy AI for biomedical, social, and other real-world data.",
@@ -207,6 +214,10 @@ export const LABORATORIES = [
             "Data-centric learning for multimodal, medical, and social intelligence.",
         topics: ["Multimodal Learning", "Trustworthy AI", "Biomedical AI"],
         href: "https://sites.google.com/site/kasohn/group",
+        logo: LamdaLogo,
+        logoAlt: "LAMDA Lab logo",
+        logoWidth: 512,
+        logoHeight: 503,
         researchTitle: "Data-Centric & Trustworthy AI",
         researchSummary:
             "Multimodal and self-supervised learning for reliable analysis of medical, social, and heterogeneous data.",

@@ -10,6 +10,8 @@ function ContactIdentity({ lab }) {
                 <img
                     src={lab.logo}
                     alt={lab.logoAlt}
+                    width={lab.logoWidth}
+                    height={lab.logoHeight}
                     loading="lazy"
                     decoding="async"
                 />
@@ -93,7 +95,7 @@ function Contact() {
                         </div>
                         <div className="contact-page__lab-secondary">
                             <div className="contact-page__prospective">
-                                <h3>Prospective student</h3>
+                                <h3>Prospective students</h3>
                                 <p>{lab.studentProfile}</p>
                             </div>
                             <div className="contact-page__contact">

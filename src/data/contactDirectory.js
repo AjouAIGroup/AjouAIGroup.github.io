@@ -51,11 +51,17 @@ const CONTACT_DETAILS = {
         contactName: "Kyung-Ah Sohn",
         contactRole: "Professor",
         contactEmail: "kasohn@ajou.ac.kr",
+        researchTitle: "Machine Learning & Biomedical AI",
+        topics: [
+            "Representation learning",
+            "Generative AI & Safety",
+            "Biomedical AI",
+        ],
         guidance:
-            "Review the lab's work in multimodal learning, trustworthy AI, and biomedical or social data. Send a concise email with your CV, research interests, and relevant academic background.",
-        note: "LAMDA currently recruits graduate students through the Department of Artificial Intelligence.",
+            "Please email your CV, academic transcript, and a brief statement of your research interests, explaining which topics or papers interest you and why.",
+        note: "LAMDA Lab currently recruits graduate students through the Department of Artificial Intelligence.",
         studentProfile:
-            "The laboratory will add its preferred background, skills, and research interests here.",
+            "We welcome curious, motivated students with basic knowledge of machine learning, programming, and mathematics.",
     },
 };
 

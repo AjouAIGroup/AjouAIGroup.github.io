@@ -51,6 +51,8 @@ function AaigHero({ isHome }) {
                                         className={`aaig-hero__laboratory-logo aaig-hero__laboratory-logo--${lab.key}`}
                                         src={lab.logo}
                                         alt={lab.logoAlt}
+                                        width={lab.logoWidth}
+                                        height={lab.logoHeight}
                                     />
                                 ) : (
                                     <span>{lab.shortName}</span>

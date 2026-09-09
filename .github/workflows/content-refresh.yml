@@ -14,7 +14,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: aaig-content-refresh
@@ -26,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -45,18 +46,37 @@ jobs:
       - name: Validate refreshed content
         run: npm run validate:content
 
-      - name: Create review pull request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          commit-message: "chore(content): refresh external lab sources"
-          title: "chore(content): refresh external lab sources"
-          body: |
-            Scheduled refresh of official lab publications/news and conference sources.
+      - name: Build refreshed site
+        run: npm run build:static
+        env:
+          VITE_ADMIN_API_URL: ${{ vars.VITE_ADMIN_API_URL }}
+          VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ vars.VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN }}
+          VITE_PUBLICATIONS_SHEET_URL: ${{ vars.PUBLICATIONS_SHEET_URL }}
 
-            Review the imported source cache and deadline diff before merging.
-          branch: automation/content-refresh
-          delete-branch: true
-          add-paths: |
+      - name: Commit refreshed content
+        env:
+          TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          refreshed_paths=(
             content/sources/cache/news.json
             content/sources/cache/publications.json
             content/deadlines/venues.json
+            src/generated/deadlines.generated.json
+            src/generated/news.generated.json
+            src/generated/photos.generated.json
+            src/generated/publications.generated.json
+          )
+
+          if [ -z "$(git status --porcelain -- "${refreshed_paths[@]}")" ]; then
+            echo "No external content changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${refreshed_paths[@]}"
+          git commit -m "chore(content): refresh external lab sources"
+
+          git fetch origin "$TARGET_BRANCH"
+          git rebase "origin/$TARGET_BRANCH"
+          git push origin "HEAD:$TARGET_BRANCH"

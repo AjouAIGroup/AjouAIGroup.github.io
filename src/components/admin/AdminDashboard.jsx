@@ -21,6 +21,41 @@ const PUBLICATIONS = getAllPublications();
 const numberFormatter = new Intl.NumberFormat("ko-KR");
 const formatNumber = (value) => numberFormatter.format(Number(value) || 0);
 
+const isFiniteNumber = (value) =>
+    typeof value === "number" && Number.isFinite(value);
+
+const normalizeAnalyticsPayload = (payload) => {
+    const hasValidTotals =
+        payload?.totals &&
+        isFiniteNumber(payload.totals.pageViews) &&
+        isFiniteNumber(payload.totals.visits);
+    const hasValidSeries =
+        Array.isArray(payload?.series) &&
+        payload.series.every(
+            (item) =>
+                typeof item?.date === "string" &&
+                isFiniteNumber(item.pageViews) &&
+                isFiniteNumber(item.visits),
+        );
+    const hasValidTopPages =
+        Array.isArray(payload?.topPages) &&
+        payload.topPages.every(
+            (item) =>
+                typeof item?.path === "string" &&
+                isFiniteNumber(item.pageViews),
+        );
+
+    if (!hasValidTotals || !hasValidSeries || !hasValidTopPages) {
+        throw new Error("통계 서버가 올바르지 않은 응답을 반환했습니다.");
+    }
+
+    return {
+        ...payload,
+        referrers: Array.isArray(payload.referrers) ? payload.referrers : [],
+        countries: Array.isArray(payload.countries) ? payload.countries : [],
+    };
+};
+
 const buildPublicationSearchUrl = (publicationId) =>
     `${REPOSITORY_URL}/search?q=${encodeURIComponent(publicationId)}&type=code`;
 
@@ -119,7 +154,7 @@ function AdminDashboard() {
                     throw failure;
                 }
 
-                setAnalytics(payload);
+                setAnalytics(normalizeAnalyticsPayload(payload));
                 setAnalyticsStatus("ready");
             } catch (error) {
                 if (error.name === "AbortError") return;
@@ -308,7 +343,8 @@ function AdminDashboard() {
                             <AdminMetric
                                 label="인기 페이지"
                                 value={
-                                    analytics.topPages[0]?.path ?? "데이터 없음"
+                                    (analytics.topPages ?? [])[0]?.path ??
+                                    "데이터 없음"
                                 }
                                 detail="가장 많이 본 경로"
                             />
@@ -354,7 +390,7 @@ function AdminDashboard() {
                             <article>
                                 <h3>인기 페이지</h3>
                                 <ol>
-                                    {analytics.topPages
+                                    {(analytics.topPages ?? [])
                                         .slice(0, 6)
                                         .map((item) => (
                                             <li key={item.path}>

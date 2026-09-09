@@ -1587,7 +1587,7 @@ export default function CloudflareAnalytics() {
         script.id = BEACON_ID;
         script.defer = true;
         script.src = "https://static.cloudflareinsights.com/beacon.min.js";
-        script.dataset.cfBeacon = JSON.stringify({ token });
+        script.dataset.cfBeacon = JSON.stringify({ token, spa: false });
         document.body.append(script);
     }, [token]);
 
@@ -1597,11 +1597,15 @@ export default function CloudflareAnalytics() {
                             <p>
                                 앱의 최상위 컴포넌트에서
                                 <code>&lt;CloudflareAnalytics /&gt;</code>를 한
-                                번만 렌더링합니다. 관리자 경로도 측정하려면
+                                번만 렌더링합니다. <code>spa: false</code>는
+                                클라이언트 경로 이동을 추가 페이지뷰로 기록하지
+                                않아 공개 페이지에서 관리자 경로로 이동해도
+                                관리자 페이지뷰가 남지 않게 합니다. 관리자
+                                경로도 측정하려면
                                 <code
                                     >window.location.pathname.startsWith("/admin")</code
                                 >
-                                조건을 제거합니다.
+                                조건을 제거하고 SPA 정책을 별도로 결정합니다.
                             </p>
                         </div>
                     </details>
@@ -1880,8 +1884,24 @@ compatibility_date = "2026-09-08"
 [vars]
 ADMIN_ORIGIN = "https://www.example.org"
 
+[[ratelimits]]
+name = "ADMIN_RATE_LIMITER"
+namespace_id = "1001"
+
+[ratelimits.simple]
+limit = 10
+period = 60
+
 [env.dev.vars]
-ADMIN_ORIGIN = "https://www.example.org,http://localhost:5173"</pre>
+ADMIN_ORIGIN = "https://www.example.org,http://localhost:5173"
+
+[[env.dev.ratelimits]]
+name = "ADMIN_RATE_LIMITER"
+namespace_id = "1002"
+
+[env.dev.ratelimits.simple]
+limit = 10
+period = 60</pre>
                                 </div>
                                 <p>
                                     <code>[env.dev.vars]</code>는 로컬 개발
@@ -1935,6 +1955,7 @@ const getAllowedOrigin = (request, env) =&gt; {
 const json = (request, env, body, status = 200) =&gt; {
     const headers = {
         "Access-Control-Allow-Headers": "Authorization, Content-Type",
+        "Access-Control-Max-Age": "86400",
         "Access-Control-Allow-Methods": "GET, OPTIONS",
         "Cache-Control": "no-store",
         "Content-Type": "application/json; charset=utf-8",
@@ -1970,6 +1991,37 @@ const isAuthorized = (request, env) =&gt; {
     );
 };
 
+const getAuthFailure = async (request, env, pathname) =&gt; {
+    if (isAuthorized(request, env)) return null;
+
+    if (env.ADMIN_RATE_LIMITER) {
+        const clientAddress =
+            request.headers.get("CF-Connecting-IP") || "unknown";
+        try {
+            const { success } = await env.ADMIN_RATE_LIMITER.limit({
+                key: `${pathname}:${clientAddress}`,
+            });
+            if (!success) {
+                return json(
+                    request,
+                    env,
+                    { error: "관리자 접근 시도가 너무 많습니다." },
+                    429,
+                );
+            }
+        } catch {
+            return json(
+                request,
+                env,
+                { error: "관리자 접근 제한 서비스를 확인해주세요." },
+                503,
+            );
+        }
+    }
+
+    return json(request, env, { error: "관리자 접근 키를 확인해주세요." }, 401);
+};
+
 const toIsoDate = (date) =&gt; date.toISOString().slice(0, 10);
 
 const getDateRange = (days) =&gt; {
@@ -1980,7 +2032,7 @@ const getDateRange = (days) =&gt; {
 };
 
 const createFilter = ({ start, end }, siteTag) =&gt;
-    `filter: { date_geq: ${JSON.stringify(start)}, date_leq: ${JSON.stringify(end)}, siteTag: ${JSON.stringify(siteTag)}, bot: 0 }`;
+    `filter: { date_geq: ${JSON.stringify(start)}, date_leq: ${JSON.stringify(end)}, siteTag: ${JSON.stringify(siteTag)}, bot: 0, requestPath_neq: "/admin" }`;
 
 const buildQuery = (env, range) =&gt; {
     const accountTag = JSON.stringify(env.CLOUDFLARE_ACCOUNT_ID);
@@ -2109,9 +2161,8 @@ export default {
             return json(request, env, { error: "Worker 환경변수 설정이 필요합니다." }, 503);
         }
 
-        if (!isAuthorized(request, env)) {
-            return json(request, env, { error: "관리자 접근 키를 확인해주세요." }, 401);
-        }
+        const authFailure = await getAuthFailure(request, env, url.pathname);
+        if (authFailure) return authFailure;
 
         const requestedDays = Number(url.searchParams.get("days") || 30);
         const days = ALLOWED_PERIODS.has(requestedDays) ? requestedDays : 30;

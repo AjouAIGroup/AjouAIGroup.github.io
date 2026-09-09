@@ -69,10 +69,25 @@ npx wrangler deploy --env=""
 배포가 끝나면 출력된 `https://...workers.dev` 주소를 복사합니다.
 
 로컬 Worker 테스트에는 production origin을 변경하지 않고 dev 환경을 사용합니다.
+업로드한 Worker Secret은 로컬 실행에 전달되지 않으므로, 다음 내용을
+`cloudflare/admin-api/.dev.vars`에 별도로 작성합니다. 이 파일은 Git에서
+무시되며 실제 값을 커밋하거나 공유하지 않습니다.
+
+```dotenv
+CLOUDFLARE_API_TOKEN="통계 조회용 API 토큰"
+CLOUDFLARE_ACCOUNT_ID="Cloudflare Account ID"
+CLOUDFLARE_SITE_TAG="Web Analytics Site Tag"
+ADMIN_TOKEN="로컬에서 입력할 관리자 접근 키"
+```
+
+그다음 Worker 디렉터리에서 실행합니다.
 
 ```bash
 npx wrangler dev --env dev
 ```
+
+로컬에서 Publication 동기화 API까지 시험할 때만 `.dev.vars`에
+`GITHUB_ACTIONS_TOKEN`을 추가합니다. 통계 조회만 확인할 때는 필요하지 않습니다.
 
 ## 4. 홈페이지와 Worker 연결
 
@@ -105,6 +120,10 @@ VITE_PUBLICATIONS_SHEET_URL=https://docs.google.com/spreadsheets/d/<spreadsheet-
 
 현재 단계는 소수 운영자를 위한 공유 접근 키 방식입니다. API 토큰은 Worker 밖으로
 노출되지 않으며 허용된 origin만 API를 호출할 수 있습니다.
+
+Worker는 잘못된 관리자 키 시도를 IP와 API 경로별로 분당 10회까지 허용합니다.
+정상 키 요청은 이 제한에 포함되지 않습니다. Rate Limiting binding은
+`wrangler.toml`에 선언되어 Worker 배포 시 함께 적용됩니다.
 
 관리자별 계정, 권한 회수, 변경 이력이 필요해지면 다음 단계에서 GitHub OAuth 또는
 Cloudflare Access로 교체합니다. Publication 변경은 Google Sheet 편집 기록과 GitHub

@@ -125,16 +125,31 @@ const buildItemFromRow = (record, rowNumber, publicationCategories) => {
     const enabled = parseBoolean(record.enabled, "enabled", rowNumber, true);
     if (!enabled) return null;
 
+    const title = normalizeCell(record.title);
+    const explicitId = normalizeCell(record.id);
+    const generatedIdSlug = normalizeSlug(title);
+    if (!explicitId && !generatedIdSlug) {
+        throw new Error(
+            `[sheet row ${rowNumber}] "title" must contain characters that can be used to generate an id.`,
+        );
+    }
+    const publicationId = explicitId || `sheet-${generatedIdSlug}`;
+    if (!explicitId) {
+        console.warn(
+            `[sheet row ${rowNumber}] generated id "${publicationId}". Copy it into the id cell after the first import to keep the URL and News identity stable if the title changes.`,
+        );
+    }
+
     const labs = parseList(record.labs);
     if (labs.length === 0) {
         throw new Error(`[sheet row ${rowNumber}] "labs" is required.`);
     }
 
     const rawItem = {
-        id: normalizeCell(record.id),
+        id: publicationId,
         category: normalizeCell(record.category),
         status: normalizeCell(record.status) || "published",
-        title: normalizeCell(record.title),
+        title,
         summary: normalizeCell(record.summary),
         featured: parseBoolean(
             record.featured,
@@ -236,10 +251,10 @@ const normalizeSheetRows = async (csvText) => {
     items.forEach((item) => {
         if (seenIds.has(item.id)) {
             errors.push(
-                `[sheet] Duplicate id "${item.id}" (rows ${seenIds.get(item.id)} and later).`,
+                `[sheet] Duplicate id "${item.id}". Use unique explicit ids and avoid values that collide with generated sheet-<title> ids.`,
             );
         } else {
-            seenIds.set(item.id, item.id);
+            seenIds.set(item.id, true);
         }
 
         const titleKey = normalizeSlug(item.title);

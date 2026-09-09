@@ -2,22 +2,11 @@ import { useEffect } from "react";
 
 const BEACON_ID = "cloudflare-web-analytics";
 
-const isAdminEntry = () => {
-    const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
-    const pathname = window.location.pathname;
-    const routePath =
-        basePath && pathname.startsWith(basePath)
-            ? pathname.slice(basePath.length)
-            : pathname;
-
-    return routePath.startsWith("/admin");
-};
-
 function CloudflareAnalytics() {
     const token = import.meta.env.VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 
     useEffect(() => {
-        if (!token || isAdminEntry() || document.getElementById(BEACON_ID)) {
+        if (!token || document.getElementById(BEACON_ID)) {
             return undefined;
         }
 

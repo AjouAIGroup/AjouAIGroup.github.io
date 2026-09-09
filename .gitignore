@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+cloudflare/admin-api/.dev.vars
 backups/*
 color.sass
 content/sources/cache/last-sync-report.json

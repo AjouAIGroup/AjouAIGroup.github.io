@@ -9,9 +9,25 @@ GITHUB_REPO = "AjouAIGroup.github.io"
 GITHUB_REF = "main"
 GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
 
+[[ratelimits]]
+name = "ADMIN_RATE_LIMITER"
+namespace_id = "1001"
+
+[ratelimits.simple]
+limit = 10
+period = 60
+
 [env.dev.vars]
 ADMIN_ORIGIN = "https://ajouaigroup.github.io,http://localhost:5173"
 GITHUB_OWNER = "AjouAIGroup"
 GITHUB_REPO = "AjouAIGroup.github.io"
 GITHUB_REF = "main"
 GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
+
+[[env.dev.ratelimits]]
+name = "ADMIN_RATE_LIMITER"
+namespace_id = "1002"
+
+[env.dev.ratelimits.simple]
+limit = 10
+period = 60

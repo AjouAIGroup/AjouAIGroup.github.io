@@ -381,6 +381,10 @@
     column-gap: clamp(1rem, 3vw, 2.5rem);
 }
 
+.admin-breakdown--countries li:nth-last-child(-n + 2) {
+    border-bottom: 0;
+}
+
 .admin-breakdown--countries strong {
     font-variant-numeric: tabular-nums;
 }

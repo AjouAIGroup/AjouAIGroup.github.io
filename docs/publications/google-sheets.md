@@ -27,7 +27,14 @@ AAIG Publication은 공개 읽기 가능한 Google Sheet를 원본으로 사용�
 7. `keywords`와 `labs`에서 값이 여러 개면 `|`로 구분합니다.
 
 CSV에는 현재 서비스 중인 114개 Publication이 들어 있습니다. 기존 행의
-`id`는 URL 연결과 News 식별에 사용되므로 변경하지 않습니다.
+`id`는 URL 연결과 News 식별에 사용되므로 변경하지 않습니다. 새 행에서는
+`id`를 입력하지 않습니다. 가져오기 과정에서 제목을 기반으로 자동 생성합니다.
+빈 `id`를 사용하려면 제목에 영문자 또는 숫자가 하나 이상 포함되어야 합니다.
+
+자동 생성 ID는 제목이 바뀌면 함께 바뀌어 Publication URL과 자동 News 식별도
+달라집니다. 첫 가져오기 로그에 표시된 `sheet-...` 값을 해당 행의 `id` 셀에
+복사하면 이후 제목을 수정해도 ID를 고정할 수 있습니다. URL을 안정적으로 유지해야
+하는 행은 이 절차를 따릅니다.
 
 ## 3. 공유 권한
 
@@ -51,25 +58,25 @@ https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/gviz/tq?tqx=out:csv&sheet=
 
 ## 4. 열 규칙
 
-| 열            | 필수   | 규칙                                             |
-| ------------- | ------ | ------------------------------------------------ |
-| `enabled`     | 예     | `TRUE`인 행만 게시 후보가 됩니다.                |
-| `id`          | 예     | 전체에서 고유하며 기존 값은 변경하지 않습니다.   |
-| `category`    | 예     | 허용된 Research category key를 사용합니다.       |
-| `status`      | 예     | `published`, `working`, `project` 중 하나입니다. |
-| `title`       | 예     | 중복 제목을 허용하지 않습니다.                   |
-| `date`        | 예     | `YYYY-MM-DD` 형식입니다.                         |
-| `authors`     | 예     | 화면에 표시할 저자 문자열입니다.                 |
-| `venue`       | 예     | `CVPR 2026`처럼 약자와 연도를 함께 씁니다.       |
-| `keywords`    | 예     | 여러 값은 `                                      | `로 구분합니다. 빈 값은 허용됩니다. |
-| `labs`        | 예     | 하나 이상 필요하며 여러 값은 `                   | `로 구분합니다.                     |
-| `pdf_url`     | 예     | 빈 값 또는 `http(s)` URL입니다.                  |
-| `arxiv_url`   | 예     | 빈 값 또는 `http(s)` URL입니다.                  |
-| `github_url`  | 예     | 빈 값 또는 `http(s)` URL입니다.                  |
-| `project_url` | 예     | 빈 값 또는 `http(s)` URL입니다.                  |
-| `featured`    | 예     | `TRUE` 또는 `FALSE`입니다.                       |
-| `summary`     | 예     | Publication 미리보기 설명입니다.                 |
-| `notes`       | 아니요 | 운영 메모이며 홈페이지에는 반영되지 않습니다.    |
+| 열            | 필수   | 규칙                                                               |
+| ------------- | ------ | ------------------------------------------------------------------ |
+| `enabled`     | 예     | `TRUE`인 행만 게시 후보가 됩니다.                                  |
+| `id`          | 아니요 | 열은 유지하고 새 행에서는 비워둡니다. 기존 값은 변경하지 않습니다. |
+| `category`    | 예     | 허용된 Research category key를 사용합니다.                         |
+| `status`      | 예     | `published`, `working`, `project` 중 하나입니다.                   |
+| `title`       | 예     | 중복 제목을 허용하지 않습니다.                                     |
+| `date`        | 예     | `YYYY-MM-DD` 형식입니다.                                           |
+| `authors`     | 예     | 화면에 표시할 저자 문자열입니다.                                   |
+| `venue`       | 예     | `CVPR 2026`처럼 약자와 연도를 함께 씁니다.                         |
+| `keywords`    | 예     | 여러 값은 `\|`로 구분합니다. 빈 값은 허용됩니다.                   |
+| `labs`        | 예     | 하나 이상 필요하며 여러 값은 `\|`로 구분합니다.                    |
+| `pdf_url`     | 예     | 빈 값 또는 `http(s)` URL입니다.                                    |
+| `arxiv_url`   | 예     | 빈 값 또는 `http(s)` URL입니다.                                    |
+| `github_url`  | 예     | 빈 값 또는 `http(s)` URL입니다.                                    |
+| `project_url` | 예     | 빈 값 또는 `http(s)` URL입니다.                                    |
+| `featured`    | 예     | `TRUE` 또는 `FALSE`입니다.                                         |
+| `summary`     | 예     | Publication 미리보기 설명입니다.                                   |
+| `notes`       | 아니요 | 운영 메모이며 홈페이지에는 반영되지 않습니다.                      |
 
 25%를 넘는 대량 삭제는 실수 방지를 위해 기본적으로 거부됩니다.
 
@@ -148,7 +155,8 @@ npm run build:static
 
 - `Missing required columns`: 첫 행의 영문 열 이름과 누락 열을 확인합니다.
 - `sheet row N`: 표시된 Sheet 행의 필수값, 날짜, URL을 수정합니다.
-- `Duplicate id/title`: 중복된 ID 또는 제목을 하나로 정리합니다.
+- `Duplicate id/title`: 중복된 제목과 직접 입력한 ID를 각각 정리합니다. 직접 입력한
+  ID가 다른 행에서 자동 생성된 `sheet-...` 값과 같아도 충돌합니다.
 - `returned 401/403`: CSV가 로그아웃 사용자에게 공개되는지 확인합니다.
 - `Refusing to replace`: 대량 삭제가 의도된 것인지 먼저 검토합니다.
 - 관리자 버튼의 `401`: 기존 관리자 접근 키를 다시 입력합니다.

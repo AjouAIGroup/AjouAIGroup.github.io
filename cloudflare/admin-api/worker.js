@@ -5,6 +5,7 @@ const ALLOWED_PERIODS = new Set([7, 30]);
 const jsonResponse = (request, env, payload, status = 200) => {
     const headers = {
         "Access-Control-Allow-Headers": "Authorization, Content-Type",
+        "Access-Control-Max-Age": "86400",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Cache-Control": "no-store",
         "Content-Type": "application/json; charset=utf-8",
@@ -52,6 +53,44 @@ const hasValidToken = (request, env) => {
     );
 };
 
+const getAuthFailureResponse = async (request, env, pathname) => {
+    if (hasValidToken(request, env)) return null;
+
+    if (env.ADMIN_RATE_LIMITER) {
+        const clientAddress =
+            request.headers.get("CF-Connecting-IP") || "unknown";
+        try {
+            const { success } = await env.ADMIN_RATE_LIMITER.limit({
+                key: `${pathname}:${clientAddress}`,
+            });
+            if (!success) {
+                return jsonResponse(
+                    request,
+                    env,
+                    {
+                        error: "관리자 접근 시도가 너무 많습니다. 잠시 후 다시 시도해주세요.",
+                    },
+                    429,
+                );
+            }
+        } catch {
+            return jsonResponse(
+                request,
+                env,
+                { error: "관리자 접근 제한 서비스를 확인해주세요." },
+                503,
+            );
+        }
+    }
+
+    return jsonResponse(
+        request,
+        env,
+        { error: "관리자 접근 키를 확인해주세요." },
+        401,
+    );
+};
+
 const toIsoDate = (date) => date.toISOString().slice(0, 10);
 
 const getDateRange = (days) => {
@@ -71,42 +110,57 @@ const buildAnalyticsQuery = (env, range) => {
     return `{
         viewer {
             accounts(filter: { accountTag: ${accountTag} }) {
-                total: rumPageloadEventsAdaptiveGroups(${filter}, limit: 1) {
+                series: rumPageloadEventsAdaptiveGroups(${filter}, limit: 5000, orderBy: [date_ASC]) {
                     count
                     sum { visits }
+                    dimensions { date requestPath }
                 }
-                series: rumPageloadEventsAdaptiveGroups(${filter}, limit: 31, orderBy: [date_ASC]) {
-                    count
-                    sum { visits }
-                    dimensions { date }
-                }
-                topPages: rumPageloadEventsAdaptiveGroups(${filter}, limit: 10, orderBy: [count_DESC]) {
+                topPages: rumPageloadEventsAdaptiveGroups(${filter}, limit: 5000, orderBy: [count_DESC]) {
                     count
                     sum { visits }
                     dimensions { requestPath }
                 }
-                referrers: rumPageloadEventsAdaptiveGroups(${filter}, limit: 10, orderBy: [count_DESC]) {
+                referrers: rumPageloadEventsAdaptiveGroups(${filter}, limit: 5000, orderBy: [count_DESC]) {
                     count
-                    dimensions { refererHost }
+                    dimensions { refererHost requestPath }
                 }
-                devices: rumPageloadEventsAdaptiveGroups(${filter}, limit: 10, orderBy: [count_DESC]) {
+                devices: rumPageloadEventsAdaptiveGroups(${filter}, limit: 5000, orderBy: [count_DESC]) {
                     count
-                    dimensions { deviceType }
+                    dimensions { deviceType requestPath }
                 }
-                countries: rumPageloadEventsAdaptiveGroups(${filter}, limit: 10, orderBy: [count_DESC]) {
+                countries: rumPageloadEventsAdaptiveGroups(${filter}, limit: 5000, orderBy: [count_DESC]) {
                     count
-                    dimensions { countryName }
+                    dimensions { countryName requestPath }
                 }
             }
         }
     }`;
 };
 
-const mapBreakdown = (rows, dimension) =>
-    (rows || []).map((row) => ({
-        label: row.dimensions?.[dimension] || "",
-        pageViews: row.count || 0,
-    }));
+const isAdminPath = (value) => {
+    const path = String(value || "/");
+    return path === "/admin" || path.startsWith("/admin/");
+};
+
+const aggregatePublicRows = (rows, dimension) => {
+    const groups = new Map();
+
+    (rows || [])
+        .filter((row) => !isAdminPath(row.dimensions?.requestPath))
+        .forEach((row) => {
+            const label = row.dimensions?.[dimension] || "";
+            const current = groups.get(label) || {
+                label,
+                pageViews: 0,
+                visits: 0,
+            };
+            current.pageViews += row.count || 0;
+            current.visits += row.sum?.visits || 0;
+            groups.set(label, current);
+        });
+
+    return Array.from(groups.values());
+};
 
 const fetchAnalytics = async (env, days) => {
     const range = getDateRange(days);
@@ -132,26 +186,42 @@ const fetchAnalytics = async (env, days) => {
         throw new Error("Cloudflare account data was not returned.");
     }
 
-    const total = result.total?.[0] || {};
+    const series = aggregatePublicRows(result.series, "date").sort((a, b) =>
+        a.label.localeCompare(b.label),
+    );
+    const topPages = aggregatePublicRows(result.topPages, "requestPath").sort(
+        (a, b) => b.pageViews - a.pageViews,
+    );
+    const totals = topPages.reduce(
+        (total, row) => ({
+            pageViews: total.pageViews + row.pageViews,
+            visits: total.visits + row.visits,
+        }),
+        { pageViews: 0, visits: 0 },
+    );
+
     return {
         range: { days, ...range },
-        totals: {
-            pageViews: total.count || 0,
-            visits: total.sum?.visits || 0,
-        },
-        series: (result.series || []).map((row) => ({
-            date: row.dimensions?.date || "",
-            pageViews: row.count || 0,
-            visits: row.sum?.visits || 0,
+        totals,
+        series: series.map((row) => ({
+            date: row.label,
+            pageViews: row.pageViews,
+            visits: row.visits,
         })),
-        topPages: (result.topPages || []).map((row) => ({
-            path: row.dimensions?.requestPath || "/",
-            pageViews: row.count || 0,
-            visits: row.sum?.visits || 0,
+        topPages: topPages.slice(0, 10).map((row) => ({
+            path: row.label || "/",
+            pageViews: row.pageViews,
+            visits: row.visits,
         })),
-        referrers: mapBreakdown(result.referrers, "refererHost"),
-        devices: mapBreakdown(result.devices, "deviceType"),
-        countries: mapBreakdown(result.countries, "countryName"),
+        referrers: aggregatePublicRows(result.referrers, "refererHost")
+            .sort((a, b) => b.pageViews - a.pageViews)
+            .slice(0, 10),
+        devices: aggregatePublicRows(result.devices, "deviceType")
+            .sort((a, b) => b.pageViews - a.pageViews)
+            .slice(0, 10),
+        countries: aggregatePublicRows(result.countries, "countryName")
+            .sort((a, b) => b.pageViews - a.pageViews)
+            .slice(0, 10),
         generatedAt: new Date().toISOString(),
     };
 };
@@ -248,14 +318,12 @@ export default {
                 );
             }
 
-            if (!hasValidToken(request, env)) {
-                return jsonResponse(
-                    request,
-                    env,
-                    { error: "관리자 접근 키를 확인해주세요." },
-                    401,
-                );
-            }
+            const authFailure = await getAuthFailureResponse(
+                request,
+                env,
+                url.pathname,
+            );
+            if (authFailure) return authFailure;
 
             const requestedDays = Number(url.searchParams.get("days") || 30);
             const days = ALLOWED_PERIODS.has(requestedDays)
@@ -291,14 +359,12 @@ export default {
                 );
             }
 
-            if (!hasValidToken(request, env)) {
-                return jsonResponse(
-                    request,
-                    env,
-                    { error: "관리자 접근 키를 확인해주세요." },
-                    401,
-                );
-            }
+            const authFailure = await getAuthFailureResponse(
+                request,
+                env,
+                url.pathname,
+            );
+            if (authFailure) return authFailure;
 
             try {
                 return jsonResponse(

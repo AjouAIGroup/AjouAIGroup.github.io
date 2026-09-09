@@ -25,8 +25,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -53,11 +51,13 @@ jobs:
           VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ vars.VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN }}
           VITE_PUBLICATIONS_SHEET_URL: ${{ vars.PUBLICATIONS_SHEET_URL }}
 
-      - name: Commit refreshed content
-        env:
-          TARGET_BRANCH: ${{ github.event.repository.default_branch }}
-        run: |
-          refreshed_paths=(
+      - name: Archive refreshed content
+        uses: actions/upload-artifact@v6
+        with:
+          name: external-content-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: error
+          path: |
             content/sources/cache/news.json
             content/sources/cache/publications.json
             content/deadlines/venues.json
@@ -65,18 +65,9 @@ jobs:
             src/generated/news.generated.json
             src/generated/photos.generated.json
             src/generated/publications.generated.json
-          )
 
-          if [ -z "$(git status --porcelain -- "${refreshed_paths[@]}")" ]; then
-            echo "No external content changes to commit."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- "${refreshed_paths[@]}"
-          git commit -m "chore(content): refresh external lab sources"
-
-          git fetch origin "$TARGET_BRANCH"
-          git rebase "origin/$TARGET_BRANCH"
-          git push origin "HEAD:$TARGET_BRANCH"
+      - name: Deploy refreshed site to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

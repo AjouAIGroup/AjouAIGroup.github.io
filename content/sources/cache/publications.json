@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-09-07T05:43:35.469Z"
+    "generated_at": "2026-09-09T02:19:40.398Z"
   },
   "items": [
     {
@@ -181,6 +181,31 @@
       "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
+      "id": "cvl-publications-flowvla-enabling-world-dynamics-understanding-through-pluggable-3d-flow-learning",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "FlowVLA: Enabling World Dynamics Understanding through Pluggable 3D Flow Learning",
+      "summary": "CoRL 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junhyeong Go, Mingyu Jung, Woobin Im, Jongbin Ryu",
+        "published_place": "CoRL 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
       "id": "cvl-publications-generative-self-supervised-learning-for-medical-image-classification",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
@@ -301,6 +326,31 @@
         "project_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html",
         "source_code_link": "",
         "paper_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
+      "id": "cvl-publications-style-kd-class-imbalanced-medical-image-classification-via-style-knowledge-distillation",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Style-KD : Class-Imbalanced Medical Image Classification via Style Knowledge Distillation",
+      "summary": "BSPC 2024 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Inhyuk Park, Won Hwa Kim, Jongbin Ryu",
+        "published_place": "BSPC 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617",
+        "source_code_link": "",
+        "paper_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -1733,7 +1783,7 @@
     {
       "id": "lamda-publications-empathy-is-steerable-but-multi-axial-mechanism-geometry-and-persona-effects-in-llms",
       "category": "efficient_learning_for_llms",
-      "status": "working",
+      "status": "published",
       "title": "Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs",
       "summary": "EMNLP 2026 publication from LAMDA Lab.",
       "featured": false,

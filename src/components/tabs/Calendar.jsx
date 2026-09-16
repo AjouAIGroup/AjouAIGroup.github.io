@@ -9,6 +9,7 @@ import {
     getVenueCfpState,
     getVenueStatusMeta,
 } from "../../utils/deadlineData";
+import DeadlineMonthGrid from "./Calendar.MonthGrid";
 import "./Calendar.css";
 
 const ALL_AREAS = "all";
@@ -262,6 +263,15 @@ function Calendar() {
                     />
                 </label>
             </section>
+
+            {now ? (
+                <DeadlineMonthGrid venues={filteredVenues} now={now} />
+            ) : (
+                <div
+                    className="calendar-month__placeholder"
+                    aria-hidden="true"
+                />
+            )}
 
             <section
                 className="calendar__list"

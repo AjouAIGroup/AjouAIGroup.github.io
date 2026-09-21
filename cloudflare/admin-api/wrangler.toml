@@ -4,6 +4,10 @@ compatibility_date = "2026-09-08"
 
 [vars]
 ADMIN_ORIGIN = "https://ajouaigroup.github.io"
+# Public OAuth client id from Google Cloud Console. Empty disables Google
+# sign-in; the allow list itself is set with `wrangler secret put
+# ADMIN_ALLOWED_EMAILS`.
+GOOGLE_CLIENT_ID = ""
 GITHUB_OWNER = "AjouAIGroup"
 GITHUB_REPO = "AjouAIGroup.github.io"
 GITHUB_REF = "main"
@@ -19,6 +23,7 @@ period = 60
 
 [env.dev.vars]
 ADMIN_ORIGIN = "https://ajouaigroup.github.io,http://localhost:5173"
+GOOGLE_CLIENT_ID = ""
 GITHUB_OWNER = "AjouAIGroup"
 GITHUB_REPO = "AjouAIGroup.github.io"
 GITHUB_REF = "main"

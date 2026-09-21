@@ -2,6 +2,19 @@ const CLOUDFLARE_GRAPHQL_ENDPOINT =
     "https://api.cloudflare.com/client/v4/graphql";
 const ALLOWED_PERIODS = new Set([7, 30]);
 
+const GOOGLE_JWKS_URL = "https://www.googleapis.com/oauth2/v3/certs";
+const GOOGLE_ISSUERS = new Set([
+    "accounts.google.com",
+    "https://accounts.google.com",
+]);
+// Google ID tokens are short lived, so a minute of clock drift is the only
+// tolerance worth allowing.
+const CLOCK_SKEW_SECONDS = 60;
+
+// Google rotates its signing keys, so the key set is cached for exactly as
+// long as Google says it is valid rather than for the lifetime of the isolate.
+let googleKeyCache = { keys: new Map(), expiresAt: 0, refreshedAt: 0 };
+
 const jsonResponse = (request, env, payload, status = 200) => {
     const headers = {
         "Access-Control-Allow-Headers": "Authorization, Content-Type",
@@ -39,22 +52,196 @@ const isAllowedOrigin = (request, env) => {
     return !origin || getAllowedOrigins(env).includes(origin);
 };
 
-const hasValidToken = (request, env) => {
+const getBearerCredential = (request) => {
+    const header = request.headers.get("Authorization") || "";
+    return header.startsWith("Bearer ")
+        ? header.slice("Bearer ".length).trim()
+        : "";
+};
+
+const matchesSharedKey = (credential, env) => {
     const expected = String(env.ADMIN_TOKEN || "");
-    const received = request.headers.get("Authorization") || "";
-    if (!expected) return false;
+    if (!expected || !credential) return false;
 
     const encoder = new TextEncoder();
-    const expectedBytes = encoder.encode(`Bearer ${expected}`);
-    const receivedBytes = encoder.encode(received);
+    const expectedBytes = encoder.encode(expected);
+    const receivedBytes = encoder.encode(credential);
     return (
         expectedBytes.byteLength === receivedBytes.byteLength &&
         crypto.subtle.timingSafeEqual(expectedBytes, receivedBytes)
     );
 };
 
+const getAllowedEmails = (env) =>
+    new Set(
+        String(env.ADMIN_ALLOWED_EMAILS || "")
+            .split(",")
+            .map((email) => email.trim().toLowerCase())
+            .filter(Boolean),
+    );
+
+const hasGoogleConfiguration = (env) =>
+    Boolean(env.GOOGLE_CLIENT_ID) && getAllowedEmails(env).size > 0;
+
+const decodeBase64Url = (value) => {
+    const normalized = String(value).replace(/-/g, "+").replace(/_/g, "/");
+    const padding = (4 - (normalized.length % 4)) % 4;
+    const binary = atob(normalized + "=".repeat(padding));
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
+    }
+    return bytes;
+};
+
+const decodeJwtSegment = (segment) =>
+    JSON.parse(new TextDecoder().decode(decodeBase64Url(segment)));
+
+const getGoogleSigningKey = async (keyId) => {
+    const now = Date.now();
+    const isCacheFresh = googleKeyCache.expiresAt > now;
+
+    if (isCacheFresh && googleKeyCache.keys.has(keyId)) {
+        return googleKeyCache.keys.get(keyId);
+    }
+
+    // An unrecognised key id almost always means a forged token. Refetching at
+    // most once a minute still picks up a real Google key rotation quickly,
+    // without letting made-up ids drive one outbound request each.
+    if (isCacheFresh && now - googleKeyCache.refreshedAt < 60_000) {
+        return null;
+    }
+
+    const response = await fetch(GOOGLE_JWKS_URL);
+    if (!response.ok) {
+        throw new Error(`Google key set returned ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const maxAge = Number(
+        /max-age=(\d+)/.exec(response.headers.get("Cache-Control") || "")?.[1],
+    );
+    const keys = new Map();
+
+    for (const jwk of payload.keys ?? []) {
+        if (!jwk.kid) continue;
+        keys.set(
+            jwk.kid,
+            await crypto.subtle.importKey(
+                "jwk",
+                jwk,
+                { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+                false,
+                ["verify"],
+            ),
+        );
+    }
+
+    googleKeyCache = {
+        keys,
+        expiresAt: now + (Number.isFinite(maxAge) ? maxAge : 3600) * 1000,
+        refreshedAt: now,
+    };
+    return keys.get(keyId) ?? null;
+};
+
+const expiredSession = {
+    ok: false,
+    status: 401,
+    error: "로그인이 만료되었습니다. 다시 로그인해주세요.",
+};
+
+const verifyGoogleIdentity = async (credential, env) => {
+    const segments = credential.split(".");
+    if (segments.length !== 3) return expiredSession;
+
+    let header;
+    let claims;
+    try {
+        header = decodeJwtSegment(segments[0]);
+        claims = decodeJwtSegment(segments[1]);
+    } catch {
+        return expiredSession;
+    }
+
+    if (header.alg !== "RS256" || !header.kid) return expiredSession;
+
+    let signingKey;
+    try {
+        signingKey = await getGoogleSigningKey(header.kid);
+    } catch {
+        return {
+            ok: false,
+            status: 503,
+            error: "Google 로그인 확인 서비스를 사용할 수 없습니다.",
+        };
+    }
+    if (!signingKey) return expiredSession;
+
+    const isSignatureValid = await crypto.subtle.verify(
+        "RSASSA-PKCS1-v1_5",
+        signingKey,
+        decodeBase64Url(segments[2]),
+        new TextEncoder().encode(`${segments[0]}.${segments[1]}`),
+    );
+    if (!isSignatureValid) return expiredSession;
+
+    const now = Math.floor(Date.now() / 1000);
+    const isIssuerValid = GOOGLE_ISSUERS.has(String(claims.iss));
+    const isAudienceValid = claims.aud === env.GOOGLE_CLIENT_ID;
+    const isUnexpired = Number(claims.exp) > now - CLOCK_SKEW_SECONDS;
+    const isNotFuture = Number(claims.iat) <= now + CLOCK_SKEW_SECONDS;
+
+    if (!isIssuerValid || !isAudienceValid || !isUnexpired || !isNotFuture) {
+        return expiredSession;
+    }
+
+    // An unverified address can be claimed by someone who does not own it, so
+    // it never satisfies the allow list even when the string matches.
+    const email = String(claims.email || "").toLowerCase();
+    if (claims.email_verified !== true || !email) {
+        return {
+            ok: false,
+            status: 403,
+            error: "이메일이 확인되지 않은 계정입니다.",
+        };
+    }
+
+    if (!getAllowedEmails(env).has(email)) {
+        return {
+            ok: false,
+            status: 403,
+            error: "이 계정에는 관리자 권한이 없습니다.",
+        };
+    }
+
+    return { ok: true, actor: email };
+};
+
+const authenticate = async (request, env) => {
+    const credential = getBearerCredential(request);
+    if (!credential) {
+        return { ok: false, status: 401, error: "관리자 로그인이 필요합니다." };
+    }
+
+    if (matchesSharedKey(credential, env)) {
+        return { ok: true, actor: "shared-key" };
+    }
+
+    if (!hasGoogleConfiguration(env)) {
+        return {
+            ok: false,
+            status: 401,
+            error: "관리자 접근 키를 확인해주세요.",
+        };
+    }
+
+    return verifyGoogleIdentity(credential, env);
+};
+
 const getAuthFailureResponse = async (request, env, pathname) => {
-    if (hasValidToken(request, env)) return null;
+    const result = await authenticate(request, env);
+    if (result.ok) return null;
 
     if (env.ADMIN_RATE_LIMITER) {
         const clientAddress =
@@ -83,12 +270,7 @@ const getAuthFailureResponse = async (request, env, pathname) => {
         }
     }
 
-    return jsonResponse(
-        request,
-        env,
-        { error: "관리자 접근 키를 확인해주세요." },
-        401,
-    );
+    return jsonResponse(request, env, { error: result.error }, result.status);
 };
 
 const toIsoDate = (date) => date.toISOString().slice(0, 10);
@@ -226,14 +408,16 @@ const fetchAnalytics = async (env, days) => {
     };
 };
 
+const hasAdminAuthentication = (env) =>
+    Boolean(env.ADMIN_TOKEN) || hasGoogleConfiguration(env);
+
 const hasCloudflareConfiguration = (env) =>
     Boolean(
         env.CLOUDFLARE_API_TOKEN &&
         env.CLOUDFLARE_ACCOUNT_ID &&
         env.CLOUDFLARE_SITE_TAG &&
-        env.ADMIN_TOKEN &&
         env.ADMIN_ORIGIN,
-    );
+    ) && hasAdminAuthentication(env);
 
 const hasPublicationSyncConfiguration = (env) =>
     Boolean(
@@ -242,9 +426,8 @@ const hasPublicationSyncConfiguration = (env) =>
         env.GITHUB_REPO &&
         env.GITHUB_REF &&
         env.GITHUB_WORKFLOW_ID &&
-        env.ADMIN_TOKEN &&
         env.ADMIN_ORIGIN,
-    );
+    ) && hasAdminAuthentication(env);
 
 const dispatchPublicationSync = async (env) => {
     const owner = encodeURIComponent(env.GITHUB_OWNER);
@@ -305,6 +488,8 @@ export default {
                 ok: true,
                 configured: hasCloudflareConfiguration(env),
                 publicationSyncConfigured: hasPublicationSyncConfiguration(env),
+                googleSignInConfigured: hasGoogleConfiguration(env),
+                sharedKeyEnabled: Boolean(env.ADMIN_TOKEN),
             });
         }
 

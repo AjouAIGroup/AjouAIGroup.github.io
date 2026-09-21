@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     getAllPublications,
     PUBLICATION_DATA_META,
 } from "../../utils/publicationData";
+import { loadGoogleIdentity, readIdentityClaims } from "./googleIdentity";
 import "./AdminDashboard.css";
 
 const ADMIN_API_URL = (import.meta.env.VITE_ADMIN_API_URL ?? "").replace(
     /\/$/,
     "",
 );
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? "";
 const REPOSITORY_URL = "https://github.com/AjouAIGroup/AjouAIGroup.github.io";
 const PUBLICATION_DIRECTORY_URL = `${REPOSITORY_URL}/tree/main/content/publications`;
 const PUBLICATIONS_SHEET_URL =
@@ -100,17 +102,20 @@ function AnalyticsSkeleton() {
 function AdminDashboard() {
     const publicationSummary = useMemo(summarizePublications, []);
     const [days, setDays] = useState(30);
-    const [accessToken, setAccessToken] = useState(
-        () => sessionStorage.getItem("aaig-admin-token") ?? "",
-    );
+    // The credential is kept in memory only. Closing or reloading the tab ends
+    // the session; Google re-issues it silently for an already-consented
+    // account, so nothing has to be stored to stay convenient.
+    const [session, setSession] = useState(null);
+    const [signInStatus, setSignInStatus] = useState("idle");
     const [tokenInput, setTokenInput] = useState("");
     const [analytics, setAnalytics] = useState(null);
     const [analyticsStatus, setAnalyticsStatus] = useState(
-        ADMIN_API_URL ? "locked" : "unconfigured",
+        ADMIN_API_URL ? "signed-out" : "unconfigured",
     );
     const [analyticsError, setAnalyticsError] = useState("");
     const [retryRequest, setRetryRequest] = useState(0);
     const [publicationQuery, setPublicationQuery] = useState("");
+    const googleButtonRef = useRef(null);
 
     useEffect(() => {
         const previousTitle = document.title;
@@ -126,8 +131,80 @@ function AdminDashboard() {
         };
     }, []);
 
+    const handleCredential = useCallback((response) => {
+        const credential = response?.credential;
+        if (!credential) return;
+
+        const claims = readIdentityClaims(credential);
+        setAnalyticsError("");
+        setSession({
+            credential,
+            kind: "google",
+            email: claims.email,
+            expiresAt: claims.expiresAt,
+        });
+    }, []);
+
     useEffect(() => {
-        if (!ADMIN_API_URL || !accessToken) {
+        if (!ADMIN_API_URL || !GOOGLE_CLIENT_ID || session) {
+            return undefined;
+        }
+
+        let cancelled = false;
+        setSignInStatus("loading");
+
+        loadGoogleIdentity()
+            .then((identity) => {
+                if (cancelled || !googleButtonRef.current) return;
+
+                identity.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleCredential,
+                    auto_select: true,
+                    cancel_on_tap_outside: false,
+                });
+                identity.renderButton(googleButtonRef.current, {
+                    theme: "outline",
+                    size: "large",
+                    text: "signin_with",
+                    shape: "rectangular",
+                    locale: "ko",
+                });
+                setSignInStatus("ready");
+            })
+            .catch(() => {
+                if (!cancelled) setSignInStatus("error");
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [handleCredential, session]);
+
+    // Google ID tokens last an hour. Locking the screen exactly when the token
+    // dies keeps the UI honest instead of waiting for the next failed request.
+    useEffect(() => {
+        if (!session?.expiresAt) return undefined;
+
+        const remaining = session.expiresAt - Date.now();
+        const expire = () => {
+            setSession(null);
+            setAnalytics(null);
+            setAnalyticsStatus("signed-out");
+            setAnalyticsError("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        };
+
+        if (remaining <= 0) {
+            expire();
+            return undefined;
+        }
+
+        const timer = setTimeout(expire, remaining);
+        return () => clearTimeout(timer);
+    }, [session]);
+
+    useEffect(() => {
+        if (!ADMIN_API_URL || !session) {
             return undefined;
         }
 
@@ -140,7 +217,9 @@ function AdminDashboard() {
                 const response = await fetch(
                     `${ADMIN_API_URL}/v1/analytics?days=${days}`,
                     {
-                        headers: { Authorization: `Bearer ${accessToken}` },
+                        headers: {
+                            Authorization: `Bearer ${session.credential}`,
+                        },
                         signal: controller.signal,
                     },
                 );
@@ -160,15 +239,28 @@ function AdminDashboard() {
                 if (error.name === "AbortError") return;
                 setAnalytics(null);
                 setAnalyticsError(error.message);
-                setAnalyticsStatus(
-                    error.status === 401 ? "unauthorized" : "error",
-                );
+
+                if (error.status === 401) {
+                    // The credential is spent, so drop it and ask for a new
+                    // one. Silent re-sign-in is turned off first: if the
+                    // rejection came from a configuration mismatch rather than
+                    // expiry, Google would otherwise hand back another
+                    // credential immediately and the two would loop.
+                    window.google?.accounts?.id?.disableAutoSelect();
+                    setSession(null);
+                    setAnalyticsStatus("signed-out");
+                    return;
+                }
+
+                // A 403 means the account itself is not on the allow list, so
+                // retrying with the same credential can never succeed.
+                setAnalyticsStatus(error.status === 403 ? "denied" : "error");
             }
         };
 
         loadAnalytics();
         return () => controller.abort();
-    }, [accessToken, days, retryRequest]);
+    }, [days, retryRequest, session]);
 
     const visiblePublications = useMemo(() => {
         const query = publicationQuery.trim().toLowerCase();
@@ -196,16 +288,19 @@ function AdminDashboard() {
         event.preventDefault();
         const normalizedToken = tokenInput.trim();
         if (!normalizedToken) return;
-        sessionStorage.setItem("aaig-admin-token", normalizedToken);
-        setAccessToken(normalizedToken);
+        setAnalyticsError("");
+        setSession({ credential: normalizedToken, kind: "key", email: "" });
         setTokenInput("");
     };
 
-    const handleLock = () => {
-        sessionStorage.removeItem("aaig-admin-token");
-        setAccessToken("");
+    const handleSignOut = () => {
+        // Without this Google would silently sign the same account back in,
+        // which makes "다른 계정으로 로그인" impossible.
+        window.google?.accounts?.id?.disableAutoSelect();
+        setSession(null);
         setAnalytics(null);
-        setAnalyticsStatus("locked");
+        setAnalyticsError("");
+        setAnalyticsStatus("signed-out");
     };
 
     const handleRetry = () => {
@@ -269,39 +364,92 @@ function AdminDashboard() {
                     </div>
                 ) : null}
 
-                {["locked", "unauthorized"].includes(analyticsStatus) ? (
-                    <form className="admin-unlock" onSubmit={handleUnlock}>
-                        <div>
-                            <label htmlFor="admin-access-token">
-                                관리자 접근 키
-                            </label>
-                            <p>키는 현재 브라우저 탭에만 보관됩니다.</p>
+                {analyticsStatus === "signed-out" ? (
+                    <div className="admin-signin">
+                        <div className="admin-signin__intro">
+                            <strong>관리자 로그인</strong>
+                            <p>
+                                등록된 운영자 Google 계정으로만 통계를 볼 수
+                                있습니다. 로그인은 1시간 동안 유지되며 이
+                                브라우저에 저장되지 않습니다.
+                            </p>
                         </div>
-                        <div className="admin-unlock__control">
-                            <input
-                                id="admin-access-token"
-                                type="password"
-                                autoComplete="current-password"
-                                value={tokenInput}
-                                onChange={(event) =>
-                                    setTokenInput(event.target.value)
-                                }
-                                aria-describedby={
-                                    analyticsStatus === "unauthorized"
-                                        ? "admin-token-error"
-                                        : undefined
-                                }
-                            />
-                            <button type="submit">통계 열기</button>
-                        </div>
-                        {analyticsStatus === "unauthorized" ? (
-                            <p
-                                id="admin-token-error"
-                                className="admin-unlock__error">
+
+                        {GOOGLE_CLIENT_ID ? (
+                            <div className="admin-signin__google">
+                                <div ref={googleButtonRef} />
+                                {signInStatus === "error" ? (
+                                    <p
+                                        className="admin-signin__error"
+                                        role="alert">
+                                        Google 로그인을 불러오지 못했습니다.
+                                        네트워크 연결을 확인한 뒤 페이지를
+                                        새로고침해주세요.
+                                    </p>
+                                ) : null}
+                            </div>
+                        ) : (
+                            <p className="admin-signin__notice">
+                                Google 로그인이 아직 설정되지 않았습니다. 빌드
+                                환경변수 VITE_GOOGLE_CLIENT_ID를 등록하면 이
+                                영역에 로그인 버튼이 나타납니다.
+                            </p>
+                        )}
+
+                        {analyticsError ? (
+                            <p className="admin-signin__error" role="alert">
                                 {analyticsError}
                             </p>
                         ) : null}
-                    </form>
+
+                        <details className="admin-signin__fallback">
+                            <summary>접근 키로 열기</summary>
+                            <form
+                                className="admin-unlock"
+                                onSubmit={handleUnlock}>
+                                <div>
+                                    <label htmlFor="admin-access-token">
+                                        관리자 접근 키
+                                    </label>
+                                    <p>
+                                        Google 로그인을 쓸 수 없을 때를 위한
+                                        예비 수단입니다.
+                                    </p>
+                                </div>
+                                <div className="admin-unlock__control">
+                                    <input
+                                        id="admin-access-token"
+                                        type="password"
+                                        autoComplete="current-password"
+                                        value={tokenInput}
+                                        onChange={(event) =>
+                                            setTokenInput(event.target.value)
+                                        }
+                                    />
+                                    <button type="submit">통계 열기</button>
+                                </div>
+                            </form>
+                        </details>
+                    </div>
+                ) : null}
+
+                {analyticsStatus === "denied" ? (
+                    <div
+                        className="admin-state admin-state--error"
+                        role="alert">
+                        <strong>이 계정에는 관리자 권한이 없습니다.</strong>
+                        <p>
+                            {session?.email
+                                ? `${session.email} 계정으로 로그인했습니다. `
+                                : ""}
+                            {analyticsError}
+                        </p>
+                        <div className="admin-state__actions">
+                            <button type="button" onClick={handleSignOut}>
+                                다른 계정으로 로그인
+                            </button>
+                        </div>
+                    </div>
                 ) : null}
 
                 {analyticsStatus === "loading" && !analytics ? (
@@ -318,8 +466,8 @@ function AdminDashboard() {
                             <button type="button" onClick={handleRetry}>
                                 다시 시도
                             </button>
-                            <button type="button" onClick={handleLock}>
-                                접근 키 다시 입력
+                            <button type="button" onClick={handleSignOut}>
+                                로그아웃
                             </button>
                         </div>
                     </div>
@@ -456,12 +604,19 @@ function AdminDashboard() {
                                 )}
                             </article>
                         </div>
-                        <button
-                            className="admin-lock"
-                            type="button"
-                            onClick={handleLock}>
-                            통계 잠그기
-                        </button>
+                        <div className="admin-session">
+                            <p>
+                                {session?.kind === "google" && session.email
+                                    ? `${session.email} 계정으로 확인 중입니다.`
+                                    : "접근 키로 확인 중입니다."}
+                            </p>
+                            <button
+                                className="admin-lock"
+                                type="button"
+                                onClick={handleSignOut}>
+                                로그아웃
+                            </button>
+                        </div>
                     </div>
                 ) : null}
             </section>

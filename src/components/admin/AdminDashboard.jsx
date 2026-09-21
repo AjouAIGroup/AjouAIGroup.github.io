@@ -113,6 +113,10 @@ function AdminDashboard() {
         ADMIN_API_URL ? "signed-out" : "unconfigured",
     );
     const [analyticsError, setAnalyticsError] = useState("");
+    // Only the Worker knows the operator allow list, so a successful
+    // response is what proves this account may see the workspace. Holding a
+    // Google session is not enough on its own: anyone can obtain one.
+    const [isAuthorized, setIsAuthorized] = useState(false);
     const [retryRequest, setRetryRequest] = useState(0);
     const [publicationQuery, setPublicationQuery] = useState("");
     const googleButtonRef = useRef(null);
@@ -189,6 +193,7 @@ function AdminDashboard() {
         const remaining = session.expiresAt - Date.now();
         const expire = () => {
             setSession(null);
+            setIsAuthorized(false);
             setAnalytics(null);
             setAnalyticsStatus("signed-out");
             setAnalyticsError("로그인이 만료되었습니다. 다시 로그인해주세요.");
@@ -235,6 +240,7 @@ function AdminDashboard() {
 
                 setAnalytics(normalizeAnalyticsPayload(payload));
                 setAnalyticsStatus("ready");
+                setIsAuthorized(true);
             } catch (error) {
                 if (error.name === "AbortError") return;
                 setAnalytics(null);
@@ -248,13 +254,23 @@ function AdminDashboard() {
                     // credential immediately and the two would loop.
                     window.google?.accounts?.id?.disableAutoSelect();
                     setSession(null);
+                    setIsAuthorized(false);
                     setAnalyticsStatus("signed-out");
                     return;
                 }
 
                 // A 403 means the account itself is not on the allow list, so
                 // retrying with the same credential can never succeed.
-                setAnalyticsStatus(error.status === 403 ? "denied" : "error");
+                if (error.status === 403) {
+                    setIsAuthorized(false);
+                    setAnalyticsStatus("denied");
+                    return;
+                }
+
+                // Any other failure is transport or upstream trouble. The
+                // account is still a verified operator, so whatever it already
+                // unlocked stays open.
+                setAnalyticsStatus("error");
             }
         };
 
@@ -298,6 +314,7 @@ function AdminDashboard() {
         // which makes "다른 계정으로 로그인" impossible.
         window.google?.accounts?.id?.disableAutoSelect();
         setSession(null);
+        setIsAuthorized(false);
         setAnalytics(null);
         setAnalyticsError("");
         setAnalyticsStatus("signed-out");
@@ -621,88 +638,121 @@ function AdminDashboard() {
                 ) : null}
             </section>
 
-            <section
-                className="admin-section"
-                aria-labelledby="publication-admin-title">
-                <div className="admin-section__head">
-                    <div>
-                        <h2 id="publication-admin-title">Publication 관리</h2>
+            {isAuthorized ? (
+                <section
+                    className="admin-section"
+                    aria-labelledby="publication-admin-title">
+                    <div className="admin-section__head">
+                        <div>
+                            <h2 id="publication-admin-title">
+                                Publication 관리
+                            </h2>
+                            <p>
+                                Google Sheet 원본과 현재 배포 데이터를 함께
+                                확인합니다.
+                            </p>
+                        </div>
+                        <a
+                            className="admin-primary-link"
+                            href={
+                                PUBLICATIONS_SHEET_URL ||
+                                PUBLICATION_DIRECTORY_URL
+                            }
+                            target="_blank"
+                            rel="noreferrer">
+                            {PUBLICATIONS_SHEET_URL
+                                ? "Google Sheet 열기"
+                                : "GitHub 스냅샷 열기"}
+                        </a>
+                    </div>
+
+                    <div className="admin-metrics admin-metrics--publications">
+                        <AdminMetric
+                            label="전체 Publication"
+                            value={formatNumber(publicationSummary.total)}
+                            detail="현재 생성 데이터 기준"
+                        />
+                        <AdminMetric
+                            label="참여 연구실"
+                            value={formatNumber(publicationSummary.labs)}
+                            detail="등록된 연구실 태그"
+                        />
+                        <AdminMetric
+                            label="수록 연도"
+                            value={formatNumber(publicationSummary.years)}
+                            detail="연도별 아카이브 범위"
+                        />
+                    </div>
+
+                    <div className="admin-publication-search">
+                        <label htmlFor="admin-publication-search">
+                            Publication 검색
+                        </label>
+                        <input
+                            id="admin-publication-search"
+                            type="search"
+                            placeholder="제목, 저자, 학회 또는 연구실"
+                            value={publicationQuery}
+                            onChange={(event) =>
+                                setPublicationQuery(event.target.value)
+                            }
+                        />
+                    </div>
+
+                    <div className="admin-publication-list">
+                        {visiblePublications.map((publication) => (
+                            <article key={publication.id}>
+                                <div>
+                                    <p>
+                                        {
+                                            publication.research_meta
+                                                .published_place
+                                        }
+                                    </p>
+                                    <h3>{publication.title}</h3>
+                                    <span>
+                                        {publication.research_meta.author}
+                                    </span>
+                                </div>
+                                <a
+                                    href={buildPublicationSearchUrl(
+                                        publication.id,
+                                    )}
+                                    target="_blank"
+                                    rel="noreferrer">
+                                    스냅샷 찾기
+                                </a>
+                            </article>
+                        ))}
+                        {visiblePublications.length === 0 ? (
+                            <p className="admin-publication-list__empty">
+                                검색 결과가 없습니다.
+                            </p>
+                        ) : null}
+                    </div>
+                </section>
+            ) : (
+                <section
+                    className="admin-section"
+                    aria-labelledby="publication-admin-title">
+                    <div className="admin-section__head">
+                        <div>
+                            <h2 id="publication-admin-title">
+                                Publication 관리
+                            </h2>
+                            <p>운영자로 로그인하면 열립니다.</p>
+                        </div>
+                    </div>
+
+                    <div className="admin-state">
+                        <strong>운영자 확인이 필요합니다.</strong>
                         <p>
-                            Google Sheet 원본과 현재 배포 데이터를 함께
-                            확인합니다.
+                            위에서 로그인하면 Publication 운영 현황과 검색이
+                            함께 열립니다.
                         </p>
                     </div>
-                    <a
-                        className="admin-primary-link"
-                        href={
-                            PUBLICATIONS_SHEET_URL || PUBLICATION_DIRECTORY_URL
-                        }
-                        target="_blank"
-                        rel="noreferrer">
-                        {PUBLICATIONS_SHEET_URL
-                            ? "Google Sheet 열기"
-                            : "GitHub 스냅샷 열기"}
-                    </a>
-                </div>
-
-                <div className="admin-metrics admin-metrics--publications">
-                    <AdminMetric
-                        label="전체 Publication"
-                        value={formatNumber(publicationSummary.total)}
-                        detail="현재 생성 데이터 기준"
-                    />
-                    <AdminMetric
-                        label="참여 연구실"
-                        value={formatNumber(publicationSummary.labs)}
-                        detail="등록된 연구실 태그"
-                    />
-                    <AdminMetric
-                        label="수록 연도"
-                        value={formatNumber(publicationSummary.years)}
-                        detail="연도별 아카이브 범위"
-                    />
-                </div>
-
-                <div className="admin-publication-search">
-                    <label htmlFor="admin-publication-search">
-                        Publication 검색
-                    </label>
-                    <input
-                        id="admin-publication-search"
-                        type="search"
-                        placeholder="제목, 저자, 학회 또는 연구실"
-                        value={publicationQuery}
-                        onChange={(event) =>
-                            setPublicationQuery(event.target.value)
-                        }
-                    />
-                </div>
-
-                <div className="admin-publication-list">
-                    {visiblePublications.map((publication) => (
-                        <article key={publication.id}>
-                            <div>
-                                <p>
-                                    {publication.research_meta.published_place}
-                                </p>
-                                <h3>{publication.title}</h3>
-                                <span>{publication.research_meta.author}</span>
-                            </div>
-                            <a
-                                href={buildPublicationSearchUrl(publication.id)}
-                                target="_blank"
-                                rel="noreferrer">
-                                스냅샷 찾기
-                            </a>
-                        </article>
-                    ))}
-                    {visiblePublications.length === 0 ? (
-                        <p className="admin-publication-list__empty">
-                            검색 결과가 없습니다.
-                        </p>
-                    ) : null}
-                </div>
-            </section>
+                </section>
+            )}
         </div>
     );
 }

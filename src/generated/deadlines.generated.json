@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MMAI Lab conference deadlines",
-    "updated_at": "2026-09-03T07:14:31.797Z",
+    "updated_at": "2026-09-21T00:00:00.000Z",
     "display_timezone": "Asia/Seoul",
     "area_order": [
       "computer-vision",
@@ -723,6 +723,214 @@
         "status": "official"
       },
       "milestones": []
+    },
+    {
+      "id": "kdd",
+      "name": "KDD",
+      "full_name": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+      "areas": [
+        "machine-learning"
+      ],
+      "official_url": "https://kdd2027.kdd.org/",
+      "cfp_url": "https://kdd2027.kdd.org/research-track-call-for-papers/",
+      "status": "verified",
+      "source_checked_at": "2026-09-21T00:00:00+09:00",
+      "source_evidence": "The important dates for the KDD 2027 First Cycle are",
+      "next_cfp": {
+        "cycle": "KDD 2027 second cycle",
+        "expected_window": "February 2027; exact date pending"
+      },
+      "event": {
+        "dates": "August 1-5, 2027",
+        "location": "San Jose, California, USA",
+        "venue": "San Jose McEnery Convention Center",
+        "source_url": "https://kdd2027.kdd.org/",
+        "status": "official"
+      },
+      "milestones": [
+        {
+          "id": "cycle1-abstract",
+          "label": "First cycle abstract deadline",
+          "short_label": "Abstract",
+          "kind": "abstract",
+          "deadline_at": "2026-07-19T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "Abstract Deadline:\\s*([A-Z][a-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE",
+            "time": "23:59"
+          }
+        },
+        {
+          "id": "cycle1-paper",
+          "label": "First cycle paper deadline",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-07-26T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "Paper Deadline:\\s*([A-Z][a-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE",
+            "time": "23:59"
+          }
+        },
+        {
+          "id": "cycle1-rebuttal",
+          "label": "First cycle rebuttal period closes",
+          "short_label": "Rebuttal",
+          "kind": "rebuttal",
+          "deadline_at": "2026-10-13T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "Author Rebuttal Period:\\s*[A-Z][a-z]+\\s+\\d{1,2}\\s*[-–]\\s*([A-Z][a-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE",
+            "time": "23:59"
+          }
+        },
+        {
+          "id": "cycle1-notification",
+          "label": "First cycle decision notification",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2026-11-14T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "Notification:\\s*([A-Z][a-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE",
+            "time": "23:59"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pakdd",
+      "name": "PAKDD",
+      "full_name": "Pacific-Asia Conference on Knowledge Discovery and Data Mining",
+      "areas": [
+        "machine-learning"
+      ],
+      "official_url": "https://www.pakdd2027.org/",
+      "cfp_url": "https://www.pakdd2027.org/pages/calls/research",
+      "status": "verified",
+      "source_checked_at": "2026-09-21T00:00:00+09:00",
+      "source_evidence": "All deadlines are 23:59 Anywhere on Earth (AoE)",
+      "event": {
+        "dates": "June 29 - July 2, 2027",
+        "location": "Wellington, New Zealand",
+        "venue": "Venue TBA",
+        "source_url": "https://www.pakdd2027.org/",
+        "status": "official"
+      },
+      "milestones": [
+        {
+          "id": "paper",
+          "label": "Research track submission deadline",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-11-20T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "notification",
+          "label": "Acceptance notification",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2027-02-26T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready deadline",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2027-03-19T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "aamas",
+      "name": "AAMAS",
+      "full_name": "International Conference on Autonomous Agents and Multiagent Systems",
+      "areas": [
+        "machine-learning",
+        "robotics"
+      ],
+      "official_url": "https://warwick.ac.uk/fac/sci/dcs/aamas2027/",
+      "cfp_url": "https://warwick.ac.uk/fac/sci/dcs/aamas2027/calls/call-for-main-track/",
+      "status": "verified",
+      "source_checked_at": "2026-09-21T00:00:00+09:00",
+      "source_evidence": "All deadlines are at the end of the specified day, Anywhere on Earth (UTC-12).",
+      "event": {
+        "dates": "May 3-7, 2027",
+        "location": "Hanoi, Vietnam",
+        "venue": "JW Marriott Hotel Hanoi",
+        "source_url": "https://warwick.ac.uk/fac/sci/dcs/aamas2027/",
+        "status": "official"
+      },
+      "milestones": [
+        {
+          "id": "registration",
+          "label": "Author registration on OpenReview",
+          "short_label": "Registration",
+          "kind": "registration",
+          "deadline_at": "2026-09-17T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "abstract",
+          "label": "Abstract submission deadline",
+          "short_label": "Abstract",
+          "kind": "abstract",
+          "deadline_at": "2026-10-01T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "paper",
+          "label": "Paper submission deadline",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-10-08T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "rebuttal",
+          "label": "Rebuttal period closes",
+          "short_label": "Rebuttal",
+          "kind": "rebuttal",
+          "deadline_at": "2026-11-24T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "notification",
+          "label": "Author notification",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2026-12-21T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready deadline",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2027-01-25T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified"
+        }
+      ]
     },
     {
       "id": "acl",

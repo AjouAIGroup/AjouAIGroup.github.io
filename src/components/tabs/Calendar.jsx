@@ -21,6 +21,7 @@ const LOCATION_FLAGS = [
     ["United Kingdom", "🇬🇧"],
     ["Netherlands", "🇳🇱"],
     ["Australia", "🇦🇺"],
+    ["New Zealand", "🇳🇿"],
     ["Canada", "🇨🇦"],
     ["Sweden", "🇸🇪"],
     ["France", "🇫🇷"],
@@ -30,6 +31,7 @@ const LOCATION_FLAGS = [
     ["Italy", "🇮🇹"],
     ["Japan", "🇯🇵"],
     ["China", "🇨🇳"],
+    ["Vietnam", "🇻🇳"],
     ["USA", "🇺🇸"],
 ];
 

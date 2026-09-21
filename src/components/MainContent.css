@@ -109,12 +109,6 @@
     --tab-identity-accent: var(--tab-apply-accent);
 }
 
-.main-content__body--photo {
-    --tab-identity-tint: var(--tab-photo-tint);
-    --tab-identity-border: var(--tab-photo-border);
-    --tab-identity-accent: var(--tab-photo-accent);
-}
-
 .main-content__body--route {
     animation: route-enter var(--dur-route) var(--ease-standard);
     animation-fill-mode: both;
@@ -250,12 +244,6 @@
     --page-head-tint: var(--tab-publication-tint);
     --page-head-border: var(--tab-publication-border);
     --page-head-accent: var(--tab-publication-accent);
-}
-
-.page-head--photo {
-    --page-head-tint: var(--tab-photo-tint);
-    --page-head-border: var(--tab-photo-border);
-    --page-head-accent: var(--tab-photo-accent);
 }
 
 .section-start-head {

@@ -32,9 +32,6 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install ImageMagick
-        run: sudo apt-get update && sudo apt-get install -y imagemagick
-
       - name: Install Dependencies
         run: npm ci
 
@@ -63,7 +60,6 @@ jobs:
             content/deadlines/venues.json
             src/generated/deadlines.generated.json
             src/generated/news.generated.json
-            src/generated/photos.generated.json
             src/generated/publications.generated.json
 
       - name: Deploy refreshed site to gh-pages

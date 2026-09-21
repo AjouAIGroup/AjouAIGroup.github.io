@@ -8,7 +8,6 @@ dist-ssr
 # Written by scripts/content/*.mjs and compared byte-for-byte by
 # scripts/content/check.mjs — reformatting these would break the drift check.
 src/generated
-public/uploads
 content/sources/cache
 
 # Authored content: the sync scripts parse this frontmatter, so it is kept

@@ -15,13 +15,13 @@ npm run dev
 
 CI가 실행하는 것과 같은 명령입니다.
 
-| 명령                       | 설명                                                                                   |
-| -------------------------- | -------------------------------------------------------------------------------------- |
-| `npm run format`           | Prettier로 전체 코드를 정리합니다.                                                     |
-| `npm run format:check`     | 포맷이 어긋난 파일이 있으면 실패합니다.                                                |
-| `npm run lint`             | ESLint를 실행합니다.                                                                   |
-| `npm run validate:content` | 콘텐츠를 파싱해 검증만 하고 파일은 쓰지 않습니다.                                      |
-| `npm run content:check`    | 동기화 후 `src/generated`와 `public/uploads`에 커밋되지 않은 변경이 남으면 실패합니다. |
+| 명령                       | 설명                                                                |
+| -------------------------- | ------------------------------------------------------------------- |
+| `npm run format`           | Prettier로 전체 코드를 정리합니다.                                  |
+| `npm run format:check`     | 포맷이 어긋난 파일이 있으면 실패합니다.                             |
+| `npm run lint`             | ESLint를 실행합니다.                                                |
+| `npm run validate:content` | 콘텐츠를 파싱해 검증만 하고 파일은 쓰지 않습니다.                   |
+| `npm run content:check`    | 동기화 후 `src/generated`에 커밋되지 않은 변경이 남으면 실패합니다. |
 
 ## 콘텐츠
 
@@ -30,7 +30,6 @@ CI가 실행하는 것과 같은 명령입니다.
 | News                           | `content/news`                                            |
 | Publication                    | Google Sheet → `content/publications/sheet.snapshot.json` |
 | Research                       | `src/assets/dataset/research_*.json`                      |
-| Photo                          | `content/photos/raw`                                      |
 | Conference Calendar            | `content/deadlines/venues.json`                           |
 | External source registry/cache | `content/sources`                                         |
 
@@ -49,9 +48,8 @@ npm run build
 2. Publications는 운영 Google Sheet에서 행을 추가하거나 수정합니다.
 3. Publication의 `labs`에는 `MMAI Lab`처럼 연구실 태그를 반드시 넣습니다. 여러 연구실은 `|`로 구분합니다.
 4. Publication의 `venue`는 `CVPR 2026`처럼 **학회/저널 약자 + 연도** 형식으로 입력합니다. 워크숍 논문은 본 학회와 구분해 `CVPR Workshop 2026`처럼 입력합니다.
-5. 사진은 `content/photos/_README.md`의 절차를 따릅니다.
-6. Conference Calendar는 `content/deadlines/venues.json`에서 관리합니다. 학회와 마일스톤을 수정한 뒤에는 ISO 형식의 `deadline_at`과 공식 CFP 링크를 확인합니다.
-7. Sheet 저장 후 관리자 페이지의 동기화 버튼을 누르거나 아래 명령으로 생성 데이터와 화면을 확인합니다.
+5. Conference Calendar는 `content/deadlines/venues.json`에서 관리합니다. 학회와 마일스톤을 수정한 뒤에는 ISO 형식의 `deadline_at`과 공식 CFP 링크를 확인합니다.
+6. Sheet를 저장하면 `Sync Publications from Google Sheets` 워크플로가 매일 검토용 PR을 올립니다. 기다리지 않고 지금 확인하려면 아래 명령을 실행합니다.
 
 ```bash
 npm run content:sync
@@ -61,7 +59,7 @@ npm run build
 
 로컬에서 Google Sheet의 최신 내용을 먼저 가져오려면 `PUBLICATIONS_SHEET_CSV_URL`을 설정하고 `npm run publications:pull`을 실행합니다. 자세한 설정과 운영 절차는 [Google Sheets Publication 가이드](docs/publications/google-sheets.md)를 참고하세요.
 
-`src/generated` 파일은 직접 수정하지 않습니다. 같은 콘텐츠에서는 항상 같은 결과가 나오므로, 동기화를 빠뜨리면 `npm run content:check`가 CI에서 이를 잡아냅니다. `public/uploads/photos`도 동기화가 관리합니다. 이벤트 폴더 이름을 바꾸면 이전 산출물은 자동으로 정리됩니다. 더 자세한 필드 설명은 [News 가이드](docs/news/README.md), [Publication 가이드](docs/publications/README.md)를 참고하세요.
+`src/generated` 파일은 직접 수정하지 않습니다. 같은 콘텐츠에서는 항상 같은 결과가 나오므로, 동기화를 빠뜨리면 `npm run content:check`가 CI에서 이를 잡아냅니다. 더 자세한 필드 설명은 [News 가이드](docs/news/README.md), [Publication 가이드](docs/publications/README.md)를 참고하세요.
 
 ## UI 구성 원칙
 

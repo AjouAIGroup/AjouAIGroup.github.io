@@ -148,8 +148,6 @@
     --identity-publication-accent: #e3a86b;
     --identity-people-soft: #f3ecff;
     --identity-people-accent: #a78bd8;
-    --identity-photo-soft: #eaf7f5;
-    --identity-photo-accent: #73beb3;
     --identity-contact-soft: #fff0f5;
     --identity-contact-accent: #e3a0b8;
     --identity-deadlines-soft: #edf4ff;
@@ -176,10 +174,6 @@
     --tab-people-tint: var(--identity-people-soft);
     --tab-people-border: #e2d6f6;
     --tab-people-accent: var(--identity-people-accent);
-
-    --tab-photo-tint: var(--identity-photo-soft);
-    --tab-photo-border: #d2e8e5;
-    --tab-photo-accent: var(--identity-photo-accent);
 
     --tab-apply-tint: var(--identity-contact-soft);
     --tab-apply-border: #f3dbe5;
@@ -393,8 +387,6 @@
     --identity-publication-accent: #f6c38c;
     --identity-people-soft: #2b1e43;
     --identity-people-accent: #ceb2ff;
-    --identity-photo-soft: #183238;
-    --identity-photo-accent: #98d8cf;
     --identity-contact-soft: #3a1f30;
     --identity-contact-accent: #f0bdd1;
     --identity-deadlines-soft: #192b48;
@@ -410,7 +402,6 @@
     --tab-research-border: #36594f;
     --tab-publication-border: #5f4a34;
     --tab-people-border: #544076;
-    --tab-photo-border: #3d6166;
     --tab-apply-border: #6d4260;
     --tab-deadlines-border: #3b5d92;
     --tab-resources-border: #3d4f63;

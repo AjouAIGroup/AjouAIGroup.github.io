@@ -47,29 +47,28 @@
 
 ---
 
-## 3) “Photo이 안 뜨거나 일부만 뜹니다”
+## 3) “생성물이 최신이 아니라고 CI가 실패합니다”
 
 ### 증상
 
-- `/photo`에 새 Photo이 보이지 않음
-- 썸네일은 나오는데 확대 이미지가 깨짐
+- `Check Generated Output Is Committed` 단계에서 실패
+- 로컬 `npm run content:check`가 `src/generated does not match the content sources`를 출력
 
 ### 원인 후보
 
-1. 원본 Photo이 `content/photos/raw` 밖에 있음
-2. 폴더명 규칙 오류 (`YYYY-MM-DD__slug` 미준수)
-3. 이미지 처리 도구 미설치 (`magick`/`convert`/`sips`)
-4. `photos:sync` 미실행
+1. content를 고친 뒤 `npm run content:sync`를 실행하지 않음
+2. 동기화는 했지만 `src/generated` 변경을 커밋하지 않음
+3. `src/generated`를 직접 손으로 수정함
 
 ### 해결 절차
 
-1. 원본 경로 확인
-    - 예: `content/photos/raw/events/2026-03-16__spring-seminar/*.jpg`
-2. `npm run photos:sync` 실행
-3. 생성물 확인
-    - `public/uploads/photos/...`
-    - `src/generated/photos.generated.json`
-4. 필요 시 `content/photos/metadata.json` 값 보정
+1. 아래를 실행합니다.
+    ```bash
+    npm run content:sync
+    ```
+2. `git status`로 `src/generated` 변경을 확인하고 함께 커밋합니다.
+3. 직접 수정한 이력이 있다면 원본 content를 고친 뒤 다시 동기화합니다.
+4. `node scripts/content/check.mjs`로 남은 차이가 없는지 확인합니다.
 
 ---
 
@@ -97,7 +96,6 @@
 1. template 파일을 복사해 붙여넣은 뒤 값만 수정합니다.
     - `content/news/_template.md`
     - `docs/publications/publications-sheet-import.csv`
-    - `content/photos/metadata.template.json`
 2. 파일 인코딩은 UTF-8 권장
 
 ---
@@ -250,8 +248,8 @@ Publication에서 `unsupported category`가 나오면 해당 frontmatter의 `cat
 
 ## 12) 운영자가 꼭 기억할 원칙
 
-1. Research 원본, content, People 원본과 `package.json`만 직접 편집
+1. Research 원본, `content/...`와 `package.json`만 직접 편집
 2. `src/generated/...`, `node_modules/...`는 자동 생성 결과물
 3. lockfile은 package manager로 갱신하고 손으로 고치지 않음
 4. “오류가 나면 template으로 되돌려 비교”가 가장 빠름
-5. 반영 확인은 항상 Home + 개별 tab(`/news`, `/publication`, `/photo`)까지 확인
+5. 반영 확인은 항상 Home + 개별 tab(`/news`, `/publication`, `/calendar`)까지 확인

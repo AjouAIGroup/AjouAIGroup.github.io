@@ -4,10 +4,9 @@
 실제 운영 시에는 아래 원본 template도 함께 참고하세요.
 
 - News 원본 template: `content/news/_template.md`
+- Publication 원본 template: `content/publications/_template.md`
 - Publication Sheet 가져오기 CSV: `docs/publications/publications-sheet-import.csv`
-- Photo metadata template: `content/photos/metadata.template.json`
-- People 데이터 template(운영 참고): `docs/templates/people.entry.template.json`
-- Research 영역과 Resource 예시: `docs/research/README.md`
+- Research 영역 예시: `docs/research/README.md`
 
 ---
 
@@ -28,9 +27,10 @@ npm run validate:content
 ## 2) template 파일 목록
 
 1. News: `docs/templates/news.template.md`
-2. Publication: `docs/publications/publications-sheet-import.csv`
-3. Photo metadata: `docs/templates/photos.metadata.template.json`
-4. People entry 샘플: `docs/templates/people.entry.template.json`
+2. Publication(수동 항목): `docs/templates/publication.template.md`
+3. Publication(Sheet 가져오기): `docs/publications/publications-sheet-import.csv`
+
+Publication은 Google Sheet가 원본입니다. 수동 markdown 항목은 Sheet에 넣을 수 없는 예외 항목에만 사용합니다.
 
 ---
 

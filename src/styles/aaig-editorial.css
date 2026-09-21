@@ -52,7 +52,6 @@
     --tab-resources-tint: transparent;
     --tab-publication-tint: transparent;
     --tab-people-tint: transparent;
-    --tab-photo-tint: transparent;
     --tab-apply-tint: transparent;
     --tab-deadlines-tint: transparent;
     --tab-home-border: rgba(23, 23, 23, 0.18);
@@ -61,7 +60,6 @@
     --tab-resources-border: rgba(23, 23, 23, 0.18);
     --tab-publication-border: rgba(23, 23, 23, 0.18);
     --tab-people-border: rgba(23, 23, 23, 0.18);
-    --tab-photo-border: rgba(23, 23, 23, 0.18);
     --tab-apply-border: rgba(23, 23, 23, 0.18);
     --tab-deadlines-border: rgba(23, 23, 23, 0.18);
     --tab-home-accent: var(--aaig-ink);
@@ -70,7 +68,6 @@
     --tab-resources-accent: var(--aaig-ink);
     --tab-publication-accent: var(--aaig-ink);
     --tab-people-accent: var(--aaig-ink);
-    --tab-photo-accent: var(--aaig-ink);
     --tab-apply-accent: var(--aaig-ink);
     --tab-deadlines-accent: var(--aaig-ink);
     font-family: var(--font-sans);
@@ -138,7 +135,6 @@
         .resources__section-head h2,
         .publication__section-head h2,
         .people__degree-header h2,
-        .photo-gallery__head h2,
         .deadlines__section-head h2
     ) {
     max-width: 12ch;
@@ -173,8 +169,7 @@
         .people__section,
         .people__card,
         .deadlines__venue,
-        .contact__panel,
-        .photo-gallery
+        .contact__panel
     ) {
     border-color: rgba(23, 23, 23, 0.18) !important;
     border-radius: 0 !important;
@@ -191,7 +186,6 @@
         .news-page__year-group,
         .people__section,
         .contact__body,
-        .photo-gallery,
         .deadlines__venue
     ) {
     padding: 1.4rem 0 0 !important;
@@ -241,8 +235,7 @@
         .research__detail-media img,
         .research__detail-focus-media img,
         .people__card img,
-        .publication__figure img,
-        .photo-gallery img
+        .publication__figure img
     ) {
     border-radius: 0 !important;
 }
@@ -375,10 +368,6 @@
     border-top: 1px solid rgba(23, 23, 23, 0.18) !important;
 }
 
-.app:not(.app--home) .photo-gallery {
-    padding-top: 1.2rem !important;
-}
-
 /* Body copy is deliberately sans-serif and more readable than the display type. */
 .app:not(.app--home) .main-content__body :is(p, li, dd, dt, address, label) {
     font-family: var(--font-sans) !important;
@@ -417,8 +406,7 @@
         .people__card,
         .deadlines__venue,
         .contact__body,
-        .contact__panel,
-        .photo-gallery
+        .contact__panel
     ) {
     border: 0 !important;
     outline: 0 !important;

@@ -9,22 +9,14 @@ const execFileAsync = promisify(execFile);
 export const ROOT_DIR = process.cwd();
 export const CONTENT_DIR = path.resolve(ROOT_DIR, "content");
 export const GENERATED_DIR = path.resolve(ROOT_DIR, "src/generated");
-export const PUBLIC_DIR = path.resolve(ROOT_DIR, "public");
 
 export const NEWS_CONTENT_DIR = path.resolve(CONTENT_DIR, "news");
 export const PUBLICATIONS_CONTENT_DIR = path.resolve(
     CONTENT_DIR,
     "publications",
 );
-export const PHOTOS_CONTENT_DIR = path.resolve(CONTENT_DIR, "photos");
 export const SOURCES_CONTENT_DIR = path.resolve(CONTENT_DIR, "sources");
 export const SOURCES_CACHE_DIR = path.resolve(SOURCES_CONTENT_DIR, "cache");
-export const PHOTOS_RAW_DIR = path.resolve(PHOTOS_CONTENT_DIR, "raw");
-export const PHOTOS_METADATA_FILE = path.resolve(
-    PHOTOS_CONTENT_DIR,
-    "metadata.json",
-);
-export const PHOTO_UPLOADS_DIR = path.resolve(PUBLIC_DIR, "uploads/photos");
 
 export const NEWS_GENERATED_FILE = path.resolve(
     GENERATED_DIR,
@@ -38,11 +30,6 @@ export const PUBLICATIONS_SHEET_SNAPSHOT_FILE = path.resolve(
     PUBLICATIONS_CONTENT_DIR,
     "sheet.snapshot.json",
 );
-export const PHOTOS_GENERATED_FILE = path.resolve(
-    GENERATED_DIR,
-    "photos.generated.json",
-);
-
 export const EXTERNAL_NEWS_FILE = path.resolve(
     SOURCES_CACHE_DIR,
     "news.json",
@@ -55,8 +42,6 @@ export const EXTERNAL_SYNC_REPORT_FILE = path.resolve(
     SOURCES_CACHE_DIR,
     "last-sync-report.json",
 );
-
-export const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 
 export const ensureDir = async (targetDir) => {
     await fs.mkdir(targetDir, { recursive: true });
@@ -164,46 +149,6 @@ export const listMarkdownFiles = async (rootDir) => {
     return files;
 };
 
-export const listImageFiles = async (rootDir) => {
-    const files = [];
-
-    if (!(await pathExists(rootDir))) {
-        return files;
-    }
-
-    const walk = async (currentDir) => {
-        const entries = await fs.readdir(currentDir, { withFileTypes: true });
-        const sortedEntries = [...entries].sort((a, b) =>
-            a.name.localeCompare(b.name),
-        );
-
-        for (const entry of sortedEntries) {
-            if (entry.name.startsWith(".")) {
-                continue;
-            }
-
-            const absolutePath = path.resolve(currentDir, entry.name);
-
-            if (entry.isDirectory()) {
-                await walk(absolutePath);
-                continue;
-            }
-
-            if (!entry.isFile()) {
-                continue;
-            }
-
-            const ext = path.extname(entry.name).toLowerCase();
-            if (IMAGE_EXTENSIONS.has(ext)) {
-                files.push(absolutePath);
-            }
-        }
-    };
-
-    await walk(rootDir);
-    return files;
-};
-
 export const normalizeSlug = (value) =>
     String(value ?? "")
         .trim()
@@ -213,21 +158,6 @@ export const normalizeSlug = (value) =>
 
 export const isIsoDate = (value) =>
     /^\d{4}-\d{2}-\d{2}$/.test(String(value ?? ""));
-
-export const inferDateFromText = (value) => {
-    const raw = String(value ?? "");
-    const ymdDashed = raw.match(/(\d{4})-(\d{2})-(\d{2})/);
-    if (ymdDashed) {
-        return `${ymdDashed[1]}-${ymdDashed[2]}-${ymdDashed[3]}`;
-    }
-
-    const ymdCompact = raw.match(/(20\d{2})(\d{2})(\d{2})/);
-    if (ymdCompact) {
-        return `${ymdCompact[1]}-${ymdCompact[2]}-${ymdCompact[3]}`;
-    }
-
-    return null;
-};
 
 export const normalizeHttpUrl = (value) => {
     const text = String(value ?? "").trim();
@@ -252,15 +182,6 @@ export const getNowIso = () => new Date().toISOString();
 export const runCommand = async (command, args, opts = {}) => {
     const { stdout, stderr } = await execFileAsync(command, args, opts);
     return { stdout: stdout?.trim() ?? "", stderr: stderr?.trim() ?? "" };
-};
-
-export const commandExists = async (command) => {
-    try {
-        await runCommand("which", [command]);
-        return true;
-    } catch {
-        return false;
-    }
 };
 
 export const relativeFromRoot = (targetPath) =>

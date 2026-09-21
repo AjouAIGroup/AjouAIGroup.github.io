@@ -11,7 +11,6 @@
     "publications:pull": "node scripts/content/publications-sheet.mjs",
     "publications:sheet:bootstrap": "node scripts/content/publications-sheet.mjs --bootstrap",
     "publications:sheet:check": "node scripts/content/publications-sheet.mjs --validate docs/publications/publications-sheet-import.csv",
-    "photos:sync": "node scripts/content/photos.mjs",
     "research:validate": "node scripts/content/research.mjs",
     "validate:content": "node scripts/content/validate.mjs",
     "audit:dependencies": "node scripts/audit.mjs",

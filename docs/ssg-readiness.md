@@ -10,12 +10,13 @@
     - `dist/index.html`
     - `dist/news/index.html`
     - `dist/research/index.html`
+    - `dist/research/<area-slug>/index.html` (Research 영역 수만큼)
     - `dist/publication/index.html`
-    - `dist/people/index.html`
-    - `dist/photo/index.html`
-    - `dist/contact/index.html`
-    - `dist/join/index.html`
-- route 목록은 `src/routes/routeDefinitions.js`에서 일원화해 관리합니다.
+    - `dist/calendar/index.html`
+    - `dist/lab/index.html`
+    - `dist/apply/index.html`
+- route 목록은 `src/routes/routeDefinitions.js`에서 일원화해 관리하며, Research 영역 route는 `research_areas.json`의 `area_order`에서 파생합니다.
+- `prerender: false`인 route(`/admin`)는 content를 렌더링하지 않고 client shell HTML만 생성합니다.
 
 ### 2) client + prerender용 명시적 route manifest
 
@@ -24,6 +25,8 @@
 - Client routes: `src/routes/AppRoutes.jsx`
 - Prerender routes: `src/routes/AppRoutes.ssg.jsx`
 - 공통 base-path helper: `src/routes/routerBasename.js`
+
+Client route에는 과거 주소를 유지하기 위한 redirect(`/contact`, `/prospective` → `/apply`)가 함께 정의되어 있습니다.
 
 ### 3) server render entry와 prerender script
 
@@ -56,16 +59,19 @@
 
 ### 로컬 content 데이터 (build 시점 친화)
 
+- 동기화 결과 JSON: `src/generated/`
 - 로컬 JSON: `src/assets/dataset/`
-- 데이터 정규화 헬퍼: `src/utils/` (예: `newsData.js`, `peopleData.js`)
+- 데이터 정규화 헬퍼: `src/utils/` (예: `newsData.js`, `publicationData.js`, `deadlineData.js`)
 
 ### client 전용 인터랙션 요소
 
-- Photo 갤러리/라이트박스 동작
+- Publication 검색/필터와 Calendar 목록·월 달력 전환
+- Home의 가로 레일 스크롤과 키보드 조작
 - 스크롤 reveal observer
 - 스크롤 진행도 / 맨 위로 이동 동작
 - 모바일 navigation 열림/닫힘 상태
 - route 전환 효과
+- `/admin` 통계 조회(Cloudflare Worker 호출)
 
 ## “완전 정적 + island hydration”을 막는 현재 제약
 

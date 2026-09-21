@@ -21,9 +21,8 @@ files and generated JSON.
   snapshot and must be refreshed with `npm run publications:pull`.
 - Edit conference deadlines in `content/deadlines/venues.json`.
 - Edit research data in `src/assets/dataset/research_*.json`.
-- Follow `content/photos/_README.md` when changing photos.
-- Do not hand-edit `src/generated/*`, `public/uploads/photos/*`, or `dist/*`.
-  Update their source files and regenerate them instead.
+- Do not hand-edit `src/generated/*` or `dist/*`. Update their source files
+  and regenerate them instead.
 - Do not edit external-source cache files unless the task explicitly concerns
   the ingestion pipeline.
 

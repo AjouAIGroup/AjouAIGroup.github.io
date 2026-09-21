@@ -1,6 +1,6 @@
 # 전체 유지보수 pipeline 가이드 (운영자용)
 
-이 문서는 MMAI Lab 사이트를 **지속 운영**할 때 필요한 전체 흐름을 한 번에 설명합니다.
+이 문서는 AAIG 사이트를 **지속 운영**할 때 필요한 전체 흐름을 한 번에 설명합니다.
 목표는 “무엇을 수정하고, 어떤 명령을 실행하고, 무엇이 자동 생성되며, GitHub Pages에 어떻게 반영되는지”를 명확히 이해하는 것입니다.
 
 > 전제: 이 project는 **GitHub Pages 정적 사이트**입니다. Publication 원본은 Google Sheet이며, 나머지는 파일 + build + GitHub Actions로 운영합니다.
@@ -9,13 +9,14 @@
 
 ## 1) 먼저 이해할 운영 구조
 
-운영 대상은 크게 5개입니다.
+운영 대상은 크게 4개입니다.
 
 1. Research
 2. News
 3. Publication
-4. Photo
-5. People(교수/학생/인턴/졸업생)
+4. Conference Calendar(학회 마감)
+
+여기에 연구실 공개 페이지를 자동 수집하는 **외부 소스 registry**가 보조로 붙습니다.
 
 주요 원칙:
 
@@ -31,44 +32,42 @@
 1. Research 원본
     - `src/assets/dataset/research_areas.json`
     - `src/assets/dataset/research_area_details.json`
-    - `src/assets/dataset/research_resources.json`
-    - `src/assets/images/research_concepts/optimized/*.webp`
+    - `src/assets/images/research_areas/*.webp`, `src/assets/images/research_labs/*.webp`
 2. News 원본
     - `content/news/*.md`
 3. Publication 원본과 배포 스냅샷
     - 관리자용 Google Sheet
     - `content/publications/sheet.snapshot.json` (직접 편집 금지)
-4. Photo 원본 + 선택 metadata
-    - `content/photos/raw/**`
-    - `content/photos/metadata.json` (선택)
-5. People 데이터
-    - `src/assets/dataset/people.json`
-    - `src/assets/images/people/*.{jpg,jpeg,png,webp}` (프로필 원본)
+    - `content/publications/<area>/*.md` (Sheet에 없는 수동 항목만)
+4. Conference Calendar 원본
+    - `content/deadlines/venues.json`
+5. 외부 수집 대상 registry
+    - `content/sources/labs.json`
+6. 연구실·구성원 소개와 Apply 안내 문구
+    - `src/data/laboratories.js`, `src/data/contactDirectory.js`
 
 ## 2-2. 자동 생성되는 경로 (Auto-generated)
 
 1. 동기화 결과(JSON)
     - `src/generated/news.generated.json`
     - `src/generated/publications.generated.json`
-    - `src/generated/photos.generated.json`
-2. Photo 최적화 결과
-    - `public/uploads/photos/...`
-3. People 최적화 결과
-    - `src/assets/images/people/optimized/*.webp`
-    - `src/assets/images/people/optimized/manifest.generated.json`
-4. build 산출물
+    - `src/generated/deadlines.generated.json`
+2. 외부 소스 캐시
+    - `content/sources/cache/news.json`
+    - `content/sources/cache/publications.json`
+3. build 산출물
     - `dist/...`
-5. Research route와 Publication category label
+4. Research route와 Publication category label
     - `research_areas.json`을 기준으로 build 시 구성
 
 ## 2-3. 직접 수정 금지 경로
 
 - `src/generated/*`
-- `public/uploads/photos/*`
-- `src/assets/images/people/optimized/*`
+- `content/publications/sheet.snapshot.json`
+- `content/sources/cache/*`
 - `dist/*`
 
-이 경로들은 직접 고치는 대신, `content:sync` / `photos:sync` / `people:sync` / `build`로 재생성해야 합니다.
+이 경로들은 직접 고치는 대신, `content:sync` / `publications:pull` / `content:refresh` / `build`로 재생성해야 합니다.
 Research route 목록과 category label도 component에 중복 입력하지 않고 Research catalog에서 파생합니다.
 
 ---
@@ -77,37 +76,34 @@ Research route 목록과 category label도 component에 중복 입력하지 않�
 
 아래 순서대로 진행하면 안전합니다.
 
-1. Research 영역·상세·리소스 수정
+1. Research 영역·상세 수정
     - `src/assets/dataset/research_*.json`
     - 필요 시 Research WebP 추가/교체
 2. News 추가/수정
     - `content/news/*.md`
 3. Publication 추가/수정
-    - Google Sheet 수정 후 관리자 페이지에서 동기화 PR 생성
-4. Photo 원본 추가
-    - `content/photos/raw/<category>/<YYYY-MM-DD>__<slug>/...`
-5. People 정보 수정
-    - `src/assets/dataset/people.json`
-    - 필요 시 `src/assets/images/people/`에 프로필 원본 추가
-6. Research 구조와 content 동기화
+    - Google Sheet 수정 → 자동 동기화 PR을 기다리거나 `npm run publications:pull`
+4. Conference Calendar 수정
+    - `content/deadlines/venues.json`의 학회와 마일스톤
+5. Research 구조와 content 동기화
     ```bash
     npm run research:validate
     npm run content:sync
     ```
-7. content 검증
+6. content 검증
     ```bash
     npm run validate:content
     ```
-8. 로컬 확인(개발 server)
+7. 로컬 확인(개발 server)
     ```bash
     npm run dev
     ```
-9. build 확인
+8. build 확인
     ```bash
     npm run build
     ```
-10. Git commit / push
-11. GitHub Actions deploy 확인
+9. Git commit / push
+10. GitHub Actions deploy 확인
     - `Content Build Check`
     - `Deploy GitHub Pages`
 
@@ -118,35 +114,43 @@ Research route 목록과 category label도 component에 중복 입력하지 않�
 아래는 `package.json` 기준 실제 명령어입니다.
 
 ```bash
-# (초기 1회 권장) 레거시 데이터에서 content 구조 생성 보조
-npm run content:bootstrap
-
-# Research 검증 + News/Publication/Photo/People 전체 동기화
+# Research 검증 + News/Publication/Calendar 전체 동기화
 npm run content:sync
 
-# Research 영역·상세·리소스 관계 검증
+# 동기화 결과가 커밋되지 않은 채 남아 있으면 실패(CI와 같은 검사)
+npm run content:check
+
+# Research 영역·상세 관계 검증
 npm run research:validate
 
-# Photo만 동기화(resize/최적화/manifest)
-npm run photos:sync
+# Google Sheet에서 Publication 스냅샷 가져오기
+npm run publications:pull
 
-# People 프로필만 동기화(WebP 생성/자동 연결)
-npm run people:sync
+# Sheet 가져오기용 CSV template 검증
+npm run publications:sheet:check
 
-# People 데이터와 이미지 매칭만 검증
-npm run people:validate
+# 외부 공개 페이지에서 News/Publication 수집 후 전체 동기화
+npm run content:refresh
 
-# schema/형식 검증
+# schema/형식 검증(파일을 쓰지 않음)
 npm run validate:content
 
 # npm 의존성 취약점 검증
 npm run audit:dependencies
 
+# 포맷과 lint
+npm run format
+npm run format:check
+npm run lint
+
 # 로컬 개발 server 실행
 npm run dev
 
-# 프로덕션 build (prebuild에서 People를 포함한 validate:content 자동 실행)
+# 프로덕션 build (prebuild에서 validate:content 자동 실행)
 npm run build
+
+# route별 정적 HTML까지 생성
+npm run build:static
 
 # build 결과 로컬 preview
 npm run preview
@@ -157,21 +161,17 @@ npm run operator:verify
 
 ---
 
-## 5) Photo 최적화 pipeline은 어떻게 동작하는가
+## 5) 외부 소스 수집은 어떻게 동작하는가
 
-Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
+연구실 공개 페이지에서 News/Publication 후보를 주기적으로 가져옵니다.
 
-1. 입력: `content/photos/raw/**`
-2. 실행: `npm run photos:sync` (또는 `npm run content:sync`)
-3. 출력:
-    - 갤러리용 썸네일
-    - 확대보기용 큰 이미지
-    - `src/generated/photos.generated.json`
-4. UI 사용:
-    - 목록: 썸네일 사용
-    - 라이트박스: 큰 이미지 사용
+1. 수집 대상 정의: `content/sources/labs.json`
+    - `enabled: false`인 항목은 기록만 남고 수집하지 않습니다.
+    - 비활성 이유는 `disabled_reason`에 적습니다.
+2. 실행: `npm run content:refresh` 또는 `Refresh External Content` 워크플로(매주 수요일)
+3. 출력: `content/sources/cache/*.json`에 정규화된 후보가 쌓이고, 이어서 전체 동기화가 실행됩니다.
 
-즉, 운영자는 Photo import 코드/component 코드를 수동으로 추가하지 않아도 됩니다.
+즉, 운영자는 새 연구실 소스를 추가할 때 registry 한 줄만 추가하면 됩니다.
 
 ---
 
@@ -179,9 +179,9 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 
 `npm run validate:content`는 다음을 점검합니다.
 
-1. Research key/slug/detail/image/resource 관계
+1. Research key/slug/detail/image 관계
 2. 필수 필드 누락 여부
-3. 날짜 형식(`YYYY-MM-DD`)
+3. 날짜 형식(`YYYY-MM-DD`)과 마감 시각(`deadline_at`) 형식
 4. 링크 형식(`http://`, `https://`)
 5. content 구조 schema 오류
 
@@ -198,11 +198,19 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 1. `.github/workflows/content-build.yml`
     - 이름: `Content Build Check`
     - 트리거: `main` push, PR
-    - 수행: `content:sync` → `validate:content` → `build`
+    - 수행: audit → format/lint → Sheet CSV template 검증 → `content:sync` → 생성물 커밋 여부 확인 → `validate:content` → `build`
 2. `.github/workflows/deploy-pages.yml`
     - 이름: `Deploy GitHub Pages`
     - 트리거: `main` push, 수동 실행
-    - 수행: `content:sync` → `validate:content` → `build` → `gh-pages` deploy
+    - 수행: `content:sync` → `validate:content` → `build:static` → `gh-pages` deploy
+3. `.github/workflows/publications-sheet-sync.yml`
+    - 이름: `Sync Publications from Google Sheets`
+    - 트리거: 매일 02:15 UTC, 수동 실행
+    - 수행: Sheet 가져오기 → 동기화 → 검증 → 정적 build → 검토용 PR 생성
+4. `.github/workflows/content-refresh.yml`
+    - 이름: `Refresh External Content`
+    - 트리거: 매주 수요일 03:20 UTC, 수동 실행
+    - 수행: 외부 소스 수집 → 검증 → 정적 build → `gh-pages` deploy
 
 ## 7-2. push 후 무슨 일이 일어나는가
 
@@ -220,7 +228,7 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
     - `Deploy GitHub Pages`
 3. 사이트에서 변경된 내용 확인
     - Home 미리보기
-    - `/research`, `/news`, `/publication`, `/photo`, `/people`
+    - `/research`, `/news`, `/publication`, `/calendar`, `/lab`, `/apply`
 
 ## 7-4. 오래된 내용이 계속 보일 때
 
@@ -237,13 +245,15 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 
 1. `src/generated/*.generated.json`
     - 수동 수정 금지, 동기화로 재생성
-2. `public/uploads/photos/*`
-    - 수동 수정 금지, `photos:sync`로 재생성
-3. `dist/*`
+2. `content/publications/sheet.snapshot.json`
+    - 수동 수정 금지, `publications:pull`로 재생성
+3. `content/sources/cache/*`
+    - 수동 수정 금지, `content:refresh`로 재생성
+4. `dist/*`
     - 수동 수정 금지, `build`로 재생성
-4. deploy workflow 파일(`.github/workflows/*`)
+5. deploy workflow 파일(`.github/workflows/*`)
     - 운영 목적(content 수정)에서는 함부로 변경 금지
-5. page component(`src/components/tabs/*`)
+6. page component(`src/components/tabs/*`)
     - Content Operations 단계에서 불필요한 코드 수정 금지
 
 ---
@@ -255,7 +265,7 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 1. canonical key가 화면 제목의 의미와 일치하는지 확인
 2. `area_order`, `areas`, `topics`의 key 일치
 3. slug가 key의 `_`를 `-`로 바꾼 값인지 확인
-4. 이미지 세 variant와 Resource image key 확인
+4. 이미지 variant가 실제로 존재하는지 확인
 5. `npm run research:validate`
 6. `/research`와 각 상세 route 확인
 
@@ -271,29 +281,20 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 ## 9-3. Publication 추가 체크리스트
 
 1. Google Sheet에 행 추가
-2. `category` 허용값 확인
-3. 필수 필드와 `labs` 입력
-4. `/admin`에서 `동기화 PR 만들기` 실행
+2. `category`가 `research_areas.json`의 canonical key인지 확인
+3. 필수 필드와 `labs` 입력, `venue`는 `CVPR 2026` 형식
+4. 자동 동기화 PR을 기다리거나 로컬에서 `npm run publications:pull`
 5. 검증된 PR을 병합하고 배포 확인
 
-## 9-4. Photo 추가 체크리스트
+## 9-4. Conference Calendar 수정 체크리스트
 
-1. `content/photos/raw/...`에 원본 추가
-2. 필요 시 `content/photos/metadata.json` 수정
-3. `npm run photos:sync` (또는 `content:sync`)
-4. `npm run validate:content`
-5. `/photo` page에서 썸네일/확대보기 확인
+1. `content/deadlines/venues.json`에 학회/마일스톤 추가
+2. `deadline_at`을 ISO 형식으로 입력하고 표시 시간대(KST) 확인
+3. 공식 CFP 링크가 열리는지 확인
+4. `npm run content:sync` → `npm run validate:content`
+5. `/calendar`에서 목록과 월 달력 확인
 
-## 9-5. People 수정 체크리스트
-
-1. `src/assets/dataset/people.json` 수정
-2. section 이동 시 기존 section에서 제거(중복 방지)
-3. Photo 추가/교체 시 `src/assets/images/people/`에 원본 저장
-4. `npm run people:sync` 실행
-5. 링크 URL 형식 확인
-6. `npm run build`로 JSON/렌더링 오류 확인
-
-## 9-6. deploy 전 체크리스트
+## 9-5. deploy 전 체크리스트
 
 1. `npm run research:validate`
 2. `npm run content:sync`
@@ -302,12 +303,12 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 5. 필요 시 `npm run preview`
 6. 변경사항 커밋/푸시
 
-## 9-7. deploy 후 확인 체크리스트
+## 9-6. deploy 후 확인 체크리스트
 
 1. Actions 2개 성공 여부 확인
 2. 실제 사이트 반영 확인
 3. 주요 경로 확인
-    - `/research`, `/news`, `/publication`, `/photo`, `/people`
+    - `/research`, `/news`, `/publication`, `/calendar`, `/lab`, `/apply`
 4. 캐시 문제 시 강력 새로고침
 
 ---
@@ -318,7 +319,7 @@ Photo은 원본만 넣으면 자동으로 파생 산출물이 생성됩니다.
 - Research: `docs/research/README.md`
 - News: `docs/news/README.md`
 - Publication: `docs/publications/README.md`
-- Photo: `docs/photos/README.md`
-- People: `docs/people/README.md`
+- Google Sheet 연동: `docs/publications/google-sheets.md`
+- `/admin` 통계: `docs/admin/README.md`
 - deploy: `docs/deployment/README.md`
 - 문제 해결: `docs/troubleshooting/README.md`

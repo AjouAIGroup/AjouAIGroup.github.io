@@ -6,23 +6,26 @@
 
 ## 1) 현재 deploy 전제
 
-이 project는 정적 사이트이며 GitHub Pages를 사용합니다.
+이 project는 정적 사이트이며 GitHub Pages를 사용합니다. deploy는 GitHub Actions가 수행하므로, 로컬에서 `gh-pages`로 직접 푸시하는 script는 두지 않습니다.
 
 ### 1-1. 로컬 script
 
-- `npm run build`
-- `npm run deploy` (`gh-pages -d dist`)
-- `npm run build:static`
-- `npm run deploy:static`
+- `npm run build` (client bundle)
+- `npm run build:static` (route별 정적 HTML까지 생성)
+- `npm run preview`
 - `npm run audit:dependencies`
 - `npm run operator:verify` (dependency audit + content sync + build)
 
 ### 1-2. GitHub Actions workflow
 
 - `.github/workflows/content-build.yml`
-    - content sync/validation/build 체크
+    - `Content Build Check`: audit/format/lint/content sync/validation/build 체크
 - `.github/workflows/deploy-pages.yml`
-    - `main` push 시 GitHub Pages 자동 deploy
+    - `Deploy GitHub Pages`: `main` push 시 `build:static` 후 `gh-pages` 자동 deploy
+- `.github/workflows/publications-sheet-sync.yml`
+    - `Sync Publications from Google Sheets`: 매일 Sheet를 가져와 검토용 PR 생성
+- `.github/workflows/content-refresh.yml`
+    - `Refresh External Content`: 매주 외부 소스를 수집해 빌드 후 배포
 
 즉, 운영자는 `main`에 push하면 자동 deploy까지 진행됩니다.
 
@@ -51,6 +54,12 @@
     - `Deploy GitHub Pages`
 4. 실제 사이트 반영 확인
 
+### 2-3. Google Sheet만 수정할 때
+
+1. Sheet에 행을 추가하거나 수정
+2. `Sync Publications from Google Sheets`가 만든 PR 확인(급하면 수동 실행)
+3. PR을 병합하면 `Deploy GitHub Pages`가 이어서 실행됨
+
 ---
 
 ## 3) 자동/수동 역할 분리
@@ -58,7 +67,8 @@
 ### 자동(workflow)
 
 - dependency audit
-- content 동기화
+- format/lint 체크
+- content 동기화와 생성물 커밋 여부 확인
 - schema/형식 검증
 - build
 - gh-pages deploy
@@ -66,6 +76,7 @@
 ### 수동(운영자)
 
 - Research 원본(`src/assets/dataset/research_*.json`)과 content 원본(`content/...`) 입력/수정
+- Google Sheet 입력과 동기화 PR 검토
 - deploy 결과 확인
 - 오타/링크/날짜 오류 수정
 
@@ -78,10 +89,13 @@
     - `/research`
     - `/news`
     - `/publication`
-    - `/photo`
-    - `/people`
-3. Home preview(최신 News/Publication/Photo) 반영 확인
+    - `/calendar`
+    - `/lab`
+    - `/apply`
+3. Home preview(최신 News/Publication/Research) 반영 확인
 4. 외부/내부 링크 동작 확인
+
+`/admin`은 prerender 대상이 아니며 검색엔진에도 노출되지 않습니다. 통계 화면 점검 절차는 `docs/admin/README.md`를 참고합니다.
 
 ---
 
@@ -93,7 +107,9 @@
     - `Deploy GitHub Pages`
 3. 실패 시 로그에서 실패 단계 확인
     - Audit Dependencies
+    - Check Formatting / Lint
     - Sync Content
+    - Check Generated Output Is Committed
     - Validate Content
     - Build Site
     - Deploy to gh-pages
@@ -104,7 +120,7 @@
 
 1. Research/content 원본이 정해진 source of truth 경로에 들어갔는지
 2. 날짜/타입/category 형식이 맞는지
-3. Photo 폴더명이 규칙을 따르는지
+3. `src/generated` 변경을 함께 커밋했는지(`npm run content:check`)
 4. dependency audit가 실패했는지
 5. Actions 실패가 있었는지
 6. `Deploy GitHub Pages` 권한 오류가 있는지
@@ -116,6 +132,6 @@
 
 1. 변경 파일이 해당 운영 문서의 source of truth 경로에 있는지 확인
 2. push 후 Actions 2개가 모두 성공인지 확인
-3. 사이트에서 Research/News/Publication/Photo/People/Home preview 확인
+3. 사이트에서 Research/News/Publication/Calendar/Labs/Apply와 Home preview 확인
 4. 링크 클릭(외부 링크 포함) 확인
 5. 문제 있으면 `docs/troubleshooting/README.md` 순서대로 점검

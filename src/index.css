@@ -130,7 +130,7 @@ section {
     width: 100%;
 }
 
-:where(.home, .news-page, .research-wrapper, .publication, .photo-wrapper) {
+:where(.home, .news-page, .research-wrapper, .publication) {
     width: 100%;
     display: flex;
     flex-direction: column;

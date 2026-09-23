@@ -108,10 +108,14 @@
    cells meet in the gap and trailing empty cells have nothing to expose. */
 .home-publication-snapshot__venues {
     display: grid;
-    /* The track has to hold the longest venue name beside its count, and the
-       names come from the archive: 9.5rem fitted the short acronyms and left
-       one as long as Interspeech pushing its count out of the cell. */
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    /* The track has to hold the longest venue name beside its count on one
+       line, and the names come from the archive: the longest the summary can
+       show is Interspeech. 14.5rem clears it at every step of the type scale
+       and still fits two tracks in the narrow results column, where a wider
+       minimum would drop the grid to a single stretched column. Anything
+       narrower drops the count onto a second line and that cell stops
+       matching the rest of the row. */
+    grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr));
     gap: 1px;
     margin: 0;
     padding: 1px 0 0 1px;

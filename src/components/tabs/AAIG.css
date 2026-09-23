@@ -420,9 +420,9 @@
 
     .aaig-hero__laboratory {
         aspect-ratio: auto;
-        --aaig-hero-logo-band: 3rem;
+        --aaig-hero-logo-band: 3.6rem;
         min-height: 7rem;
-        grid-template-columns: minmax(7rem, 0.72fr) minmax(0, 1.28fr);
+        grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1.2fr);
         grid-template-rows: auto auto;
         gap: 0.5rem 0.9rem;
         padding: 0.95rem 1rem;
@@ -433,18 +433,31 @@
        text rather than squeezed under the logo. */
     .aaig-hero__laboratory-identity {
         grid-row: 1 / -1;
+        /* The column already spans both rows, so letting it fill that height
+           and centring the mark inside sits the logo against the middle of the
+           copy instead of pinning it to a short band at the top. */
+        height: auto;
+        align-items: center;
     }
 
     .aaig-hero__laboratory-topics {
         grid-column: 2;
     }
 
+    /* Sizing by width alone made the column width the only thing that decided
+       how big a mark was drawn. The wide wordmarks were pushed out to the full
+       column on every card -- squeezing MMAI's tagline down to a few
+       unreadable pixels -- while the round marks, capped by the band's height
+       first, settled at under half that width. Capping both dimensions instead
+       lets each mark take its natural shape and gives them comparable weight. */
     .aaig-hero__laboratory-identity img {
-        max-height: 100%;
+        width: auto;
+        max-width: 100%;
+        max-height: var(--aaig-hero-logo-band);
     }
 
     .aaig-hero__laboratory-identity span {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 
     /* "LAMDA Lab" is the one wordmark that wraps in the narrow logo column,

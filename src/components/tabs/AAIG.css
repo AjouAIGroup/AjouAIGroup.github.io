@@ -398,6 +398,12 @@
         grid-template-columns: 1fr;
         grid-template-rows: none;
         height: auto;
+        /* The cap belongs to the absolutely positioned desktop composition,
+           where the grid is pinned inside a viewport-tall hero. Carried into
+           the static stack it shortens the container below the five cards it
+           holds, and the hero clips whatever hangs past it: on any viewport
+           under about 750px tall the last laboratory is cut in half or lost. */
+        max-height: none;
         gap: 0.55rem;
         padding-inline: 0;
         align-self: flex-end;
@@ -447,8 +453,17 @@
         font-size: 1.5rem;
     }
 
+    /* The desktop grid gives every card the same fixed share of two rows, so
+       there the title is clamped to keep the composition even. A stacked card
+       is sized by its own content and can simply grow, and clamping it here
+       truncates the laboratory name outright as soon as a larger text setting
+       pushes the title onto a third line. */
     .aaig-hero__laboratory h2 {
+        display: block;
+        overflow: visible;
         font-size: 1.05rem;
+        line-height: 1.14;
+        -webkit-line-clamp: none;
     }
 
     .aaig-hero__laboratory-label {

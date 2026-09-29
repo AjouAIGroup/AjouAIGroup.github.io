@@ -226,7 +226,7 @@
     },
     {
       "id": "wacv",
-      "name": "WACV 2027",
+      "name": "WACV",
       "full_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
       "areas": [
         "computer-vision"
@@ -663,7 +663,7 @@
     },
     {
       "id": "iclr",
-      "name": "ICLR 2027",
+      "name": "ICLR",
       "full_name": "International Conference on Learning Representations",
       "areas": [
         "machine-learning",
@@ -676,7 +676,7 @@
       "source_checked_at": "2026-08-12T18:30:00+09:00",
       "source_evidence": "full paper submission deadline",
       "event": {
-        "dates": "October 6-9, 2026",
+        "dates": "April 26-30, 2027",
         "location": "California, USA",
         "venue": "Venue TBA",
         "source_url": "https://iclr.cc/Conferences/2027",

@@ -48,10 +48,23 @@ export const getVenueStatusMeta = (status) =>
         tone: "awaiting",
     };
 
+// Every listed deadline belongs to one edition, so the name always carries
+// that edition's year, taken from its event dates ("ICRA" held in May 2027
+// reads "ICRA 2027"). Keeping the year out of venues.json means a new cycle
+// only needs new event dates, never a rename.
+const getCycleName = (venue) => {
+    const baseName = String(venue.name ?? "")
+        .replace(/\s+20\d{2}$/, "")
+        .trim();
+    const years = String(venue.event?.dates ?? "").match(/20\d{2}/g);
+    return years ? `${baseName} ${years[years.length - 1]}` : baseName;
+};
+
 export const getAllVenues = () =>
     [...(DEADLINE_DATA.venues ?? [])]
         .map((venue) => ({
             ...venue,
+            name: getCycleName(venue),
             milestones: [...(venue.milestones ?? [])].sort(
                 (left, right) =>
                     Date.parse(left.deadline_at) -

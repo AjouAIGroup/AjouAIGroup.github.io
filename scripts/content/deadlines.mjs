@@ -73,6 +73,13 @@ const validateDeadline = (deadline, venueId, index) => {
         throw new Error(`${prefix}.deadline_at is not a valid date.`);
     }
 
+    if (
+        deadline.time_stated !== undefined &&
+        typeof deadline.time_stated !== "boolean"
+    ) {
+        throw new Error(`${prefix}.time_stated must be true or false.`);
+    }
+
     if (deadline.source_parser !== undefined) {
         if (
             !deadline.source_parser ||
@@ -116,6 +123,28 @@ const validateEvent = (event, prefix) => {
 
     if (!isHttpUrl(event.source_url)) {
         throw new Error(`${prefix}.event.source_url must be a valid URL.`);
+    }
+
+    // The calendar draws the event as a bar from start_date to end_date, so
+    // both must be real calendar dates in order, and agree with the text.
+    for (const field of ["start_date", "end_date"]) {
+        const value = event[field];
+        const parsed = new Date(`${value}T00:00:00Z`);
+        if (
+            !/^\d{4}-\d{2}-\d{2}$/.test(String(value ?? "")) ||
+            Number.isNaN(parsed.getTime()) ||
+            parsed.toISOString().slice(0, 10) !== value
+        ) {
+            throw new Error(`${prefix}.event.${field} must be a YYYY-MM-DD date.`);
+        }
+    }
+    if (event.start_date > event.end_date) {
+        throw new Error(`${prefix}.event.start_date must not be after end_date.`);
+    }
+    if (!event.dates.includes(event.end_date.slice(0, 4))) {
+        throw new Error(
+            `${prefix}.event.dates must mention the year of end_date (${event.end_date.slice(0, 4)}).`,
+        );
     }
 };
 

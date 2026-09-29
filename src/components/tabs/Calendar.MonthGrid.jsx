@@ -3,6 +3,8 @@ import {
     DEADLINE_DISPLAY_TIMEZONE,
     formatDeadlineInDisplayTimezone,
     formatDeadlineTimeInDisplayTimezone,
+    formatStatedDate,
+    getConferenceSpans,
     getDeadlineCalendarEvents,
     getDeadlineDayParts,
     toDeadlineDayKey,
@@ -81,8 +83,96 @@ const buildWeeks = (year, month) => {
     return weeks;
 };
 
+const dayKeyToMonthIndex = (key) =>
+    toMonthIndex(Number(key.slice(0, 4)), Number(key.slice(5, 7)));
+
+// Places each conference that touches a week on the first lane free for all
+// of its days that week, so a multi-day bar keeps one vertical position from
+// cell to cell and overlapping conferences stack instead of colliding.
+const buildWeekSegments = (week, spans) => {
+    const keys = week.map((cell) => cell?.key ?? null);
+    const segments = [];
+    spans.forEach((span) => {
+        const covered = keys
+            .map((key, index) =>
+                key && key >= span.startKey && key <= span.endKey ? index : -1,
+            )
+            .filter((index) => index >= 0);
+        if (covered.length) {
+            segments.push({
+                span,
+                from: covered[0],
+                to: covered[covered.length - 1],
+            });
+        }
+    });
+
+    const laneEnds = [];
+    segments.forEach((segment) => {
+        let lane = laneEnds.findIndex((end) => end < segment.from);
+        if (lane < 0) {
+            lane = laneEnds.length;
+            laneEnds.push(-1);
+        }
+        laneEnds[lane] = segment.to;
+        segment.lane = lane;
+    });
+    return segments;
+};
+
+function ConferenceLanes({ segments, cellIndex, cellKey }) {
+    const here = segments.filter(
+        (segment) => cellIndex >= segment.from && cellIndex <= segment.to,
+    );
+    if (!here.length) return null;
+
+    const laneCount = Math.max(...here.map((segment) => segment.lane)) + 1;
+    return (
+        <span className="calendar-month__spans" aria-hidden="true">
+            {Array.from({ length: laneCount }, (_, lane) => {
+                const segment = here.find((item) => item.lane === lane);
+                if (!segment) {
+                    return (
+                        <span
+                            key={`gap-${lane}`}
+                            className="calendar-month__span calendar-month__span--gap"
+                        />
+                    );
+                }
+
+                const { span } = segment;
+                const isFirstInWeek = cellIndex === segment.from;
+                const className = [
+                    "calendar-month__span",
+                    cellKey === span.startKey ? "is-start" : "",
+                    cellKey === span.endKey ? "is-end" : "",
+                ]
+                    .filter(Boolean)
+                    .join(" ");
+
+                return (
+                    <span
+                        key={span.id}
+                        className={className}
+                        style={{
+                            "--span-cells": segment.to - segment.from + 1,
+                        }}>
+                        {isFirstInWeek ? (
+                            <span className="calendar-month__span-label">
+                                <CountryFlags location={span.location} />
+                                {span.venueName}
+                            </span>
+                        ) : null}
+                    </span>
+                );
+            })}
+        </span>
+    );
+}
+
 function DeadlineMonthGrid({ venues, now }) {
     const events = useMemo(() => getDeadlineCalendarEvents(venues), [venues]);
+    const spans = useMemo(() => getConferenceSpans(venues), [venues]);
 
     const eventsByDay = useMemo(() => {
         const grouped = new Map();
@@ -108,15 +198,19 @@ function DeadlineMonthGrid({ venues, now }) {
     const todayMonthIndex = toMonthIndex(todayParts.year, todayParts.month);
 
     const monthBounds = useMemo(() => {
-        const monthIndexes = events.map((event) =>
-            toMonthIndex(event.year, event.month),
-        );
+        const monthIndexes = [
+            ...events.map((event) => toMonthIndex(event.year, event.month)),
+            ...spans.flatMap((span) => [
+                dayKeyToMonthIndex(span.startKey),
+                dayKeyToMonthIndex(span.endKey),
+            ]),
+        ];
 
         return {
             min: Math.min(todayMonthIndex, ...monthIndexes),
             max: Math.max(todayMonthIndex, ...monthIndexes),
         };
-    }, [events, todayMonthIndex]);
+    }, [events, spans, todayMonthIndex]);
 
     const [monthIndex, setMonthIndex] = useState(todayMonthIndex);
     const [selectedDayKey, setSelectedDayKey] = useState(null);
@@ -135,6 +229,12 @@ function DeadlineMonthGrid({ venues, now }) {
 
     const { year, month } = fromMonthIndex(visibleMonthIndex);
     const weeks = useMemo(() => buildWeeks(year, month), [year, month]);
+    const weekSegments = useMemo(
+        () => weeks.map((week) => buildWeekSegments(week, spans)),
+        [weeks, spans],
+    );
+    const spansOnDay = (key) =>
+        spans.filter((span) => key >= span.startKey && key <= span.endKey);
     const monthLabel = formatMonth(visibleMonthIndex);
 
     const monthEventCount = useMemo(
@@ -157,6 +257,7 @@ function DeadlineMonthGrid({ venues, now }) {
     const selectedEvents = selectedDayKey
         ? (eventsByDay.get(selectedDayKey) ?? [])
         : [];
+    const selectedSpans = selectedDayKey ? spansOnDay(selectedDayKey) : [];
 
     const isAtStart = visibleMonthIndex <= monthBounds.min;
     const isAtEnd = visibleMonthIndex >= monthBounds.max;
@@ -242,6 +343,14 @@ function DeadlineMonthGrid({ venues, now }) {
 
                                 const dayEvents =
                                     eventsByDay.get(cell.key) ?? [];
+                                const daySpans = spansOnDay(cell.key);
+                                const lanes = (
+                                    <ConferenceLanes
+                                        segments={weekSegments[weekIndex]}
+                                        cellIndex={cellIndex}
+                                        cellKey={cell.key}
+                                    />
+                                );
                                 const isToday = cell.key === todayParts.key;
                                 const isSelected = cell.key === selectedDayKey;
                                 const isPast = cell.key < todayParts.key;
@@ -250,11 +359,12 @@ function DeadlineMonthGrid({ venues, now }) {
                                     isToday ? "is-today" : "",
                                     isPast ? "is-past" : "",
                                     dayEvents.length ? "has-events" : "",
+                                    daySpans.length ? "has-conference" : "",
                                 ]
                                     .filter(Boolean)
                                     .join(" ");
 
-                                if (!dayEvents.length) {
+                                if (!dayEvents.length && !daySpans.length) {
                                     return (
                                         <td
                                             key={cell.key}
@@ -290,10 +400,24 @@ function DeadlineMonthGrid({ venues, now }) {
                                                         : cell.key,
                                                 )
                                             }
-                                            aria-label={`${formatDayKey(cell.key, DAY_LABEL_FORMATTER)}, ${dayEvents.length} deadline${dayEvents.length === 1 ? "" : "s"}`}>
+                                            aria-label={[
+                                                formatDayKey(
+                                                    cell.key,
+                                                    DAY_LABEL_FORMATTER,
+                                                ),
+                                                dayEvents.length
+                                                    ? `${dayEvents.length} deadline${dayEvents.length === 1 ? "" : "s"}`
+                                                    : "",
+                                                daySpans.length
+                                                    ? `in session: ${daySpans.map((span) => span.venueName).join(", ")}`
+                                                    : "",
+                                            ]
+                                                .filter(Boolean)
+                                                .join(", ")}>
                                             <span className="calendar-month__day-number">
                                                 {cell.day}
                                             </span>
+                                            {lanes}
                                             <span
                                                 className="calendar-month__day-events"
                                                 aria-hidden="true">
@@ -330,12 +454,44 @@ function DeadlineMonthGrid({ venues, now }) {
             </table>
 
             <div className="calendar-month__readout" aria-live="polite">
-                {selectedEvents.length ? (
+                {selectedEvents.length || selectedSpans.length ? (
                     <div className="calendar-month__detail">
                         <h3>
                             {formatDayKey(selectedDayKey, DAY_LABEL_FORMATTER)}
                         </h3>
                         <ul>
+                            {selectedSpans.map((span) => (
+                                <li key={span.id}>
+                                    <div className="calendar-month__detail-copy">
+                                        <p className="calendar-month__detail-kind calendar-month__detail-kind--conference">
+                                            Conference
+                                        </p>
+                                        <p className="calendar-month__detail-venue">
+                                            <CountryFlags
+                                                location={span.location}
+                                            />
+                                            {span.venueName}
+                                        </p>
+                                        <p className="calendar-month__detail-label">
+                                            {span.venueFullName}
+                                        </p>
+                                    </div>
+                                    <div className="calendar-month__detail-time">
+                                        <span className="calendar-month__detail-dates">
+                                            {span.dates}
+                                        </span>
+                                        <small>{span.location}</small>
+                                        <a
+                                            href={span.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="animated-underline">
+                                            Conference site{" "}
+                                            <span aria-hidden="true">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            ))}
                             {selectedEvents.map((event) => (
                                 <li key={event.id}>
                                     <div className="calendar-month__detail-copy">
@@ -354,19 +510,41 @@ function DeadlineMonthGrid({ venues, now }) {
                                         </p>
                                     </div>
                                     <div className="calendar-month__detail-time">
-                                        <time dateTime={event.deadlineAt}>
-                                            {formatDeadlineTimeInDisplayTimezone(
-                                                event.deadlineAt,
-                                            )}{" "}
-                                            KST
-                                        </time>
-                                        <small>
-                                            {formatDeadlineInDisplayTimezone(
-                                                event.deadlineAt,
-                                            )}{" "}
-                                            · Official timezone:{" "}
-                                            {event.timezoneLabel}
-                                        </small>
+                                        {event.dateOnly ? (
+                                            <>
+                                                <time
+                                                    dateTime={event.deadlineAt.slice(
+                                                        0,
+                                                        10,
+                                                    )}>
+                                                    {formatStatedDate(
+                                                        event.deadlineAt,
+                                                    )}
+                                                </time>
+                                                <small>
+                                                    Time not announced ·
+                                                    Official timezone:{" "}
+                                                    {event.timezoneLabel}
+                                                </small>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <time
+                                                    dateTime={event.deadlineAt}>
+                                                    {formatDeadlineTimeInDisplayTimezone(
+                                                        event.deadlineAt,
+                                                    )}{" "}
+                                                    KST
+                                                </time>
+                                                <small>
+                                                    {formatDeadlineInDisplayTimezone(
+                                                        event.deadlineAt,
+                                                    )}{" "}
+                                                    · Official timezone:{" "}
+                                                    {event.timezoneLabel}
+                                                </small>
+                                            </>
+                                        )}
                                         <a
                                             href={event.cfpUrl}
                                             target="_blank"
@@ -382,7 +560,8 @@ function DeadlineMonthGrid({ venues, now }) {
                     </div>
                 ) : monthEventCount ? (
                     <p className="calendar-month__hint">
-                        Select a highlighted day to see its deadlines in full.
+                        Select a highlighted day to see its deadlines and
+                        conferences in full.
                     </p>
                 ) : (
                     <p className="calendar-month__hint">

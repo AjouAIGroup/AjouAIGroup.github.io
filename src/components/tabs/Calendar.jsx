@@ -3,11 +3,13 @@ import {
     DEADLINE_AREAS,
     DEADLINE_DISPLAY_TIMEZONE,
     formatDeadlineInDisplayTimezone,
+    formatStatedDate,
     getAllVenues,
     getCountdownLabel,
     getDefaultMilestoneId,
     getVenueCfpState,
     getVenueStatusMeta,
+    isDateOnlyMilestone,
 } from "../../utils/deadlineData";
 import CountryFlags from "../CountryFlags";
 import DeadlineMonthGrid from "./Calendar.MonthGrid";
@@ -31,8 +33,9 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
     const milestone = venue.milestones.find((item) => item.id === milestoneId);
     const status = getVenueStatusMeta(venue.status);
     const cfpState = getVenueCfpState(venue, now ?? new Date());
+    const dateOnly = isDateOnlyMilestone(milestone);
     const countdown = milestone
-        ? getCountdownLabel(milestone.deadline_at, now)
+        ? getCountdownLabel(milestone.deadline_at, now, { dateOnly })
         : null;
 
     return (
@@ -120,16 +123,36 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
                         aria-live="polite">
                         <div>
                             <p>{milestone.label}</p>
-                            <time dateTime={milestone.deadline_at}>
-                                {formatDeadlineInDisplayTimezone(
-                                    milestone.deadline_at,
-                                )}{" "}
-                                KST
-                            </time>
-                            <small>
-                                Official deadline timezone:{" "}
-                                {milestone.timezone_label}
-                            </small>
+                            {dateOnly ? (
+                                <>
+                                    <time
+                                        dateTime={milestone.deadline_at.slice(
+                                            0,
+                                            10,
+                                        )}>
+                                        {formatStatedDate(
+                                            milestone.deadline_at,
+                                        )}
+                                    </time>
+                                    <small>
+                                        Time not announced · Official timezone:{" "}
+                                        {milestone.timezone_label}
+                                    </small>
+                                </>
+                            ) : (
+                                <>
+                                    <time dateTime={milestone.deadline_at}>
+                                        {formatDeadlineInDisplayTimezone(
+                                            milestone.deadline_at,
+                                        )}{" "}
+                                        KST
+                                    </time>
+                                    <small>
+                                        Official deadline timezone:{" "}
+                                        {milestone.timezone_label}
+                                    </small>
+                                </>
+                            )}
                         </div>
                         <div className="calendar__deadline-status">
                             <strong>{countdown}</strong>

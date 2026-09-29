@@ -288,11 +288,22 @@ npm run operator:verify
 
 ## 9-4. Conference Calendar 수정 체크리스트
 
-1. `content/deadlines/venues.json`에 학회/마일스톤 추가
+1. `content/deadlines/venues.json`에 학회/마일스톤 추가. 날짜와 시각은
+   학회 공식 사이트에 적힌 값만 사용합니다.
 2. `deadline_at`을 ISO 형식으로 입력하고 표시 시간대(KST) 확인
-3. 공식 CFP 링크가 열리는지 확인
-4. `npm run content:sync` → `npm run validate:content`
-5. `/calendar`에서 목록과 월 달력 확인
+3. 공식 페이지에 시각 없이 날짜만 있으면(예: "January 31, 2027") 그날
+   23:59를 해당 시간대로 적고 `"time_stated": false`를 붙입니다. 이 일정은
+   KST로 옮기지 않고 적힌 날짜 그대로, 시각 없이, 일 단위 남은 기간으로
+   표시됩니다. AoE 표기가 있는 날짜는 23:59 AoE로 적고 이 필드를 붙이지
+   않습니다.
+4. 기간으로 된 일정(rebuttal 등)은 끝나는 날을 `deadline_at`으로 두고,
+   시작일은 `label`에 적습니다. 예: "Rebuttal period (November 20-24)"
+5. `event.start_date`와 `event.end_date`(`YYYY-MM-DD`)를 학회 현지 날짜로
+   입력합니다. 월 달력에 학회 기간 막대로 그려지며, 이름 옆 연도도 이
+   날짜에서 정해지므로 학회 이름(`name`)에는 연도를 적지 않습니다.
+6. 공식 CFP 링크가 열리는지 확인
+7. `npm run content:sync` → `npm run validate:content`
+8. `/calendar`에서 목록과 월 달력 확인
 
 ## 9-5. deploy 전 체크리스트
 

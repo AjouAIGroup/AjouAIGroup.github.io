@@ -193,6 +193,37 @@ export const getDeadlineDayParts = (deadlineAt) => {
 export const getMilestoneKindTone = (kind) =>
     MILESTONE_KIND_TONES[kind] ?? "other";
 
+// Organizers often publish only a date ("January 31, 2027") for decisions
+// and camera-ready. Such milestones store the end of that day in the stated
+// timezone but are shown as the date itself: never moved into KST, never
+// given a clock time or a to-the-second countdown the organizer did not set.
+export const isDateOnlyMilestone = (milestone) =>
+    milestone?.time_stated === false;
+
+const getStatedDayParts = (deadlineAt) => {
+    const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(deadlineAt ?? ""));
+    if (!match) return null;
+    const [, year, month, day] = match;
+    return {
+        key: `${year}-${month}-${day}`,
+        year: Number(year),
+        month: Number(month),
+        day: Number(day),
+    };
+};
+
+const STATED_DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeZone: "UTC",
+});
+
+export const formatStatedDate = (deadlineAt) => {
+    const parts = getStatedDayParts(deadlineAt);
+    return parts
+        ? STATED_DATE_FORMATTER.format(new Date(`${parts.key}T00:00:00Z`))
+        : "Date unavailable";
+};
+
 export const formatDeadlineTimeInDisplayTimezone = (deadlineAt) => {
     const date = asDate(deadlineAt);
     return date ? DAY_TIME_FORMATTER.format(date) : "";
@@ -203,7 +234,10 @@ export const formatDeadlineTimeInDisplayTimezone = (deadlineAt) => {
 export const getDeadlineCalendarEvents = (venues = []) =>
     venues.flatMap((venue) =>
         (venue.milestones ?? []).flatMap((milestone) => {
-            const dayParts = getDeadlineDayParts(milestone.deadline_at);
+            const dateOnly = isDateOnlyMilestone(milestone);
+            const dayParts = dateOnly
+                ? getStatedDayParts(milestone.deadline_at)
+                : getDeadlineDayParts(milestone.deadline_at);
             if (!dayParts) {
                 return [];
             }
@@ -225,11 +259,35 @@ export const getDeadlineCalendarEvents = (venues = []) =>
                     label: milestone.label,
                     shortLabel: milestone.short_label ?? milestone.label,
                     deadlineAt: milestone.deadline_at,
+                    dateOnly,
                     timezoneLabel: milestone.timezone_label,
                 },
             ];
         }),
     );
+
+// Conference days as calendar spans. Event dates are local calendar days at
+// the venue, so they are compared as YYYY-MM-DD keys, never shifted into the
+// display timezone the way deadlines are.
+export const getConferenceSpans = (venues = []) =>
+    venues
+        .filter((venue) => venue.event?.start_date && venue.event?.end_date)
+        .map((venue) => ({
+            id: `${venue.id}-event`,
+            venueId: venue.id,
+            venueName: venue.name,
+            venueFullName: venue.full_name,
+            dates: venue.event.dates,
+            location: venue.event.location ?? "",
+            startKey: venue.event.start_date,
+            endKey: venue.event.end_date,
+            url: venue.official_url || venue.cfp_url,
+        }))
+        .sort(
+            (left, right) =>
+                left.startKey.localeCompare(right.startKey) ||
+                right.endKey.localeCompare(left.endKey),
+        );
 
 export const formatDeadlineInDisplayTimezone = (deadlineAt) => {
     const date = asDate(deadlineAt);
@@ -244,7 +302,11 @@ export const formatDeadlineInDisplayTimezone = (deadlineAt) => {
     }).format(date);
 };
 
-export const getCountdownLabel = (deadlineAt, now) => {
+export const getCountdownLabel = (
+    deadlineAt,
+    now,
+    { dateOnly = false } = {},
+) => {
     const deadline = asDate(deadlineAt);
     if (!deadline || !now) {
         return "Calculating…";
@@ -253,6 +315,11 @@ export const getCountdownLabel = (deadlineAt, now) => {
     const remainingMs = deadline.getTime() - now.getTime();
     if (remainingMs <= 0) {
         return "Closed";
+    }
+
+    if (dateOnly) {
+        const days = Math.floor(remainingMs / 86_400_000);
+        return days === 0 ? "Today" : `${days} day${days === 1 ? "" : "s"}`;
     }
 
     const totalSeconds = Math.floor(remainingMs / 1000);

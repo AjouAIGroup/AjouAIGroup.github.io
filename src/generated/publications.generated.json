@@ -3,7 +3,7 @@
     "schema_version": "1.1",
     "source": "google-sheets snapshot",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "source_synced_at": "2026-09-08T10:03:54.737Z",
+    "source_synced_at": "2026-09-29T07:41:06.265Z",
     "categories": [
       "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",
@@ -653,6 +653,122 @@
       "research_meta": {
         "author": "S.-H. Lee and H.-Y. Choi",
         "published_place": "ICML 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "SAIL"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://sites.google.com/view/speechailab/publication",
+        "source_code_link": "",
+        "paper_link": "https://sites.google.com/view/speechailab/publication"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "sheet-differentiable-bit-widths-co-optimizing-pruning-and-quantization-via-svd-for-ultra-efficient-llm-compression",
+      "key": "sheet-differentiable-bit-widths-co-optimizing-pruning-and-quantization-via-svd-for-ultra-efficient-llm-compression",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Differentiable Bit-Widths: Co-optimizing Pruning and Quantization via SVD for Ultra-Efficient LLM Compression",
+      "summary": "NeurIPS 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Hankyul Kang, Jongbin Ryu",
+        "published_place": "NeurIPS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "sheet-efficient-test-time-adaptation-through-candidate-verification-and-divergence-shifts",
+      "key": "sheet-efficient-test-time-adaptation-through-candidate-verification-and-divergence-shifts",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Efficient Test-time Adaptation through Candidate Verification and Divergence Shifts",
+      "summary": "NeurIPS 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seungmin Oh, Seunghun Kang, Jongbin Ryu",
+        "published_place": "NeurIPS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "sheet-flowvla-enabling-world-dynamics-understanding-through-pluggable-3d-flow-learning",
+      "key": "sheet-flowvla-enabling-world-dynamics-understanding-through-pluggable-3d-flow-learning",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "FlowVLA: Enabling World Dynamics Understanding through Pluggable 3D Flow Learning",
+      "summary": "CoRL 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junhyeong Go, Mingyu Jung, Woobin Im, Jongbin Ryu",
+        "published_place": "CoRL 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
+      "key": "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
+      "summary": "NeurIPS 2026 publication from SAIL.",
+      "featured": false,
+      "research_meta": {
+        "author": "S.H. Lee and H.Y. Choi",
+        "published_place": "NeurIPS 2026",
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
@@ -2029,6 +2145,35 @@
         "project_link": "https://sites.google.com/view/speechailab/publication",
         "source_code_link": "",
         "paper_link": "https://sites.google.com/view/speechailab/publication"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      }
+    },
+    {
+      "id": "sheet-psydial-personality-based-synthetic-dialogue-generation-using-large-language-models",
+      "key": "sheet-psydial-personality-based-synthetic-dialogue-generation-using-large-language-models",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "PSYDIAL: Personality-based Synthetic Dialogue Generation using Large Language Models",
+      "summary": "COLING 2024 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Ji-Eun Han, Jun-Seok Koh, Hyeon-Tae Seo and Kyung-Ah Sohn",
+        "published_place": "COLING 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://aclanthology.org/2024.lrec-main.1166/",
+        "source_code_link": "",
+        "paper_link": "https://aclanthology.org/2024.lrec-main.1166/"
       },
       "content": {
         "problem": "",

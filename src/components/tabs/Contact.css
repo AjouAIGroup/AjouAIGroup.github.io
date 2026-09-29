@@ -130,6 +130,13 @@
     object-position: left center;
 }
 
+/* MMAI's (key cvl) mark is square with a stacked wordmark, so the height cap that fits
+   the other labs' wide wordmarks would shrink it to a thumbnail. */
+.contact-page__identity--cvl img {
+    width: auto;
+    max-height: 6rem;
+}
+
 .contact-page__identity p {
     margin: 0;
     color: #171717;

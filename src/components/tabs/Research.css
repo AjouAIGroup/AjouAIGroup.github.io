@@ -71,10 +71,12 @@
     padding: 0;
 }
 
+/* One height for every lab keeps the area titles on a shared line across
+   the two-column grid; wide wordmarks sit at the bottom of the box. */
 .aaig-research__identity {
     display: flex;
-    align-items: center;
-    min-height: 2.85rem;
+    align-items: flex-end;
+    min-height: 4.75rem;
     margin: 0;
 }
 
@@ -86,6 +88,13 @@
     object-position: left center;
     transform: scale(var(--research-logo-scale, 1));
     transform-origin: left center;
+}
+
+/* Square mark with a stacked wordmark: allow it the height a wide logo
+   would take in width. */
+.aaig-research__identity--cvl .aaig-research__lab-logo {
+    width: auto;
+    max-height: 4.75rem;
 }
 
 .aaig-research__identity--hei {

@@ -5,7 +5,8 @@ import "./Contact.css";
 
 function ContactIdentity({ lab }) {
     return (
-        <div className="contact-page__identity">
+        <div
+            className={`contact-page__identity contact-page__identity--${lab.key}`}>
             {lab.logo ? (
                 <img
                     src={lab.logo}

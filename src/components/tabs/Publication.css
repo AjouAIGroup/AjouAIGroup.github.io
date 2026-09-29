@@ -412,6 +412,13 @@
     overflow-wrap: anywhere;
 }
 
+.publication__linked {
+    margin: 0 0 var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--outline-color);
+    color: var(--text-secondary);
+}
+
 .publication__empty {
     margin: 0;
     width: 100%;

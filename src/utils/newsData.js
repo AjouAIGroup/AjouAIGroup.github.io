@@ -129,6 +129,9 @@ const normalizeStructuredNewsItems = (items) =>
             publication_id: normalizeText(item?.publication_id),
             publication_title: normalizeText(item?.publication_title),
             publication_query: normalizeText(item?.publication_query),
+            publication_ids: Array.isArray(item?.publication_ids)
+                ? item.publication_ids.map(normalizeText).filter(Boolean)
+                : [],
             generated_from: normalizeText(item?.generated_from),
             _parsedDate: parsedDate,
         };

@@ -3,41 +3,12 @@ import { Link } from "react-router-dom";
 import { formatNewsDate, getPublicationNewsItems } from "../../utils/newsData";
 import "./News.css";
 
-const PAPER_ACCEPTED_TITLE_PATTERN = /^paper\s+accepted\b/i;
-
-const isNonEmpty = (value) =>
-    typeof value === "string" && value.trim().length > 0;
-
-const getPublicationSearchQuery = (item) => {
-    const candidates = [
-        item.publication_id,
-        item.publication_title,
-        item.publication_query,
-    ];
-
-    for (const candidate of candidates) {
-        if (isNonEmpty(candidate)) {
-            return candidate.trim();
-        }
-    }
-
-    if (
-        isNonEmpty(item.title) &&
-        !PAPER_ACCEPTED_TITLE_PATTERN.test(item.title.trim())
-    ) {
-        return item.title.trim();
-    }
-
-    if (isNonEmpty(item.summary)) {
-        return item.summary.trim();
-    }
-
-    if (isNonEmpty(item.venue)) {
-        return item.venue.trim();
-    }
-
-    return "";
-};
+// News items carry the ids of the papers they are about, resolved when the
+// content is built, so the link opens exactly those papers.
+const getPublicationTarget = (item) =>
+    item.publication_ids.length > 0
+        ? `/publication?ids=${item.publication_ids.map(encodeURIComponent).join(",")}`
+        : "";
 
 function News() {
     const publicationNewsItems = useMemo(() => getPublicationNewsItems(), []);
@@ -111,11 +82,10 @@ function News() {
                         </h2>
                         <div className="news-page__list">
                             {group.items.map((item, index) => {
-                                const publicationQuery =
-                                    getPublicationSearchQuery(item);
-                                const publicationTarget = publicationQuery
-                                    ? `/publication?q=${encodeURIComponent(publicationQuery)}&scope=title-authors-venue`
-                                    : "/publication";
+                                const publicationTarget =
+                                    getPublicationTarget(item);
+                                const publicationCount =
+                                    item.publication_ids.length;
                                 const details = item.venue;
 
                                 return (
@@ -145,14 +115,21 @@ function News() {
                                             ) : null}
                                         </div>
                                         <div className="news-page__action">
-                                            <Link
-                                                to={publicationTarget}
-                                                className="news-page__action-link btn btn--tertiary animated-underline">
-                                                <span>Publications</span>
-                                                <span className="news-page__action-arrow">
-                                                    →
-                                                </span>
-                                            </Link>
+                                            {publicationTarget ? (
+                                                <Link
+                                                    to={publicationTarget}
+                                                    className="news-page__action-link btn btn--tertiary animated-underline"
+                                                    aria-label={`${publicationCount === 1 ? "Publication" : `${publicationCount} publications`} for ${item.title}`}>
+                                                    <span>
+                                                        {publicationCount === 1
+                                                            ? "Publication"
+                                                            : `${publicationCount} Publications`}
+                                                    </span>
+                                                    <span className="news-page__action-arrow">
+                                                        →
+                                                    </span>
+                                                </Link>
+                                            ) : null}
                                         </div>
                                     </article>
                                 );

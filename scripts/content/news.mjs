@@ -302,6 +302,75 @@ const mergePublicationNewsItems = (manualItems, publicationItems) => {
     return mergedItems;
 };
 
+// The publications each news item is about, resolved once at build time so
+// the News page can link straight to them rather than guessing a search
+// query. A generated item names its paper directly; an announcement is
+// matched by the paper titles it quotes; a hand-written item may name a
+// publication by id or title.
+const attachPublicationIds = (newsItems, publicationItems) => {
+    const knownIds = new Set(publicationItems.map((item) => item.id));
+    const titledPublications = publicationItems
+        .map((item) => ({ id: item.id, slug: normalizeSlug(item.title) }))
+        .filter((item) => item.slug);
+
+    return newsItems.map((item) => {
+        const explicitId = normalizeText(item.publication_id);
+        if (explicitId && knownIds.has(explicitId)) {
+            return { ...item, publication_ids: [explicitId] };
+        }
+
+        const namedTitle = normalizeSlug(
+            item.publication_title || item.publication_query,
+        );
+        const exact = namedTitle
+            ? titledPublications.find((entry) => entry.slug === namedTitle)
+            : null;
+        if (exact) {
+            return { ...item, publication_ids: [exact.id] };
+        }
+
+        if (item.type !== PAPER_ACCEPTED_TYPE) {
+            return { ...item, publication_ids: [] };
+        }
+        const text = normalizeSlug(
+            [item.title, item.summary, item.publication_title].join(" "),
+        );
+        const quoted = titledPublications
+            .filter(
+                (entry) =>
+                    entry.slug.length >= MIN_ANNOUNCED_TITLE_LENGTH &&
+                    text.includes(entry.slug),
+            )
+            .map((entry) => entry.id);
+        if (quoted.length > 0) {
+            return { ...item, publication_ids: quoted };
+        }
+
+        // An announcement that names no paper ("SAIL paper accepted to ICML
+        // 2026") still points at that lab's papers at that venue.
+        const venue = normalizeText(item.venue);
+        const lab = normalizeText(item.related_person);
+        return {
+            ...item,
+            publication_ids:
+                venue && lab
+                    ? publicationItems
+                          .filter(
+                              (publication) =>
+                                  normalizeText(
+                                      publication.research_meta
+                                          ?.published_place,
+                                  ) === venue &&
+                                  (publication.research_meta?.labs ?? []).includes(
+                                      lab,
+                                  ),
+                          )
+                          .map((publication) => publication.id)
+                    : [],
+        };
+    });
+};
+
 export const syncNewsContent = async ({
     validateOnly = false,
     publicationItems = null,
@@ -346,8 +415,8 @@ export const syncNewsContent = async ({
         ? publicationItems
         : await syncPublicationContent({ validateOnly: true });
 
-    const mergedItems = mergePublicationNewsItems(
-        items,
+    const mergedItems = attachPublicationIds(
+        mergePublicationNewsItems(items, resolvedPublicationItems),
         resolvedPublicationItems,
     );
 

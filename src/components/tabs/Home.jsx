@@ -248,7 +248,7 @@ function Home() {
                             <Link
                                 key={publication.id}
                                 className="home-publication-index__item"
-                                to={`/publication?q=${encodeURIComponent(publication.title)}`}>
+                                to={`/publication?ids=${encodeURIComponent(publication.id)}`}>
                                 <p className="home-publication-index__venue">
                                     {publication.research_meta.published_place}
                                 </p>

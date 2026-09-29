@@ -3,7 +3,7 @@
 The assets in this directory were collected on 2026-08-24 from the official websites named below for display on the AAIG laboratory directory and research-area index.
 
 - MMAI Lab: [official homepage](https://mmai-laboratory.github.io/)
-    - `mmai-logo.svg` was downloaded from the official MMAI Lab website. `cvl-research.webp` and `cvl-jongbin-ryu.webp` remain historic directory assets.
+    - `mmai-logo.webp` is the lab's 2026-09 logo, supplied by the lab as a PNG and converted to a transparent WebP (white ground removed, margins cropped). `cvl-research.webp` and `cvl-jongbin-ryu.webp` remain historic directory assets.
 - Speech Artificial Intelligence Lab: [People page](https://sites.google.com/view/speechailab/people)
     - `sail-research.png` was published on the laboratory homepage.
     - `sail-sanghoon-lee.jpg` was collected from [Ajou University's official faculty profile](https://www.ajou.ac.kr/researcher/sub02/general-graduate-school.do?cate=1&deptCd=%24cms%24CIZQDALGYIxgnANiA&empl_no=%24cms%24EwBmBYEYTSg&mngt_no=%24cms%24EwBmBYEYTSg&mode=view&uniCd=gg), linked to the SAIL faculty member. The SAIL People page does not publish a faculty portrait.

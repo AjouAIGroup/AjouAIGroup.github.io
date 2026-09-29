@@ -1,4 +1,4 @@
-import MmaiLogo from "../assets/images/laboratories/mmai-logo.svg";
+import MmaiLogo from "../assets/images/laboratories/mmai-logo.webp";
 import HeiLogo from "../assets/images/laboratories/hei-logo.png";
 import IknowLogo from "../assets/images/laboratories/iknow-logo.png";
 import LamdaLogo from "../assets/images/laboratories/lamda-logo.png";
@@ -25,8 +25,8 @@ export const LABORATORIES = [
         href: "https://mmai-laboratory.github.io/",
         logo: MmaiLogo,
         logoAlt: "MMAI Lab logo",
-        logoWidth: 694,
-        logoHeight: 191,
+        logoWidth: 520,
+        logoHeight: 524,
         researchTitle: "Multi-Modal AI",
         researchSummary:
             "Vision, language, and multimodal learning systems for reliable real-world intelligence.",

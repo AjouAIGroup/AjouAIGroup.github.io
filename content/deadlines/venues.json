@@ -617,7 +617,7 @@
       "official_url": "https://aaai.org/conference/aaai/aaai-27/",
       "cfp_url": "https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/",
       "status": "verified",
-      "source_checked_at": "2026-08-12T18:30:00+09:00",
+      "source_checked_at": "2026-09-29T17:30:00+09:00",
       "source_evidence": "Full papers due",
       "event": {
         "dates": "February 16-23, 2027",
@@ -676,11 +676,29 @@
           "status": "verified"
         },
         {
+          "id": "author-feedback",
+          "label": "Author feedback window (October 19-25)",
+          "short_label": "Author feedback",
+          "kind": "rebuttal",
+          "deadline_at": "2026-10-25T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
           "id": "final-decision",
           "label": "Final acceptance notification",
           "short_label": "Final decision",
           "kind": "notification",
           "deadline_at": "2026-11-30T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready files due (Main Technical Track)",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2026-12-14T23:59:00-12:00",
           "timezone_label": "AoE",
           "status": "verified"
         }
@@ -1330,45 +1348,80 @@
         "robotics"
       ],
       "official_url": "https://roboticsconference.org/",
-      "cfp_url": "https://roboticsconference.org/",
+      "cfp_url": "https://roboticsconference.org/information/cfp/",
       "status": "verified",
-      "source_checked_at": "2026-08-26T00:00:00+09:00",
-      "source_evidence": "Paper Submission Deadline",
-      "next_cfp": {
-        "cycle": "RSS 2027",
-        "expected_window": "late 2026 (estimated)"
-      },
+      "source_checked_at": "2026-09-29T17:40:00+09:00",
+      "source_evidence": "Extended Abstract submission deadline",
       "event": {
-        "dates": "July 13-17, 2026",
-        "location": "Sydney, Australia",
-        "venue": "University of Technology Sydney and ICC Sydney",
+        "dates": "July 6-11, 2027",
+        "location": "Athens, Greece",
+        "venue": "Venue TBA",
         "source_url": "https://roboticsconference.org/",
         "status": "official"
       },
       "milestones": [
         {
-          "id": "abstract",
-          "label": "Abstract/title submission deadline",
-          "short_label": "Abstract",
+          "id": "extended-abstract",
+          "label": "Extended abstract submission (Stage 1)",
+          "short_label": "Extended abstract",
           "kind": "abstract",
-          "deadline_at": "2026-01-23T23:59:00-12:00",
+          "deadline_at": "2026-12-04T23:59:00-12:00",
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified",
           "source_parser": {
-            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Abstract/Title Submission Deadline",
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Extended Abstract submission deadline",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "stage-1-decision",
+          "label": "Stage 1 decision: reject or invitation to rebuttal",
+          "short_label": "Stage 1 decision",
+          "kind": "notification",
+          "deadline_at": "2027-02-05T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Decision Stage 1",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "rebuttal",
+          "label": "Rebuttal submission deadline",
+          "short_label": "Rebuttal",
+          "kind": "rebuttal",
+          "deadline_at": "2027-02-12T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Rebuttal submission deadline",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "stage-2-decision",
+          "label": "Stage 2 decision: reject or extension charter",
+          "short_label": "Stage 2 decision",
+          "kind": "notification",
+          "deadline_at": "2027-02-26T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Decision Stage 2",
             "timezone": "AoE"
           }
         },
         {
           "id": "paper",
-          "label": "Paper submission deadline",
-          "short_label": "Paper",
+          "label": "Final paper submission deadline",
+          "short_label": "Final paper",
           "kind": "paper",
-          "deadline_at": "2026-01-30T23:59:00-12:00",
+          "deadline_at": "2027-04-16T23:59:00-12:00",
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified",
           "source_parser": {
-            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Paper Submission Deadline",
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Final paper submission deadline",
             "timezone": "AoE"
           }
         },
@@ -1377,11 +1430,11 @@
           "label": "Supplementary material submission deadline",
           "short_label": "Supplementary",
           "kind": "supplementary",
-          "deadline_at": "2026-02-06T23:59:00-12:00",
+          "deadline_at": "2027-04-19T23:59:00-12:00",
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified",
           "source_parser": {
-            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Supplementary Material Submission Deadline",
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Supplementary material submission deadline",
             "timezone": "AoE"
           }
         },
@@ -1390,11 +1443,24 @@
           "label": "Paper acceptance notification",
           "short_label": "Decision",
           "kind": "notification",
-          "deadline_at": "2026-04-27T23:59:00-12:00",
+          "deadline_at": "2027-04-30T23:59:00-12:00",
           "timezone_label": "Anywhere on Earth (AoE)",
           "status": "verified",
           "source_parser": {
-            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Paper Acceptance Notification",
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Paper acceptance notification",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready paper submission",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2027-05-14T23:59:00-12:00",
+          "timezone_label": "Anywhere on Earth (AoE)",
+          "status": "verified",
+          "source_parser": {
+            "match": "([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+11:59pm\\s+AoE\\s+Camera-ready paper submission",
             "timezone": "AoE"
           }
         }

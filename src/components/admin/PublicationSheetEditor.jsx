@@ -398,7 +398,6 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
     const [syncPolls, setSyncPolls] = useState(0);
     const restoredDraftRef = useRef(false);
     const returnFocusRef = useRef("");
-    const canEdit = session.kind === "google";
 
     const handleFailure = useCallback(
         (error) => {
@@ -408,8 +407,6 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
     );
 
     useEffect(() => {
-        if (!canEdit) return undefined;
-
         let cancelled = false;
         setRowsState((current) => ({ ...current, status: "loading" }));
         requestJson(`${apiUrl}/v1/publications/rows`, session.credential)
@@ -434,7 +431,7 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
         return () => {
             cancelled = true;
         };
-    }, [apiUrl, canEdit, handleFailure, reloadRequest, session.credential]);
+    }, [apiUrl, handleFailure, reloadRequest, session.credential]);
 
     const loadSyncStatus = useCallback(async () => {
         try {
@@ -777,18 +774,6 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
         }
     };
 
-    if (!canEdit) {
-        return (
-            <div className="admin-state">
-                <strong>편집은 Google 로그인으로만 할 수 있습니다.</strong>
-                <p>
-                    접근 키로는 통계만 볼 수 있습니다. 로그아웃한 뒤 운영자
-                    Google 계정으로 다시 로그인해주세요.
-                </p>
-            </div>
-        );
-    }
-
     const runSummary = describeRun(sync.run);
 
     return (
@@ -854,6 +839,12 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
                     sheetRows={rowsState.rows}
                     disabled={isDirty}
                     onReview={(candidate) => openEditor(null, candidate)}
+                    onOpenRow={(rowNumber) => {
+                        const row = rowsState.rows.find(
+                            (item) => item.rowNumber === rowNumber,
+                        );
+                        if (row) openEditor(row);
+                    }}
                     onRowAdded={addSheetRow}
                     onFailure={handleFailure}
                 />

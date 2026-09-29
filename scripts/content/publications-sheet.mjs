@@ -16,7 +16,9 @@ import {
     SHEET_FALSE_VALUES,
     SHEET_TRUE_VALUES,
     publicationItemToSheetValues,
+    RETITLE_MIN_WORD_OVERLAP,
     splitSheetList,
+    titleWordOverlap,
     validatePublicationSheetRow,
 } from "../../src/utils/publicationSheetRules.js";
 
@@ -97,47 +99,6 @@ const getPublicationCategories = async () => {
         throw new Error("[sheet] Research area categories are not configured.");
     }
     return categories;
-};
-
-const RETITLE_MIN_WORD_OVERLAP = 0.6;
-const TITLE_STOP_WORDS = new Set([
-    "a",
-    "an",
-    "and",
-    "at",
-    "by",
-    "for",
-    "from",
-    "in",
-    "is",
-    "of",
-    "on",
-    "the",
-    "to",
-    "via",
-    "with",
-]);
-
-const titleWords = (value) =>
-    new Set(
-        normalizeSlug(value)
-            .split("-")
-            .filter((word) => word && !TITLE_STOP_WORDS.has(word)),
-    );
-
-// Share of the shorter title's words that the other title also contains, so
-// a typo fix or an added subtitle still reads as the same paper.
-const titleWordOverlap = (left, right) => {
-    const leftWords = titleWords(left);
-    const rightWords = titleWords(right);
-    const smaller = Math.min(leftWords.size, rightWords.size);
-    if (smaller === 0) return 0;
-
-    let shared = 0;
-    leftWords.forEach((word) => {
-        if (rightWords.has(word)) shared += 1;
-    });
-    return shared / smaller;
 };
 
 // A retitled row keeps the id of the paper that left the previous snapshot

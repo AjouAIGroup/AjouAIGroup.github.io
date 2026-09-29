@@ -10,7 +10,7 @@
 `/admin` 통계는 Google 로그인으로 보호됩니다. 서버가 Google에 신분을 직접 확인한
 뒤, 허용 목록에 있는 운영자 계정에만 통계를 내줍니다.
 
-Cloudflare API 토큰, 관리자 접근 키, 허용 이메일 목록은 브라우저 번들에 포함하지
+Cloudflare API 토큰, 허용 이메일 목록은 브라우저 번들에 포함하지
 않습니다. Worker의 암호화된 secret으로만 저장합니다. Google 클라이언트 ID는 공개
 식별자이므로 예외입니다.
 
@@ -42,21 +42,14 @@ Account > Account Analytics > Read
 - Cloudflare Account ID
 - Web Analytics Site Tag
 - 위에서 만든 API token
-- 관리자가 입력할 충분히 긴 임의 접근 키
 
 Site Tag는 비콘 token과 다른 식별자입니다. Web Analytics 사이트 화면의 URL에서
 확인하거나 GraphQL에서 `dimensions { siteTag }`를 조회해 확인합니다.
 
-관리자 접근 키는 다음처럼 생성할 수 있습니다.
-
-```bash
-openssl rand -base64 32
-```
-
 ## 3. Google 로그인 준비
 
-`/admin` 통계는 등록된 운영자 Google 계정으로만 열립니다. 공유 접근 키는 Google
-로그인을 쓸 수 없을 때를 위한 예비 수단으로 당분간 함께 남겨둡니다.
+`/admin`은 등록된 운영자 Google 계정으로만 열립니다. 예전의 공유 접근 키
+(`ADMIN_TOKEN`)는 제거되었으며, Worker도 더 이상 받지 않습니다.
 
 ### 3-1. OAuth 클라이언트 만들기
 
@@ -99,7 +92,7 @@ operator@ajou.ac.kr,second-operator@ajou.ac.kr
 - `ADMIN_ORIGIN`이 실제 홈페이지 origin과 맞는지. 커스텀 도메인을 사용한다면
   해당 origin을 쉼표로 추가합니다.
 - `GOOGLE_CLIENT_ID`에 3단계에서 발급받은 클라이언트 ID를 넣었는지. 비워두면
-  Google 로그인이 꺼지고 접근 키만 동작합니다.
+  `/admin`에 로그인할 수 없습니다.
 
 그다음 Worker 디렉터리에서 아래 명령을 실행합니다.
 
@@ -110,7 +103,6 @@ npx wrangler secret put CLOUDFLARE_API_TOKEN
 npx wrangler secret put CLOUDFLARE_ACCOUNT_ID
 npx wrangler secret put CLOUDFLARE_SITE_TAG
 npx wrangler secret put ADMIN_ALLOWED_EMAILS
-npx wrangler secret put ADMIN_TOKEN
 npx wrangler secret put GITHUB_ACTIONS_TOKEN
 npx wrangler secret put GOOGLE_SERVICE_ACCOUNT_KEY < 내려받은-키.json
 npx wrangler deploy --env=""
@@ -128,7 +120,6 @@ CLOUDFLARE_API_TOKEN="통계 조회용 API 토큰"
 CLOUDFLARE_ACCOUNT_ID="Cloudflare Account ID"
 CLOUDFLARE_SITE_TAG="Web Analytics Site Tag"
 ADMIN_ALLOWED_EMAILS="operator@ajou.ac.kr"
-ADMIN_TOKEN="로컬에서 입력할 관리자 접근 키"
 ```
 
 그다음 Worker 디렉터리에서 실행합니다.
@@ -158,8 +149,7 @@ VITE_PUBLICATIONS_SHEET_URL=https://docs.google.com/spreadsheets/d/<spreadsheet-
 브라우저에 저장되지 않으므로 새로고침하면 세션이 끝납니다. 이미 동의한 계정은
 Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편이 없습니다.
 
-`VITE_GOOGLE_CLIENT_ID`를 등록하기 전에는 로그인 버튼 대신 안내 문구가 표시되며,
-`접근 키로 열기`를 펼쳐 기존 방식으로 확인할 수 있습니다.
+`VITE_GOOGLE_CLIENT_ID`를 등록하기 전에는 로그인 버튼 대신 안내 문구가 표시됩니다.
 
 로컬에서는 `.env.example`을 `.env.local`로 복사하고 값을 채운 뒤 개발 서버를
 시작합니다. `.env.local`은 커밋하지 않습니다.
@@ -178,8 +168,7 @@ Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편�
 | `GET /v1/publications/candidates` | Sheet에 없는 연구실 수집 항목 | 두 설정 모두                 |
 | `POST /v1/content/refresh`        | 연구실 홈페이지 수집 실행     | `GITHUB_ACTIONS_TOKEN`       |
 
-행 API와 동기화 실행은 허용 목록의 Google 계정만 쓸 수 있고, 공유 접근 키로는
-거부됩니다. 서비스 계정과 GitHub 토큰 준비는
+모든 API는 허용 목록의 Google 계정으로 로그인해야 쓸 수 있습니다. 서비스 계정과 GitHub 토큰 준비는
 `docs/publications/google-sheets.md` 6·7절을 따릅니다.
 
 `/health`의 `publicationEditingConfigured`, `publicationSyncConfigured`,
@@ -197,10 +186,6 @@ Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편�
 여부를 모두 확인한 뒤 허용 목록과 대조합니다. 확인되지 않은 이메일은 문자열이
 일치해도 통과하지 못합니다.
 
-공유 접근 키(`ADMIN_TOKEN`)는 예비 수단으로 함께 남아 있습니다. Google 로그인이
-자리를 잡으면 secret을 삭제하는 것을 권장합니다. 삭제해도 Google 로그인만으로
-Worker는 정상 동작합니다.
-
 API 토큰과 허용 이메일 목록은 Worker 밖으로 노출되지 않으며, 허용된 origin만 API를
 호출할 수 있습니다. 잘못된 로그인 시도는 IP와 API 경로별로 분당 10회까지
 허용합니다. 정상 요청은 이 제한에 포함되지 않습니다. Rate Limiting binding은
@@ -213,8 +198,7 @@ API 토큰과 허용 이메일 목록은 Worker 밖으로 노출되지 않으며
 뒤에만 처리하므로, 페이지 파일을 내려받아도 데이터를 바꿀 수는 없습니다.
 
 Publication 변경 이력은 Google Sheet 편집 기록, Worker 로그의 운영자 이메일,
-GitHub PR 기록으로 남습니다. 편집 기능이 쓰기 권한을 가지므로, Google 로그인이
-자리를 잡았다면 공유 접근 키(`ADMIN_TOKEN`) 삭제를 권장합니다.
+GitHub PR 기록으로 남습니다.
 
 ## 8. 확인 항목
 
@@ -229,5 +213,3 @@ GitHub PR 기록으로 남습니다. 편집 기능이 쓰기 권한을 가지므
 7. GitHub Actions의 Content Build Check와 Deploy GitHub Pages가 성공하는지 확인합니다.
 8. Publication 관리에서 한 행의 요약을 고쳐 저장하면 Google Sheet에 반영되고,
    동기화 상태가 `동기화 중`을 거쳐 검토 PR 링크를 보여주는지 확인합니다.
-9. 접근 키로 열었을 때는 편집 영역이 `편집은 Google 로그인으로만 할 수
-있습니다`로 잠기는지 확인합니다.

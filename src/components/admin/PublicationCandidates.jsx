@@ -19,6 +19,7 @@ function PublicationCandidates({
     sheetRows,
     disabled,
     onReview,
+    onOpenRow,
     onRowAdded,
     onFailure,
 }) {
@@ -238,15 +239,44 @@ function PublicationCandidates({
                                 <p className="admin-sheet-list__authors">
                                     {candidate.values.authors}
                                 </p>
+                                {candidate.similar ? (
+                                    <p className="admin-candidates__similar">
+                                        비슷한 논문이 Sheet{" "}
+                                        {candidate.similar.rowNumber}행
+                                        {candidate.similar.hidden
+                                            ? "(숨김)"
+                                            : ""}
+                                        에 있습니다: {candidate.similar.title} ·{" "}
+                                        {candidate.similar.venue}. 같은 논문이면
+                                        제외하고, 고칠 정보가 있으면 기존 행을
+                                        수정해주세요.
+                                    </p>
+                                ) : null}
                             </div>
                             <div className="admin-candidates__actions">
+                                {candidate.similar ? (
+                                    <button
+                                        className="admin-button admin-button--primary"
+                                        type="button"
+                                        onClick={() =>
+                                            onOpenRow(
+                                                candidate.similar.rowNumber,
+                                            )
+                                        }
+                                        disabled={disabled}
+                                        aria-label={`Sheet ${candidate.similar.rowNumber}행 열기`}>
+                                        기존 행 열기
+                                    </button>
+                                ) : null}
                                 <button
-                                    className="admin-button admin-button--primary"
+                                    className={`admin-button${candidate.similar ? "" : " admin-button--primary"}`}
                                     type="button"
                                     onClick={() => onReview(candidate)}
                                     disabled={disabled}
-                                    aria-label={`${candidate.values.title} 검토 후 추가`}>
-                                    검토 후 추가
+                                    aria-label={`${candidate.values.title} ${candidate.similar ? "그래도 추가" : "검토 후 추가"}`}>
+                                    {candidate.similar
+                                        ? "그래도 추가"
+                                        : "검토 후 추가"}
                                 </button>
                                 <button
                                     className="admin-button"

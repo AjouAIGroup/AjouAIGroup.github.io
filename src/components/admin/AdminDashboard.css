@@ -119,7 +119,6 @@
 }
 
 .admin-period button,
-.admin-unlock button,
 .admin-lock {
     border: 1px solid var(--line-strong);
     color: var(--text-primary);
@@ -224,19 +223,10 @@
 }
 
 .admin-state p,
-.admin-signin p,
-.admin-unlock p {
+.admin-signin p {
     margin: 0.25rem 0 0;
     color: var(--text-muted);
     font-size: var(--type-support-size);
-}
-
-.admin-unlock {
-    display: grid;
-    grid-template-columns: minmax(13rem, 0.65fr) minmax(16rem, 1fr);
-    align-items: end;
-    gap: 1rem;
-    margin-top: 0.85rem;
 }
 
 .admin-signin {
@@ -272,24 +262,6 @@
     color: var(--red-800);
 }
 
-.admin-signin__fallback {
-    width: 100%;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--line);
-}
-
-.admin-signin__fallback summary {
-    color: var(--text-muted);
-    font-size: var(--type-support-size);
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.admin-signin__fallback summary:focus-visible {
-    outline: 2px solid var(--accent-ui-800);
-    outline-offset: 2px;
-}
-
 .admin-session {
     margin-top: 1.1rem;
     display: flex;
@@ -305,7 +277,6 @@
     font-size: var(--type-support-size);
 }
 
-.admin-unlock label,
 .admin-publication-search label {
     display: block;
     color: var(--text-primary);
@@ -313,13 +284,6 @@
     font-weight: 700;
 }
 
-.admin-unlock__control {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.45rem;
-}
-
-.admin-unlock input,
 .admin-publication-search input {
     width: 100%;
     min-height: 2.65rem;
@@ -329,17 +293,6 @@
     color: var(--text-primary);
     background: var(--surface);
     font: inherit;
-}
-
-.admin-unlock button {
-    min-height: 2.65rem;
-    padding: 0.6rem 0.9rem;
-    border-color: var(--accent-ui-800);
-    border-radius: var(--radius-md);
-    color: var(--white);
-    background: var(--accent-ui-800);
-    font: inherit;
-    font-weight: 700;
 }
 
 .admin-analytics-skeleton {
@@ -751,6 +704,17 @@
     font-size: var(--type-meta-size);
 }
 
+.admin-candidates__similar {
+    margin-top: 0.45rem;
+    padding: 0.45rem 0.65rem;
+    border-left: 3px solid var(--accent-ui-500);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    background: var(--accent-ui-100);
+    font-size: var(--type-meta-size);
+    overflow-wrap: anywhere;
+}
+
 .admin-candidates__list {
     border-top: 1px solid var(--line);
 }
@@ -934,7 +898,6 @@
 @media (max-width: 48rem) {
     .admin-header,
     .admin-section__head,
-    .admin-unlock,
     .admin-publication-search,
     .admin-sheet-toolbar {
         grid-template-columns: minmax(0, 1fr);
@@ -978,7 +941,6 @@
 }
 
 @media (max-width: 32rem) {
-    .admin-unlock__control,
     .admin-sheet-list li,
     .admin-editor__grid {
         grid-template-columns: minmax(0, 1fr);

@@ -105,7 +105,6 @@ function AdminDashboard() {
     // account, so nothing has to be stored to stay convenient.
     const [session, setSession] = useState(null);
     const [signInStatus, setSignInStatus] = useState("idle");
-    const [tokenInput, setTokenInput] = useState("");
     const [analytics, setAnalytics] = useState(null);
     const [analyticsStatus, setAnalyticsStatus] = useState(
         ADMIN_API_URL ? "signed-out" : "unconfigured",
@@ -280,15 +279,6 @@ function AdminDashboard() {
         ...(analytics?.series ?? []).map((item) => item.pageViews),
     );
 
-    const handleUnlock = (event) => {
-        event.preventDefault();
-        const normalizedToken = tokenInput.trim();
-        if (!normalizedToken) return;
-        setAnalyticsError("");
-        setSession({ credential: normalizedToken, kind: "key", email: "" });
-        setTokenInput("");
-    };
-
     const handleSignOut = () => {
         // Without this Google would silently sign the same account back in,
         // which makes "다른 계정으로 로그인" impossible.
@@ -410,35 +400,6 @@ function AdminDashboard() {
                                 {analyticsError}
                             </p>
                         ) : null}
-
-                        <details className="admin-signin__fallback">
-                            <summary>접근 키로 열기</summary>
-                            <form
-                                className="admin-unlock"
-                                onSubmit={handleUnlock}>
-                                <div>
-                                    <label htmlFor="admin-access-token">
-                                        관리자 접근 키
-                                    </label>
-                                    <p>
-                                        Google 로그인을 쓸 수 없을 때를 위한
-                                        예비 수단입니다.
-                                    </p>
-                                </div>
-                                <div className="admin-unlock__control">
-                                    <input
-                                        id="admin-access-token"
-                                        type="password"
-                                        autoComplete="current-password"
-                                        value={tokenInput}
-                                        onChange={(event) =>
-                                            setTokenInput(event.target.value)
-                                        }
-                                    />
-                                    <button type="submit">통계 열기</button>
-                                </div>
-                            </form>
-                        </details>
                     </div>
                 ) : null}
 
@@ -615,9 +576,9 @@ function AdminDashboard() {
                         </div>
                         <div className="admin-session">
                             <p>
-                                {session?.kind === "google" && session.email
+                                {session?.email
                                     ? `${session.email} 계정으로 확인 중입니다.`
-                                    : "접근 키로 확인 중입니다."}
+                                    : "운영자 계정으로 확인 중입니다."}
                             </p>
                             <button
                                 className="admin-lock"

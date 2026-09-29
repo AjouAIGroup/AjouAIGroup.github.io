@@ -4,6 +4,8 @@ import {
     PUBLICATION_SHEET_COLUMNS,
     PUBLICATION_SHEET_REQUIRED_COLUMNS,
     toSlug,
+    findSimilarSheetRow,
+    isSheetRowEnabled,
     publicationItemToSheetValues,
     validateSheetRowForSave,
 } from "../../src/utils/publicationSheetRules.js";
@@ -67,19 +69,6 @@ const getBearerCredential = (request) => {
     return header.startsWith("Bearer ")
         ? header.slice("Bearer ".length).trim()
         : "";
-};
-
-const matchesSharedKey = (credential, env) => {
-    const expected = String(env.ADMIN_TOKEN || "");
-    if (!expected || !credential) return false;
-
-    const encoder = new TextEncoder();
-    const expectedBytes = encoder.encode(expected);
-    const receivedBytes = encoder.encode(credential);
-    return (
-        expectedBytes.byteLength === receivedBytes.byteLength &&
-        crypto.subtle.timingSafeEqual(expectedBytes, receivedBytes)
-    );
 };
 
 const getAllowedEmails = (env) =>
@@ -234,15 +223,11 @@ const authenticate = async (request, env) => {
         return { ok: false, status: 401, error: "관리자 로그인이 필요합니다." };
     }
 
-    if (matchesSharedKey(credential, env)) {
-        return { ok: true, actor: "shared-key" };
-    }
-
     if (!hasGoogleConfiguration(env)) {
         return {
             ok: false,
-            status: 401,
-            error: "관리자 접근 키를 확인해주세요.",
+            status: 503,
+            error: "Worker의 Google 로그인 설정이 필요합니다.",
         };
     }
 
@@ -250,29 +235,10 @@ const authenticate = async (request, env) => {
 };
 
 // Resolves the operator behind a request. `failure` is a ready response when
-// the request must stop; otherwise `actor` names who is acting. Writes pass
-// requireGoogle so every change is tied to a named, verified account rather
-// than the shared fallback key.
-const authorize = async (
-    request,
-    env,
-    pathname,
-    { requireGoogle = false } = {},
-) => {
+// the request must stop; otherwise `actor` is the verified operator email.
+const authorize = async (request, env, pathname) => {
     const result = await authenticate(request, env);
     if (result.ok) {
-        if (requireGoogle && result.actor === "shared-key") {
-            return {
-                failure: jsonResponse(
-                    request,
-                    env,
-                    {
-                        error: "편집은 운영자 Google 계정으로 로그인해야 할 수 있습니다.",
-                    },
-                    403,
-                ),
-            };
-        }
         return { failure: null, actor: result.actor };
     }
 
@@ -452,16 +418,13 @@ const fetchAnalytics = async (env, days) => {
     };
 };
 
-const hasAdminAuthentication = (env) =>
-    Boolean(env.ADMIN_TOKEN) || hasGoogleConfiguration(env);
-
 const hasCloudflareConfiguration = (env) =>
     Boolean(
         env.CLOUDFLARE_API_TOKEN &&
         env.CLOUDFLARE_ACCOUNT_ID &&
         env.CLOUDFLARE_SITE_TAG &&
         env.ADMIN_ORIGIN,
-    ) && hasAdminAuthentication(env);
+    ) && hasGoogleConfiguration(env);
 
 const hasPublicationSyncConfiguration = (env) =>
     Boolean(
@@ -471,7 +434,7 @@ const hasPublicationSyncConfiguration = (env) =>
         env.GITHUB_REF &&
         env.GITHUB_WORKFLOW_ID &&
         env.ADMIN_ORIGIN,
-    ) && hasAdminAuthentication(env);
+    ) && hasGoogleConfiguration(env);
 
 const GITHUB_API = "https://api.github.com";
 // Branch the sync workflow opens its review pull request from. It must match
@@ -954,12 +917,26 @@ const findPublicationCandidates = (refreshItems, sheetRows) => {
                 !sheetIds.has(String(item.id ?? "")) &&
                 !sheetTitles.has(toSlug(item.title)),
         )
-        .map((item) => ({
-            key: String(item.id ?? toSlug(item.title)),
-            sourceId: item.source_id ?? "",
-            sourceUrl: item.source_url ?? "",
-            values: { ...publicationItemToSheetValues(item), id: "" },
-        }))
+        .map((item) => {
+            const values = { ...publicationItemToSheetValues(item), id: "" };
+            // A near match is not hidden, only flagged: a similar title can
+            // still be a different paper, so the operator decides.
+            const similar = findSimilarSheetRow(values, sheetRows);
+            return {
+                key: String(item.id ?? toSlug(item.title)),
+                sourceId: item.source_id ?? "",
+                sourceUrl: item.source_url ?? "",
+                values,
+                similar: similar
+                    ? {
+                          rowNumber: similar.rowNumber,
+                          title: similar.values.title,
+                          venue: similar.values.venue,
+                          hidden: !isSheetRowEnabled(similar.values),
+                      }
+                    : null,
+            };
+        })
         .sort((a, b) => b.values.date.localeCompare(a.values.date));
 };
 
@@ -983,7 +960,6 @@ const handlePublicationCandidates = async (request, env) => {
         request,
         env,
         "/v1/publications/candidates",
-        { requireGoogle: true },
     );
     if (failure) return failure;
 
@@ -1066,7 +1042,6 @@ const handlePublicationRows = async (request, env, url) => {
         request,
         env,
         "/v1/publications/rows",
-        { requireGoogle: true },
     );
     if (failure) return failure;
 
@@ -1217,7 +1192,6 @@ export default {
                     hasPublicationEditConfiguration(env),
                 contentRefreshConfigured: hasContentRefreshConfiguration(env),
                 googleSignInConfigured: hasGoogleConfiguration(env),
-                sharedKeyEnabled: Boolean(env.ADMIN_TOKEN),
             });
         }
 
@@ -1275,9 +1249,7 @@ export default {
                 );
             }
 
-            const { failure } = await authorize(request, env, url.pathname, {
-                requireGoogle: true,
-            });
+            const { failure } = await authorize(request, env, url.pathname);
             if (failure) return failure;
 
             try {
@@ -1320,9 +1292,7 @@ export default {
                 );
             }
 
-            const { failure } = await authorize(request, env, url.pathname, {
-                requireGoogle: request.method === "POST",
-            });
+            const { failure } = await authorize(request, env, url.pathname);
             if (failure) return failure;
 
             try {

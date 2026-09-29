@@ -286,3 +286,69 @@ export const publicationItemToSheetValues = (item) => {
         notes: "",
     };
 };
+
+// Two titles count as the same paper when this share of the shorter one's
+// words also appears in the other and the venue or the authors match.
+export const RETITLE_MIN_WORD_OVERLAP = 0.6;
+
+const TITLE_STOP_WORDS = new Set([
+    "a",
+    "an",
+    "and",
+    "at",
+    "by",
+    "for",
+    "from",
+    "in",
+    "is",
+    "of",
+    "on",
+    "the",
+    "to",
+    "via",
+    "with",
+]);
+
+const titleWords = (value) =>
+    new Set(
+        toSlug(value)
+            .split("-")
+            .filter((word) => word && !TITLE_STOP_WORDS.has(word)),
+    );
+
+// Share of the shorter title's words that the other title also contains, so
+// a typo fix or an added subtitle still reads as the same paper.
+export const titleWordOverlap = (left, right) => {
+    const leftWords = titleWords(left);
+    const rightWords = titleWords(right);
+    const smaller = Math.min(leftWords.size, rightWords.size);
+    if (smaller === 0) return 0;
+
+    let shared = 0;
+    leftWords.forEach((word) => {
+        if (rightWords.has(word)) shared += 1;
+    });
+    return shared / smaller;
+};
+
+// The sheet row most likely to be the same paper as `values`, or null.
+// Used to warn before a lab-site entry is added a second time under a
+// slightly different title.
+export const findSimilarSheetRow = (values, rows) => {
+    const scored = rows
+        .map((row) => ({
+            row,
+            overlap: titleWordOverlap(values.title, row.values.title),
+            anchored:
+                String(row.values.venue).trim() ===
+                    String(values.venue).trim() ||
+                String(row.values.authors).trim() ===
+                    String(values.authors).trim(),
+        }))
+        .filter(
+            ({ overlap, anchored }) =>
+                anchored && overlap >= RETITLE_MIN_WORD_OVERLAP,
+        )
+        .sort((a, b) => b.overlap - a.overlap);
+    return scored[0]?.row ?? null;
+};

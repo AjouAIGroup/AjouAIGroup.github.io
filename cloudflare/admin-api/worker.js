@@ -1,9 +1,11 @@
 import RESEARCH_CATALOG from "../../src/assets/dataset/research_areas.json" with { type: "json" };
+import SOURCE_REGISTRY from "../../content/sources/labs.json" with { type: "json" };
 import {
     PUBLICATION_SHEET_COLUMNS,
     PUBLICATION_SHEET_REQUIRED_COLUMNS,
     toSlug,
-    validatePublicationSheetRow,
+    publicationItemToSheetValues,
+    validateSheetRowForSave,
 } from "../../src/utils/publicationSheetRules.js";
 
 const CLOUDFLARE_GRAPHQL_ENDPOINT =
@@ -495,11 +497,33 @@ const githubRequest = async (env, path, init = {}) => {
     const payload = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-        throw new Error(
+        const failure = new Error(
             payload.message || `GitHub API returned ${response.status}`,
         );
+        failure.status = response.status;
+        throw failure;
     }
     return payload;
+};
+
+const summarizeRun = (run) =>
+    run
+        ? {
+              status: run.status,
+              conclusion: run.conclusion,
+              event: run.event,
+              createdAt: run.created_at,
+              updatedAt: run.updated_at,
+              url: run.html_url,
+          }
+        : null;
+
+const fetchLatestRun = async (env, workflowId) => {
+    const runs = await githubRequest(
+        env,
+        `/actions/workflows/${encodeURIComponent(workflowId)}/runs?per_page=1`,
+    );
+    return summarizeRun(runs.workflow_runs?.[0]);
 };
 
 const dispatchPublicationSync = async (env) => {
@@ -525,28 +549,17 @@ const dispatchPublicationSync = async (env) => {
 };
 
 const fetchPublicationSyncStatus = async (env) => {
-    const workflow = encodeURIComponent(env.GITHUB_WORKFLOW_ID);
     const head = encodeURIComponent(
         `${env.GITHUB_OWNER}:${PUBLICATION_SYNC_BRANCH}`,
     );
-    const [runs, pulls] = await Promise.all([
-        githubRequest(env, `/actions/workflows/${workflow}/runs?per_page=1`),
+    const [run, pulls] = await Promise.all([
+        fetchLatestRun(env, env.GITHUB_WORKFLOW_ID),
         githubRequest(env, `/pulls?state=open&head=${head}&per_page=1`),
     ]);
-    const run = runs.workflow_runs?.[0];
     const pull = Array.isArray(pulls) ? pulls[0] : null;
 
     return {
-        run: run
-            ? {
-                  status: run.status,
-                  conclusion: run.conclusion,
-                  event: run.event,
-                  createdAt: run.created_at,
-                  updatedAt: run.updated_at,
-                  url: run.html_url,
-              }
-            : null,
+        run,
         pullRequest: pull
             ? {
                   number: pull.number,
@@ -556,6 +569,47 @@ const fetchPublicationSyncStatus = async (env) => {
               }
             : null,
     };
+};
+
+// The lab-site refresh workflow publishes its result to this branch; it must
+// match the branch in .github/workflows/content-refresh.yml.
+const EXTERNAL_CONTENT_BRANCH = "automation/external-content";
+const PUBLICATION_SOURCES = new Map(
+    (SOURCE_REGISTRY.sources ?? [])
+        .filter((source) => source.kind === "publication")
+        .map((source) => [source.id, source]),
+);
+
+const hasContentRefreshConfiguration = (env) =>
+    hasPublicationSyncConfiguration(env) &&
+    Boolean(env.CONTENT_REFRESH_WORKFLOW_ID);
+
+const dispatchContentRefresh = async (env) => {
+    await githubRequest(
+        env,
+        `/actions/workflows/${encodeURIComponent(env.CONTENT_REFRESH_WORKFLOW_ID)}/dispatches`,
+        { method: "POST", body: JSON.stringify({ ref: env.GITHUB_REF }) },
+    );
+    return { message: "연구실 홈페이지 수집을 시작했습니다." };
+};
+
+const decodeBase64Text = (value) =>
+    new TextDecoder().decode(
+        decodeBase64Url(String(value || "").replace(/\s+/g, "")),
+    );
+
+// Returns null until the refresh workflow has published its first result.
+const readRefreshFile = async (env, path) => {
+    try {
+        const payload = await githubRequest(
+            env,
+            `/contents/${path}?ref=${encodeURIComponent(EXTERNAL_CONTENT_BRANCH)}`,
+        );
+        return JSON.parse(decodeBase64Text(payload.content));
+    } catch (error) {
+        if (error.status === 404) return null;
+        throw error;
+    }
 };
 
 // A saved row is already safe in the sheet, so a failed dispatch is reported
@@ -886,6 +940,101 @@ const describeSheetError = (message) => {
     return "";
 };
 
+// Lab-site publications that the sheet does not hold yet, matched by id and
+// by title so a paper already entered by hand is never offered twice.
+const findPublicationCandidates = (refreshItems, sheetRows) => {
+    const sheetIds = new Set(sheetRows.map((row) => row.values.id.trim()));
+    const sheetTitles = new Set(
+        sheetRows.map((row) => toSlug(row.values.title)).filter(Boolean),
+    );
+
+    return refreshItems
+        .filter(
+            (item) =>
+                !sheetIds.has(String(item.id ?? "")) &&
+                !sheetTitles.has(toSlug(item.title)),
+        )
+        .map((item) => ({
+            key: String(item.id ?? toSlug(item.title)),
+            sourceId: item.source_id ?? "",
+            sourceUrl: item.source_url ?? "",
+            values: { ...publicationItemToSheetValues(item), id: "" },
+        }))
+        .sort((a, b) => b.values.date.localeCompare(a.values.date));
+};
+
+const handlePublicationCandidates = async (request, env) => {
+    if (
+        !hasPublicationEditConfiguration(env) ||
+        !hasContentRefreshConfiguration(env)
+    ) {
+        return jsonResponse(
+            request,
+            env,
+            {
+                error: "연구실 홈페이지 수집 설정이 필요합니다.",
+                setupRequired: true,
+            },
+            503,
+        );
+    }
+
+    const { failure } = await authorize(
+        request,
+        env,
+        "/v1/publications/candidates",
+        { requireGoogle: true },
+    );
+    if (failure) return failure;
+
+    try {
+        const [refreshData, report, run, sheet] = await Promise.all([
+            readRefreshFile(env, "content/sources/cache/publications.json"),
+            readRefreshFile(env, "content/sources/cache/last-sync-report.json"),
+            fetchLatestRun(env, env.CONTENT_REFRESH_WORKFLOW_ID),
+            readPublicationSheet(env),
+        ]);
+
+        return jsonResponse(request, env, {
+            run,
+            refreshedAt: report?.meta?.generated_at ?? null,
+            sources: (report?.sources ?? [])
+                .filter((source) => PUBLICATION_SOURCES.has(source.id))
+                .map((source) => ({
+                    id: source.id,
+                    lab: PUBLICATION_SOURCES.get(source.id).lab,
+                    url: PUBLICATION_SOURCES.get(source.id).url,
+                    state: source.state,
+                    count: source.count ?? 0,
+                    message: source.state === "updated" ? "" : source.message,
+                })),
+            candidates: findPublicationCandidates(
+                Array.isArray(refreshData?.items) ? refreshData.items : [],
+                sheet.rows,
+            ),
+        });
+    } catch (error) {
+        if (error instanceof HttpError) {
+            return jsonResponse(
+                request,
+                env,
+                { error: error.message },
+                error.status,
+            );
+        }
+        return jsonResponse(
+            request,
+            env,
+            {
+                error: "연구실 홈페이지 수집 결과를 불러오지 못했습니다.",
+                hint: describeSheetError(error.message),
+                detail: error.message,
+            },
+            502,
+        );
+    }
+};
+
 const handlePublicationRows = async (request, env, url) => {
     const rowMatch = PUBLICATION_ROW_PATH.exec(url.pathname);
     const isList = !rowMatch && request.method === "GET";
@@ -959,7 +1108,7 @@ const handlePublicationRows = async (request, env, url) => {
             values.id = "";
         }
 
-        const fieldErrors = validatePublicationSheetRow(values, {
+        const fieldErrors = validateSheetRowForSave(values, {
             categories: PUBLICATION_CATEGORIES,
         });
         const titleKey = toSlug(values.title);
@@ -1066,6 +1215,7 @@ export default {
                 publicationSyncConfigured: hasPublicationSyncConfiguration(env),
                 publicationEditingConfigured:
                     hasPublicationEditConfiguration(env),
+                contentRefreshConfigured: hasContentRefreshConfiguration(env),
                 googleSignInConfigured: hasGoogleConfiguration(env),
                 sharedKeyEnabled: Boolean(env.ADMIN_TOKEN),
             });
@@ -1098,6 +1248,51 @@ export default {
                     env,
                     {
                         error: "Cloudflare 통계를 불러오지 못했습니다.",
+                        detail: error.message,
+                    },
+                    502,
+                );
+            }
+        }
+
+        if (
+            request.method === "GET" &&
+            url.pathname === "/v1/publications/candidates"
+        ) {
+            return handlePublicationCandidates(request, env);
+        }
+
+        if (
+            request.method === "POST" &&
+            url.pathname === "/v1/content/refresh"
+        ) {
+            if (!hasContentRefreshConfiguration(env)) {
+                return jsonResponse(
+                    request,
+                    env,
+                    { error: "연구실 홈페이지 수집 설정이 필요합니다." },
+                    503,
+                );
+            }
+
+            const { failure } = await authorize(request, env, url.pathname, {
+                requireGoogle: true,
+            });
+            if (failure) return failure;
+
+            try {
+                return jsonResponse(
+                    request,
+                    env,
+                    await dispatchContentRefresh(env),
+                    202,
+                );
+            } catch (error) {
+                return jsonResponse(
+                    request,
+                    env,
+                    {
+                        error: "연구실 홈페이지 수집을 시작하지 못했습니다.",
                         detail: error.message,
                     },
                     502,

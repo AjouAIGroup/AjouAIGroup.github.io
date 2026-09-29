@@ -21,6 +21,7 @@ GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
 # JSON key is set with `wrangler secret put GOOGLE_SERVICE_ACCOUNT_KEY`.
 PUBLICATIONS_SHEET_ID = "1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE"
 PUBLICATIONS_SHEET_TAB = "Publications"
+CONTENT_REFRESH_WORKFLOW_ID = "content-refresh.yml"
 
 [[ratelimits]]
 name = "ADMIN_RATE_LIMITER"
@@ -39,6 +40,7 @@ GITHUB_REF = "main"
 GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
 PUBLICATIONS_SHEET_ID = "1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE"
 PUBLICATIONS_SHEET_TAB = "Publications"
+CONTENT_REFRESH_WORKFLOW_ID = "content-refresh.yml"
 
 [[env.dev.ratelimits]]
 name = "ADMIN_RATE_LIMITER"

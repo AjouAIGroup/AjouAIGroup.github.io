@@ -15,6 +15,7 @@ import {
     PUBLICATION_SHEET_REQUIRED_COLUMNS,
     SHEET_FALSE_VALUES,
     SHEET_TRUE_VALUES,
+    publicationItemToSheetValues,
     splitSheetList,
     validatePublicationSheetRow,
 } from "../../src/utils/publicationSheetRules.js";
@@ -399,26 +400,8 @@ export const normalizeSheetRows = async (csvText, previousItems = []) => {
 const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
 
 const itemToSheetRow = (item) => {
-    const meta = item.research_meta ?? {};
-    return [
-        "TRUE",
-        item.id,
-        item.category,
-        item.status,
-        item.title,
-        meta.published_date,
-        meta.author,
-        meta.published_place,
-        (meta.keywords ?? []).join(" | "),
-        (meta.labs ?? []).join(" | "),
-        meta.pdf_link,
-        meta.arxiv_link,
-        meta.github_link,
-        meta.project_link,
-        item.featured ? "TRUE" : "FALSE",
-        item.summary,
-        "",
-    ];
+    const values = publicationItemToSheetValues(item);
+    return SHEET_COLUMNS.map((column) => values[column]);
 };
 
 const writeSheetImportCsv = async (items) => {

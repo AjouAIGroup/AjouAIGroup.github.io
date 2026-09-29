@@ -38,6 +38,21 @@ jobs:
       - name: Refresh official sources
         run: npm run content:refresh
 
+      # The admin page lists lab-site publications that are missing from the
+      # Google Sheet. It reads them from this branch, which always holds main
+      # plus the latest refresh result and is replaced on every run.
+      - name: Publish refresh result for the admin page
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C automation/external-content
+          git add -f \
+            content/sources/cache/publications.json \
+            content/sources/cache/news.json \
+            content/sources/cache/last-sync-report.json
+          git commit --allow-empty -m "content: record external refresh ${{ github.run_id }}"
+          git push --force origin automation/external-content
+
       - name: Validate refreshed content
         run: npm run validate:content
 

@@ -242,3 +242,47 @@ export const validatePublicationSheetRow = (record, { categories }) => {
 
     return errors;
 };
+
+// A blank enabled cell counts as enabled, matching the nightly sync.
+export const isSheetRowEnabled = (record) =>
+    !SHEET_FALSE_VALUES.has(
+        String(record?.enabled ?? "")
+            .trim()
+            .toLowerCase(),
+    );
+
+// Hidden rows are skipped by the sync, so only their title is required;
+// that is what lets an operator park an incomplete or rejected entry.
+export const validateSheetRowForSave = (record, options) => {
+    if (isSheetRowEnabled(record)) {
+        return validatePublicationSheetRow(record, options);
+    }
+    return String(record?.title ?? "").trim()
+        ? []
+        : [{ field: "title", message: "제목을 입력해주세요." }];
+};
+
+// Converts a structured publication (the generated data or a lab-site
+// refresh result) into the sheet's column values.
+export const publicationItemToSheetValues = (item) => {
+    const meta = item?.research_meta ?? {};
+    return {
+        enabled: "TRUE",
+        id: String(item?.id ?? ""),
+        category: String(item?.category ?? ""),
+        status: String(item?.status || "published"),
+        title: String(item?.title ?? ""),
+        date: String(meta.published_date ?? ""),
+        authors: String(meta.author ?? ""),
+        venue: String(meta.published_place ?? ""),
+        keywords: (meta.keywords ?? []).join(" | "),
+        labs: (meta.labs ?? []).join(" | "),
+        pdf_url: String(meta.pdf_link ?? ""),
+        arxiv_url: String(meta.arxiv_link ?? ""),
+        github_url: String(meta.github_link ?? ""),
+        project_url: String(meta.project_link ?? ""),
+        featured: item?.featured ? "TRUE" : "FALSE",
+        summary: String(item?.summary ?? ""),
+        notes: "",
+    };
+};

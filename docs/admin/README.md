@@ -168,20 +168,23 @@ Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편�
 
 `/admin`의 Publication 관리는 Worker의 다음 API를 사용합니다.
 
-| API                              | 용도                       | 필요한 설정                  |
-| -------------------------------- | -------------------------- | ---------------------------- |
-| `GET /v1/publications/rows`      | Sheet 행 목록              | `GOOGLE_SERVICE_ACCOUNT_KEY` |
-| `POST /v1/publications/rows`     | 새 행 추가                 | `GOOGLE_SERVICE_ACCOUNT_KEY` |
-| `PUT /v1/publications/rows/{행}` | 행 수정                    | `GOOGLE_SERVICE_ACCOUNT_KEY` |
-| `GET /v1/publications/sync`      | 최근 동기화 실행과 검토 PR | `GITHUB_ACTIONS_TOKEN`       |
-| `POST /v1/publications/sync`     | 동기화 워크플로 실행       | `GITHUB_ACTIONS_TOKEN`       |
+| API                               | 용도                          | 필요한 설정                  |
+| --------------------------------- | ----------------------------- | ---------------------------- |
+| `GET /v1/publications/rows`       | Sheet 행 목록                 | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `POST /v1/publications/rows`      | 새 행 추가                    | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `PUT /v1/publications/rows/{행}`  | 행 수정                       | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `GET /v1/publications/sync`       | 최근 동기화 실행과 검토 PR    | `GITHUB_ACTIONS_TOKEN`       |
+| `POST /v1/publications/sync`      | 동기화 워크플로 실행          | `GITHUB_ACTIONS_TOKEN`       |
+| `GET /v1/publications/candidates` | Sheet에 없는 연구실 수집 항목 | 두 설정 모두                 |
+| `POST /v1/content/refresh`        | 연구실 홈페이지 수집 실행     | `GITHUB_ACTIONS_TOKEN`       |
 
 행 API와 동기화 실행은 허용 목록의 Google 계정만 쓸 수 있고, 공유 접근 키로는
 거부됩니다. 서비스 계정과 GitHub 토큰 준비는
 `docs/publications/google-sheets.md` 6·7절을 따릅니다.
 
-`/health`의 `publicationEditingConfigured`와 `publicationSyncConfigured`가
-모두 `true`이면 편집과 자동 동기화가 준비된 상태입니다.
+`/health`의 `publicationEditingConfigured`, `publicationSyncConfigured`,
+`contentRefreshConfigured`가 모두 `true`이면 편집, 자동 동기화, 연구실
+홈페이지 수집이 준비된 상태입니다.
 
 로컬에서 편집 API까지 시험할 때만 `.dev.vars`에 `GOOGLE_SERVICE_ACCOUNT_KEY`와
 `GITHUB_ACTIONS_TOKEN`을 추가합니다. 서비스 계정 키는 JSON 전체를 한 줄

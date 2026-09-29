@@ -8,8 +8,10 @@ import {
     SHEET_FALSE_VALUES,
     splitSheetList,
     toSlug,
-    validatePublicationSheetRow,
+    validateSheetRowForSave,
 } from "../../utils/publicationSheetRules";
+import { formatDateTime, requestJson } from "./adminApi";
+import PublicationCandidates from "./PublicationCandidates";
 
 const CATEGORY_OPTIONS = (RESEARCH_CATALOG.meta?.area_order ?? []).map(
     (key) => ({ key, title: RESEARCH_CATALOG.areas?.[key]?.title ?? key }),
@@ -68,6 +70,7 @@ const storeDraft = (editing) => {
                     mode: editing.mode,
                     rowNumber: editing.rowNumber,
                     original: editing.original,
+                    sourceUrl: editing.sourceUrl,
                     draft: editing.draft,
                 }),
             );
@@ -87,18 +90,6 @@ const isDraftChanged = (editing) =>
             String(editing.original[column] ?? "").trim(),
     );
 
-const dateTimeFormatter = new Intl.DateTimeFormat("ko-KR", {
-    month: "numeric",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-});
-
-const formatDateTime = (value) => {
-    const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? "" : dateTimeFormatter.format(date);
-};
-
 const describeRun = (run) => {
     if (!run) return { tone: "idle", label: "기록 없음" };
     if (run.status !== "completed") {
@@ -108,34 +99,6 @@ const describeRun = (run) => {
         return { tone: "success", label: "최근 동기화 성공" };
     }
     return { tone: "failure", label: "최근 동기화 실패" };
-};
-
-const requestJson = async (url, credential, init = {}) => {
-    const response = await fetch(url, {
-        ...init,
-        headers: {
-            Authorization: `Bearer ${credential}`,
-            ...(init.body ? { "Content-Type": "application/json" } : {}),
-        },
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-        // The hint names the fix; the detail is the upstream message, shown
-        // so an operator can report exactly what Google or GitHub said.
-        const failure = new Error(
-            [
-                payload.error || "요청을 처리하지 못했습니다.",
-                payload.hint,
-                payload.detail ? `(${payload.detail})` : "",
-            ]
-                .filter(Boolean)
-                .join(" "),
-        );
-        failure.status = response.status;
-        failure.payload = payload;
-        throw failure;
-    }
-    return payload;
 };
 
 function FieldError({ id, message }) {
@@ -222,6 +185,18 @@ function PublicationRowForm({
                         ? `ID ${draft.id} · URL과 News 연결에 쓰이므로 바뀌지 않습니다.`
                         : "ID는 동기화할 때 제목으로 자동 생성됩니다."}
                 </p>
+                {editing.sourceUrl ? (
+                    <p className="admin-editor__source">
+                        연구실 홈페이지에서 가져온 값입니다. 제목, 저자, 학회
+                        표기와 연구 분야를 확인한 뒤 저장해주세요.{" "}
+                        <a
+                            href={editing.sourceUrl}
+                            target="_blank"
+                            rel="noreferrer">
+                            연구실 페이지 열기
+                        </a>
+                    </p>
+                ) : null}
             </div>
 
             {formError ? (
@@ -601,7 +576,7 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
         editing?.mode === "edit" &&
         !visibleRows.some((row) => row.rowNumber === editing.rowNumber);
 
-    const openEditor = (row) => {
+    const openEditor = (row, candidate = null) => {
         returnFocusRef.current = row
             ? `admin-row-edit-${row.rowNumber}`
             : "admin-publication-add";
@@ -613,13 +588,27 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
             mode: row ? "edit" : "create",
             rowNumber: row?.rowNumber ?? null,
             original,
-            draft: { ...original },
+            draft: candidate
+                ? { ...original, ...candidate.values, id: "" }
+                : { ...original },
+            sourceUrl: candidate?.sourceUrl ?? "",
             fieldErrors: {},
             formError: "",
             saving: false,
             conflict: false,
         });
     };
+
+    const addSheetRow = useCallback((row) => {
+        if (!row?.rowNumber) {
+            setReloadRequest((count) => count + 1);
+            return;
+        }
+        setRowsState((current) => ({
+            ...current,
+            rows: [...current.rows, row],
+        }));
+    }, []);
 
     const closeEditor = () => setEditing(null);
 
@@ -651,7 +640,7 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
         if (!editing || editing.saving) return;
 
         const errors = Object.fromEntries(
-            validatePublicationSheetRow(editing.draft, {
+            validateSheetRowForSave(editing.draft, {
                 categories: CATEGORY_KEYS,
             })
                 .reverse()
@@ -856,6 +845,18 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
                     등록해야 합니다. 저장한 내용은 매일 예약된 동기화 때
                     반영됩니다.
                 </p>
+            ) : null}
+
+            {rowsState.status === "ready" ? (
+                <PublicationCandidates
+                    apiUrl={apiUrl}
+                    credential={session.credential}
+                    sheetRows={rowsState.rows}
+                    disabled={isDirty}
+                    onReview={(candidate) => openEditor(null, candidate)}
+                    onRowAdded={addSheetRow}
+                    onFailure={handleFailure}
+                />
             ) : null}
 
             <div className="admin-sheet-editor__notice" aria-live="polite">

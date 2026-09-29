@@ -5,6 +5,7 @@ import {
     PUBLICATION_DATA_META,
 } from "../../utils/publicationData";
 import { loadGoogleIdentity, readIdentityClaims } from "./googleIdentity";
+import PublicationSheetEditor from "./PublicationSheetEditor";
 import "./AdminDashboard.css";
 
 const ADMIN_API_URL = (import.meta.env.VITE_ADMIN_API_URL ?? "").replace(
@@ -57,9 +58,6 @@ const normalizeAnalyticsPayload = (payload) => {
         countries: Array.isArray(payload.countries) ? payload.countries : [],
     };
 };
-
-const buildPublicationSearchUrl = (publicationId) =>
-    `${REPOSITORY_URL}/search?q=${encodeURIComponent(publicationId)}&type=code`;
 
 const summarizePublications = () => {
     const labs = new Set();
@@ -118,7 +116,6 @@ function AdminDashboard() {
     // Google session is not enough on its own: anyone can obtain one.
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [retryRequest, setRetryRequest] = useState(0);
-    const [publicationQuery, setPublicationQuery] = useState("");
     const googleButtonRef = useRef(null);
 
     useEffect(() => {
@@ -278,23 +275,6 @@ function AdminDashboard() {
         return () => controller.abort();
     }, [days, retryRequest, session]);
 
-    const visiblePublications = useMemo(() => {
-        const query = publicationQuery.trim().toLowerCase();
-        if (!query) return PUBLICATIONS.slice(0, 12);
-
-        return PUBLICATIONS.filter((publication) =>
-            [
-                publication.title,
-                publication.research_meta.author,
-                publication.research_meta.published_place,
-                ...publication.research_meta.labs,
-            ]
-                .join(" ")
-                .toLowerCase()
-                .includes(query),
-        ).slice(0, 30);
-    }, [publicationQuery]);
-
     const maxSeriesValue = Math.max(
         1,
         ...(analytics?.series ?? []).map((item) => item.pageViews),
@@ -319,6 +299,18 @@ function AdminDashboard() {
         setAnalyticsError("");
         setAnalyticsStatus("signed-out");
     };
+
+    // An edit request that comes back 401 means the credential expired between
+    // the timer check and the request. The editor keeps its draft, so signing
+    // in again picks up where the operator left off.
+    const handleSessionExpired = useCallback(() => {
+        window.google?.accounts?.id?.disableAutoSelect();
+        setSession(null);
+        setIsAuthorized(false);
+        setAnalytics(null);
+        setAnalyticsStatus("signed-out");
+        setAnalyticsError("로그인이 만료되었습니다. 다시 로그인해주세요.");
+    }, []);
 
     const handleRetry = () => {
         setRetryRequest((requestNumber) => requestNumber + 1);
@@ -648,8 +640,9 @@ function AdminDashboard() {
                                 Publication 관리
                             </h2>
                             <p>
-                                Google Sheet 원본과 현재 배포 데이터를 함께
-                                확인합니다.
+                                Google Sheet 원본을 바로 수정합니다. 저장한
+                                내용은 동기화와 검토 PR 병합을 거쳐 홈페이지에
+                                반영됩니다.
                             </p>
                         </div>
                         <a
@@ -684,52 +677,11 @@ function AdminDashboard() {
                         />
                     </div>
 
-                    <div className="admin-publication-search">
-                        <label htmlFor="admin-publication-search">
-                            Publication 검색
-                        </label>
-                        <input
-                            id="admin-publication-search"
-                            type="search"
-                            placeholder="제목, 저자, 학회 또는 연구실"
-                            value={publicationQuery}
-                            onChange={(event) =>
-                                setPublicationQuery(event.target.value)
-                            }
-                        />
-                    </div>
-
-                    <div className="admin-publication-list">
-                        {visiblePublications.map((publication) => (
-                            <article key={publication.id}>
-                                <div>
-                                    <p>
-                                        {
-                                            publication.research_meta
-                                                .published_place
-                                        }
-                                    </p>
-                                    <h3>{publication.title}</h3>
-                                    <span>
-                                        {publication.research_meta.author}
-                                    </span>
-                                </div>
-                                <a
-                                    href={buildPublicationSearchUrl(
-                                        publication.id,
-                                    )}
-                                    target="_blank"
-                                    rel="noreferrer">
-                                    스냅샷 찾기
-                                </a>
-                            </article>
-                        ))}
-                        {visiblePublications.length === 0 ? (
-                            <p className="admin-publication-list__empty">
-                                검색 결과가 없습니다.
-                            </p>
-                        ) : null}
-                    </div>
+                    <PublicationSheetEditor
+                        apiUrl={ADMIN_API_URL}
+                        session={session}
+                        onSessionExpired={handleSessionExpired}
+                    />
                 </section>
             ) : (
                 <section
@@ -747,7 +699,7 @@ function AdminDashboard() {
                     <div className="admin-state">
                         <strong>운영자 확인이 필요합니다.</strong>
                         <p>
-                            위에서 로그인하면 Publication 운영 현황과 검색이
+                            위에서 로그인하면 Publication 운영 현황과 편집이
                             함께 열립니다.
                         </p>
                     </div>

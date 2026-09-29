@@ -3,8 +3,9 @@
 현재 구현은 다음 두 부분으로 나뉩니다.
 
 - 공개 홈페이지: Cloudflare Web Analytics 비콘으로 방문 데이터를 전송합니다.
-- `/admin`: Cloudflare Worker를 통해 집계 통계를 조회합니다. Publication 동기화는
-  `Sync Publications from Google Sheets` 워크플로가 담당합니다.
+- `/admin`: Cloudflare Worker를 통해 집계 통계를 조회하고, Publication Google
+  Sheet를 직접 수정합니다. 수정 내용은 `Sync Publications from Google Sheets`
+  워크플로가 검토 PR로 만듭니다.
 
 `/admin` 통계는 Google 로그인으로 보호됩니다. 서버가 Google에 신분을 직접 확인한
 뒤, 허용 목록에 있는 운영자 계정에만 통계를 내줍니다.
@@ -111,6 +112,7 @@ npx wrangler secret put CLOUDFLARE_SITE_TAG
 npx wrangler secret put ADMIN_ALLOWED_EMAILS
 npx wrangler secret put ADMIN_TOKEN
 npx wrangler secret put GITHUB_ACTIONS_TOKEN
+npx wrangler secret put GOOGLE_SERVICE_ACCOUNT_KEY < 내려받은-키.json
 npx wrangler deploy --env=""
 ```
 
@@ -162,20 +164,28 @@ Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편�
 로컬에서는 `.env.example`을 `.env.local`로 복사하고 값을 채운 뒤 개발 서버를
 시작합니다. `.env.local`은 커밋하지 않습니다.
 
-## 6. Publication 동기화 권한
+## 6. Publication 편집과 동기화 권한
 
-Publication 동기화는 `Sync Publications from Google Sheets` 워크플로가 매일
-자동으로 수행하며, 검증에 성공한 변경은 검토용 PR로 생성됩니다. 관리자 화면에는
-동기화 버튼이 없습니다.
+`/admin`의 Publication 관리는 Worker의 다음 API를 사용합니다.
 
-Worker에는 같은 워크플로를 호출하는 API(`POST /v1/publications/sync`)가 남아
-있습니다. 지금은 화면에서 쓰지 않으므로, `GITHUB_ACTIONS_TOKEN`은 이 API를 실제로
-쓸 때만 등록하면 됩니다. 등록한다면 대상 저장소의 Actions `Read and write` 권한만
-부여합니다. Google Sheet와 GitHub Variables 설정은
-`docs/publications/google-sheets.md`를 따릅니다.
+| API                              | 용도                       | 필요한 설정                  |
+| -------------------------------- | -------------------------- | ---------------------------- |
+| `GET /v1/publications/rows`      | Sheet 행 목록              | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `POST /v1/publications/rows`     | 새 행 추가                 | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `PUT /v1/publications/rows/{행}` | 행 수정                    | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `GET /v1/publications/sync`      | 최근 동기화 실행과 검토 PR | `GITHUB_ACTIONS_TOKEN`       |
+| `POST /v1/publications/sync`     | 동기화 워크플로 실행       | `GITHUB_ACTIONS_TOKEN`       |
 
-`/health`의 `publicationSyncConfigured`가 `true`이면 Worker의 GitHub 연동이
-준비된 상태입니다.
+행 API와 동기화 실행은 허용 목록의 Google 계정만 쓸 수 있고, 공유 접근 키로는
+거부됩니다. 서비스 계정과 GitHub 토큰 준비는
+`docs/publications/google-sheets.md` 6·7절을 따릅니다.
+
+`/health`의 `publicationEditingConfigured`와 `publicationSyncConfigured`가
+모두 `true`이면 편집과 자동 동기화가 준비된 상태입니다.
+
+로컬에서 편집 API까지 시험할 때만 `.dev.vars`에 `GOOGLE_SERVICE_ACCOUNT_KEY`와
+`GITHUB_ACTIONS_TOKEN`을 추가합니다. 서비스 계정 키는 JSON 전체를 한 줄
+문자열로 넣습니다.
 
 ## 7. 현재 보안 범위와 다음 단계
 
@@ -196,8 +206,12 @@ API 토큰과 허용 이메일 목록은 Worker 밖으로 노출되지 않으며
 남아 있는 한계는 `/admin` 페이지 자체입니다. GitHub Pages는 정적 호스팅이라 페이지
 파일을 내려받는 것 자체는 막을 수 없습니다. 로그인 전 화면에는 비밀 정보가 없고
 통계도 표시되지 않지만, 진입 자체를 차단하려면 커스텀 도메인과 Cloudflare Access가
-필요합니다. Publication 변경 이력은 Google Sheet 편집 기록과 GitHub PR 기록으로
-남습니다.
+필요합니다. 다만 Sheet를 읽고 쓰는 요청은 모두 Worker가 Google 로그인을 확인한
+뒤에만 처리하므로, 페이지 파일을 내려받아도 데이터를 바꿀 수는 없습니다.
+
+Publication 변경 이력은 Google Sheet 편집 기록, Worker 로그의 운영자 이메일,
+GitHub PR 기록으로 남습니다. 편집 기능이 쓰기 권한을 가지므로, Google 로그인이
+자리를 잡았다면 공유 접근 키(`ADMIN_TOKEN`) 삭제를 권장합니다.
 
 ## 8. 확인 항목
 
@@ -210,3 +224,7 @@ API 토큰과 허용 이메일 목록은 Worker 밖으로 노출되지 않으며
    표시되고 통계가 반환되지 않는지 확인합니다.
 6. 로그아웃 후 다른 계정으로 다시 로그인할 수 있는지 확인합니다.
 7. GitHub Actions의 Content Build Check와 Deploy GitHub Pages가 성공하는지 확인합니다.
+8. Publication 관리에서 한 행의 요약을 고쳐 저장하면 Google Sheet에 반영되고,
+   동기화 상태가 `동기화 중`을 거쳐 검토 PR 링크를 보여주는지 확인합니다.
+9. 접근 키로 열었을 때는 편집 영역이 `편집은 Google 로그인으로만 할 수
+있습니다`로 잠기는지 확인합니다.

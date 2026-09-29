@@ -2,6 +2,11 @@ name = "aaig-admin-api"
 main = "worker.js"
 compatibility_date = "2026-09-08"
 
+# Keeps the Worker log, which records the operator behind every publication
+# edit. Google Sheet revision history only shows the service account.
+[observability]
+enabled = true
+
 [vars]
 ADMIN_ORIGIN = "https://ajouaigroup.github.io"
 # Public OAuth client id from Google Cloud Console. Empty disables Google
@@ -12,6 +17,10 @@ GITHUB_OWNER = "AjouAIGroup"
 GITHUB_REPO = "AjouAIGroup.github.io"
 GITHUB_REF = "main"
 GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
+# Publication editing writes to this sheet through a service account whose
+# JSON key is set with `wrangler secret put GOOGLE_SERVICE_ACCOUNT_KEY`.
+PUBLICATIONS_SHEET_ID = "1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE"
+PUBLICATIONS_SHEET_TAB = "Publications"
 
 [[ratelimits]]
 name = "ADMIN_RATE_LIMITER"
@@ -28,6 +37,8 @@ GITHUB_OWNER = "AjouAIGroup"
 GITHUB_REPO = "AjouAIGroup.github.io"
 GITHUB_REF = "main"
 GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
+PUBLICATIONS_SHEET_ID = "1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE"
+PUBLICATIONS_SHEET_TAB = "Publications"
 
 [[env.dev.ratelimits]]
 name = "ADMIN_RATE_LIMITER"

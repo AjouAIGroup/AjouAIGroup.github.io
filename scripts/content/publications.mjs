@@ -15,78 +15,16 @@ import {
     relativeFromRoot,
     writeJsonFile,
 } from "./lib.mjs";
+import {
+    PUBLICATION_STATUSES as PUBLICATION_STATUS_LIST,
+    isApprovedVenue,
+} from "../../src/utils/publicationSheetRules.js";
 
 const RESEARCH_AREAS_FILE = path.resolve(
     "src/assets/dataset/research_areas.json",
 );
-const PUBLICATION_STATUSES = new Set(["published", "working", "project"]);
-const PUBLICATION_VENUES = new Set([
-    "ACCV",
-    "ACPR",
-    "ICPR",
-    "SMC",
-    "Neural Networks",
-    "IEEE TASLP",
-    "IEEE TNNLS",
-    "IEEE TAC",
-    "BMVC",
-    "BSPC",
-    "JKMS",
-    "CBM",
-    "CMPB",
-    "CVPR",
-    "ECCV",
-    "ESWA",
-    "DASFAA",
-    "FEIII",
-    "ICCV",
-    "ICCVW",
-    "NeurIPS",
-    "ICML",
-    "IJS",
-    "MedIA",
-    "MLHC",
-    "NAACL",
-    "Nano Convergence",
-    "Pattern Recognition",
-    "RSS",
-    "Sci Rep",
-    "WACV",
-    "AAAI",
-    "ACM MM",
-    "ACL",
-    "Advanced Materials",
-    "ASONAM",
-    "BigComp",
-    "EMNLP",
-    "Findings of EMNLP",
-    "ICDE",
-    "ICDM",
-    "ICLR",
-    "ICME",
-    "ICRA",
-    "ICASSP",
-    "IROS",
-    "Interspeech",
-    "Int J Pharm",
-    "CIKM",
-    "KCC",
-    "KDD",
-    "LREC",
-    "PAKDD",
-    "SIGIR",
-    "TKDE",
-    "VLDB",
-    "IEEE Access",
-    "CoRL",
-    "COLING",
-]);
+const PUBLICATION_STATUSES = new Set(PUBLICATION_STATUS_LIST);
 const VENUE_WITH_YEAR_PATTERN = /^(.+?)\s+(\d{4})$/;
-
-const isApprovedVenue = (venue) =>
-    PUBLICATION_VENUES.has(venue) ||
-    (venue.endsWith(" Workshop") &&
-        PUBLICATION_VENUES.has(venue.slice(0, -" Workshop".length)));
 
 const normalizeText = (value) => String(value ?? "").trim();
 const normalizeStringList = (value) => {

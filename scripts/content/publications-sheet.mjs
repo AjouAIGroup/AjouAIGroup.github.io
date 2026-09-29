@@ -10,6 +10,14 @@ import {
     writeJsonFile,
 } from "./lib.mjs";
 import { parseStructuredPublicationItem } from "./publications.mjs";
+import {
+    PUBLICATION_SHEET_COLUMNS,
+    PUBLICATION_SHEET_REQUIRED_COLUMNS,
+    SHEET_FALSE_VALUES,
+    SHEET_TRUE_VALUES,
+    splitSheetList,
+    validatePublicationSheetRow,
+} from "../../src/utils/publicationSheetRules.js";
 
 const RESEARCH_AREAS_FILE = path.resolve(
     "src/assets/dataset/research_areas.json",
@@ -17,53 +25,22 @@ const RESEARCH_AREAS_FILE = path.resolve(
 const SHEET_IMPORT_FILE = path.resolve(
     "docs/publications/publications-sheet-import.csv",
 );
-const SHEET_COLUMNS = [
-    "enabled",
-    "id",
-    "category",
-    "status",
-    "title",
-    "date",
-    "authors",
-    "venue",
-    "keywords",
-    "labs",
-    "pdf_url",
-    "arxiv_url",
-    "github_url",
-    "project_url",
-    "featured",
-    "summary",
-    "notes",
-];
-const REQUIRED_COLUMNS = SHEET_COLUMNS.filter((column) => column !== "notes");
-const TRUE_VALUES = new Set(["true", "yes", "y", "1", "사용", "게시"]);
-const FALSE_VALUES = new Set([
-    "false",
-    "no",
-    "n",
-    "0",
-    "미사용",
-    "비게시",
-]);
+const SHEET_COLUMNS = PUBLICATION_SHEET_COLUMNS;
+const REQUIRED_COLUMNS = PUBLICATION_SHEET_REQUIRED_COLUMNS;
 
 const normalizeCell = (value) => String(value ?? "").trim();
 
 const parseBoolean = (value, field, rowNumber, defaultValue = false) => {
     const normalized = normalizeCell(value).toLowerCase();
     if (!normalized) return defaultValue;
-    if (TRUE_VALUES.has(normalized)) return true;
-    if (FALSE_VALUES.has(normalized)) return false;
+    if (SHEET_TRUE_VALUES.has(normalized)) return true;
+    if (SHEET_FALSE_VALUES.has(normalized)) return false;
     throw new Error(
         `[sheet row ${rowNumber}] "${field}" must be TRUE or FALSE (received "${value}").`,
     );
 };
 
-const parseList = (value) =>
-    normalizeCell(value)
-        .split(/\s*\|\s*|\r?\n/)
-        .map((item) => item.trim())
-        .filter(Boolean);
+const parseList = splitSheetList;
 
 export const parseCsv = (source) => {
     const input = String(source ?? "").replace(/^\uFEFF/, "");
@@ -121,29 +98,162 @@ const getPublicationCategories = async () => {
     return categories;
 };
 
-const buildItemFromRow = (record, rowNumber, publicationCategories) => {
+const RETITLE_MIN_WORD_OVERLAP = 0.6;
+const TITLE_STOP_WORDS = new Set([
+    "a",
+    "an",
+    "and",
+    "at",
+    "by",
+    "for",
+    "from",
+    "in",
+    "is",
+    "of",
+    "on",
+    "the",
+    "to",
+    "via",
+    "with",
+]);
+
+const titleWords = (value) =>
+    new Set(
+        normalizeSlug(value)
+            .split("-")
+            .filter((word) => word && !TITLE_STOP_WORDS.has(word)),
+    );
+
+// Share of the shorter title's words that the other title also contains, so
+// a typo fix or an added subtitle still reads as the same paper.
+const titleWordOverlap = (left, right) => {
+    const leftWords = titleWords(left);
+    const rightWords = titleWords(right);
+    const smaller = Math.min(leftWords.size, rightWords.size);
+    if (smaller === 0) return 0;
+
+    let shared = 0;
+    leftWords.forEach((word) => {
+        if (rightWords.has(word)) shared += 1;
+    });
+    return shared / smaller;
+};
+
+// A retitled row keeps the id of the paper that left the previous snapshot
+// under its old title. It must still share most title words and either the
+// venue or the authors; ties are left unmatched rather than guessed.
+const findRetitledItem = (record, candidates) => {
+    const venue = normalizeCell(record.venue);
+    const authors = normalizeCell(record.authors);
+    const scored = candidates
+        .map((item) => ({
+            item,
+            overlap: titleWordOverlap(record.title, item.title),
+            anchored:
+                item.research_meta?.published_place === venue ||
+                item.research_meta?.author === authors,
+        }))
+        .filter(
+            ({ overlap, anchored }) =>
+                anchored && overlap >= RETITLE_MIN_WORD_OVERLAP,
+        )
+        .sort((a, b) => b.overlap - a.overlap);
+
+    if (scored.length === 0) return null;
+    if (scored.length > 1 && scored[0].overlap === scored[1].overlap) {
+        return null;
+    }
+    return scored[0].item;
+};
+
+// Rows without an id cell get their id from the previous snapshot, so an
+// operator never has to copy generated ids back into the sheet. Only rows
+// that are new to the snapshot receive a fresh sheet-<title> id.
+const assignRowIds = (entries, previousItems) => {
+    const ids = new Map();
+    const claimedIds = new Set();
+    const sheetTitles = new Set();
+
+    entries.forEach(({ rowNumber, record }) => {
+        const explicitId = normalizeCell(record.id);
+        if (explicitId) {
+            ids.set(rowNumber, explicitId);
+            claimedIds.add(explicitId);
+        }
+        sheetTitles.add(normalizeSlug(record.title));
+    });
+
+    const previousByTitle = new Map(
+        previousItems.map((item) => [normalizeSlug(item.title), item]),
+    );
+    const unmatched = [];
+    entries.forEach(({ rowNumber, record }) => {
+        const titleKey = normalizeSlug(record.title);
+        if (ids.has(rowNumber) || !titleKey) return;
+
+        const previous = previousByTitle.get(titleKey);
+        if (previous && !claimedIds.has(previous.id)) {
+            ids.set(rowNumber, previous.id);
+            claimedIds.add(previous.id);
+            return;
+        }
+        unmatched.push({ rowNumber, record, titleKey });
+    });
+
+    unmatched.forEach(({ rowNumber, record, titleKey }) => {
+        const candidates = previousItems.filter(
+            (item) =>
+                !claimedIds.has(item.id) &&
+                !sheetTitles.has(normalizeSlug(item.title)),
+        );
+        const retitled = findRetitledItem(record, candidates);
+        if (retitled) {
+            ids.set(rowNumber, retitled.id);
+            claimedIds.add(retitled.id);
+            console.log(
+                `[sheet row ${rowNumber}] kept id "${retitled.id}" after the title changed from "${retitled.title}".`,
+            );
+            return;
+        }
+
+        const generatedId = `sheet-${titleKey}`;
+        ids.set(rowNumber, generatedId);
+        console.log(
+            `[sheet row ${rowNumber}] new publication id "${generatedId}".`,
+        );
+    });
+
+    return ids;
+};
+
+const buildItemFromRow = (
+    record,
+    rowNumber,
+    publicationId,
+    publicationCategories,
+) => {
     const enabled = parseBoolean(record.enabled, "enabled", rowNumber, true);
     if (!enabled) return null;
 
+    const rowErrors = validatePublicationSheetRow(record, {
+        categories: publicationCategories,
+    });
+    if (rowErrors.length > 0) {
+        throw new Error(
+            `[sheet row ${rowNumber}] ${rowErrors
+                .map(({ field, message }) => `"${field}" ${message}`)
+                .join(" ")}`,
+        );
+    }
+
     const title = normalizeCell(record.title);
-    const explicitId = normalizeCell(record.id);
-    const generatedIdSlug = normalizeSlug(title);
-    if (!explicitId && !generatedIdSlug) {
+    if (!publicationId) {
         throw new Error(
             `[sheet row ${rowNumber}] "title" must contain characters that can be used to generate an id.`,
         );
     }
-    const publicationId = explicitId || `sheet-${generatedIdSlug}`;
-    if (!explicitId) {
-        console.warn(
-            `[sheet row ${rowNumber}] generated id "${publicationId}". Copy it into the id cell after the first import to keep the URL and News identity stable if the title changes.`,
-        );
-    }
 
     const labs = parseList(record.labs);
-    if (labs.length === 0) {
-        throw new Error(`[sheet row ${rowNumber}] "labs" is required.`);
-    }
 
     const rawItem = {
         id: publicationId,
@@ -196,7 +306,7 @@ const buildItemFromRow = (record, rowNumber, publicationCategories) => {
     }
 };
 
-const normalizeSheetRows = async (csvText) => {
+export const normalizeSheetRows = async (csvText, previousItems = []) => {
     const rows = parseCsv(csvText);
     if (rows.length < 2) {
         throw new Error("[sheet] CSV must contain a header and at least one row.");
@@ -225,19 +335,23 @@ const normalizeSheetRows = async (csvText) => {
     const items = [];
     const errors = [];
 
-    rows.slice(1).forEach((values, rowIndex) => {
-        const rowNumber = rowIndex + 2;
-        const record = Object.fromEntries(
+    const entries = rows.slice(1).map((values, rowIndex) => ({
+        rowNumber: rowIndex + 2,
+        record: Object.fromEntries(
             headers.map((header, columnIndex) => [
                 header,
                 values[columnIndex] ?? "",
             ]),
-        );
+        ),
+    }));
+    const rowIds = assignRowIds(entries, previousItems);
 
+    entries.forEach(({ rowNumber, record }) => {
         try {
             const item = buildItemFromRow(
                 record,
                 rowNumber,
+                rowIds.get(rowNumber),
                 publicationCategories,
             );
             if (item) items.push(item);
@@ -344,8 +458,18 @@ const bootstrap = async () => {
     );
 };
 
+const readSnapshotItems = async () => {
+    const snapshot = await readJsonFile(PUBLICATIONS_SHEET_SNAPSHOT_FILE, {
+        items: [],
+    });
+    return Array.isArray(snapshot?.items) ? snapshot.items : [];
+};
+
 const validateCsvFile = async (filePath) => {
-    const items = await normalizeSheetRows(await fs.readFile(filePath, "utf8"));
+    const items = await normalizeSheetRows(
+        await fs.readFile(filePath, "utf8"),
+        await readSnapshotItems(),
+    );
     console.log(
         `[sheet] validated ${items.length} rows from ${relativeFromRoot(filePath)}`,
     );
@@ -387,10 +511,13 @@ const pull = async () => {
         );
     }
 
-    const items = await normalizeSheetRows(await response.text());
     const current = await readJsonFile(PUBLICATIONS_SHEET_SNAPSHOT_FILE, {
         items: [],
     });
+    const items = await normalizeSheetRows(
+        await response.text(),
+        Array.isArray(current?.items) ? current.items : [],
+    );
     const currentCount = current.items?.length ?? 0;
     const minimumSafeCount = Math.floor(currentCount * 0.75);
     if (

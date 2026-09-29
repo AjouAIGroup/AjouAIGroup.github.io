@@ -24,18 +24,94 @@
       "areas": [
         "computer-vision"
       ],
-      "official_url": "https://cvpr.thecvf.com/",
-      "cfp_url": "https://cvpr.thecvf.com/",
-      "status": "needs_review",
+      "official_url": "https://cvpr.thecvf.com/Conferences/2027",
+      "cfp_url": "https://cvpr.thecvf.com/Conferences/2027/Dates",
+      "status": "verified",
       "event": {
-        "dates": "June 20-24, 2027",
+        "dates": "June 20-25, 2027",
         "location": "Seattle, Washington, USA",
         "venue": "Venue TBA",
         "source_url": "https://www.thecvf.com/?p=137",
         "status": "official"
       },
-      "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.455Z"
+      "milestones": [
+        {
+          "id": "registration",
+          "label": "Paper registration deadline",
+          "short_label": "Registration",
+          "kind": "registration",
+          "deadline_at": "2026-11-10T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Paper Registration Deadline\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "paper",
+          "label": "Paper submission deadline (no extension)",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-11-16T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Submission Deadline\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "supplementary",
+          "label": "Supplementary materials deadline",
+          "short_label": "Supplementary",
+          "kind": "supplementary",
+          "deadline_at": "2026-11-23T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Supplementary Materials Deadline\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "reviews",
+          "label": "Reviews released",
+          "short_label": "Reviews",
+          "kind": "review",
+          "deadline_at": "2027-01-25T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Reviews Released\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "rebuttal",
+          "label": "Rebuttal period (January 25 - February 1)",
+          "short_label": "Rebuttal",
+          "kind": "rebuttal",
+          "deadline_at": "2027-02-01T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
+          "id": "decision",
+          "label": "Final decisions",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2027-02-25T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Final Decisions\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        }
+      ],
+      "source_checked_at": "2026-09-29T18:00:00+09:00",
+      "source_evidence": "Paper Registration Deadline"
     },
     {
       "id": "iccv",
@@ -229,17 +305,65 @@
       "areas": [
         "computer-vision"
       ],
-      "official_url": "https://bmvc2026.org/",
-      "cfp_url": "https://bmvc2026.org/",
-      "status": "awaiting_cfp",
+      "official_url": "https://bmvc2026.bmva.org/",
+      "cfp_url": "https://bmvc2026.bmva.org/dates/",
+      "status": "verified",
       "event": {
         "dates": "November 23-26, 2026",
         "location": "Lancaster, United Kingdom",
-        "venue": "Venue TBA",
-        "source_url": "https://www.bmva.org/bmvc",
+        "venue": "Lancaster Town Hall",
+        "source_url": "https://bmvc2026.bmva.org/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [
+        {
+          "id": "abstract",
+          "label": "Abstract submission deadline",
+          "short_label": "Abstract",
+          "kind": "abstract",
+          "deadline_at": "2026-05-22T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
+          "id": "paper",
+          "label": "Paper and supplementary submission deadline",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-05-29T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
+          "id": "rebuttal",
+          "label": "Rebuttal ends (opens July 3 with reviews)",
+          "short_label": "Rebuttal",
+          "kind": "rebuttal",
+          "deadline_at": "2026-07-10T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
+          "id": "decision",
+          "label": "Author notifications",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2026-08-07T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready deadline",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2026-08-28T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified"
+        }
+      ],
+      "source_checked_at": "2026-09-29T18:00:00+09:00",
+      "source_evidence": "Paper Submission Deadline"
     },
     {
       "id": "accv",
@@ -711,17 +835,85 @@
       "areas": [
         "machine-learning"
       ],
-      "official_url": "https://aistats.org/",
-      "cfp_url": "https://aistats.org/",
-      "status": "awaiting_cfp",
+      "official_url": "https://aistats.org/aistats2027/",
+      "cfp_url": "https://virtual.aistats.org/Conferences/2027/Dates",
+      "status": "verified",
       "event": {
-        "dates": "May 2-5, 2026",
-        "location": "Tangier, Morocco",
-        "venue": "Hilton Tangier Al Houara Resort & Spa",
-        "source_url": "https://virtual.aistats.org/",
+        "dates": "May 3-6, 2027",
+        "location": "Montreal, Canada",
+        "venue": "Venue TBA",
+        "source_url": "https://aistats.org/aistats2027/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [
+        {
+          "id": "abstract",
+          "label": "Abstract submission deadline",
+          "short_label": "Abstract",
+          "kind": "abstract",
+          "deadline_at": "2026-09-29T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Abstract Submission Deadline\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "paper",
+          "label": "Full paper submission, including supplementary material",
+          "short_label": "Paper",
+          "kind": "paper",
+          "deadline_at": "2026-10-06T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Full Paper Submission Deadline \\(including all supplementary material\\)\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "reviews",
+          "label": "Reviews released",
+          "short_label": "Reviews",
+          "kind": "review",
+          "deadline_at": "2026-11-16T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Reviews Released\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "discussion",
+          "label": "Author-reviewer discussion ends (opens November 23)",
+          "short_label": "Discussion",
+          "kind": "rebuttal",
+          "deadline_at": "2026-12-03T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Author Reviewer Discussion Period Ends\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "decision",
+          "label": "Paper decision notifications",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2027-01-20T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Paper Decision Notifications\\s+([A-Za-z]+\\s+\\d{1,2}\\s+'\\d{2})",
+            "timezone": "AoE"
+          }
+        }
+      ],
+      "source_checked_at": "2026-09-29T18:00:00+09:00",
+      "source_evidence": "Full Paper Submission Deadline"
     },
     {
       "id": "uai",
@@ -957,9 +1149,9 @@
       "areas": [
         "llm-nlp"
       ],
-      "official_url": "https://www.aclweb.org/portal/",
-      "cfp_url": "https://www.aclweb.org/portal/",
-      "status": "awaiting_cfp",
+      "official_url": "https://2027.aclweb.org/",
+      "cfp_url": "https://2027.aclweb.org/calls/main/",
+      "status": "verified",
       "event": {
         "dates": "August 17-22, 2027",
         "location": "Kyoto, Japan",
@@ -967,7 +1159,23 @@
         "source_url": "https://2027.aclweb.org/",
         "status": "official"
       },
-      "milestones": []
+      "milestones": [
+        {
+          "id": "arr-submission",
+          "label": "ARR submission deadline (January 2027 cycle)",
+          "short_label": "ARR submission",
+          "kind": "paper",
+          "deadline_at": "2027-01-04T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "ARR submission deadline \\(long (?:&|&amp;) short papers\\)[^A-Za-z]{0,20}([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE"
+          }
+        }
+      ],
+      "source_checked_at": "2026-09-29T18:00:00+09:00",
+      "source_evidence": "ARR submission deadline"
     },
     {
       "id": "emnlp",
@@ -1229,9 +1437,9 @@
       "areas": [
         "llm-nlp"
       ],
-      "official_url": "https://coling2025.org/",
-      "cfp_url": "https://coling2025.org/",
-      "status": "needs_review",
+      "official_url": "https://2027.coling-iccl.org/",
+      "cfp_url": "https://2027.coling-iccl.org/calls/main_conference_papers/",
+      "status": "verified",
       "event": {
         "dates": "May 9-14, 2027",
         "location": "Macau, China",
@@ -1239,8 +1447,49 @@
         "source_url": "https://2027.coling-iccl.org/about/",
         "status": "official"
       },
-      "milestones": [],
-      "source_checked_at": "2026-09-03T07:14:26.464Z"
+      "milestones": [
+        {
+          "id": "arr-submission",
+          "label": "ARR submission deadline (October 2026 cycle)",
+          "short_label": "ARR submission",
+          "kind": "paper",
+          "deadline_at": "2026-10-12T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "ARR submission deadline \\(long (?:&|&amp;) short papers\\):\\s*([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "commitment",
+          "label": "Commitment after meta-reviews",
+          "short_label": "Commitment",
+          "kind": "paper",
+          "deadline_at": "2026-12-23T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Commitment after meta-reviews:\\s*([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE"
+          }
+        },
+        {
+          "id": "notification",
+          "label": "Notification of acceptance",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2027-02-10T23:59:00-12:00",
+          "timezone_label": "AoE",
+          "status": "verified",
+          "source_parser": {
+            "match": "Notification of acceptance:\\s*([A-Za-z]+\\s+\\d{1,2},\\s+\\d{4})",
+            "timezone": "AoE"
+          }
+        }
+      ],
+      "source_checked_at": "2026-09-29T18:00:00+09:00",
+      "source_evidence": "Commitment after meta-reviews"
     },
     {
       "id": "conll",
@@ -1537,20 +1786,20 @@
       "areas": [
         "robotics"
       ],
-      "official_url": "https://www.ieee-ras.org/conferences-workshops/financially-co-sponsored/humanoids",
-      "cfp_url": "https://www.ieee-ras.org/event/2026-ieee-ras-25th-international-conference-on-humanoid-robots-humanoids-68892/",
+      "official_url": "https://2026.ieee-humanoids.org/",
+      "cfp_url": "https://2026.ieee-humanoids.org/call-for-papers/",
       "status": "verified",
-      "source_checked_at": "2026-08-26T00:00:00+09:00",
-      "source_evidence": "Paper submission deadline: Humanoids",
+      "source_checked_at": "2026-09-29T18:00:00+09:00",
+      "source_evidence": "Paper submission deadline",
       "next_cfp": {
         "cycle": "Humanoids 2027",
-        "expected_window": "mid-2026; official announcement pending"
+        "expected_window": "mid-2027 (estimated)"
       },
       "event": {
-        "dates": "December 7-9, 2026",
+        "dates": "December 6-9, 2026",
         "location": "Santa Clara, California, USA",
         "venue": "Santa Clara Convention Center",
-        "source_url": "https://www.ieee-ras.org/event/2026-ieee-ras-25th-international-conference-on-humanoid-robots-humanoids-68892/",
+        "source_url": "https://2026.ieee-humanoids.org/",
         "status": "official"
       },
       "milestones": [
@@ -1559,13 +1808,36 @@
           "label": "Paper submission deadline",
           "short_label": "Paper",
           "kind": "paper",
-          "deadline_at": "2025-07-13T23:59:00-12:00",
-          "timezone_label": "Anywhere on Earth (AoE)",
-          "status": "verified",
-          "source_parser": {
-            "match": "([A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4}).{0,220}?Paper submission deadline: Humanoids",
-            "timezone": "AoE"
-          }
+          "deadline_at": "2026-07-27T23:59:00-07:00",
+          "timezone_label": "Pacific Time (PT)",
+          "status": "verified"
+        },
+        {
+          "id": "supplementary",
+          "label": "Supplementary video deadline (optional)",
+          "short_label": "Video",
+          "kind": "supplementary",
+          "deadline_at": "2026-07-30T23:59:00-07:00",
+          "timezone_label": "Pacific Time (PT)",
+          "status": "verified"
+        },
+        {
+          "id": "decision",
+          "label": "Notification of acceptance",
+          "short_label": "Decision",
+          "kind": "notification",
+          "deadline_at": "2026-10-06T23:59:00-07:00",
+          "timezone_label": "Pacific Time (PT)",
+          "status": "verified"
+        },
+        {
+          "id": "camera-ready",
+          "label": "Camera-ready paper deadline",
+          "short_label": "Camera-ready",
+          "kind": "camera-ready",
+          "deadline_at": "2026-10-26T23:59:00-07:00",
+          "timezone_label": "Pacific Time (PT)",
+          "status": "verified"
         }
       ]
     }

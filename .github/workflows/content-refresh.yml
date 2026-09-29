@@ -78,7 +78,11 @@ jobs:
             src/generated/news.generated.json
             src/generated/publications.generated.json
 
+      # A push to main is already deployed by Deploy GitHub Pages from the
+      # committed content. Deploying here as well would race it, and whichever
+      # finished last would decide what the site shows.
       - name: Deploy refreshed site to gh-pages
+        if: github.event_name != 'push'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

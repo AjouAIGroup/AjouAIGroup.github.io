@@ -3,7 +3,7 @@
     "schema_version": "1.1",
     "source": "google-sheets snapshot",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "source_synced_at": "2026-09-08T10:03:54.737Z",
+    "source_synced_at": "2026-09-29T07:00:21.155Z",
     "categories": [
       "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",
@@ -52,7 +52,7 @@
       "category": "efficient_learning_for_llms",
       "status": "published",
       "title": "Layer-wise Curriculum Learning for Efficient LLM Compression",
-      "summary": "EMNLP 2026 publication from MMAI Lab.",
+      "summary": "EMNLP 2026 publication from MMAI Lab. -test-",
       "featured": false,
       "research_meta": {
         "author": "Donggeon Lee, Dooyeon Na, Seungmin Oh, Jongbin Ryu",

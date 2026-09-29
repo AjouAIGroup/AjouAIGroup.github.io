@@ -862,6 +862,30 @@ const writeSheetRow = async (env, header, rowNumber, cells) => {
     return Number.isFinite(appendedRow) ? appendedRow : null;
 };
 
+// Google's error text is English and technical, so the common setup mistakes
+// are translated into the step an operator has to fix.
+const describeSheetError = (message) => {
+    const text = String(message || "");
+    if (/has not been used|is disabled|SERVICE_DISABLED/i.test(text)) {
+        return "Google Cloud 프로젝트에서 Google Sheets API를 사용 설정해주세요.";
+    }
+    if (/permission|PERMISSION_DENIED|forbidden/i.test(text)) {
+        return "서비스 계정 이메일을 Sheet 공유 설정에 편집자로 추가해주세요.";
+    }
+    if (/Unable to parse range/i.test(text)) {
+        return "Sheet의 데이터 탭 이름이 Publications인지 확인해주세요.";
+    }
+    if (
+        /invalid_grant|invalid_client|Invalid JWT|account not found/i.test(text)
+    ) {
+        return "서비스 계정 키가 올바른지, 삭제되지 않았는지 확인해주세요.";
+    }
+    if (/Requested entity was not found|NOT_FOUND/i.test(text)) {
+        return "wrangler.toml의 PUBLICATIONS_SHEET_ID가 Sheet 주소와 같은지 확인해주세요.";
+    }
+    return "";
+};
+
 const handlePublicationRows = async (request, env, url) => {
     const rowMatch = PUBLICATION_ROW_PATH.exec(url.pathname);
     const isList = !rowMatch && request.method === "GET";
@@ -999,11 +1023,19 @@ const handlePublicationRows = async (request, env, url) => {
                 error.status,
             );
         }
+        console.error(
+            JSON.stringify({
+                event: "publication.sheet_error",
+                actor,
+                message: error.message,
+            }),
+        );
         return jsonResponse(
             request,
             env,
             {
                 error: "Google Sheet에 연결하지 못했습니다.",
+                hint: describeSheetError(error.message),
                 detail: error.message,
             },
             502,

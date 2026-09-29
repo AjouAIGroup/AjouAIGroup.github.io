@@ -120,8 +120,16 @@ const requestJson = async (url, credential, init = {}) => {
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
+        // The hint names the fix; the detail is the upstream message, shown
+        // so an operator can report exactly what Google or GitHub said.
         const failure = new Error(
-            payload.error || "요청을 처리하지 못했습니다.",
+            [
+                payload.error || "요청을 처리하지 못했습니다.",
+                payload.hint,
+                payload.detail ? `(${payload.detail})` : "",
+            ]
+                .filter(Boolean)
+                .join(" "),
         );
         failure.status = response.status;
         failure.payload = payload;

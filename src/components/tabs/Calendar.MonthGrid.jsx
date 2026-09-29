@@ -7,6 +7,7 @@ import {
     getDeadlineDayParts,
     toDeadlineDayKey,
 } from "../../utils/deadlineData";
+import CountryFlags from "../CountryFlags";
 
 const WEEKDAYS = [
     { short: "Sun", long: "Sunday" },
@@ -301,6 +302,11 @@ function DeadlineMonthGrid({ venues, now }) {
                                                         key={event.id}
                                                         className={`calendar-month__chip calendar-month__chip--${event.tone}`}>
                                                         <span className="calendar-month__chip-venue">
+                                                            <CountryFlags
+                                                                location={
+                                                                    event.location
+                                                                }
+                                                            />
                                                             {event.venueName}
                                                         </span>
                                                         <span className="calendar-month__chip-label">
@@ -338,6 +344,9 @@ function DeadlineMonthGrid({ venues, now }) {
                                             {event.shortLabel}
                                         </p>
                                         <p className="calendar-month__detail-venue">
+                                            <CountryFlags
+                                                location={event.location}
+                                            />
                                             {event.venueName}
                                         </p>
                                         <p className="calendar-month__detail-label">

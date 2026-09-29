@@ -206,6 +206,7 @@ export const getDeadlineCalendarEvents = (venues = []) =>
                     venueName: venue.name,
                     venueFullName: venue.full_name,
                     cfpUrl: venue.cfp_url,
+                    location: venue.event?.location ?? "",
                     kind: milestone.kind,
                     tone: getMilestoneKindTone(milestone.kind),
                     label: milestone.label,

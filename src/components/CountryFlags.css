@@ -1,0 +1,15 @@
+.country-flags {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    vertical-align: -0.1em;
+}
+
+.country-flags__flag {
+    width: 1.15em;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-width: none;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px var(--line);
+}

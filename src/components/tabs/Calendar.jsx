@@ -9,43 +9,11 @@ import {
     getVenueCfpState,
     getVenueStatusMeta,
 } from "../../utils/deadlineData";
+import CountryFlags from "../CountryFlags";
 import DeadlineMonthGrid from "./Calendar.MonthGrid";
 import "./Calendar.css";
 
 const ALL_AREAS = "all";
-
-const LOCATION_FLAGS = [
-    ["Hong Kong", "🇭🇰"],
-    ["Macau", "🇲🇴"],
-    ["South Korea", "🇰🇷"],
-    ["United Kingdom", "🇬🇧"],
-    ["Netherlands", "🇳🇱"],
-    ["Australia", "🇦🇺"],
-    ["New Zealand", "🇳🇿"],
-    ["Canada", "🇨🇦"],
-    ["Sweden", "🇸🇪"],
-    ["France", "🇫🇷"],
-    ["Greece", "🇬🇷"],
-    ["Hungary", "🇭🇺"],
-    ["Morocco", "🇲🇦"],
-    ["Italy", "🇮🇹"],
-    ["Japan", "🇯🇵"],
-    ["China", "🇨🇳"],
-    ["Vietnam", "🇻🇳"],
-    ["USA", "🇺🇸"],
-];
-
-const getLocationFlags = (location = "") =>
-    location
-        .split(";")
-        .map(
-            (place) =>
-                LOCATION_FLAGS.find(([country]) =>
-                    place.includes(country),
-                )?.[1],
-        )
-        .filter(Boolean)
-        .filter((flag, index, flags) => flags.indexOf(flag) === index);
 
 const getNextCfpMessage = (venue) => {
     const nextCfp = venue.next_cfp;
@@ -63,7 +31,6 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
     const milestone = venue.milestones.find((item) => item.id === milestoneId);
     const status = getVenueStatusMeta(venue.status);
     const cfpState = getVenueCfpState(venue, now ?? new Date());
-    const locationFlags = getLocationFlags(venue.event?.location);
     const countdown = milestone
         ? getCountdownLabel(milestone.deadline_at, now)
         : null;
@@ -112,13 +79,10 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
                     <div>
                         <dt>Location</dt>
                         <dd>
-                            {locationFlags.length ? (
-                                <span
-                                    className="calendar__location-flags"
-                                    aria-hidden="true">
-                                    {locationFlags.join(" ")}
-                                </span>
-                            ) : null}
+                            <CountryFlags
+                                location={venue.event.location}
+                                className="calendar__location-flags"
+                            />
                             {venue.event.location}
                         </dd>
                     </div>

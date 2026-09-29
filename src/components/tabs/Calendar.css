@@ -194,7 +194,11 @@
 .calendar__location-flags {
     margin-right: 0.38rem;
     font-size: 0.98rem;
-    letter-spacing: 0.08em;
+}
+
+.calendar-month__chip-venue .country-flags,
+.calendar-month__detail-venue .country-flags {
+    margin-right: 0.3rem;
 }
 
 .calendar__deadline {
@@ -332,16 +336,6 @@
     gap: 0.3rem;
 }
 
-.calendar-month__heading h2 {
-    margin: 0;
-    color: #171717;
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 3.4vw, 3.4rem);
-    font-weight: 400;
-    letter-spacing: -0.035em;
-    line-height: 1;
-}
-
 .calendar-month__heading p {
     margin: 0;
     color: #615e57;
@@ -423,7 +417,10 @@
     table-layout: fixed;
 }
 
-.calendar-month__caption {
+/* The page title above already names the calendar, so its own heading is
+   kept for screen readers only and still labels the section. */
+.calendar-month__caption,
+.calendar-month__heading h2 {
     position: absolute;
     width: 1px;
     height: 1px;

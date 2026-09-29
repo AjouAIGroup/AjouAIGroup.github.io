@@ -444,18 +444,40 @@ const bootstrap = async () => {
 // Records when each publication first reached the snapshot, so the home page
 // can lead with what was added most recently rather than by publication date,
 // which is often only a year. The very first import stamps nothing: it holds
-// the existing archive, not new additions.
-export const stampAddedAt = (items, previousItems, now) => {
+// the existing archive, not new additions. `archiveIds` lists that original
+// archive, so a paper added before stamping existed still gets a time on the
+// next sync instead of sinking among the archive.
+export const stampAddedAt = (items, previousItems, now, archiveIds = null) => {
     const previousById = new Map(previousItems.map((item) => [item.id, item]));
     return items.map((item) => {
         const previous = previousById.get(item.id);
-        if (previous) {
-            return previous.added_at
-                ? { ...item, added_at: previous.added_at }
-                : item;
+        if (previous?.added_at) {
+            return { ...item, added_at: previous.added_at };
         }
-        return previousItems.length > 0 ? { ...item, added_at: now } : item;
+        const isNewToSnapshot = !previous && previousItems.length > 0;
+        const isUnstampedAddition =
+            Boolean(previous) && archiveIds?.size > 0 && !archiveIds.has(item.id);
+        return isNewToSnapshot || isUnstampedAddition
+            ? { ...item, added_at: now }
+            : item;
     });
+};
+
+// The committed import CSV is the archive the sheet was first seeded with.
+const readArchiveIds = async () => {
+    try {
+        const rows = parseCsv(await fs.readFile(SHEET_IMPORT_FILE, "utf8"));
+        const idIndex = rows[0]?.map((cell) => normalizeCell(cell)).indexOf("id");
+        if (idIndex === undefined || idIndex < 0) return null;
+        return new Set(
+            rows
+                .slice(1)
+                .map((row) => normalizeCell(row[idIndex]))
+                .filter(Boolean),
+        );
+    } catch {
+        return null;
+    }
 };
 
 const readSnapshotItems = async () => {
@@ -519,6 +541,7 @@ const pull = async () => {
         await normalizeSheetRows(await response.text(), previousItems),
         previousItems,
         new Date().toISOString(),
+        await readArchiveIds(),
     );
     const currentCount = current.items?.length ?? 0;
     const minimumSafeCount = Math.floor(currentCount * 0.75);

@@ -3,7 +3,7 @@
     "schema_version": "1.1",
     "source": "google-sheets snapshot",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "source_synced_at": "2026-09-29T07:41:06.265Z",
+    "source_synced_at": "2026-09-29T07:47:55.166Z",
     "categories": [
       "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",
@@ -698,7 +698,8 @@
         "problem": "",
         "solve": "",
         "expermental_result": ""
-      }
+      },
+      "added_at": "2026-09-29T07:47:55.163Z"
     },
     {
       "id": "sheet-efficient-test-time-adaptation-through-candidate-verification-and-divergence-shifts",
@@ -727,7 +728,8 @@
         "problem": "",
         "solve": "",
         "expermental_result": ""
-      }
+      },
+      "added_at": "2026-09-29T07:47:55.163Z"
     },
     {
       "id": "sheet-flowvla-enabling-world-dynamics-understanding-through-pluggable-3d-flow-learning",
@@ -756,7 +758,8 @@
         "problem": "",
         "solve": "",
         "expermental_result": ""
-      }
+      },
+      "added_at": "2026-09-29T07:47:55.163Z"
     },
     {
       "id": "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
@@ -785,7 +788,8 @@
         "problem": "",
         "solve": "",
         "expermental_result": ""
-      }
+      },
+      "added_at": "2026-09-29T07:47:55.163Z"
     },
     {
       "id": "core-capub1-do-your-best-and-get-enough-rest-for-continual",
@@ -2179,7 +2183,8 @@
         "problem": "",
         "solve": "",
         "expermental_result": ""
-      }
+      },
+      "added_at": "2026-09-29T07:47:55.163Z"
     },
     {
       "id": "biomedical-bapub0-deep-learning-using-computed-tomography-to",

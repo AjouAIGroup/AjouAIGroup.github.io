@@ -441,6 +441,23 @@ const bootstrap = async () => {
     );
 };
 
+// Records when each publication first reached the snapshot, so the home page
+// can lead with what was added most recently rather than by publication date,
+// which is often only a year. The very first import stamps nothing: it holds
+// the existing archive, not new additions.
+export const stampAddedAt = (items, previousItems, now) => {
+    const previousById = new Map(previousItems.map((item) => [item.id, item]));
+    return items.map((item) => {
+        const previous = previousById.get(item.id);
+        if (previous) {
+            return previous.added_at
+                ? { ...item, added_at: previous.added_at }
+                : item;
+        }
+        return previousItems.length > 0 ? { ...item, added_at: now } : item;
+    });
+};
+
 const readSnapshotItems = async () => {
     const snapshot = await readJsonFile(PUBLICATIONS_SHEET_SNAPSHOT_FILE, {
         items: [],
@@ -497,9 +514,11 @@ const pull = async () => {
     const current = await readJsonFile(PUBLICATIONS_SHEET_SNAPSHOT_FILE, {
         items: [],
     });
-    const items = await normalizeSheetRows(
-        await response.text(),
-        Array.isArray(current?.items) ? current.items : [],
+    const previousItems = Array.isArray(current?.items) ? current.items : [];
+    const items = stampAddedAt(
+        await normalizeSheetRows(await response.text(), previousItems),
+        previousItems,
+        new Date().toISOString(),
     );
     const currentCount = current.items?.length ?? 0;
     const minimumSafeCount = Math.floor(currentCount * 0.75);

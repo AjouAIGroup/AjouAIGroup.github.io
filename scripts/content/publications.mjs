@@ -223,9 +223,14 @@ const loadSheetPublicationItems = async (publicationCategories) => {
     }
 
     return {
-        items: data.items.map((item) =>
-            parseStructuredPublicationItem(item, publicationCategories),
-        ),
+        items: data.items.map((item) => {
+            const parsed = parseStructuredPublicationItem(
+                item,
+                publicationCategories,
+            );
+            const addedAt = normalizeText(item.added_at);
+            return addedAt ? { ...parsed, added_at: addedAt } : parsed;
+        }),
         meta: data.meta ?? {},
     };
 };

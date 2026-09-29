@@ -223,8 +223,17 @@ export const getPublicationYears = () =>
         },
     );
 
-export const getLatestPublications = (limit = 3) =>
-    getAllPublications().slice(0, limit);
+// Newly added publications lead, most recent first; the rest follow in
+// publication-date order. Many lab sites list only a year, so the date alone
+// cannot tell which paper is new.
+export const getLatestPublications = (limit = 3) => {
+    const publications = getAllPublications();
+    const added = publications
+        .filter((item) => normalizeText(item.added_at))
+        .sort((a, b) => b.added_at.localeCompare(a.added_at));
+    const rest = publications.filter((item) => !normalizeText(item.added_at));
+    return [...added, ...rest].slice(0, limit);
+};
 
 const VENUE_SHORT_NAMES = [
     "AAAI",

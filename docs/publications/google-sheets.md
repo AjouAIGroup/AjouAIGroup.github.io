@@ -185,6 +185,11 @@ Sheet ID와 탭 이름은 `wrangler.toml`의 `PUBLICATIONS_SHEET_ID`,
    바뀌고 `검토 PR 열기`가 나타나면 PR의 추가·수정·삭제 내용을 검토합니다.
 5. PR을 병합하고 Pages 배포 완료를 확인합니다.
 
+홈페이지 첫 화면의 Publications 목록은 새로 추가된 순서로 보여줍니다. 동기화가
+처음 보는 Publication에 `added_at`(추가 시각)을 스냅샷에 기록하고, 제목을 고쳐도
+처음 기록한 시각을 유지합니다. 이 기록이 없는 기존 항목은 그 뒤에 게재일 순으로
+이어집니다. 전체 Publications 페이지는 계속 게재일 순입니다.
+
 ### 연구실 홈페이지에서 새 Publication 가져오기
 
 `Refresh External Content` 워크플로가 매주 수요일(한국시간 정오 무렵) 각

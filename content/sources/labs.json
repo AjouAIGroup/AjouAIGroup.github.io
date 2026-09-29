@@ -19,8 +19,7 @@
       "kind": "news",
       "adapter": "cvl-news",
       "url": "https://mmai-laboratory.github.io/news",
-      "enabled": false,
-      "disabled_reason": "MMAI's public news archive is currently an in-progress source with placeholder entries."
+      "enabled": true
     },
     {
       "id": "hei-publications",

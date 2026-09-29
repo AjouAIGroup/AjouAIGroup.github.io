@@ -43,6 +43,9 @@ const TYPE_LABELS = {
 
 const PAPER_ACCEPTED_TYPE = "paper_accepted";
 const AUTO_PUBLICATION_SOURCE = "publications-auto";
+// Short titles could appear inside unrelated text, so only titles at least
+// this long (as a slug) are matched against lab announcements.
+const MIN_ANNOUNCED_TITLE_LENGTH = 20;
 
 const normalizeText = (value) => String(value ?? "").trim();
 
@@ -242,6 +245,19 @@ const mergePublicationNewsItems = (manualItems, publicationItems) => {
             .map((item) => normalizeText(item.publication_id))
             .filter(Boolean),
     );
+    // A lab's own announcement often names several papers in one item, with
+    // the real acceptance date. Its papers then need no separate generated
+    // item, which would repeat them under the year-only publication date.
+    const announcedText = manualItems
+        .filter((item) => item.type === PAPER_ACCEPTED_TYPE)
+        .map((item) => normalizeSlug(`${item.title} ${item.summary}`));
+    const isAnnounced = (publicationItem) => {
+        const titleSlug = normalizeSlug(publicationItem.title);
+        return (
+            titleSlug.length >= MIN_ANNOUNCED_TITLE_LENGTH &&
+            announcedText.some((text) => text.includes(titleSlug))
+        );
+    };
     const manualPaperKeys = new Set(
         manualItems
             .filter((item) => item.type === PAPER_ACCEPTED_TYPE)
@@ -273,6 +289,9 @@ const mergePublicationNewsItems = (manualItems, publicationItems) => {
                 return;
             }
             if (manualPaperKeys.has(paperKey)) {
+                return;
+            }
+            if (isAnnounced(publicationItem)) {
                 return;
             }
 

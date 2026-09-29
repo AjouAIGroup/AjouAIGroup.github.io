@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-09-07T05:43:35.469Z"
+    "generated_at": "2026-09-29T08:03:59.866Z"
   },
   "items": [
     {
@@ -38,7 +38,7 @@
       "summary": "WACV 2025 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Junhyung Ko, Jongbin Ryu",
+        "author": "Junhyeong Go, Jongbin Ryu",
         "published_place": "WACV 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -73,9 +73,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2609.18131v1",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2609.18131v1"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -101,6 +101,31 @@
         "project_link": "https://www.nature.com/articles/s41598-020-74653-1.pdf",
         "source_code_link": "",
         "paper_link": "https://www.nature.com/articles/s41598-020-74653-1.pdf"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
+      "id": "cvl-publications-differentiable-bit-widths-co-optimizing-pruning-and-quantization-via-svd-for-ultra-efficient-llm-compression",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Differentiable Bit-Widths: Co-optimizing Pruning and Quantization via SVD for Ultra-Efficient LLM Compression",
+      "summary": "NeurIPS 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Hankyul Kang, Jongbin Ryu",
+        "published_place": "NeurIPS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -156,6 +181,31 @@
       "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
+      "id": "cvl-publications-efficient-test-time-adaptation-through-candidate-verification-and-divergence-shifts",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Efficient Test-time Adaptation through Candidate Verification and Divergence Shifts",
+      "summary": "NeurIPS 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seungmin Oh, Seunghun Kang, Jongbin Ryu",
+        "published_place": "NeurIPS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
       "id": "cvl-publications-enriching-local-patterns-with-multi-token-attention-for-broad-sight-neural-networks",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
@@ -176,6 +226,31 @@
         "project_link": "https://openaccess.thecvf.com/content/WACV2025/papers/Kang_Enriching_Local_Patterns_with_Multi-Token_Attention_for_Broad-Sight_Neural_Networks_WACV_2025_paper.pdf",
         "source_code_link": "",
         "paper_link": "https://openaccess.thecvf.com/content/WACV2025/papers/Kang_Enriching_Local_Patterns_with_Multi-Token_Attention_for_Broad-Sight_Neural_Networks_WACV_2025_paper.pdf"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
+      "id": "cvl-publications-flowvla-enabling-world-dynamics-understanding-through-pluggable-3d-flow-learning",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "FlowVLA: Enabling World Dynamics Understanding through Pluggable 3D Flow Learning",
+      "summary": "CoRL 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Junhyeong Go, Mingyu Jung, Woobin Im, Jongbin Ryu",
+        "published_place": "CoRL 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://mmai-laboratory.github.io/publication",
+        "source_code_link": "",
+        "paper_link": "https://mmai-laboratory.github.io/publication"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -223,9 +298,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2609.19213",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2609.19213"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -273,24 +348,24 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2609.06967",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2609.06967"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
-      "id": "cvl-publications-robust-asymmetric-loss-for-multi-label-long-tailed-learning",
-      "category": "computer_vision_and_learning_algorithms",
+      "id": "cvl-publications-style-kd-class-imbalanced-medical-image-classification-via-style-knowledge-distillation",
+      "category": "industrial_and_medical_ai",
       "status": "published",
-      "title": "Robust Asymmetric Loss for Multi-Label Long-Tailed Learning",
-      "summary": "ICCVW 2023 publication from MMAI Lab.",
+      "title": "Style-KD : Class-Imbalanced Medical Image Classification via Style Knowledge Distillation",
+      "summary": "BSPC 2024 publication from MMAI Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Wongi Park, Inhyuk Park, Sungeun Kim, Jongbin Ryu",
-        "published_place": "ICCVW 2023",
-        "published_date": "2023-01-01",
+        "author": "Inhyuk Park, Won Hwa Kim, Jongbin Ryu",
+        "published_place": "BSPC 2024",
+        "published_date": "2024-01-01",
         "keywords": [],
         "labs": [
           "MMAI Lab"
@@ -298,9 +373,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html",
+        "project_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617",
         "source_code_link": "",
-        "paper_link": "https://openaccess.thecvf.com/content/ICCV2023W/CVAMD/html/Park_Robust_Asymmetric_Loss_for_Multi-Label_Long-Tailed_Learning_ICCVW_2023_paper.html"
+        "paper_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -348,9 +423,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2609.06974",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2609.06974"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -738,7 +813,7 @@
       "summary": "Nano Convergence 2026 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Ji Hoon Hong, Chi-Hoon Lee, Hyeon Woo Kim, Dong Won Jeon, Jun Hyuk Kang, Yoon-Seo Kim, Ji-Su Bae, Seonggil Heo, Sangyeon Lee, Jooyeong Na, Jaegook You, Soyeon Hong, Hyunsouk Cho , Jin-Seong Park, Sung Beom Cho",
+        "author": "Ji Hoon Hong, Chi-Hoon Lee, Hyeon Woo Kim, Dong Won Jeon, Jun Hyuk Kang, Yoon-Seo Kim, Ji-Su Bae, Seonggil Heo, Sangyeon Lee, Jooyeong Na , Jaegook You , Soyeon Hong , Hyunsouk Cho , Jin-Seong Park, Sung Beom Cho",
         "published_place": "Nano Convergence 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -763,7 +838,7 @@
       "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Soyeon Hong, Heegyu Kim, Ji Hoon Hong, Jindong Hwang, Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
+        "author": "Soyeon Hong , Heegyu Kim , Ji Hoon Hong, Jindong Hwang , Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
         "published_place": "Findings of EMNLP 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -813,7 +888,7 @@
       "summary": "ICDM 2026 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Jinchan Kim, Jinhee Im, and Hyunsouk Cho",
+        "author": "Jinchan Kim , Jinhee Im , and Hyunsouk Cho",
         "published_place": "ICDM 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -863,7 +938,7 @@
       "summary": "Advanced Materials 2026 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Dong Won Jeon, Dong Hwi Kim, Taeyang Jeon, Joo Yeong Na, Heegyu Kim, Hyunsouk Cho , Dae Soo Jung, Ju Li, Jin-Sung Park, Sung Beom Cho",
+        "author": "Dong Won Jeon, Dong Hwi Kim, Taeyang Jeon , Joo Yeong Na , Heegyu Kim , Hyunsouk Cho , Dae Soo Jung, Ju Li, Jin-Sung Park, Sung Beom Cho",
         "published_place": "Advanced Materials 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -913,7 +988,7 @@
       "summary": "IEEE Access 2024 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Soyeon Hong, HyeoungGuk Kang, Hyunsouk Cho",
+        "author": "Soyeon Hong , HyeoungGuk Kang, Hyunsouk Cho",
         "published_place": "IEEE Access 2024",
         "published_date": "2024-01-01",
         "keywords": [],
@@ -938,7 +1013,7 @@
       "summary": "IEEE Access 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Donghoon Lee, Hyunsouk Cho",
+        "author": "Donghoon Lee , Hyunsouk Cho",
         "published_place": "IEEE Access 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -963,7 +1038,7 @@
       "summary": "AAAI 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Wooyeon Jo, Hyunsouk Cho",
+        "author": "Wooyeon Jo , Hyunsouk Cho",
         "published_place": "AAAI 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -1063,7 +1138,7 @@
       "summary": "IEEE Access 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Seunghwan Choi, Donghoon Lee, Hyeoungguk Kang, Hyunsouk Cho",
+        "author": "Seunghwan Choi , Donghoon Lee , Hyeoungguk Kang , Hyunsouk Cho",
         "published_place": "IEEE Access 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -1088,7 +1163,7 @@
       "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Jooyeong Na, Wansik Jo, Hyunsouk Cho",
+        "author": "Jooyeong Na , Wansik Jo , Hyunsouk Cho",
         "published_place": "Findings of EMNLP 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -1113,7 +1188,7 @@
       "summary": "ACL 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Heegyu Kim, Taeyang Jeon, Seunghwan Choi, Seungtaek Choi, Hyunsouk Cho",
+        "author": "Heegyu Kim , Taeyang Jeon , Seunghwan Choi , Seungtaek Choi, Hyunsouk Cho",
         "published_place": "ACL 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -1188,7 +1263,7 @@
       "summary": "Findings of EMNLP 2023 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Heegyu Kim, Hyunsouk Cho",
+        "author": "Heegyu Kim , Hyunsouk Cho",
         "published_place": "Findings of EMNLP 2023",
         "published_date": "2023-01-01",
         "keywords": [],
@@ -1263,7 +1338,7 @@
       "summary": "Int J Pharm 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Jin-Hyuk Jeong, Soyeon Hong, Ji-Hyeon Kwon, Soyoun Yang, Dong-Wook Kim, Nan Song, Hyunsouk Cho , Chun-Woong Park",
+        "author": "Jin-Hyuk Jeong, Soyeon Hong , Ji-Hyeon Kwon, Soyoun Yang, Dong-Wook Kim, Nan Song, Hyunsouk Cho , Chun-Woong Park",
         "published_place": "Int J Pharm 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -1388,7 +1463,7 @@
       "summary": "ACM MM 2024 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "{Soo-ho Kim, Soyeon Hong}, Kyungsoo Park, Hyunsouk Cho , Kyung-Ah Sohn",
+        "author": "{Soo-ho Kim, Soyeon Hong }, Kyungsoo Park, Hyunsouk Cho , Kyung-Ah Sohn",
         "published_place": "ACM MM 2024",
         "published_date": "2024-01-01",
         "keywords": [],
@@ -1438,7 +1513,7 @@
       "summary": "BigComp 2023 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "HyeoungGuk Kang, Donghoon Lee, Hyunsouk Cho",
+        "author": "Hyeoungguk Kang , Donghoon Lee , Hyunsouk Cho",
         "published_place": "BigComp 2023",
         "published_date": "2023-01-01",
         "keywords": [],
@@ -1488,7 +1563,7 @@
       "summary": "CIKM 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Wansik Jo, Jooyeong Na, Soyeon Hong, Seungtaek Choi, Hyunsouk Cho",
+        "author": "Wansik Jo , Jooyeong Na , Soyeon Hong , Seungtaek Choi, Hyunsouk Cho",
         "published_place": "CIKM 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -1588,7 +1663,7 @@
       "summary": "ICML 2026 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Soyeon Hong, Jinchan Kim, Jaegook You, Seungtaek Choi, Suha Kwak, Hyunsouk Cho",
+        "author": "Soyeon Hong , Jinchan Kim , Jaegook You , Seungtaek Choi, Suha Kwak, Hyunsouk Cho",
         "published_place": "ICML 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -1638,7 +1713,7 @@
       "summary": "CIKM 2025 publication from iKnow Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Heegyu Kim, Taeyang Jeon, Seungtaek Choi, Ji Hoon Hong, Dong Won Jeon, Ga-Yeon Baek, Gyeong-Won Kwak, Dong-Hee Lee, Jisu Bae, Chihoon Lee, Yunseo Kim, Seon-Jin Choi, Jin-Seong Park, Sung Beom Cho, Hyunsouk Cho",
+        "author": "Heegyu Kim , Taeyang Jeon , Seungtaek Choi, Ji Hoon Hong, Dong Won Jeon, Ga-Yeon Baek, Gyeong-Won Kwak, Dong-Hee Lee, Jisu Bae, Chihoon Lee, Yunseo Kim, Seon-Jin Choi, Jin-Seong Park, Sung Beom Cho, Hyunsouk Cho",
         "published_place": "CIKM 2025",
         "published_date": "2025-01-01",
         "keywords": [],
@@ -1733,7 +1808,7 @@
     {
       "id": "lamda-publications-empathy-is-steerable-but-multi-axial-mechanism-geometry-and-persona-effects-in-llms",
       "category": "efficient_learning_for_llms",
-      "status": "working",
+      "status": "published",
       "title": "Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs",
       "summary": "EMNLP 2026 publication from LAMDA Lab.",
       "featured": false,
@@ -1801,6 +1876,31 @@
         "project_link": "https://doi.org/10.1038/s41598-026-52750-x",
         "source_code_link": "",
         "paper_link": "https://doi.org/10.1038/s41598-026-52750-x"
+      },
+      "source_id": "lamda-publications",
+      "source_url": "https://sites.google.com/site/kasohn/publication"
+    },
+    {
+      "id": "lamda-publications-psydial-personality-based-synthetic-dialogue-generation-using-large-language-models",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "PSYDIAL: Personality-based Synthetic Dialogue Generation using Large Language Models",
+      "summary": "COLING 2024 publication from LAMDA Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Ji-Eun Han, Jun-Seok Koh, Hyeon-Tae Seo and Kyung-Ah Sohn",
+        "published_place": "COLING 2024",
+        "published_date": "2024-01-01",
+        "keywords": [],
+        "labs": [
+          "LAMDA Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://aclanthology.org/2024.lrec-main.1166/",
+        "source_code_link": "",
+        "paper_link": "https://aclanthology.org/2024.lrec-main.1166/"
       },
       "source_id": "lamda-publications",
       "source_url": "https://sites.google.com/site/kasohn/publication"
@@ -2691,6 +2791,31 @@
         "author": "S.-H. Lee, J.-H. Kim, H. Chung, and S.-W. Lee",
         "published_place": "NeurIPS 2021",
         "published_date": "2021-01-01",
+        "keywords": [],
+        "labs": [
+          "SAIL"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://sites.google.com/view/speechailab/publication",
+        "source_code_link": "",
+        "paper_link": "https://sites.google.com/view/speechailab/publication"
+      },
+      "source_id": "sail-publications",
+      "source_url": "https://sites.google.com/view/speechailab/publication"
+    },
+    {
+      "id": "sail-publications-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
+      "summary": "NeurIPS 2026 publication from SAIL.",
+      "featured": false,
+      "research_meta": {
+        "author": "S.-H. Lee and H.-Y. Choi",
+        "published_place": "NeurIPS 2026",
+        "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
           "SAIL"

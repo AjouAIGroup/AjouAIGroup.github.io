@@ -1,1 +1,0 @@
-import{r}from"./index-DSHvKlDK.js";function n(o){const e=[...o];for(let t=e.length-1;t>0;t-=1){const f=Math.floor(Math.random()*(t+1));[e[t],e[f]]=[e[f],e[t]]}return e}const s=typeof window>"u"?r.useEffect:r.useLayoutEffect;function d(o){const[e,t]=r.useState(o);return s(()=>{t(n(o))},[o]),e}export{d as u};

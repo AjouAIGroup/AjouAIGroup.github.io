@@ -30,7 +30,7 @@
     "js-yaml": "^4.3.1",
     "nanoid": "^3.3.18",
     "@humanfs/node": "0.16.8",
-    "fast-uri": "3.1.7"
+    "fast-uri": "3.1.8"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",

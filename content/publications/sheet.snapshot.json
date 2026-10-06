@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "source": "google-sheets",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "synced_at": "2026-09-29T07:47:55.166Z"
+    "synced_at": "2026-10-06T08:54:39.004Z"
   },
   "items": [
     {
@@ -739,9 +739,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://gnaroshi.dev/mmai-lab/flowvla",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://gnaroshi.dev/mmai-lab/flowvla"
       },
       "content": {
         "problem": "",

@@ -2,15 +2,15 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-09-29T08:03:59.866Z"
+    "generated_at": "2026-10-07T10:23:57.637Z"
   },
   "items": [
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-applied-energy-2026-09-03",
+      "id": "cvl-news-a-paper-has-been-accepted-at-applied-energy-2026-09-04",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Applied Energy",
       "summary": "One-Cycle Based Battery Remaining Useful Life Prediction by Continuous Wavelet Scale Compression with Deep Neural Networks",
-      "date": "2026-09-03",
+      "date": "2026-09-04",
       "related_person": "MMAI Lab",
       "venue": "Sungeun Kim, Mingyu Jung, Yuri Kim, Jin-Sung Park, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -19,11 +19,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-biomedical-signal-processing-and-control-2024-12-28",
+      "id": "cvl-news-a-paper-has-been-accepted-at-biomedical-signal-processing-and-control-2024-12-29",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Biomedical Signal Processing and Control",
       "summary": "Style-KD : Class-Imbalanced Medical Image Classification via Style Knowledge Distillation",
-      "date": "2024-12-28",
+      "date": "2024-12-29",
       "related_person": "MMAI Lab",
       "venue": "Inhyuk Park, Won Hwa Kim, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -32,11 +32,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-bmvc-2024-2024-11-24",
+      "id": "cvl-news-a-paper-has-been-accepted-at-bmvc-2024-2024-11-25",
       "type": "paper_accepted",
       "title": "A paper has been accepted at BMVC 2024",
       "summary": "Unsupervised Hashing Network with Hyper Quantization Tree",
-      "date": "2024-11-24",
+      "date": "2024-11-25",
       "related_person": "MMAI Lab",
       "venue": "Sungeun Kim, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -45,11 +45,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-bmvc-2026-2026-08-20",
+      "id": "cvl-news-a-paper-has-been-accepted-at-bmvc-2026-2026-08-21",
       "type": "paper_accepted",
       "title": "A paper has been accepted at BMVC 2026",
       "summary": "Re-calibrated Contrastive Loss for Transformation-Aware Prompt Conditioning in Vision-Language Models",
-      "date": "2026-08-20",
+      "date": "2026-08-21",
       "related_person": "MMAI Lab",
       "venue": "Seungmin Oh, Seunghun Kang, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -58,11 +58,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-computer-methods-and-programs-in-biomedicine-2024-04-20",
+      "id": "cvl-news-a-paper-has-been-accepted-at-computer-methods-and-programs-in-biomedicine-2024-04-21",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Computer Methods and Programs in Biomedicine",
       "summary": "Attentional Decoder Networks for Chest X-ray Image Recognition on High-resolution Features",
-      "date": "2024-04-20",
+      "date": "2024-04-21",
       "related_person": "MMAI Lab",
       "venue": "Hankyul Kang, Namkug Kim, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -71,11 +71,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-computers-in-biology-and-medicine-2023-12-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-computers-in-biology-and-medicine-2024-01-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Computers in Biology and Medicine",
       "summary": "Fine-Grained Self-Supervised Learning with Jigsaw puzzles for medical image classification",
-      "date": "2023-12-31",
+      "date": "2024-01-01",
       "related_person": "MMAI Lab",
       "venue": "Wongi Park, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -84,11 +84,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-corl-2026-2026-09-04",
+      "id": "cvl-news-a-paper-has-been-accepted-at-corl-2026-2026-09-05",
       "type": "paper_accepted",
       "title": "A paper has been accepted at CoRL 2026",
       "summary": "FlowVLA: Enabling World Dynamics Understanding through Pluggable 3D Flow Learning",
-      "date": "2026-09-04",
+      "date": "2026-09-05",
       "related_person": "MMAI Lab",
       "venue": "Junhyeong Go, Mingyu Jung, Woobin Im, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -97,11 +97,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-cvpr-2025-2025-05-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-cvpr-2025-2025-06-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at CVPR 2025",
       "summary": "Do Your Best and Get Enough Rest for Continual Learning",
-      "date": "2025-05-31",
+      "date": "2025-06-01",
       "related_person": "MMAI Lab",
       "venue": "Hankyul Kang, Gregor Seifer, Donghyun Lee, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -110,11 +110,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-expert-systems-with-applications-2024-10-03",
+      "id": "cvl-news-a-paper-has-been-accepted-at-expert-systems-with-applications-2024-10-04",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Expert Systems with applications",
       "summary": "Spatial Bias for Attention-free Non-local Neural Networks",
-      "date": "2024-10-03",
+      "date": "2024-10-04",
       "related_person": "MMAI Lab",
       "venue": "Junhyeong Go, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -123,11 +123,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-iccv-2023-2023-10-01",
+      "id": "cvl-news-a-paper-has-been-accepted-at-iccv-2023-2023-10-02",
       "type": "paper_accepted",
       "title": "A paper has been accepted at ICCV 2023",
       "summary": "Gramian Attention Heads are Strong yet Efficient Vision Learners",
-      "date": "2023-10-01",
+      "date": "2023-10-02",
       "related_person": "MMAI Lab",
       "venue": "Jongbin Ryu*, Dongyoon Han*, Jongwoo Lim (*co-first author)",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -136,11 +136,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-iccvw-2023-2023-08-09",
+      "id": "cvl-news-a-paper-has-been-accepted-at-iccvw-2023-2023-08-10",
       "type": "paper_accepted",
       "title": "A paper has been accepted at ICCVW 2023",
       "summary": "Robust Asymmetric Loss for Multi-Label Long-Tailed Learning",
-      "date": "2023-08-09",
+      "date": "2023-08-10",
       "related_person": "MMAI Lab",
       "venue": "Wongi Park, Inhyuk Park, Sungeun Kim, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -149,11 +149,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-ieee-transactions-on-pattern-analysis-and-machine-intelligence-2020-12-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-ieee-transactions-on-pattern-analysis-and-machine-intelligence-2021-01-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at IEEE Transactions on Pattern Analysis and Machine Intelligence",
       "summary": "End-to-End Learning for Omnidirectional Stereo Matching with Uncertainty Prior",
-      "date": "2020-12-31",
+      "date": "2021-01-01",
       "related_person": "MMAI Lab",
       "venue": "Changhee Won, Jongbin Ryu, Jongwoo Lim",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -162,11 +162,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-international-journal-of-surgery-2023-11-30",
+      "id": "cvl-news-a-paper-has-been-accepted-at-international-journal-of-surgery-2023-12-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at International Journal of Surgery",
       "summary": "Deep Learning Using Computed Tomography to Identify High-Risk Patients for Acute Small Bowel Obstruction: Development and Validation of a Prediction Model: A Retrospective Cohort Study",
-      "date": "2023-11-30",
+      "date": "2023-12-01",
       "related_person": "MMAI Lab",
       "venue": "Seungmin Oh, Jongbin Ryu, Ho-Jung Shin, Jeong Ho Song, Sang-Yong Son, Hoon Hur, Sang-Uk Han",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -175,11 +175,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-journal-of-digital-imaging-2023-01-24",
+      "id": "cvl-news-a-paper-has-been-accepted-at-journal-of-digital-imaging-2023-01-25",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Journal of Digital Imaging",
       "summary": "Effect of Contrast Level and Image Format on a Deep Learning Algorithm for the Detection of Pneumothorax with Chest Radiography",
-      "date": "2023-01-24",
+      "date": "2023-01-25",
       "related_person": "MMAI Lab",
       "venue": "Myeong Seong Yoon, Gitaek Kwon, Jaehoon Oh*, Jongbin Ryu*, Jongwoo Lim, Bo-kyeong Kang, Juncheol Lee, Dong-Kyoon Han (*corresponding author)",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -188,11 +188,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-medical-image-analysis-2023-12-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-medical-image-analysis-2024-01-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Medical Image Analysis",
       "summary": "Towards long-tailed, multi-label disease classification from chest X-ray: Overview of the CXR-LT challenge",
-      "date": "2023-12-31",
+      "date": "2024-01-01",
       "related_person": "MMAI Lab",
       "venue": "CVAMD participants including Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -201,11 +201,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-medical-image-analysis-2025-05-27",
+      "id": "cvl-news-a-paper-has-been-accepted-at-medical-image-analysis-2025-05-28",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Medical Image Analysis",
       "summary": "A medical imaging paper from MMAI Lab was accepted after peer review.",
-      "date": "2025-05-27",
+      "date": "2025-05-28",
       "related_person": "MMAI Lab",
       "venue": "Biomedical AI Group",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -214,11 +214,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-neural-networks-2020-12-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-neural-networks-2021-01-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Neural Networks",
       "summary": "Unsupervised Feature Learning for Self-Tuning Neural Networks",
-      "date": "2020-12-31",
+      "date": "2021-01-01",
       "related_person": "MMAI Lab",
       "venue": "Jongbin Ryu, Ming-Hsuan Yang, Jongwoo Lim",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -227,11 +227,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-pattern-recognition-letters-2020-12-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-pattern-recognition-letters-2021-01-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Pattern Recognition Letters",
       "summary": "Dual Aggregated Feature Pyramid Network for Multi Label Classification",
-      "date": "2020-12-31",
+      "date": "2021-01-01",
       "related_person": "MMAI Lab",
       "venue": "Dongjoo Yun, Jongbin Ryu*, Jongwoo Lim (*corresponding author)",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -240,11 +240,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-scientific-reports-2019-12-31",
+      "id": "cvl-news-a-paper-has-been-accepted-at-scientific-reports-2020-01-01",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Scientific Reports",
       "summary": "Deep Learning Algorithms for Detecting and Visualising Intussusception on Plain Abdominal Radiography in Children: A Retrospective Multicenter Study",
-      "date": "2019-12-31",
+      "date": "2020-01-01",
       "related_person": "MMAI Lab",
       "venue": "Gitaek Kwon*, Jongbin Ryu*, Jaehoon Oh, Jongwoo Lim, Bo-kyeong Kang, Chiwon Ahn, Junwon Bae, Dong Keon Lee (*co-first author)",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -253,11 +253,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-scientific-reports-2024-04-15",
+      "id": "cvl-news-a-paper-has-been-accepted-at-scientific-reports-2024-04-16",
       "type": "paper_accepted",
       "title": "A paper has been accepted at Scientific Reports",
       "summary": "Analyzing to Discover Origins of CNNs and ViT Architectures in Medical Images",
-      "date": "2024-04-15",
+      "date": "2024-04-16",
       "related_person": "MMAI Lab",
       "venue": "Seungmin Oh, Namkug Kim, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -266,11 +266,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-a-paper-has-been-accepted-at-wacv-2026-2026-02-17",
+      "id": "cvl-news-a-paper-has-been-accepted-at-wacv-2026-2026-02-18",
       "type": "paper_accepted",
       "title": "A paper has been accepted at WACV 2026",
       "summary": "Our work on robust visual representation learning was accepted for publication.",
-      "date": "2026-02-17",
+      "date": "2026-02-18",
       "related_person": "MMAI Lab",
       "venue": "Sungeun Kim, Jongbin Ryu",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -279,11 +279,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-congratulations-to-our-august-2023-graduates-2023-08-21",
+      "id": "cvl-news-congratulations-to-our-august-2023-graduates-2023-08-22",
       "type": "general",
       "title": "Congratulations to our August 2023 graduates",
       "summary": "Jihoon Kim and Hyunsoo Park",
-      "date": "2023-08-21",
+      "date": "2023-08-22",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Alumni",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -292,11 +292,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-congratulations-to-our-august-2025-graduate-2025-08-21",
+      "id": "cvl-news-congratulations-to-our-august-2025-graduate-2025-08-22",
       "type": "general",
       "title": "Congratulations to our August 2025 graduate",
       "summary": "Soohyeon Pyo",
-      "date": "2025-08-21",
+      "date": "2025-08-22",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Alumni",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -305,11 +305,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-congratulations-to-our-february-2025-graduates-2025-02-20",
+      "id": "cvl-news-congratulations-to-our-february-2025-graduates-2025-02-21",
       "type": "general",
       "title": "Congratulations to our February 2025 graduates",
       "summary": "Inhyuk Park and Sunki Joo",
-      "date": "2025-02-20",
+      "date": "2025-02-21",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Alumni",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -318,11 +318,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-congratulations-to-our-february-2026-graduates-2026-02-19",
+      "id": "cvl-news-congratulations-to-our-february-2026-graduates-2026-02-20",
       "type": "general",
       "title": "Congratulations to our February 2026 graduates",
       "summary": "Kyusung Nam, Gregor Seifer, Dongkyu Kim, and Euihak Heo",
-      "date": "2026-02-19",
+      "date": "2026-02-20",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Alumni",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -331,11 +331,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-industry-collaboration-visit-hosted-2025-10-01",
+      "id": "cvl-news-industry-collaboration-visit-hosted-2025-10-02",
       "type": "general",
       "title": "Industry collaboration visit hosted",
       "summary": "Research exchange session held with an industrial R&D team on applied vision and learning systems.",
-      "date": "2025-10-01",
+      "date": "2025-10-02",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab + Partner R&D Group",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -344,11 +344,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-lab-open-house-and-project-showcase-2024-11-07",
+      "id": "cvl-news-lab-open-house-and-project-showcase-2024-11-08",
       "type": "general",
       "title": "Lab open house and project showcase",
       "summary": "Visitors explored ongoing projects and discussed possible collaboration opportunities.",
-      "date": "2024-11-07",
+      "date": "2024-11-08",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -357,11 +357,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-lab-workshop-on-biomedical-vision-pipelines-2025-09-10",
+      "id": "cvl-news-lab-workshop-on-biomedical-vision-pipelines-2025-09-11",
       "type": "general",
       "title": "Lab workshop on biomedical vision pipelines",
       "summary": "Internal workshop covered annotation quality, uncertainty, and deployment constraints.",
-      "date": "2025-09-10",
+      "date": "2025-09-11",
       "related_person": "MMAI Lab",
       "venue": "Biomedical AI Group",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -370,11 +370,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-new-interns-joined-the-lab-in-july-2026-2026-07-22",
+      "id": "cvl-news-new-interns-joined-the-lab-in-july-2026-2026-07-23",
       "type": "general",
       "title": "New interns joined the lab in July 2026",
       "summary": "Hyeonbin Kim, Hyeongwoo Kim, and Myungkwon Shin",
-      "date": "2026-07-22",
+      "date": "2026-07-23",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Interns",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -383,11 +383,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-new-interns-joined-the-lab-in-march-2026-2026-03-19",
+      "id": "cvl-news-new-interns-joined-the-lab-in-march-2026-2026-03-20",
       "type": "general",
       "title": "New interns joined the lab in March 2026",
       "summary": "Jihoon Park, Junwon Bae, Seungwon Lee, AhReam Lee, and Bonghyun Jang",
-      "date": "2026-03-19",
+      "date": "2026-03-20",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Interns",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -396,11 +396,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-new-interns-joined-the-lab-in-october-2025-2025-10-27",
+      "id": "cvl-news-new-interns-joined-the-lab-in-october-2025-2025-10-28",
       "type": "general",
       "title": "New interns joined the lab in October 2025",
       "summary": "HoHyeon Han and Yoonsoo Park",
-      "date": "2025-10-27",
+      "date": "2025-10-28",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Interns",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -409,11 +409,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-new-multi-gpu-workstation-installed-2025-12-02",
+      "id": "cvl-news-new-multi-gpu-workstation-installed-2025-12-03",
       "type": "general",
       "title": "New multi-GPU workstation installed",
       "summary": "16 GPUs were added, bringing the lab cluster to 144 GPUs in total.",
-      "date": "2025-12-02",
+      "date": "2025-12-03",
       "related_person": "MMAI Lab",
       "venue": "Lab Infrastructure Team",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -422,11 +422,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-three-papers-have-been-accepted-at-emnlp-2026-2026-08-20",
+      "id": "cvl-news-three-papers-have-been-accepted-at-emnlp-2026-2026-08-21",
       "type": "paper_accepted",
       "title": "Three papers have been accepted at EMNLP 2026",
       "summary": "Colla-Q: Toward Collaborative Experts in MoE Quantization via Minimax Precision Balancing Layer-wise Curriculum Learning for Efficient LLM Compression Train Overcomplete, Deploy Compact: Scaling Recovery Capacity for Structured LLM Pruning",
-      "date": "2026-08-20",
+      "date": "2026-08-21",
       "related_person": "MMAI Lab",
       "venue": "EunJu Shin, Jongbin Ryu, Donggeon Lee, Dooyeon Na, Seungmin Oh",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -435,11 +435,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-two-papers-have-been-accepted-at-accv-2024-2024-11-30",
+      "id": "cvl-news-two-papers-have-been-accepted-at-accv-2024-2024-12-01",
       "type": "paper_accepted",
       "title": "Two papers have been accepted at ACCV 2024",
       "summary": "Generative Self-Supervised Learning for Medical Image Classification Neural Substitution for Branch-level Network Re-parameterization",
-      "date": "2024-11-30",
+      "date": "2024-12-01",
       "related_person": "MMAI Lab",
       "venue": "Inhyuk Park, Sungeun Kim, Jongbin Ryu, Seungmin Oh",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -448,11 +448,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-two-papers-have-been-accepted-at-neurips-2026-2026-09-23",
+      "id": "cvl-news-two-papers-have-been-accepted-at-neurips-2026-2026-09-24",
       "type": "paper_accepted",
       "title": "Two papers have been accepted at NeurIPS 2026",
       "summary": "Efficient Test-time Adaptation through Candidate Verification and Divergence Shifts Differentiable Bit-Widths: Co-optimizing Pruning and Quantization via SVD for Ultra-Efficient LLM Compression",
-      "date": "2026-09-23",
+      "date": "2026-09-24",
       "related_person": "MMAI Lab",
       "venue": "Seungmin Oh, Seunghun Kang, Jongbin Ryu, Hankyul Kang",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -461,11 +461,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-two-papers-have-been-accepted-at-wacv-2025-2024-12-31",
+      "id": "cvl-news-two-papers-have-been-accepted-at-wacv-2025-2025-01-01",
       "type": "paper_accepted",
       "title": "Two papers have been accepted at WACV 2025",
       "summary": "Channel Propagation Networks for Refreshable Vision Transformer Enriching Local Patterns with Multi-Token Attention for Broad-Sight Neural Networks",
-      "date": "2024-12-31",
+      "date": "2025-01-01",
       "related_person": "MMAI Lab",
       "venue": "Junhyeong Go, Jongbin Ryu, Hankyul Kang",
       "external_url": "https://mmai-laboratory.github.io/news",
@@ -474,11 +474,11 @@
       "source_url": "https://mmai-laboratory.github.io/news"
     },
     {
-      "id": "cvl-news-weekly-seminar-on-efficient-vision-learning-models-2026-02-06",
+      "id": "cvl-news-weekly-seminar-on-efficient-vision-learning-models-2026-02-07",
       "type": "general",
       "title": "Weekly seminar on efficient vision-learning models",
       "summary": "Lab members shared current experiments and discussion notes from ongoing projects.",
-      "date": "2026-02-06",
+      "date": "2026-02-07",
       "related_person": "MMAI Lab",
       "venue": "MMAI Lab Seminar Team",
       "external_url": "https://mmai-laboratory.github.io/news",

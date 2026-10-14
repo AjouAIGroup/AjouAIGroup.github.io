@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-09-29T08:03:59.866Z"
+    "generated_at": "2026-10-14T08:51:05.547Z"
   },
   "items": [
     {
@@ -1823,9 +1823,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://sites.google.com/",
+        "project_link": "https://arxiv.org/abs/2609.15654",
         "source_code_link": "",
-        "paper_link": "https://sites.google.com/"
+        "paper_link": "https://arxiv.org/abs/2609.15654"
       },
       "source_id": "lamda-publications",
       "source_url": "https://sites.google.com/site/kasohn/publication"
@@ -1863,7 +1863,7 @@
       "summary": "Sci Rep 2026 publication from LAMDA Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Sangjin Ahn, So Yeon Kim † & Kyung-Ah Sohn †",
+        "author": "Sangjin Ahn, So Yeon Kim & Kyung-Ah Sohn",
         "published_place": "Sci Rep 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -1938,7 +1938,7 @@
       "summary": "JKMS 2026 publication from LAMDA Lab.",
       "featured": false,
       "research_meta": {
-        "author": "So Yeon Kim † , Sehee Wang † , Kyung-Ah Sohn * , Eun Kyung Choe *",
+        "author": "So Yeon Kim † , Sehee Wang † , Kyung-Ah Sohn, Eun Kyung Choe",
         "published_place": "JKMS 2026",
         "published_date": "2026-01-01",
         "keywords": [],

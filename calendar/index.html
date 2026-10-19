@@ -47,6 +47,20 @@
             name="twitter:image:alt"
             content="Ajou Artificial Intelligence Group campus memorial and logo" />
         <title>Conference Calendar · AAIG</title>
+        <!-- Google shows this as the site name above the result; without it,
+             it falls back to the github.io host and shows "GitHub". -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "AAIG",
+                "alternateName": [
+                    "Ajou AI Group",
+                    "Ajou Artificial Intelligence Group"
+                ],
+                "url": "https://ajouaigroup.github.io/"
+            }
+        </script>
         <script>
             (function () {
                 var params = new URLSearchParams(window.location.search);

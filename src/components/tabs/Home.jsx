@@ -180,7 +180,7 @@ function Home() {
                         AAIG research output
                     </p>
                     <h2 id="home-publication-snapshot-title">
-                        Publication Summary {publicationSnapshot.year}
+                        Highlight Papers {publicationSnapshot.year}
                     </h2>
                     <p>
                         A quick view of regular conference papers currently

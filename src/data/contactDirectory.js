@@ -9,7 +9,7 @@ const CONTACT_DETAILS = {
             "Please send an email introducing yourself, regardless of the format.",
         note: "Donggeon Lee, the student representative, can answer questions about day-to-day lab life.",
         studentProfile:
-            "The laboratory will add its preferred background, skills, and research interests here.",
+            "We are looking for students who are determined to work hard. We always welcome positive and responsible students.",
     },
     sail: {
         contactName: "Sanghoon Lee",

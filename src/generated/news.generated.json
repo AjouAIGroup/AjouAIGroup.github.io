@@ -732,6 +732,27 @@
       ]
     },
     {
+      "id": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "type": "paper_accepted",
+      "title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "summary": "NeurIPS Workshop 2026 publication from HEI Lab.",
+      "date": "2026-01-01",
+      "year": 2026,
+      "related_person": "SeongJun Jeong, ChungWoo Lee, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+      "venue": "NeurIPS Workshop 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "publication_title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "publication_query": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning"
+      ]
+    },
+    {
       "id": "publication-sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
       "type": "paper_accepted",
       "title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
@@ -2593,6 +2614,27 @@
       "generated_from": "publications-auto",
       "publication_ids": [
         "sail-publications-audio-dequantization-for-high-fidelity-audio-generation-in-flow-based-neural-vocoder"
+      ]
+    },
+    {
+      "id": "publication-sheet-generalized-convolutional-forest-networks-for-domain-generalization-and-visual-recognition",
+      "type": "paper_accepted",
+      "title": "Generalized Convolutional Forest Networks for Domain Generalization and Visual Recognition",
+      "summary": "ICLR 2020 publication from MMAI Lab.",
+      "date": "2020-01-01",
+      "year": 2020,
+      "related_person": "Jongbin Ryu, Gitaek Kwon, Ming-Hsuan Yang, Jongwoo Lim",
+      "venue": "ICLR 2020",
+      "external_url": "",
+      "internal_slug": "publication-sheet-generalized-convolutional-forest-networks-for-domain-generalization-and-visual-recognition",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-generalized-convolutional-forest-networks-for-domain-generalization-and-visual-recognition",
+      "publication_title": "Generalized Convolutional Forest Networks for Domain Generalization and Visual Recognition",
+      "publication_query": "Generalized Convolutional Forest Networks for Domain Generalization and Visual Recognition",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-generalized-convolutional-forest-networks-for-domain-generalization-and-visual-recognition"
       ]
     },
     {

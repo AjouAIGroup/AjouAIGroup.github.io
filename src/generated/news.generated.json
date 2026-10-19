@@ -2722,6 +2722,27 @@
       ]
     },
     {
+      "id": "publication-sheet-sweepnet-wide-baseline-omnidirectional-depth-estimation",
+      "type": "paper_accepted",
+      "title": "SweepNet: Wide-baseline Omnidirectional Depth Estimation",
+      "summary": "ICRA 2019 publication from MMAI Lab.",
+      "date": "2019-01-01",
+      "year": 2019,
+      "related_person": "Changhee Won, Jongbin Ryu, Jongwoo Lim",
+      "venue": "ICRA 2019",
+      "external_url": "",
+      "internal_slug": "publication-sheet-sweepnet-wide-baseline-omnidirectional-depth-estimation",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-sweepnet-wide-baseline-omnidirectional-depth-estimation",
+      "publication_title": "SweepNet: Wide-baseline Omnidirectional Depth Estimation",
+      "publication_query": "SweepNet: Wide-baseline Omnidirectional Depth Estimation",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-sweepnet-wide-baseline-omnidirectional-depth-estimation"
+      ]
+    },
+    {
       "id": "publication-iknow-publications-machine-translated-knowledge-transfer-for-commonsense-causal-reasoning",
       "type": "paper_accepted",
       "title": "Machine-Translated Knowledge Transfer for Commonsense Causal Reasoning",
@@ -2782,6 +2803,27 @@
       "generated_from": "publications-auto",
       "publication_ids": [
         "iknow-publications-visual-choice-of-plausible-alternatives-an-evaluation-of-image-based-commonsense-causal-reasoning"
+      ]
+    },
+    {
+      "id": "publication-sheet-dft-based-transformation-invariant-pooling-layer-for-visual-classification",
+      "type": "paper_accepted",
+      "title": "DFT-based Transformation Invariant Pooling Layer for Visual Classification",
+      "summary": "ECCV 2018 publication from MMAI Lab.",
+      "date": "2018-01-01",
+      "year": 2018,
+      "related_person": "Jongbin Ryu, Ming-Hsuan Yang, Jongwoo Lim",
+      "venue": "ECCV 2018",
+      "external_url": "",
+      "internal_slug": "publication-sheet-dft-based-transformation-invariant-pooling-layer-for-visual-classification",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-dft-based-transformation-invariant-pooling-layer-for-visual-classification",
+      "publication_title": "DFT-based Transformation Invariant Pooling Layer for Visual Classification",
+      "publication_query": "DFT-based Transformation Invariant Pooling Layer for Visual Classification",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-dft-based-transformation-invariant-pooling-layer-for-visual-classification"
       ]
     },
     {

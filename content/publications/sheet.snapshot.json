@@ -3,7 +3,7 @@
     "schema_version": "1.0",
     "source": "google-sheets",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "synced_at": "2026-10-19T07:04:22.315Z"
+    "synced_at": "2026-10-19T07:14:24.226Z"
   },
   "items": [
     {
@@ -3259,6 +3259,36 @@
       }
     },
     {
+      "id": "sheet-sweepnet-wide-baseline-omnidirectional-depth-estimation",
+      "key": "sheet-sweepnet-wide-baseline-omnidirectional-depth-estimation",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "SweepNet: Wide-baseline Omnidirectional Depth Estimation",
+      "summary": "ICRA 2019 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Changhee Won, Jongbin Ryu, Jongwoo Lim",
+        "published_place": "ICRA 2019",
+        "published_date": "2019-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8793823",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8793823"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      },
+      "added_at": "2026-10-19T07:14:24.223Z"
+    },
+    {
       "id": "iknow-publications-machine-translated-knowledge-transfer-for-commonsense-causal-reasoning",
       "key": "iknow-publications-machine-translated-knowledge-transfer-for-commonsense-causal-reasoning",
       "category": "efficient_learning_for_llms",
@@ -3344,6 +3374,36 @@
         "solve": "",
         "expermental_result": ""
       }
+    },
+    {
+      "id": "sheet-dft-based-transformation-invariant-pooling-layer-for-visual-classification",
+      "key": "sheet-dft-based-transformation-invariant-pooling-layer-for-visual-classification",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "DFT-based Transformation Invariant Pooling Layer for Visual Classification",
+      "summary": "ECCV 2018 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jongbin Ryu, Ming-Hsuan Yang, Jongwoo Lim",
+        "published_place": "ECCV 2018",
+        "published_date": "2018-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://openaccess.thecvf.com/content_ECCV_2018/papers/Jongbin_Ryu_DFT-based_Transformation_Invariant_ECCV_2018_paper.pdf",
+        "source_code_link": "",
+        "paper_link": "https://openaccess.thecvf.com/content_ECCV_2018/papers/Jongbin_Ryu_DFT-based_Transformation_Invariant_ECCV_2018_paper.pdf"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      },
+      "added_at": "2026-10-19T07:14:24.223Z"
     },
     {
       "id": "iknow-publications-gradable-adjective-embedding-for-commonsense-knowledge",

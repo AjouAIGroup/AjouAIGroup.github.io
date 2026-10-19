@@ -6,7 +6,7 @@ const CONTACT_DETAILS = {
         contactRole: "Associate Professor",
         contactEmail: "jongbinryu@ajou.ac.kr",
         guidance:
-            "Start by reviewing the lab's research areas. Send a short email with your CV, research interests, and any available academic record to discuss fit and current opportunities.",
+            "Please send an email introducing yourself, regardless of the format.",
         note: "Donggeon Lee, the student representative, can answer questions about day-to-day lab life.",
         studentProfile:
             "The laboratory will add its preferred background, skills, and research interests here.",

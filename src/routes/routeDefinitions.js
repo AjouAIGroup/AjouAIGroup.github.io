@@ -1,11 +1,14 @@
 import RESEARCH_CATALOG from "../assets/dataset/research_areas.json" with { type: "json" };
 
 const SITE_NAME = "AAIG";
+// The home page title is what search results show as the site's headline, so
+// it spells out the group name; inner pages keep the short "News · AAIG".
+const HOME_TITLE = "AAIG - Ajou AI Group";
 
 // Every public route is prerendered into its own HTML file, so each one needs
 // its own head copy. Private client-only routes opt out with prerender: false.
 export const buildPageTitle = (pageTitle) =>
-    pageTitle ? `${pageTitle} · ${SITE_NAME}` : SITE_NAME;
+    pageTitle ? `${pageTitle} · ${SITE_NAME}` : HOME_TITLE;
 
 const RESEARCH_AREA_ROUTES = (RESEARCH_CATALOG.meta?.area_order ?? [])
     .map((areaKey) => RESEARCH_CATALOG.areas?.[areaKey])

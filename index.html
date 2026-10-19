@@ -16,7 +16,7 @@
         <meta name="theme-color" content="#0f172a" />
         <meta name="color-scheme" content="light" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="AAIG" />
+        <meta property="og:title" content="AAIG - Ajou AI Group" />
         <meta
             property="og:description"
             content="Ajou Artificial Intelligence Group — five laboratories, one research community." />
@@ -36,7 +36,7 @@
             property="og:image:alt"
             content="Ajou Artificial Intelligence Group campus memorial and logo" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="AAIG" />
+        <meta name="twitter:title" content="AAIG - Ajou AI Group" />
         <meta
             name="twitter:description"
             content="Ajou Artificial Intelligence Group — five laboratories, one research community." />
@@ -46,7 +46,21 @@
         <meta
             name="twitter:image:alt"
             content="Ajou Artificial Intelligence Group campus memorial and logo" />
-        <title>AAIG</title>
+        <title>AAIG - Ajou AI Group</title>
+        <!-- Google shows this as the site name above the result; without it,
+             it falls back to the github.io host and shows "GitHub". -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "AAIG",
+                "alternateName": [
+                    "Ajou AI Group",
+                    "Ajou Artificial Intelligence Group"
+                ],
+                "url": "https://ajouaigroup.github.io/"
+            }
+        </script>
         <script>
             (function () {
                 var params = new URLSearchParams(window.location.search);

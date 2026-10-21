@@ -23,7 +23,7 @@ const FACULTY = [
         portrait: CvlPortrait,
     },
     {
-        name: "Sanghoon Lee",
+        name: "Sang-Hoon Lee",
         koreanName: "이상훈",
         lab: "SAIL",
         role: "Assistant Professor",

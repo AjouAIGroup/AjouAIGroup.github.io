@@ -12,13 +12,13 @@ const CONTACT_DETAILS = {
             "We are looking for students who are determined to work hard. We always welcome positive and responsible students.",
     },
     sail: {
-        contactName: "Sanghoon Lee",
+        contactName: "Sang-Hoon Lee",
         contactRole: "Assistant Professor",
         contactEmail: "sanghoonlee@ajou.ac.kr",
-        guidance:
-            "Review current research on speech and generative AI, then introduce your background and intended research direction by email. Confirm current openings and required materials with the lab.",
+        // Supplied by the lab for the Apply page.
+        guidance: "Please send your CV to sanghoonlee@ajou.ac.kr.",
         studentProfile:
-            "The laboratory will add its preferred background, skills, and research interests here.",
+            "We are recruiting M.S. and Ph.D. students who are interested in text-to-speech, speech language models, speech-to-speech translation, generative models, vision-language-action models, and world models.",
     },
     hei: {
         contactName: "Gi-Cheon Kang",

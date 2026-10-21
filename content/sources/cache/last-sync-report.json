@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "generated_at": "2026-10-21T08:42:32.996Z",
+    "registry": "content/sources/labs.json"
+  },
+  "sources": [
+    {
+      "id": "cvl-publications",
+      "state": "updated",
+      "count": 22,
+      "fingerprint": "3af9ea13068b3fe7"
+    },
+    {
+      "id": "cvl-news",
+      "state": "updated",
+      "count": 42,
+      "fingerprint": "78cbf8d3224a4d7b"
+    },
+    {
+      "id": "hei-publications",
+      "state": "updated",
+      "count": 14,
+      "fingerprint": "19fa1caa85a14787"
+    },
+    {
+      "id": "iknow-publications",
+      "state": "updated",
+      "count": 39,
+      "fingerprint": "aae1037677ffdaec"
+    },
+    {
+      "id": "sail-publications",
+      "state": "updated",
+      "count": 34,
+      "fingerprint": "66b938ddcf02b3ac"
+    },
+    {
+      "id": "sail-news",
+      "state": "disabled",
+      "message": "The public Google Sites page has no dated news archive. Add a dated feed or archive URL before enabling."
+    },
+    {
+      "id": "lamda-publications",
+      "state": "updated",
+      "count": 8,
+      "fingerprint": "b5b0b46c1253a270"
+    },
+    {
+      "id": "lamda-news",
+      "state": "updated",
+      "count": 5,
+      "fingerprint": "45acd44a267247f4"
+    }
+  ]
+}

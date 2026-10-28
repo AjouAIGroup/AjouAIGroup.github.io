@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "source": "scheduled external refresh",
-    "generated_at": "2026-09-29T08:03:59.866Z"
+    "generated_at": "2026-10-28T09:50:16.241Z"
   },
   "items": [
     {
@@ -23,9 +23,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://www.nature.com/articles/s41598-024-58382-3",
+        "project_link": "https://www.nature.com/articles/s41598-024-58382-3.pdf",
         "source_code_link": "",
-        "paper_link": "https://www.nature.com/articles/s41598-024-58382-3"
+        "paper_link": "https://www.nature.com/articles/s41598-024-58382-3.pdf"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -106,6 +106,31 @@
       "source_url": "https://mmai-laboratory.github.io/publication"
     },
     {
+      "id": "cvl-publications-dft-based-transformation-invariant-pooling-layer-for-visual-classification",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "DFT-based Transformation Invariant Pooling Layer for Visual Classification",
+      "summary": "ECCV 2018 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jongbin Ryu, Ming-Hsuan Yang, Jongwoo Lim",
+        "published_place": "ECCV 2018",
+        "published_date": "2018-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://openaccess.thecvf.com/content_ECCV_2018/papers/Jongbin_Ryu_DFT-based_Transformation_Invariant_ECCV_2018_paper.pdf",
+        "source_code_link": "",
+        "paper_link": "https://openaccess.thecvf.com/content_ECCV_2018/papers/Jongbin_Ryu_DFT-based_Transformation_Invariant_ECCV_2018_paper.pdf"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
       "id": "cvl-publications-differentiable-bit-widths-co-optimizing-pruning-and-quantization-via-svd-for-ultra-efficient-llm-compression",
       "category": "computer_vision_and_learning_algorithms",
       "status": "published",
@@ -123,9 +148,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2610.06026",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2610.06026"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -148,9 +173,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://openaccess.thecvf.com/content/CVPR2025/html/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.html",
+        "project_link": "https://openaccess.thecvf.com/content/CVPR2025/papers/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.pdf",
         "source_code_link": "",
-        "paper_link": "https://openaccess.thecvf.com/content/CVPR2025/html/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.html"
+        "paper_link": "https://openaccess.thecvf.com/content/CVPR2025/papers/Kang_Do_Your_Best_and_Get_Enough_Rest_for_Continual_Learning_CVPR_2025_paper.pdf"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -173,9 +198,34 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://www.sciencedirect.com/science/article/abs/pii/S016786552100026X",
+        "project_link": "https://www.sciencedirect.com/science/article/pii/S016786552100026X/pdfft?isDTMRedir=true&download=false",
         "source_code_link": "",
-        "paper_link": "https://www.sciencedirect.com/science/article/abs/pii/S016786552100026X"
+        "paper_link": "https://www.sciencedirect.com/science/article/pii/S016786552100026X/pdfft?isDTMRedir=true&download=false"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
+      "id": "cvl-publications-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "summary": "Sci Rep 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seunghun Kang, Sungeun Kim, Hyun Woong Roh, Chang Hyung Hong, Sang Joon Son, Jongbin Ryu",
+        "published_place": "Sci Rep 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://www.nature.com/articles/s41598-026-74059-5.pdf",
+        "source_code_link": "",
+        "paper_link": "https://www.nature.com/articles/s41598-026-74059-5.pdf"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -198,9 +248,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2610.06147",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2610.06147"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -248,9 +298,34 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://mmai-laboratory.github.io/publication",
+        "project_link": "https://arxiv.org/abs/2610.16160",
         "source_code_link": "",
-        "paper_link": "https://mmai-laboratory.github.io/publication"
+        "paper_link": "https://arxiv.org/abs/2610.16160"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
+      "id": "cvl-publications-generalized-convolutional-forest-networks-for-domain-generalization-and-visual-recognition",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "Generalized Convolutional Forest Networks for Domain Generalization and Visual Recognition",
+      "summary": "ICLR 2020 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Jongbin Ryu, Gitaek Kwon, Ming-Hsuan Yang, Jongwoo Lim",
+        "published_place": "ICLR 2020",
+        "published_date": "2020-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://openreview.net/pdf?id=H1lxVyStPH",
+        "source_code_link": "",
+        "paper_link": "https://openreview.net/pdf?id=H1lxVyStPH"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -273,9 +348,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://openaccess.thecvf.com/content/ACCV2024/html/Park_Generative_Self-Supervised_Learning_for_Medical_Image_Classification_ACCV_2024_paper.html",
+        "project_link": "https://openaccess.thecvf.com/content/ACCV2024/papers/Park_Generative_Self-Supervised_Learning_for_Medical_Image_Classification_ACCV_2024_paper.pdf",
         "source_code_link": "",
-        "paper_link": "https://openaccess.thecvf.com/content/ACCV2024/html/Park_Generative_Self-Supervised_Learning_for_Medical_Image_Classification_ACCV_2024_paper.html"
+        "paper_link": "https://openaccess.thecvf.com/content/ACCV2024/papers/Park_Generative_Self-Supervised_Learning_for_Medical_Image_Classification_ACCV_2024_paper.pdf"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -373,9 +448,34 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617",
+        "project_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617/pdfft?isDTMRedir=true&download=false",
         "source_code_link": "",
-        "paper_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617"
+        "paper_link": "https://www.sciencedirect.com/science/article/pii/S1746809423013617/pdfft?isDTMRedir=true&download=false"
+      },
+      "source_id": "cvl-publications",
+      "source_url": "https://mmai-laboratory.github.io/publication"
+    },
+    {
+      "id": "cvl-publications-sweepnet-wide-baseline-omnidirectional-depth-estimation",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "SweepNet: Wide-baseline Omnidirectional Depth Estimation",
+      "summary": "ICRA 2019 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Changhee Won, Jongbin Ryu, Jongwoo Lim",
+        "published_place": "ICRA 2019",
+        "published_date": "2019-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8793823",
+        "source_code_link": "",
+        "paper_link": "https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8793823"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -398,9 +498,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://www.sciencedirect.com/science/article/abs/pii/S136184152400149X",
+        "project_link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11365790/pdf/nihms-2001119.pdf",
         "source_code_link": "",
-        "paper_link": "https://www.sciencedirect.com/science/article/abs/pii/S136184152400149X"
+        "paper_link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11365790/pdf/nihms-2001119.pdf"
       },
       "source_id": "cvl-publications",
       "source_url": "https://mmai-laboratory.github.io/publication"
@@ -506,31 +606,6 @@
       "source_url": "https://heilaboratory.github.io/publications/"
     },
     {
-      "id": "hei-publications-can-embodied-agents-remember-what-you-said-evaluating-dialogue-grounded-embodied-memory-in-3d-environments",
-      "category": "computer_vision_and_learning_algorithms",
-      "status": "published",
-      "title": "Can Embodied Agents Remember What You Said? Evaluating Dialogue-Grounded Embodied Memory in 3D Environments",
-      "summary": "CVPR Workshop 2026 publication from HEI Lab.",
-      "featured": false,
-      "research_meta": {
-        "author": "Seongjun Jeong, Junghyun Kim, Gi-Cheon Kang†, Byoung-Tak Zhang†",
-        "published_place": "CVPR Workshop 2026",
-        "published_date": "2026-01-01",
-        "keywords": [],
-        "labs": [
-          "HEI Lab"
-        ],
-        "pdf_link": "",
-        "arxiv_link": "",
-        "github_link": "",
-        "project_link": "https://3d-llm-vla.github.io/",
-        "source_code_link": "",
-        "paper_link": "https://3d-llm-vla.github.io/"
-      },
-      "source_id": "hei-publications",
-      "source_url": "https://heilaboratory.github.io/publications/"
-    },
-    {
       "id": "hei-publications-clip-rt-learning-language-conditioned-robotic-policies-from-natural-language-supervision",
       "category": "robot_learning",
       "status": "published",
@@ -576,6 +651,31 @@
         "project_link": "https://arxiv.org/abs/2403.15049",
         "source_code_link": "",
         "paper_link": "https://arxiv.org/abs/2403.15049"
+      },
+      "source_id": "hei-publications",
+      "source_url": "https://heilaboratory.github.io/publications/"
+    },
+    {
+      "id": "hei-publications-dialogmem-evaluating-dialogue-grounded-embodied-memory-in-3d-environments",
+      "category": "computer_vision_and_learning_algorithms",
+      "status": "published",
+      "title": "DialogMem: Evaluating Dialogue-Grounded Embodied Memory in 3D Environments",
+      "summary": "CVPR Workshop 2026 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seongjun Jeong, Junghyun Kim, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+        "published_place": "CVPR Workshop 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://arxiv.org/pdf/2610.24767",
+        "source_code_link": "",
+        "paper_link": "https://arxiv.org/pdf/2610.24767"
       },
       "source_id": "hei-publications",
       "source_url": "https://heilaboratory.github.io/publications/"
@@ -756,6 +856,31 @@
       "source_url": "https://heilaboratory.github.io/publications/"
     },
     {
+      "id": "hei-publications-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "category": "robot_learning",
+      "status": "published",
+      "title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "summary": "NeurIPS Workshop 2026 publication from HEI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "SeongJun Jeong, ChungWoo Lee, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+        "published_place": "NeurIPS Workshop 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "HEI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://arxiv.org/pdf/2610.24804",
+        "source_code_link": "",
+        "paper_link": "https://arxiv.org/pdf/2610.24804"
+      },
+      "source_id": "hei-publications",
+      "source_url": "https://heilaboratory.github.io/publications/"
+    },
+    {
       "id": "hei-publications-socratic-planner-self-qa-based-zero-shot-planning-for-embodied-instruction-following",
       "category": "robot_learning",
       "status": "published",
@@ -840,6 +965,31 @@
       "research_meta": {
         "author": "Soyeon Hong , Heegyu Kim , Ji Hoon Hong, Jindong Hwang , Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
         "published_place": "Findings of EMNLP 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "source_id": "iknow-publications",
+      "source_url": "https://iknow.ajou.ac.kr/publications/"
+    },
+    {
+      "id": "iknow-publications-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "summary": "NeurIPS 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Taehoon Kim, Wonjun Hwang, Hyunsouk Cho",
+        "published_place": "NeurIPS 2026",
         "published_date": "2026-01-01",
         "keywords": [],
         "labs": [
@@ -1823,9 +1973,9 @@
         "pdf_link": "",
         "arxiv_link": "",
         "github_link": "",
-        "project_link": "https://sites.google.com/",
+        "project_link": "https://arxiv.org/abs/2609.15654",
         "source_code_link": "",
-        "paper_link": "https://sites.google.com/"
+        "paper_link": "https://arxiv.org/abs/2609.15654"
       },
       "source_id": "lamda-publications",
       "source_url": "https://sites.google.com/site/kasohn/publication"
@@ -1863,7 +2013,7 @@
       "summary": "Sci Rep 2026 publication from LAMDA Lab.",
       "featured": false,
       "research_meta": {
-        "author": "Sangjin Ahn, So Yeon Kim † & Kyung-Ah Sohn †",
+        "author": "Sangjin Ahn, So Yeon Kim & Kyung-Ah Sohn",
         "published_place": "Sci Rep 2026",
         "published_date": "2026-01-01",
         "keywords": [],
@@ -1938,7 +2088,7 @@
       "summary": "JKMS 2026 publication from LAMDA Lab.",
       "featured": false,
       "research_meta": {
-        "author": "So Yeon Kim † , Sehee Wang † , Kyung-Ah Sohn * , Eun Kyung Choe *",
+        "author": "So Yeon Kim † , Sehee Wang † , Kyung-Ah Sohn, Eun Kyung Choe",
         "published_place": "JKMS 2026",
         "published_date": "2026-01-01",
         "keywords": [],

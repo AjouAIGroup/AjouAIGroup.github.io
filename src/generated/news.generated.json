@@ -732,6 +732,48 @@
       ]
     },
     {
+      "id": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "type": "paper_accepted",
+      "title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "summary": "NeurIPS 2026 publication from iKnow Lab.",
+      "date": "2026-01-01",
+      "year": 2026,
+      "related_person": "Taehoon Kim, Wonjun Hwang, Hyunsouk Cho",
+      "venue": "NeurIPS 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "publication_title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "publication_query": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation"
+      ]
+    },
+    {
+      "id": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "type": "paper_accepted",
+      "title": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "summary": "Sci Rep 2026 publication from MMAI Lab.",
+      "date": "2026-01-01",
+      "year": 2026,
+      "related_person": "Seunghun Kang, Sungeun Kim, Hyun Woong Roh, Chang Hyung Hong, Sang Joon Son, Jongbin Ryu",
+      "venue": "Sci Rep 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "publication_title": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "publication_query": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling"
+      ]
+    },
+    {
       "id": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
       "type": "paper_accepted",
       "title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",

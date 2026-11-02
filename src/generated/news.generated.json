@@ -732,6 +732,27 @@
       ]
     },
     {
+      "id": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "type": "paper_accepted",
+      "title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "summary": "NeurIPS 2026 publication from iKnow Lab.",
+      "date": "2026-01-01",
+      "year": 2026,
+      "related_person": "Taehoon Kim, Wonjun Hwang, Hyunsouk Cho",
+      "venue": "NeurIPS 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "publication_title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "publication_query": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation"
+      ]
+    },
+    {
       "id": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
       "type": "paper_accepted",
       "title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",

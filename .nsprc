@@ -1,0 +1,7 @@
+{
+    "1244012": {
+        "active": true,
+        "notes": "minimatch glob DoS (GHSA-g3hv-75wg-m249). Reached only through eslint and eslint-plugin-react, which still pin minimatch 3 with no patched release; 11.0.1 is a breaking major. Lint runs on our own globs and nothing ships to the site. Remove once eslint moves off minimatch 3.",
+        "expiry": "2027-02-01"
+    }
+}

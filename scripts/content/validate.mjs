@@ -2,6 +2,7 @@ import { syncNewsContent } from "./news.mjs";
 import { syncPublicationContent } from "./publications.mjs";
 import { validateResearchContent } from "./research.mjs";
 import { syncDeadlineContent } from "./deadlines.mjs";
+import { validatePhotoContent } from "./photos.mjs";
 
 const run = async () => {
     await validateResearchContent();
@@ -10,6 +11,7 @@ const run = async () => {
     });
     await syncNewsContent({ validateOnly: true, publicationItems });
     await syncDeadlineContent({ validateOnly: true });
+    await validatePhotoContent();
     console.log("[content] validation completed");
 };
 

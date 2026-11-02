@@ -7,8 +7,10 @@ import {
     getAllVenues,
     getCountdownLabel,
     getDefaultMilestoneId,
+    getTimeZoneAbbreviation,
     getVenueCfpState,
     getVenueStatusMeta,
+    getViewerTimeZone,
     isDateOnlyMilestone,
 } from "../../utils/deadlineData";
 import CountryFlags from "../CountryFlags";
@@ -26,7 +28,13 @@ const getNextCfpMessage = (venue) => {
     return `${nextCfp.cycle} · Expected ${nextCfp.expected_window}`;
 };
 
-function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
+function CalendarVenue({
+    venue,
+    selectedMilestones,
+    onSelectMilestone,
+    now,
+    timeZone,
+}) {
     const milestoneId =
         selectedMilestones[venue.id] ??
         getDefaultMilestoneId(venue, now ?? new Date());
@@ -144,8 +152,12 @@ function CalendarVenue({ venue, selectedMilestones, onSelectMilestone, now }) {
                                     <time dateTime={milestone.deadline_at}>
                                         {formatDeadlineInDisplayTimezone(
                                             milestone.deadline_at,
+                                            timeZone,
                                         )}{" "}
-                                        KST
+                                        {getTimeZoneAbbreviation(
+                                            timeZone,
+                                            milestone.deadline_at,
+                                        )}
                                     </time>
                                     <small>
                                         Official deadline timezone:{" "}
@@ -179,7 +191,20 @@ function Calendar() {
     const [query, setQuery] = useState("");
     const [selectedMilestones, setSelectedMilestones] = useState({});
     const [now, setNow] = useState(null);
+    // Prerendered HTML is built without knowing the reader, so it starts in
+    // the default zone and moves to the browser's own zone after hydration.
+    const [viewerTimeZone, setViewerTimeZone] = useState(
+        DEADLINE_DISPLAY_TIMEZONE,
+    );
+    const [useDefaultTimeZone, setUseDefaultTimeZone] = useState(false);
+    const timeZone = useDefaultTimeZone
+        ? DEADLINE_DISPLAY_TIMEZONE
+        : viewerTimeZone;
     const venues = useMemo(() => getAllVenues(), []);
+
+    useEffect(() => {
+        setViewerTimeZone(getViewerTimeZone());
+    }, []);
 
     useEffect(() => {
         const updateNow = () => setNow(new Date());
@@ -210,7 +235,7 @@ function Calendar() {
                 <h1>Conference Calendar</h1>
                 <p className="page-head__summary">
                     Official submission schedules across the AAIG research
-                    community. All displayed times are Korea Standard Time.
+                    community. Times follow the time zone of your device.
                 </p>
             </header>
 
@@ -251,10 +276,42 @@ function Calendar() {
                         placeholder="CVPR, NeurIPS, ACL"
                     />
                 </label>
+                {viewerTimeZone !== DEADLINE_DISPLAY_TIMEZONE ? (
+                    <div
+                        className="calendar__timezone"
+                        role="group"
+                        aria-labelledby="calendar-timezone-label">
+                        <span id="calendar-timezone-label">Time zone</span>
+                        <div className="calendar__filters">
+                            <button
+                                type="button"
+                                className={
+                                    useDefaultTimeZone ? "" : "is-active"
+                                }
+                                aria-pressed={!useDefaultTimeZone}
+                                onClick={() => setUseDefaultTimeZone(false)}>
+                                {`My time zone (${getTimeZoneAbbreviation(viewerTimeZone, now)})`}
+                            </button>
+                            <button
+                                type="button"
+                                className={
+                                    useDefaultTimeZone ? "is-active" : ""
+                                }
+                                aria-pressed={useDefaultTimeZone}
+                                onClick={() => setUseDefaultTimeZone(true)}>
+                                {`Korea (${getTimeZoneAbbreviation(DEADLINE_DISPLAY_TIMEZONE)})`}
+                            </button>
+                        </div>
+                    </div>
+                ) : null}
             </section>
 
             {now ? (
-                <DeadlineMonthGrid venues={filteredVenues} now={now} />
+                <DeadlineMonthGrid
+                    venues={filteredVenues}
+                    now={now}
+                    timeZone={timeZone}
+                />
             ) : (
                 <div
                     className="calendar-month__placeholder"
@@ -269,7 +326,7 @@ function Calendar() {
                     <h2 id="calendar-list-title">Conference schedule</h2>
                     <p>
                         {filteredVenues.length} venues · Times displayed in{" "}
-                        {DEADLINE_DISPLAY_TIMEZONE}
+                        {timeZone}
                     </p>
                 </div>
                 {filteredVenues.map((venue) => (
@@ -278,6 +335,7 @@ function Calendar() {
                         venue={venue}
                         selectedMilestones={selectedMilestones}
                         now={now}
+                        timeZone={timeZone}
                         onSelectMilestone={(venueId, milestoneId) =>
                             setSelectedMilestones((current) => ({
                                 ...current,

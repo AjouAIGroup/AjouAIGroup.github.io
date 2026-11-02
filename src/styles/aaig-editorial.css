@@ -85,7 +85,8 @@
         .lab-page,
         .publication,
         .contact-page,
-        .calendar
+        .calendar,
+        .photo-page
     ) {
     --aaig-page-flow-gap: clamp(2.5rem, 4vw, 3.5rem);
     row-gap: 0 !important;
@@ -98,7 +99,8 @@
         .lab-page,
         .publication,
         .contact-page,
-        .calendar
+        .calendar,
+        .photo-page
     )
     > *
     + * {
@@ -565,7 +567,8 @@
             .lab-page,
             .publication,
             .contact-page,
-            .calendar
+            .calendar,
+            .photo-page
         ) {
         --aaig-page-flow-gap: clamp(2.25rem, 9vw, 2.75rem);
     }

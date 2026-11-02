@@ -49,6 +49,7 @@
 }
 
 .calendar__search span,
+.calendar__timezone > span,
 .calendar__venue-meta,
 .calendar__event dt {
     color: #69655d;
@@ -58,6 +59,11 @@
     letter-spacing: 0.08em;
     line-height: 1.35;
     text-transform: uppercase;
+}
+
+.calendar__timezone {
+    display: grid;
+    gap: 0.35rem;
 }
 
 .calendar__search input {

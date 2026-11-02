@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-    DEADLINE_DISPLAY_TIMEZONE,
     formatDeadlineInDisplayTimezone,
     formatDeadlineTimeInDisplayTimezone,
     formatStatedDate,
     getConferenceSpans,
     getDeadlineCalendarEvents,
     getDeadlineDayParts,
+    getTimeZoneAbbreviation,
     toDeadlineDayKey,
 } from "../../utils/deadlineData";
 import CountryFlags from "../CountryFlags";
@@ -25,8 +25,8 @@ const MAX_CHIPS_PER_DAY = 2;
 
 // Grid geometry only needs the weekday of the first of the month and the month
 // length. Anchoring those on UTC keeps the layout identical no matter which
-// timezone the browser runs in; the deadlines themselves are already resolved
-// to Korea Standard Time before they reach this component.
+// timezone the browser runs in; the deadlines themselves are resolved to the
+// display timezone before they are placed on a day.
 const monthAnchor = (year, month) => new Date(Date.UTC(year, month - 1, 1));
 
 const MONTH_LABEL_FORMATTER = new Intl.DateTimeFormat("en-US", {
@@ -170,8 +170,11 @@ function ConferenceLanes({ segments, cellIndex, cellKey }) {
     );
 }
 
-function DeadlineMonthGrid({ venues, now }) {
-    const events = useMemo(() => getDeadlineCalendarEvents(venues), [venues]);
+function DeadlineMonthGrid({ venues, now, timeZone }) {
+    const events = useMemo(
+        () => getDeadlineCalendarEvents(venues, timeZone),
+        [venues, timeZone],
+    );
     const spans = useMemo(() => getConferenceSpans(venues), [venues]);
 
     const eventsByDay = useMemo(() => {
@@ -192,8 +195,8 @@ function DeadlineMonthGrid({ venues, now }) {
     }, [events]);
 
     const todayParts = useMemo(
-        () => getDeadlineDayParts(now.toISOString()),
-        [now],
+        () => getDeadlineDayParts(now.toISOString(), timeZone),
+        [now, timeZone],
     );
     const todayMonthIndex = toMonthIndex(todayParts.year, todayParts.month);
 
@@ -273,7 +276,7 @@ function DeadlineMonthGrid({ venues, now }) {
                     <p>
                         {monthEventCount} deadline
                         {monthEventCount === 1 ? "" : "s"} in {monthLabel} ·
-                        Times shown in {DEADLINE_DISPLAY_TIMEZONE}
+                        Times shown in {timeZone}
                     </p>
                 </div>
                 <div
@@ -533,12 +536,17 @@ function DeadlineMonthGrid({ venues, now }) {
                                                     dateTime={event.deadlineAt}>
                                                     {formatDeadlineTimeInDisplayTimezone(
                                                         event.deadlineAt,
+                                                        timeZone,
                                                     )}{" "}
-                                                    KST
+                                                    {getTimeZoneAbbreviation(
+                                                        timeZone,
+                                                        event.deadlineAt,
+                                                    )}
                                                 </time>
                                                 <small>
                                                     {formatDeadlineInDisplayTimezone(
                                                         event.deadlineAt,
+                                                        timeZone,
                                                     )}{" "}
                                                     · Official timezone:{" "}
                                                     {event.timezoneLabel}

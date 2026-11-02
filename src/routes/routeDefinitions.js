@@ -71,7 +71,14 @@ export const ROUTE_DEFINITIONS = [
         tabKey: "calendar",
         title: "Conference Calendar",
         description:
-            "Official AI conference submission deadlines tracked by the Ajou Artificial Intelligence Group, shown in Korea Standard Time.",
+            "Official AI conference submission deadlines tracked by the Ajou Artificial Intelligence Group, shown in your local time zone.",
+    },
+    {
+        path: "/photo",
+        tabKey: "photo",
+        title: "Photos",
+        description:
+            "Photos from workshops, seminars, and joint activities of the five Ajou Artificial Intelligence Group laboratories.",
     },
     {
         path: "/admin",

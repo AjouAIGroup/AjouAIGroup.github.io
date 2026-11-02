@@ -9,6 +9,7 @@ import LabPage from "../pages/LabPage";
 import ContactPage from "../pages/ContactPage";
 import PublicationPage from "../pages/PublicationPage";
 import CalendarPage from "../pages/CalendarPage";
+import PhotoPage from "../pages/PhotoPage";
 
 const PAGE_COMPONENTS = {
     home: HomePage,
@@ -18,6 +19,7 @@ const PAGE_COMPONENTS = {
     apply: ContactPage,
     publication: PublicationPage,
     calendar: CalendarPage,
+    photo: PhotoPage,
 };
 
 export const PAGE_MANIFEST_SSG = PRERENDER_ROUTE_DEFINITIONS.map((route) => ({

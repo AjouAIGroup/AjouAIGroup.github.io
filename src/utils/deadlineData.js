@@ -9,8 +9,73 @@ export const DEADLINE_AREAS = (DEADLINE_DATA.meta?.area_order ?? []).map(
     }),
 );
 
+// The prerendered page and any browser whose timezone cannot be read show
+// this zone; the calendar switches to the reader's own zone once it mounts.
 export const DEADLINE_DISPLAY_TIMEZONE =
     DEADLINE_DATA.meta?.display_timezone ?? "Asia/Seoul";
+
+const isSupportedTimeZone = (timeZone) => {
+    try {
+        new Intl.DateTimeFormat("en-US", { timeZone });
+        return true;
+    } catch {
+        return false;
+    }
+};
+
+export const getViewerTimeZone = () => {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return timeZone && isSupportedTimeZone(timeZone)
+        ? timeZone
+        : DEADLINE_DISPLAY_TIMEZONE;
+};
+
+// Intl has no English abbreviation for most zones outside the US and prints
+// "GMT+9" for Seoul, so the zone the site was built around keeps the name
+// readers here know it by.
+const TIMEZONE_ABBREVIATIONS = { "Asia/Seoul": "KST" };
+
+const formatterCache = new Map();
+
+// Formatters are costly to build and the calendar formats every deadline on
+// each render, so one is kept per option set and timezone.
+const getFormatter = (name, options, timeZone) => {
+    const cacheKey = `${name}|${timeZone}`;
+    if (!formatterCache.has(cacheKey)) {
+        formatterCache.set(
+            cacheKey,
+            new Intl.DateTimeFormat(options.locale ?? "en-US", {
+                ...options.format,
+                timeZone,
+            }),
+        );
+    }
+    return formatterCache.get(cacheKey);
+};
+
+const DAY_KEY_FORMAT = {
+    locale: "en-CA",
+    format: { year: "numeric", month: "2-digit", day: "2-digit" },
+};
+const DAY_TIME_FORMAT = { format: { hour: "numeric", minute: "2-digit" } };
+const DATE_TIME_FORMAT = {
+    format: { dateStyle: "medium", timeStyle: "short" },
+};
+const ZONE_NAME_FORMAT = { format: { timeZoneName: "short" } };
+
+// The abbreviation depends on the date because of daylight saving time: a
+// deadline in July reads "PDT" and one in January "PST".
+export const getTimeZoneAbbreviation = (timeZone, at = new Date()) => {
+    if (TIMEZONE_ABBREVIATIONS[timeZone]) {
+        return TIMEZONE_ABBREVIATIONS[timeZone];
+    }
+    const date = asDate(at) ?? new Date();
+    return (
+        getFormatter("zone", ZONE_NAME_FORMAT, timeZone)
+            .formatToParts(date)
+            .find((part) => part.type === "timeZoneName")?.value ?? timeZone
+    );
+};
 
 const DEADLINE_STATUS_META = {
     verified: { label: "Official CFP verified", tone: "verified" },
@@ -133,22 +198,6 @@ export const getVenueCfpState = (venue, now = new Date()) => {
     return { label: "Schedule in progress", tone: "in-progress" };
 };
 
-// Each venue publishes its deadline in its own timezone, so a month grid has
-// to ask which calendar day the instant lands on in the display timezone
-// rather than reading the date out of the raw timestamp.
-const DAY_KEY_FORMATTER = new Intl.DateTimeFormat("en-CA", {
-    timeZone: DEADLINE_DISPLAY_TIMEZONE,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-});
-
-const DAY_TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
-    timeZone: DEADLINE_DISPLAY_TIMEZONE,
-    hour: "numeric",
-    minute: "2-digit",
-});
-
 const MILESTONE_KIND_TONES = {
     abstract: "submission",
     registration: "submission",
@@ -163,21 +212,26 @@ const MILESTONE_KIND_TONES = {
 export const toDeadlineDayKey = (year, month, day) =>
     `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
-export const getDeadlineDayParts = (deadlineAt) => {
+// Each venue publishes its deadline in its own timezone, so a month grid has
+// to ask which calendar day the instant lands on in the display timezone
+// rather than reading the date out of the raw timestamp.
+export const getDeadlineDayParts = (
+    deadlineAt,
+    timeZone = DEADLINE_DISPLAY_TIMEZONE,
+) => {
     const date = asDate(deadlineAt);
     if (!date) {
         return null;
     }
 
-    const parts = DAY_KEY_FORMATTER.formatToParts(date).reduce(
-        (collected, part) => {
+    const parts = getFormatter("day-key", DAY_KEY_FORMAT, timeZone)
+        .formatToParts(date)
+        .reduce((collected, part) => {
             if (part.type !== "literal") {
                 collected[part.type] = part.value;
             }
             return collected;
-        },
-        {},
-    );
+        }, {});
 
     const year = Number.parseInt(parts.year, 10);
     const month = Number.parseInt(parts.month, 10);
@@ -195,7 +249,8 @@ export const getMilestoneKindTone = (kind) =>
 
 // Organizers often publish only a date ("January 31, 2027") for decisions
 // and camera-ready. Such milestones store the end of that day in the stated
-// timezone but are shown as the date itself: never moved into KST, never
+// timezone but are shown as the date itself: never moved into the reader's
+// timezone, never
 // given a clock time or a to-the-second countdown the organizer did not set.
 export const isDateOnlyMilestone = (milestone) =>
     milestone?.time_stated === false;
@@ -224,20 +279,28 @@ export const formatStatedDate = (deadlineAt) => {
         : "Date unavailable";
 };
 
-export const formatDeadlineTimeInDisplayTimezone = (deadlineAt) => {
+export const formatDeadlineTimeInDisplayTimezone = (
+    deadlineAt,
+    timeZone = DEADLINE_DISPLAY_TIMEZONE,
+) => {
     const date = asDate(deadlineAt);
-    return date ? DAY_TIME_FORMATTER.format(date) : "";
+    return date
+        ? getFormatter("day-time", DAY_TIME_FORMAT, timeZone).format(date)
+        : "";
 };
 
 // Flattens the venue tree into one deadline per row so the calendar can group
 // by day without walking every venue for every cell it draws.
-export const getDeadlineCalendarEvents = (venues = []) =>
+export const getDeadlineCalendarEvents = (
+    venues = [],
+    timeZone = DEADLINE_DISPLAY_TIMEZONE,
+) =>
     venues.flatMap((venue) =>
         (venue.milestones ?? []).flatMap((milestone) => {
             const dateOnly = isDateOnlyMilestone(milestone);
             const dayParts = dateOnly
                 ? getStatedDayParts(milestone.deadline_at)
-                : getDeadlineDayParts(milestone.deadline_at);
+                : getDeadlineDayParts(milestone.deadline_at, timeZone);
             if (!dayParts) {
                 return [];
             }
@@ -289,17 +352,16 @@ export const getConferenceSpans = (venues = []) =>
                 right.endKey.localeCompare(left.endKey),
         );
 
-export const formatDeadlineInDisplayTimezone = (deadlineAt) => {
+export const formatDeadlineInDisplayTimezone = (
+    deadlineAt,
+    timeZone = DEADLINE_DISPLAY_TIMEZONE,
+) => {
     const date = asDate(deadlineAt);
     if (!date) {
         return "Date unavailable";
     }
 
-    return new Intl.DateTimeFormat("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-        timeZone: DEADLINE_DISPLAY_TIMEZONE,
-    }).format(date);
+    return getFormatter("date-time", DATE_TIME_FORMAT, timeZone).format(date);
 };
 
 export const getCountdownLabel = (

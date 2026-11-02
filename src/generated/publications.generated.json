@@ -3,7 +3,7 @@
     "schema_version": "1.1",
     "source": "google-sheets snapshot",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "source_synced_at": "2026-10-19T07:14:24.226Z",
+    "source_synced_at": "2026-11-02T11:22:12.351Z",
     "categories": [
       "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",
@@ -672,6 +672,36 @@
       }
     },
     {
+      "id": "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "key": "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "category": "efficient_learning_for_llms",
+      "status": "published",
+      "title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "summary": "NeurIPS 2026 publication from iKnow Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Taehoon Kim, Wonjun Hwang, Hyunsouk Cho",
+        "published_place": "NeurIPS 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "iKnow Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://iknow.ajou.ac.kr/publications/",
+        "source_code_link": "",
+        "paper_link": "https://iknow.ajou.ac.kr/publications/"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      },
+      "added_at": "2026-11-02T11:22:12.341Z"
+    },
+    {
       "id": "sheet-differentiable-bit-widths-co-optimizing-pruning-and-quantization-via-svd-for-ultra-efficient-llm-compression",
       "key": "sheet-differentiable-bit-widths-co-optimizing-pruning-and-quantization-via-svd-for-ultra-efficient-llm-compression",
       "category": "computer_vision_and_learning_algorithms",
@@ -700,6 +730,36 @@
         "expermental_result": ""
       },
       "added_at": "2026-09-29T07:47:55.163Z"
+    },
+    {
+      "id": "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "key": "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "summary": "Sci Rep 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Seunghun Kang, Sungeun Kim, Hyun Woong Roh, Chang Hyung Hong, Sang Joon Son, Jongbin Ryu",
+        "published_place": "Sci Rep 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://www.nature.com/articles/s41598-026-74059-5.pdf",
+        "source_code_link": "",
+        "paper_link": "https://www.nature.com/articles/s41598-026-74059-5.pdf"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      },
+      "added_at": "2026-11-02T11:22:12.341Z"
     },
     {
       "id": "sheet-efficient-test-time-adaptation-through-candidate-verification-and-divergence-shifts",

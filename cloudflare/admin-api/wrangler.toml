@@ -22,6 +22,13 @@ GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
 PUBLICATIONS_SHEET_ID = "1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE"
 PUBLICATIONS_SHEET_TAB = "Publications"
 CONTENT_REFRESH_WORKFLOW_ID = "content-refresh.yml"
+# News and Photos edits are committed by this workflow; see siteContent.js.
+SITE_EDIT_WORKFLOW_ID = "admin-site-edit.yml"
+
+# Holds each News or Photos edit until the workflow above picks it up. With no
+# id, `wrangler deploy` creates the namespace on first deploy.
+[[kv_namespaces]]
+binding = "SITE_EDITS"
 
 [[ratelimits]]
 name = "ADMIN_RATE_LIMITER"
@@ -41,6 +48,10 @@ GITHUB_WORKFLOW_ID = "publications-sheet-sync.yml"
 PUBLICATIONS_SHEET_ID = "1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE"
 PUBLICATIONS_SHEET_TAB = "Publications"
 CONTENT_REFRESH_WORKFLOW_ID = "content-refresh.yml"
+SITE_EDIT_WORKFLOW_ID = "admin-site-edit.yml"
+
+[[env.dev.kv_namespaces]]
+binding = "SITE_EDITS"
 
 [[env.dev.ratelimits]]
 name = "ADMIN_RATE_LIMITER"

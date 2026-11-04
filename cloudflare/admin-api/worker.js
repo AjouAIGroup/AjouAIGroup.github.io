@@ -10,6 +10,7 @@ import {
     validateSheetRowForSave,
 } from "../../src/utils/publicationSheetRules.js";
 import {
+    SITE_EDIT_AUDIENCE,
     createSiteContentHandler,
     hasSiteContentConfiguration,
     isSiteContentPath,
@@ -28,9 +29,10 @@ const GOOGLE_ISSUERS = new Set([
 // tolerance worth allowing.
 const CLOCK_SKEW_SECONDS = 60;
 
-// Google rotates its signing keys, so the key set is cached for exactly as
-// long as Google says it is valid rather than for the lifetime of the isolate.
-let googleKeyCache = { keys: new Map(), expiresAt: 0, refreshedAt: 0 };
+// GitHub Actions identity tokens let the site-edit workflow fetch the edit it
+// was started for without any shared secret.
+const GITHUB_OIDC_ISSUER = "https://token.actions.githubusercontent.com";
+const GITHUB_OIDC_JWKS_URL = `${GITHUB_OIDC_ISSUER}/.well-known/jwks`;
 
 const jsonResponse = (request, env, payload, status = 200) => {
     const headers = {
@@ -101,52 +103,98 @@ const decodeBase64Url = (value) => {
 const decodeJwtSegment = (segment) =>
     JSON.parse(new TextDecoder().decode(decodeBase64Url(segment)));
 
-const getGoogleSigningKey = async (keyId) => {
-    const now = Date.now();
-    const isCacheFresh = googleKeyCache.expiresAt > now;
+// Google and GitHub rotate their signing keys, so each key set is cached for
+// exactly as long as its issuer says it is valid rather than for the lifetime
+// of the isolate.
+const createSigningKeyCache = (jwksUrl) => {
+    let cache = { keys: new Map(), expiresAt: 0, refreshedAt: 0 };
 
-    if (isCacheFresh && googleKeyCache.keys.has(keyId)) {
-        return googleKeyCache.keys.get(keyId);
-    }
+    return async (keyId) => {
+        const now = Date.now();
+        const isCacheFresh = cache.expiresAt > now;
 
-    // An unrecognised key id almost always means a forged token. Refetching at
-    // most once a minute still picks up a real Google key rotation quickly,
-    // without letting made-up ids drive one outbound request each.
-    if (isCacheFresh && now - googleKeyCache.refreshedAt < 60_000) {
+        if (isCacheFresh && cache.keys.has(keyId)) {
+            return cache.keys.get(keyId);
+        }
+
+        // An unrecognised key id almost always means a forged token.
+        // Refetching at most once a minute still picks up a real key rotation
+        // quickly, without letting made-up ids drive one outbound request each.
+        if (isCacheFresh && now - cache.refreshedAt < 60_000) {
+            return null;
+        }
+
+        const response = await fetch(jwksUrl);
+        if (!response.ok) {
+            throw new Error(`Key set returned ${response.status}`);
+        }
+
+        const payload = await response.json();
+        const maxAge = Number(
+            /max-age=(\d+)/.exec(
+                response.headers.get("Cache-Control") || "",
+            )?.[1],
+        );
+        const keys = new Map();
+
+        for (const jwk of payload.keys ?? []) {
+            if (!jwk.kid || jwk.kty !== "RSA") continue;
+            keys.set(
+                jwk.kid,
+                await crypto.subtle.importKey(
+                    "jwk",
+                    { kty: jwk.kty, n: jwk.n, e: jwk.e, alg: "RS256" },
+                    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+                    false,
+                    ["verify"],
+                ),
+            );
+        }
+
+        cache = {
+            keys,
+            expiresAt: now + (Number.isFinite(maxAge) ? maxAge : 3600) * 1000,
+            refreshedAt: now,
+        };
+        return keys.get(keyId) ?? null;
+    };
+};
+
+const getGoogleSigningKey = createSigningKeyCache(GOOGLE_JWKS_URL);
+const getGithubSigningKey = createSigningKeyCache(GITHUB_OIDC_JWKS_URL);
+
+// Returns the token's claims when its RS256 signature checks out against the
+// issuer's key set, null when it does not, and throws when the key set itself
+// cannot be fetched.
+const readSignedClaims = async (credential, getSigningKey) => {
+    const segments = String(credential).split(".");
+    if (segments.length !== 3) return null;
+
+    let header;
+    let claims;
+    try {
+        header = decodeJwtSegment(segments[0]);
+        claims = decodeJwtSegment(segments[1]);
+    } catch {
         return null;
     }
+    if (header.alg !== "RS256" || !header.kid) return null;
 
-    const response = await fetch(GOOGLE_JWKS_URL);
-    if (!response.ok) {
-        throw new Error(`Google key set returned ${response.status}`);
-    }
+    const signingKey = await getSigningKey(header.kid);
+    if (!signingKey) return null;
 
-    const payload = await response.json();
-    const maxAge = Number(
-        /max-age=(\d+)/.exec(response.headers.get("Cache-Control") || "")?.[1],
+    const isSignatureValid = await crypto.subtle.verify(
+        "RSASSA-PKCS1-v1_5",
+        signingKey,
+        decodeBase64Url(segments[2]),
+        new TextEncoder().encode(`${segments[0]}.${segments[1]}`),
     );
-    const keys = new Map();
+    if (!isSignatureValid) return null;
 
-    for (const jwk of payload.keys ?? []) {
-        if (!jwk.kid) continue;
-        keys.set(
-            jwk.kid,
-            await crypto.subtle.importKey(
-                "jwk",
-                jwk,
-                { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
-                false,
-                ["verify"],
-            ),
-        );
-    }
-
-    googleKeyCache = {
-        keys,
-        expiresAt: now + (Number.isFinite(maxAge) ? maxAge : 3600) * 1000,
-        refreshedAt: now,
-    };
-    return keys.get(keyId) ?? null;
+    const now = Math.floor(Date.now() / 1000);
+    const isUnexpired = Number(claims.exp) > now - CLOCK_SKEW_SECONDS;
+    const isNotFuture = Number(claims.iat) <= now + CLOCK_SKEW_SECONDS;
+    return isUnexpired && isNotFuture ? claims : null;
 };
 
 const expiredSession = {
@@ -156,23 +204,9 @@ const expiredSession = {
 };
 
 const verifyGoogleIdentity = async (credential, env) => {
-    const segments = credential.split(".");
-    if (segments.length !== 3) return expiredSession;
-
-    let header;
     let claims;
     try {
-        header = decodeJwtSegment(segments[0]);
-        claims = decodeJwtSegment(segments[1]);
-    } catch {
-        return expiredSession;
-    }
-
-    if (header.alg !== "RS256" || !header.kid) return expiredSession;
-
-    let signingKey;
-    try {
-        signingKey = await getGoogleSigningKey(header.kid);
+        claims = await readSignedClaims(credential, getGoogleSigningKey);
     } catch {
         return {
             ok: false,
@@ -180,25 +214,11 @@ const verifyGoogleIdentity = async (credential, env) => {
             error: "Google 로그인 확인 서비스를 사용할 수 없습니다.",
         };
     }
-    if (!signingKey) return expiredSession;
+    if (!claims) return expiredSession;
 
-    const isSignatureValid = await crypto.subtle.verify(
-        "RSASSA-PKCS1-v1_5",
-        signingKey,
-        decodeBase64Url(segments[2]),
-        new TextEncoder().encode(`${segments[0]}.${segments[1]}`),
-    );
-    if (!isSignatureValid) return expiredSession;
-
-    const now = Math.floor(Date.now() / 1000);
     const isIssuerValid = GOOGLE_ISSUERS.has(String(claims.iss));
     const isAudienceValid = claims.aud === env.GOOGLE_CLIENT_ID;
-    const isUnexpired = Number(claims.exp) > now - CLOCK_SKEW_SECONDS;
-    const isNotFuture = Number(claims.iat) <= now + CLOCK_SKEW_SECONDS;
-
-    if (!isIssuerValid || !isAudienceValid || !isUnexpired || !isNotFuture) {
-        return expiredSession;
-    }
+    if (!isIssuerValid || !isAudienceValid) return expiredSession;
 
     // An unverified address can be claimed by someone who does not own it, so
     // it never satisfies the allow list even when the string matches.
@@ -286,6 +306,32 @@ const authorize = async (request, env, pathname) => {
             result.status,
         ),
     };
+};
+
+// Lets only the site-edit workflow on the site's own branch read and release
+// the edits the Worker queued for it.
+const authorizeSiteEditWorkflow = async (request, env) => {
+    const failure = (status, error) =>
+        jsonResponse(request, env, { error }, status);
+    const credential = getBearerCredential(request);
+    if (!credential) return failure(401, "Workflow token required.");
+
+    let claims;
+    try {
+        claims = await readSignedClaims(credential, getGithubSigningKey);
+    } catch {
+        return failure(503, "GitHub key set unavailable.");
+    }
+
+    const repository = `${env.GITHUB_OWNER}/${env.GITHUB_REPO}`;
+    const workflowRef = `${repository}/.github/workflows/${env.SITE_EDIT_WORKFLOW_ID}@refs/heads/${env.GITHUB_REF}`;
+    const isTrusted =
+        claims &&
+        claims.iss === GITHUB_OIDC_ISSUER &&
+        claims.aud === SITE_EDIT_AUDIENCE &&
+        claims.repository === repository &&
+        claims.workflow_ref === workflowRef;
+    return isTrusted ? null : failure(403, "Workflow token rejected.");
 };
 
 const toIsoDate = (date) => date.toISOString().slice(0, 10);
@@ -1175,6 +1221,7 @@ const handlePublicationRows = async (request, env, url) => {
 const handleSiteContent = createSiteContentHandler({
     jsonResponse,
     authorize,
+    authorizeSiteEditWorkflow,
     githubRequest,
     HttpError,
 });

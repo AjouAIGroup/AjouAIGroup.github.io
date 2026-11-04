@@ -181,8 +181,22 @@ Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편�
 
 ## 6-1. News·Photos 편집
 
-`/admin`의 News 관리와 Photos 관리는 GitHub 저장소에 바로 커밋합니다. 저장하면
-`main`에 커밋이 하나 생기고, 평소 배포가 돌아 3~5분 뒤 홈페이지에 반영됩니다.
+`/admin`의 News 관리와 Photos 관리는 저장할 때마다 GitHub Actions의 **Apply Admin
+Site Edit** 워크플로(`.github/workflows/admin-site-edit.yml`)를 거쳐 `main`에
+커밋됩니다. Worker의 GitHub 토큰은 워크플로 실행 권한만 있으면 되고, 저장소에
+직접 쓰지 않습니다.
+
+1. Worker가 입력을 검사한 뒤 바뀔 파일을 KV 저장소 `SITE_EDITS`에 하루 동안
+   보관하고, 편집 id를 넘겨 워크플로를 실행합니다.
+2. 워크플로는 GitHub Actions OIDC 토큰으로 Worker에서 편집 내용을 받아옵니다.
+   Worker는 이 저장소의 `admin-site-edit.yml`이 `main`에서 발급받은 토큰만
+   받으므로 공유 비밀값이 없습니다.
+3. 워크플로가 파일을 적용하고 `content:sync`, `validate:content`를 돌린 뒤
+   생성 파일과 함께 한 커밋으로 push하고, Deploy GitHub Pages를 실행합니다.
+   보통 5분쯤 뒤 홈페이지에 반영됩니다.
+4. 반영되는 동안 그 글이나 앨범은 관리자 화면에 `반영 중`으로 표시되고 다시
+   수정할 수 없습니다. 워크플로가 끝나면(실패해도) 잠금이 풀리고, 워크플로가
+   돌지 않으면 30분 뒤 자동으로 풀립니다.
 
 | API                              | 용도                                    |
 | -------------------------------- | --------------------------------------- |
@@ -201,14 +215,17 @@ Google이 조용히 다시 로그인시켜 주므로 실제 사용에는 불편�
 - 사진은 브라우저에서 긴 변 2000px로 줄이고 WebP(안 되면 JPEG)로 다시 저장한 뒤
   올립니다. 이 과정에서 GPS 같은 EXIF 정보가 지워집니다. Worker는 JPEG, PNG,
   WebP만 받고 한 장에 3MB까지 허용합니다.
-- 커밋 메시지에는 `[admin-edit]`와 편집한 운영자 이메일이 남습니다. Content Build
-  Check 워크플로는 이 표시가 있는 커밋에 대해 `src/generated`를 다시 만들어
-  커밋합니다.
+- 커밋은 `github-actions[bot]` 이름으로 생기고, 메시지에 편집한 운영자 이메일이
+  남습니다. 저장이 반영되지 않으면 Actions 탭의 Apply Admin Site Edit 실행 기록을
+  확인합니다.
 
-이 기능은 `GITHUB_ACTIONS_TOKEN`으로 커밋하므로, 그 토큰에 이 저장소의
-**Contents: Read and write** 권한이 있어야 합니다. GitHub의 Settings → Developer
-settings → Fine-grained tokens에서 기존 토큰을 열어 권한만 추가하면 되고, 토큰
-값은 바뀌지 않으므로 Worker secret을 다시 등록할 필요가 없습니다.
+필요한 설정은 다음과 같습니다.
+
+- `GITHUB_ACTIONS_TOKEN`: **Actions: Read and write** (Publication 동기화와 같은
+  권한). Contents 쓰기 권한은 필요 없습니다.
+- KV 저장소 `SITE_EDITS`: `wrangler.toml`에 id 없이 선언되어 있어 `npx wrangler
+deploy`가 처음 배포할 때 만듭니다.
+- GitHub 저장소 변수 `VITE_ADMIN_API_URL`: 워크플로가 Worker 주소로 사용합니다.
 
 `/health`의 `siteContentConfigured`가 `true`이면 설정이 끝난 상태입니다.
 
@@ -231,8 +248,8 @@ API 토큰과 허용 이메일 목록은 Worker 밖으로 노출되지 않으며
 뒤에만 처리하므로, 페이지 파일을 내려받아도 데이터를 바꿀 수는 없습니다.
 
 Publication 변경 이력은 Google Sheet 편집 기록, Worker 로그의 운영자 이메일,
-GitHub PR 기록으로 남습니다. News·Photos 변경은 GitHub 커밋 기록에 운영자
-이메일과 함께 남습니다.
+GitHub PR 기록으로 남습니다. News·Photos 변경은 GitHub 커밋 기록과 Actions 실행
+기록에 운영자 이메일과 함께 남습니다.
 
 ## 8. 확인 항목
 

@@ -498,8 +498,8 @@ function AdminDashboard() {
                                 <h2 id="news-admin-title">News 관리</h2>
                                 <p>
                                     News를 새로 쓰거나 고치고 사진을 붙입니다.
-                                    저장하면 바로 게시되어 3~5분 뒤 홈페이지에
-                                    반영됩니다.
+                                    저장하면 자동으로 게시되어 5분쯤 뒤
+                                    홈페이지에 반영됩니다.
                                 </p>
                             </div>
                         </div>
@@ -518,7 +518,7 @@ function AdminDashboard() {
                                 <h2 id="photos-admin-title">Photos 관리</h2>
                                 <p>
                                     연합 활동 앨범을 만들고 사진을 올립니다.
-                                    저장하면 3~5분 뒤 Photos 페이지에
+                                    저장하면 5분쯤 뒤 Photos 페이지에
                                     반영됩니다.
                                 </p>
                             </div>

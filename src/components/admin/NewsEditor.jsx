@@ -105,7 +105,7 @@ function NewsForm({
                 <h3>{mode === "create" ? "새 News 작성" : "News 수정"}</h3>
                 <p>
                     {isManual
-                        ? "저장하면 바로 커밋되고 3~5분 뒤 홈페이지에 반영됩니다."
+                        ? "저장하면 자동으로 커밋되어 5분쯤 뒤 홈페이지에 반영됩니다."
                         : "연구실 홈페이지나 Publication에서 온 글입니다. 제목, 요약, 사진만 바꿀 수 있고, 다음 수집 때도 바꾼 내용이 유지됩니다."}
                 </p>
             </div>
@@ -258,6 +258,12 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
         };
     }, [apiUrl, session.credential, reload, handleFailure]);
 
+    // Items with an edit still on its way to the site cannot be edited again
+    // until it lands; the Worker refuses that edit anyway.
+    const pending = useMemo(
+        () => new Set(state.pending ?? []),
+        [state.pending],
+    );
     const items = useMemo(
         () => (state.items ?? []).filter(isPublishedNewsItem),
         [state.items],
@@ -358,7 +364,7 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                   ));
             setEditing(null);
             setNotice(
-                "저장했습니다. 3~5분 뒤 홈페이지에 반영되고, 이 목록도 그때 갱신됩니다.",
+                "저장 요청을 접수했습니다. 5분쯤 뒤 홈페이지에 반영되고, 이 목록도 그때 갱신됩니다.",
             );
             setReload((count) => count + 1);
         } catch (error) {
@@ -384,8 +390,8 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
             );
             setNotice(
                 manual
-                    ? "삭제했습니다. 3~5분 뒤 반영됩니다."
-                    : "숨겼습니다. 3~5분 뒤 반영됩니다.",
+                    ? "삭제 요청을 접수했습니다. 5분쯤 뒤 반영됩니다."
+                    : "숨기기 요청을 접수했습니다. 5분쯤 뒤 반영됩니다.",
             );
             setReload((count) => count + 1);
         } catch (error) {
@@ -399,7 +405,7 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
             await send("PUT", `/v1/site/news/${encodeURIComponent(id)}`, {
                 restore: true,
             });
-            setNotice("다시 보이게 했습니다. 3~5분 뒤 반영됩니다.");
+            setNotice("다시 보이기 요청을 접수했습니다. 5분쯤 뒤 반영됩니다.");
             setReload((count) => count + 1);
         } catch (error) {
             handleFailure(error);
@@ -533,6 +539,11 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                                             {item.image ? (
                                                 <span>사진</span>
                                             ) : null}
+                                            {pending.has(item.id) ? (
+                                                <span className="admin-pill admin-pill--active">
+                                                    반영 중
+                                                </span>
+                                            ) : null}
                                             {item.edited ? (
                                                 <span className="admin-pill admin-pill--idle">
                                                     수정됨
@@ -549,7 +560,10 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                                             className="admin-button"
                                             type="button"
                                             onClick={() => open(item)}
-                                            disabled={Boolean(editing)}
+                                            disabled={
+                                                Boolean(editing) ||
+                                                pending.has(item.id)
+                                            }
                                             aria-label={`${item.title} 수정`}>
                                             수정
                                         </button>
@@ -557,7 +571,10 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                                             className="admin-button"
                                             type="button"
                                             onClick={() => handleDelete(item)}
-                                            disabled={Boolean(editing)}
+                                            disabled={
+                                                Boolean(editing) ||
+                                                pending.has(item.id)
+                                            }
                                             aria-label={`${item.title} ${item.source_path ? "삭제" : "숨기기"}`}>
                                             {item.source_path
                                                 ? "삭제"

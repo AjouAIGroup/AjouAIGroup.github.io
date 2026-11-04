@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { LABORATORIES } from "../../data/laboratories";
 import { validateAlbumMeta } from "../../utils/siteContentRules";
 import { prepareImageUpload } from "./adminImage";
@@ -289,6 +289,12 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
         };
     }, [apiUrl, session.credential, reload, handleFailure]);
 
+    // Albums with an edit still on its way to the site cannot be edited again
+    // until it lands; the Worker refuses that edit anyway.
+    const pending = useMemo(
+        () => new Set(state.pending ?? []),
+        [state.pending],
+    );
     const folderUrl = (id) => `${state.rawBase}/${state.photoPath}/${id}`;
 
     const update = (patch) =>
@@ -386,7 +392,9 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                 { method: mode === "create" ? "POST" : "PUT", body },
             );
             setEditing(null);
-            setNotice("저장했습니다. 3~5분 뒤 Photos 페이지에 반영됩니다.");
+            setNotice(
+                "저장 요청을 접수했습니다. 5분쯤 뒤 Photos 페이지에 반영됩니다.",
+            );
             setReload((count) => count + 1);
         } catch (error) {
             handleFailure(error);
@@ -412,7 +420,7 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                 session.credential,
                 { method: "DELETE" },
             );
-            setNotice("삭제했습니다. 3~5분 뒤 반영됩니다.");
+            setNotice("삭제 요청을 접수했습니다. 5분쯤 뒤 반영됩니다.");
             setReload((count) => count + 1);
         } catch (error) {
             handleFailure(error);
@@ -512,6 +520,11 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                                     <span>
                                         사진 {album.photos?.length ?? 0}장
                                     </span>
+                                    {pending.has(album.id) ? (
+                                        <span className="admin-pill admin-pill--active">
+                                            반영 중
+                                        </span>
+                                    ) : null}
                                 </p>
                                 <h3>{album.title}</h3>
                                 {album.location ? (
@@ -525,7 +538,10 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                                     className="admin-button"
                                     type="button"
                                     onClick={() => open(album)}
-                                    disabled={Boolean(editing)}
+                                    disabled={
+                                        Boolean(editing) ||
+                                        pending.has(album.id)
+                                    }
                                     aria-label={`${album.title} 수정`}>
                                     수정
                                 </button>
@@ -533,7 +549,10 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                                     className="admin-button"
                                     type="button"
                                     onClick={() => handleDelete(album)}
-                                    disabled={Boolean(editing)}
+                                    disabled={
+                                        Boolean(editing) ||
+                                        pending.has(album.id)
+                                    }
                                     aria-label={`${album.title} 삭제`}>
                                     삭제
                                 </button>

@@ -14,28 +14,39 @@ import {
     validateNewsOverride,
 } from "../../src/utils/siteContentRules.js";
 
-// News and Photos edits from the admin page become one commit on the site's
-// branch. The push starts the normal deploy, and the content build workflow
-// regenerates src/generated for commits marked ADMIN_COMMIT_MARKER.
-export const ADMIN_COMMIT_MARKER = "[admin-edit]";
+// The Worker's GitHub token can start workflows but not write to the
+// repository, so a News or Photos edit is checked here, parked in the
+// SITE_EDITS store, and handed to the site-edit workflow. That workflow
+// fetches it with its GitHub identity token, commits it together with the
+// regenerated output, and starts the deploy.
+export const SITE_EDIT_AUDIENCE = "aaig-admin-api";
 
 const NEWS_GENERATED_PATH = "src/generated/news.generated.json";
 // Photos are resized in the browser, so a whole album fits well under this.
 export const MAX_CONTENT_BODY_BYTES = 40 * 1024 * 1024;
 const MAX_PHOTOS_PER_ALBUM = 60;
-const COMMIT_ATTEMPTS = 3;
+// A queued edit is applied within minutes; the day only covers a workflow
+// that waited in GitHub's queue or was re-run by hand.
+const JOB_TTL_SECONDS = 24 * 60 * 60;
+// While an edit is on its way, the item it touches cannot be edited again:
+// the second edit would start from the page as it was before the first.
+const LOCK_TTL_SECONDS = 30 * 60;
 
 const NEWS_ITEM_PATH = /^\/v1\/site\/news\/([a-z0-9-]+)$/;
 const PHOTO_ALBUM_PATH = /^\/v1\/site\/photos\/([a-z0-9-]+)$/;
+const JOB_PATH = /^\/v1\/site\/jobs\/([0-9a-f-]{36})(?:\/files\/(\d{1,3}))?$/;
 
 export const isSiteContentPath = (pathname) =>
     pathname === "/v1/site/news" ||
     pathname === "/v1/site/photos" ||
     NEWS_ITEM_PATH.test(pathname) ||
-    PHOTO_ALBUM_PATH.test(pathname);
+    PHOTO_ALBUM_PATH.test(pathname) ||
+    JOB_PATH.test(pathname);
 
 export const hasSiteContentConfiguration = (env) =>
     Boolean(
+        env.SITE_EDITS &&
+        env.SITE_EDIT_WORKFLOW_ID &&
         env.GITHUB_ACTIONS_TOKEN &&
         env.GITHUB_OWNER &&
         env.GITHUB_REPO &&
@@ -49,15 +60,6 @@ const decodeBase64 = (value) =>
     Uint8Array.from(atob(String(value ?? "").replace(/\s+/g, "")), (char) =>
         char.charCodeAt(0),
     );
-
-const encodeBase64 = (value) => {
-    const bytes = new TextEncoder().encode(value);
-    let binary = "";
-    for (let index = 0; index < bytes.length; index += 0x8000) {
-        binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
-    }
-    return btoa(binary);
-};
 
 // The browser re-encodes every upload, so only these formats ever arrive.
 // The bytes are checked rather than the declared type, which the client
@@ -96,7 +98,7 @@ const readUpload = (upload, label, HttpError) => {
             `${label}: JPEG, PNG, WebP 사진만 올릴 수 있습니다.`,
         );
     }
-    return { base64: data, ext: format.ext };
+    return { bytes, ext: format.ext };
 };
 
 const uniqueSuffix = () => Date.now().toString(36);
@@ -104,6 +106,7 @@ const uniqueSuffix = () => Date.now().toString(36);
 export const createSiteContentHandler = ({
     jsonResponse,
     authorize,
+    authorizeSiteEditWorkflow,
     githubRequest,
     HttpError,
 }) => {
@@ -164,83 +167,148 @@ export const createSiteContentHandler = ({
         };
     };
 
-    // `buildChanges` runs against the current head and returns
-    // { message, files: [{ path, base64 } | { path, delete: true }] }. If
-    // someone else pushes in between, the ref update is refused and the edit
-    // is rebuilt on the new head, so a concurrent change is never overwritten.
-    const commitChanges = async (env, actor, buildChanges) => {
-        for (let attempt = 1; attempt <= COMMIT_ATTEMPTS; attempt += 1) {
-            const head = await readHead(env);
-            const { message, files, result } = await buildChanges(
-                createReader(env, head.sha),
-            );
+    const lockKey = (target) => `lock:${target}`;
+    const jobKey = (jobId) => `job:${jobId}`;
+    const fileKey = (jobId, index) => `job:${jobId}:file:${index}`;
 
-            const tree = await Promise.all(
-                files.map(async (file) => {
-                    if (file.delete) {
-                        return {
-                            path: file.path,
-                            mode: "100644",
-                            type: "blob",
-                            sha: null,
-                        };
-                    }
-                    const blob = await githubRequest(env, "/git/blobs", {
-                        method: "POST",
-                        body: JSON.stringify({
-                            content: file.base64,
-                            encoding: "base64",
-                        }),
-                    });
-                    return {
-                        path: file.path,
-                        mode: "100644",
-                        type: "blob",
-                        sha: blob.sha,
-                    };
-                }),
-            );
-            const newTree = await githubRequest(env, "/git/trees", {
-                method: "POST",
-                body: JSON.stringify({ base_tree: head.treeSha, tree }),
-            });
-            const commit = await githubRequest(env, "/git/commits", {
-                method: "POST",
-                body: JSON.stringify({
-                    message: `${message} ${ADMIN_COMMIT_MARKER}\n\nEdited on the admin page by ${actor}.`,
-                    tree: newTree.sha,
-                    parents: [head.sha],
-                }),
-            });
+    const listPending = async (env, prefix) => {
+        const { keys } = await env.SITE_EDITS.list({
+            prefix: lockKey(prefix),
+        });
+        return keys.map((key) => key.name.slice(lockKey(prefix).length));
+    };
 
-            try {
-                await githubRequest(env, `/git/refs/heads/${branch(env)}`, {
-                    method: "PATCH",
-                    body: JSON.stringify({ sha: commit.sha, force: false }),
-                });
-            } catch (error) {
-                if (error.status === 422 && attempt < COMMIT_ATTEMPTS) continue;
-                throw error;
-            }
-
-            console.log(
-                JSON.stringify({
-                    event: "site_content.commit",
-                    actor,
-                    message,
-                    commit: commit.sha,
-                }),
+    // `buildChanges` reads the current head and returns { message, files,
+    // overrides, result }. `files` are whole files to write ({ path, bytes }
+    // or { path, text }) or remove ({ path, delete: true }); `overrides` maps a
+    // News id to its new overrides.json entry, or null to drop it, so edits to
+    // different items never overwrite each other's entries.
+    const queueChanges = async (env, actor, target, buildChanges) => {
+        if (await env.SITE_EDITS.get(lockKey(target))) {
+            throw new HttpError(
+                409,
+                "이 항목의 이전 저장이 아직 반영 중입니다. 몇 분 뒤 다시 시도해주세요.",
             );
-            return {
-                ...result,
-                commit: commit.sha,
-                commitUrl: `https://github.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/commit/${commit.sha}`,
-            };
         }
-        throw new HttpError(
-            409,
-            "저장 중 다른 변경과 겹쳤습니다. 다시 시도해주세요.",
+
+        const head = await readHead(env);
+        const {
+            message,
+            files,
+            overrides = {},
+            result,
+        } = await buildChanges(createReader(env, head.sha));
+
+        const jobId = crypto.randomUUID();
+        const ttl = { expirationTtl: JOB_TTL_SECONDS };
+        const manifest = await Promise.all(
+            files.map(async (file, index) => {
+                if (file.delete) return { path: file.path, delete: true };
+                const bytes = file.bytes ?? new TextEncoder().encode(file.text);
+                await env.SITE_EDITS.put(fileKey(jobId, index), bytes, ttl);
+                return { path: file.path, file: index };
+            }),
         );
+        await env.SITE_EDITS.put(
+            jobKey(jobId),
+            JSON.stringify({
+                id: jobId,
+                actor,
+                message,
+                base: head.sha,
+                files: manifest,
+                overrides,
+                target,
+                createdAt: new Date().toISOString(),
+            }),
+            ttl,
+        );
+        await env.SITE_EDITS.put(lockKey(target), jobId, {
+            expirationTtl: LOCK_TTL_SECONDS,
+        });
+
+        try {
+            await githubRequest(
+                env,
+                `/actions/workflows/${encodeURIComponent(env.SITE_EDIT_WORKFLOW_ID)}/dispatches`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        ref: env.GITHUB_REF,
+                        inputs: { job_id: jobId },
+                    }),
+                },
+            );
+        } catch (error) {
+            await releaseJob(env, jobId);
+            throw error;
+        }
+
+        console.log(
+            JSON.stringify({
+                event: "site_content.queued",
+                actor,
+                message,
+                jobId,
+            }),
+        );
+        return {
+            ...result,
+            queued: true,
+            jobId,
+            runsUrl: `https://github.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/actions/workflows/${env.SITE_EDIT_WORKFLOW_ID}`,
+        };
+    };
+
+    const readJob = async (env, jobId) => {
+        const job = await env.SITE_EDITS.get(jobKey(jobId), "json");
+        if (!job) throw new HttpError(404, "Edit not found or expired.");
+        return job;
+    };
+
+    const releaseJob = async (env, jobId) => {
+        const job = await env.SITE_EDITS.get(jobKey(jobId), "json");
+        if (!job) return { released: false };
+        await Promise.all(
+            job.files
+                .filter((file) => !file.delete)
+                .map((file) =>
+                    env.SITE_EDITS.delete(fileKey(jobId, file.file)),
+                ),
+        );
+        // The lock may already belong to a newer edit if this one expired.
+        if ((await env.SITE_EDITS.get(lockKey(job.target))) === jobId) {
+            await env.SITE_EDITS.delete(lockKey(job.target));
+        }
+        await env.SITE_EDITS.delete(jobKey(jobId));
+        return { released: true };
+    };
+
+    const handleJob = async (request, env, jobId, fileIndex) => {
+        const denied = await authorizeSiteEditWorkflow(request, env);
+        if (denied) return denied;
+        try {
+            if (request.method === "DELETE" && fileIndex === undefined) {
+                return jsonResponse(request, env, await releaseJob(env, jobId));
+            }
+            if (request.method !== "GET") {
+                throw new HttpError(405, "Method not allowed.");
+            }
+            if (fileIndex === undefined) {
+                return jsonResponse(request, env, await readJob(env, jobId));
+            }
+            const bytes = await env.SITE_EDITS.get(
+                fileKey(jobId, Number(fileIndex)),
+                "arrayBuffer",
+            );
+            if (!bytes) throw new HttpError(404, "File not found or expired.");
+            return new Response(bytes, {
+                headers: { "Content-Type": "application/octet-stream" },
+            });
+        } catch (error) {
+            const status = error instanceof HttpError ? error.status : 500;
+            return jsonResponse(request, env, { error: error.message }, status);
+        }
     };
 
     const rawBase = (env, sha) =>
@@ -250,11 +318,6 @@ export const createSiteContentHandler = ({
 
     const readOverrides = async (reader) =>
         (await reader.json(NEWS_OVERRIDES_PATH))?.items ?? {};
-
-    const overridesFile = (items) => ({
-        path: NEWS_OVERRIDES_PATH,
-        base64: encodeBase64(`${JSON.stringify({ items }, null, 4)}\n`),
-    });
 
     const findNewsItem = async (reader, id) => {
         const generated = await reader.json(NEWS_GENERATED_PATH);
@@ -284,9 +347,10 @@ export const createSiteContentHandler = ({
     const listNews = async (env) => {
         const head = await readHead(env);
         const reader = createReader(env, head.sha);
-        const [generated, overrides] = await Promise.all([
+        const [generated, overrides, pending] = await Promise.all([
             reader.json(NEWS_GENERATED_PATH),
             readOverrides(reader),
+            listPending(env, "news:"),
         ]);
         return {
             headSha: head.sha,
@@ -294,54 +358,61 @@ export const createSiteContentHandler = ({
             imagePath: NEWS_IMAGE_PATH,
             items: generated?.items ?? [],
             overrides,
+            pending,
         };
     };
 
     const createNews = (env, actor, body) =>
-        commitChanges(env, actor, async (reader) => {
-            const fields = pickNewsFields(body.fields);
-            const files = [];
-            if (body.image) {
-                const upload = readUpload(body.image, "사진", HttpError);
-                fields.image = `${createNewsId(fields.date, fields.title)}-${uniqueSuffix()}.${upload.ext}`;
-                files.push({
-                    path: `${NEWS_IMAGE_PATH}/${fields.image}`,
-                    base64: upload.base64,
-                });
-            }
-            assertValid(validateNewsFields(fields));
+        queueChanges(
+            env,
+            actor,
+            `news:${createNewsId(text(body.fields?.date), text(body.fields?.title))}`,
+            async (reader) => {
+                const fields = pickNewsFields(body.fields);
+                const files = [];
+                if (body.image) {
+                    const upload = readUpload(body.image, "사진", HttpError);
+                    fields.image = `${createNewsId(fields.date, fields.title)}-${uniqueSuffix()}.${upload.ext}`;
+                    files.push({
+                        path: `${NEWS_IMAGE_PATH}/${fields.image}`,
+                        bytes: upload.bytes,
+                    });
+                }
+                assertValid(validateNewsFields(fields));
 
-            const id = createNewsId(fields.date, fields.title);
-            const path = `${NEWS_CONTENT_PATH}/${id}.md`;
-            if (
-                (await reader.text(path)) !== null ||
-                (await findNewsItem(reader, id))
-            ) {
-                throw new HttpError(
-                    409,
-                    "같은 날짜에 같은 제목의 News가 이미 있습니다.",
-                );
-            }
-            const markdown = setFrontmatterFields("", {
-                id,
-                ...fields,
-                is_external: Boolean(fields.external_url),
-                featured: false,
-                internal_slug: id,
-            });
-            files.push({ path, base64: encodeBase64(markdown) });
-            return {
-                message: `News: add "${fields.title}"`,
-                files,
-                result: { id },
-            };
-        });
+                const id = createNewsId(fields.date, fields.title);
+                const path = `${NEWS_CONTENT_PATH}/${id}.md`;
+                if (
+                    (await reader.text(path)) !== null ||
+                    (await findNewsItem(reader, id))
+                ) {
+                    throw new HttpError(
+                        409,
+                        "같은 날짜에 같은 제목의 News가 이미 있습니다.",
+                    );
+                }
+                const markdown = setFrontmatterFields("", {
+                    id,
+                    ...fields,
+                    is_external: Boolean(fields.external_url),
+                    featured: false,
+                    internal_slug: id,
+                });
+                files.push({ path, text: markdown });
+                return {
+                    message: `News: add "${fields.title}"`,
+                    files,
+                    result: { id },
+                };
+            },
+        );
 
     const updateNews = (env, actor, id, body) =>
-        commitChanges(env, actor, async (reader) => {
+        queueChanges(env, actor, `news:${id}`, async (reader) => {
             const item = await findNewsItem(reader, id);
             const overrides = await readOverrides(reader);
             const files = [];
+            let overridePatch;
 
             if (body.restore) {
                 if (!overrides[id]?.hidden)
@@ -351,10 +422,11 @@ export const createSiteContentHandler = ({
                 delete rest.hidden_title;
                 if (Object.keys(rest).length) overrides[id] = rest;
                 else delete overrides[id];
-                files.push(overridesFile(overrides));
+                overridePatch = { [id]: overrides[id] ?? null };
                 return {
                     message: `News: show "${id}" again`,
                     files,
+                    overrides: overridePatch,
                     result: { id },
                 };
             }
@@ -369,7 +441,7 @@ export const createSiteContentHandler = ({
                 image = `${id.slice(0, 70)}-${uniqueSuffix()}.${upload.ext}`;
                 files.push({
                     path: `${NEWS_IMAGE_PATH}/${image}`,
-                    base64: upload.base64,
+                    bytes: upload.bytes,
                 });
             }
             if (currentImage && currentImage !== image) {
@@ -390,12 +462,10 @@ export const createSiteContentHandler = ({
                     throw new HttpError(404, "News 파일을 찾을 수 없습니다.");
                 files.push({
                     path: item.source_path,
-                    base64: encodeBase64(
-                        setFrontmatterFields(markdown, {
-                            ...fields,
-                            is_external: Boolean(fields.external_url),
-                        }),
-                    ),
+                    text: setFrontmatterFields(markdown, {
+                        ...fields,
+                        is_external: Boolean(fields.external_url),
+                    }),
                 });
             } else {
                 // Lab-site and generated items are rebuilt from their source,
@@ -422,22 +492,24 @@ export const createSiteContentHandler = ({
                 );
                 if (kept.length) overrides[id] = override;
                 else delete overrides[id];
-                files.push(overridesFile(overrides));
+                overridePatch = { [id]: overrides[id] ?? null };
             }
 
             return {
                 message: `News: edit "${text(body.fields?.title) || id}"`,
                 files,
+                overrides: overridePatch,
                 result: { id },
             };
         });
 
     const deleteNews = (env, actor, id) =>
-        commitChanges(env, actor, async (reader) => {
+        queueChanges(env, actor, `news:${id}`, async (reader) => {
             const item = await findNewsItem(reader, id);
             if (!item) throw new HttpError(404, "News를 찾을 수 없습니다.");
             const overrides = await readOverrides(reader);
             const files = [];
+            let overridePatch;
 
             if (item.source_path) {
                 files.push({ path: item.source_path, delete: true });
@@ -449,11 +521,12 @@ export const createSiteContentHandler = ({
                 }
                 if (overrides[id]) {
                     delete overrides[id];
-                    files.push(overridesFile(overrides));
+                    overridePatch = { [id]: overrides[id] ?? null };
                 }
                 return {
                     message: `News: delete "${item.title}"`,
                     files,
+                    overrides: overridePatch,
                     result: { id, deleted: true },
                 };
             }
@@ -465,10 +538,11 @@ export const createSiteContentHandler = ({
                 hidden: true,
                 hidden_title: item.title,
             };
-            files.push(overridesFile(overrides));
+            overridePatch = { [id]: overrides[id] ?? null };
             return {
                 message: `News: hide "${item.title}"`,
                 files,
+                overrides: overridePatch,
                 result: { id, hidden: true },
             };
         });
@@ -481,6 +555,7 @@ export const createSiteContentHandler = ({
         const folders = (await reader.list(PHOTO_CONTENT_PATH)).filter(
             (entry) => entry.type === "dir",
         );
+        const pending = await listPending(env, "album:");
         const albums = await Promise.all(
             folders.map(async (folder) => ({
                 id: folder.name,
@@ -494,6 +569,7 @@ export const createSiteContentHandler = ({
             rawBase: rawBase(env, head.sha),
             photoPath: PHOTO_CONTENT_PATH,
             labs: LAB_KEYS,
+            pending,
             albums: albums.sort((left, right) =>
                 text(right.date).localeCompare(text(left.date)),
             ),
@@ -534,7 +610,7 @@ export const createSiteContentHandler = ({
                 file = `${String(index + 1).padStart(2, "0")}-${suffix}.${upload.ext}`;
                 files.push({
                     path: `${folder}/${file}`,
-                    base64: upload.base64,
+                    bytes: upload.bytes,
                 });
             } else if (!existingFiles.has(file)) {
                 throw new HttpError(
@@ -557,7 +633,7 @@ export const createSiteContentHandler = ({
         });
         files.push({
             path: `${folder}/album.json`,
-            base64: encodeBase64(`${JSON.stringify(album, null, 4)}\n`),
+            text: `${JSON.stringify(album, null, 4)}\n`,
         });
         return { album, files };
     };
@@ -573,30 +649,35 @@ export const createSiteContentHandler = ({
         );
 
     const createAlbum = (env, actor, body) =>
-        commitChanges(env, actor, async (reader) => {
-            const meta = pickAlbumMeta(body.album);
-            const albumId = createAlbumId(meta.date, meta.title);
-            if (!albumId || (await albumImageFiles(reader, albumId)).size) {
-                throw new HttpError(
-                    409,
-                    "같은 날짜에 같은 제목의 앨범이 이미 있습니다.",
+        queueChanges(
+            env,
+            actor,
+            `album:${createAlbumId(text(body.album?.date), text(body.album?.title))}`,
+            async (reader) => {
+                const meta = pickAlbumMeta(body.album);
+                const albumId = createAlbumId(meta.date, meta.title);
+                if (!albumId || (await albumImageFiles(reader, albumId)).size) {
+                    throw new HttpError(
+                        409,
+                        "같은 날짜에 같은 제목의 앨범이 이미 있습니다.",
+                    );
+                }
+                const { album, files } = buildAlbumFiles(
+                    albumId,
+                    meta,
+                    body.photos,
+                    new Set(),
                 );
-            }
-            const { album, files } = buildAlbumFiles(
-                albumId,
-                meta,
-                body.photos,
-                new Set(),
-            );
-            return {
-                message: `Photos: add "${album.title}"`,
-                files,
-                result: { id: albumId },
-            };
-        });
+                return {
+                    message: `Photos: add "${album.title}"`,
+                    files,
+                    result: { id: albumId },
+                };
+            },
+        );
 
     const updateAlbum = (env, actor, albumId, body) =>
-        commitChanges(env, actor, async (reader) => {
+        queueChanges(env, actor, `album:${albumId}`, async (reader) => {
             const existing = await albumImageFiles(reader, albumId);
             if (!existing.size)
                 throw new HttpError(404, "앨범을 찾을 수 없습니다.");
@@ -614,7 +695,7 @@ export const createSiteContentHandler = ({
         });
 
     const deleteAlbum = (env, actor, albumId) =>
-        commitChanges(env, actor, async (reader) => {
+        queueChanges(env, actor, `album:${albumId}`, async (reader) => {
             const entries = await reader.list(
                 `${PHOTO_CONTENT_PATH}/${albumId}`,
             );
@@ -643,6 +724,9 @@ export const createSiteContentHandler = ({
                 503,
             );
         }
+
+        const job = JOB_PATH.exec(url.pathname);
+        if (job) return handleJob(request, env, job[1], job[2]);
 
         const { failure, actor } = await authorize(request, env, "/v1/site");
         if (failure) return failure;
@@ -698,7 +782,7 @@ export const createSiteContentHandler = ({
                 request,
                 env,
                 payload,
-                method === "GET" ? 200 : 201,
+                method === "GET" ? 200 : 202,
             );
         } catch (error) {
             if (error instanceof HttpError) {
@@ -721,9 +805,9 @@ export const createSiteContentHandler = ({
                 request,
                 env,
                 {
-                    error: "GitHub에 저장하지 못했습니다.",
+                    error: "저장 요청을 보내지 못했습니다.",
                     hint: permission
-                        ? "GITHUB_ACTIONS_TOKEN에 이 저장소의 Contents 읽기·쓰기 권한이 있는지 확인하세요."
+                        ? "GITHUB_ACTIONS_TOKEN에 Actions 읽기·쓰기 권한이 있는지, 저장소에 site-edit 워크플로가 있는지 확인하세요."
                         : undefined,
                     detail: error.message,
                 },

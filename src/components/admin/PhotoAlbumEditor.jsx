@@ -8,6 +8,8 @@ const LAB_NAMES = Object.fromEntries(
     LABORATORIES.map((lab) => [lab.key, lab.shortName]),
 );
 
+// How often the list re-checks while an edit is on its way to the site.
+const PENDING_POLL_MS = 20 * 1000;
 const todayKey = () => new Date().toISOString().slice(0, 10);
 
 const blankAlbum = () => ({
@@ -89,12 +91,6 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                     사진에 나온 분들이 공개에 동의한 사진만 올려주세요.
                 </p>
             </div>
-
-            {formError ? (
-                <div className="admin-editor__alert" role="alert">
-                    <p>{formError}</p>
-                </div>
-            ) : null}
 
             <div className="admin-editor__grid">
                 {input("title", "제목", { wide: true })}
@@ -238,6 +234,12 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                 </ol>
             </div>
 
+            {formError ? (
+                <div className="admin-editor__alert" role="alert">
+                    <p>{formError}</p>
+                </div>
+            ) : null}
+
             <div className="admin-editor__actions">
                 <button
                     className="admin-button admin-button--primary"
@@ -295,6 +297,17 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
         () => new Set(state.pending ?? []),
         [state.pending],
     );
+
+    // The lock lifts when the workflow finishes, so the list re-checks until
+    // nothing is pending instead of leaving the buttons disabled until reload.
+    useEffect(() => {
+        if (!pending.size) return undefined;
+        const timer = setTimeout(
+            () => setReload((count) => count + 1),
+            PENDING_POLL_MS,
+        );
+        return () => clearTimeout(timer);
+    }, [pending]);
     const folderUrl = (id) => `${state.rawBase}/${state.photoPath}/${id}`;
 
     const update = (patch) =>
@@ -496,6 +509,13 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                         disabled={Boolean(editing)}>
                         새 앨범 만들기
                     </button>
+                    <button
+                        className="admin-button"
+                        type="button"
+                        onClick={() => setReload((count) => count + 1)}
+                        disabled={Boolean(editing)}>
+                        새로 불러오기
+                    </button>
                 </div>
             </div>
 
@@ -522,7 +542,7 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                                     </span>
                                     {pending.has(album.id) ? (
                                         <span className="admin-pill admin-pill--active">
-                                            반영 중
+                                            반영 중 · 끝나면 수정할 수 있어요
                                         </span>
                                     ) : null}
                                 </p>

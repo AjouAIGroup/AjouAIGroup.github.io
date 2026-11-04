@@ -9,6 +9,8 @@ import { prepareImageUpload } from "./adminImage";
 import { requestJson } from "./adminApi";
 
 const LIST_PAGE_SIZE = 5;
+// How often the list re-checks while an edit is on its way to the site.
+const PENDING_POLL_MS = 20 * 1000;
 const EDITABLE_TYPES = [
     "paper_accepted",
     "award",
@@ -110,12 +112,6 @@ function NewsForm({
                 </p>
             </div>
 
-            {formError ? (
-                <div className="admin-editor__alert" role="alert">
-                    <p>{formError}</p>
-                </div>
-            ) : null}
-
             <div className="admin-editor__grid">
                 {input("title", "제목", { wide: true })}
                 {isManual ? input("date", "날짜", { type: "date" }) : null}
@@ -200,6 +196,12 @@ function NewsForm({
                     : null}
             </div>
 
+            {formError ? (
+                <div className="admin-editor__alert" role="alert">
+                    <p>{formError}</p>
+                </div>
+            ) : null}
+
             <div className="admin-editor__actions">
                 <button
                     className="admin-button admin-button--primary"
@@ -264,6 +266,17 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
         () => new Set(state.pending ?? []),
         [state.pending],
     );
+
+    // The lock lifts when the workflow finishes, so the list re-checks until
+    // nothing is pending instead of leaving the buttons disabled until reload.
+    useEffect(() => {
+        if (!pending.size) return undefined;
+        const timer = setTimeout(
+            () => setReload((count) => count + 1),
+            PENDING_POLL_MS,
+        );
+        return () => clearTimeout(timer);
+    }, [pending]);
     const items = useMemo(
         () => (state.items ?? []).filter(isPublishedNewsItem),
         [state.items],
@@ -541,7 +554,8 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                                             ) : null}
                                             {pending.has(item.id) ? (
                                                 <span className="admin-pill admin-pill--active">
-                                                    반영 중
+                                                    반영 중 · 끝나면 수정할 수
+                                                    있어요
                                                 </span>
                                             ) : null}
                                             {item.edited ? (

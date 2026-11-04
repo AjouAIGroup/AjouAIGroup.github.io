@@ -1,11 +1,17 @@
 // Calls the admin Worker with the operator's Google credential. A failed
 // response becomes an Error whose message is ready to show on screen.
-export const requestJson = async (url, credential, init = {}) => {
+export const requestJson = async (
+    url,
+    credential,
+    { contentType, ...init } = {},
+) => {
     const response = await fetch(url, {
         ...init,
         headers: {
             Authorization: `Bearer ${credential}`,
-            ...(init.body ? { "Content-Type": "application/json" } : {}),
+            ...(init.body
+                ? { "Content-Type": contentType ?? "application/json" }
+                : {}),
         },
     });
     const payload = await response.json().catch(() => ({}));
@@ -39,3 +45,14 @@ export const formatDateTime = (value) => {
     const date = new Date(value);
     return Number.isNaN(date.getTime()) ? "" : dateTimeFormatter.format(date);
 };
+
+// Sends one prepared image to the Worker, which keeps it until the edit that
+// uses it is saved, and returns the id that edit refers to it by.
+export const uploadImage = async (apiUrl, credential, blob) =>
+    (
+        await requestJson(`${apiUrl}/v1/site/uploads`, credential, {
+            method: "POST",
+            body: blob,
+            contentType: blob.type,
+        })
+    ).id;

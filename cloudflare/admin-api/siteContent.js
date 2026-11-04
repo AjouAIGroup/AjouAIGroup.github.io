@@ -1,11 +1,13 @@
 import {
     LAB_KEYS,
     MAX_IMAGE_BYTES,
+    MAX_IMAGE_EDGE,
     NEWS_CONTENT_PATH,
     NEWS_IMAGE_PATH,
     NEWS_OVERRIDES_PATH,
     NEWS_OVERRIDE_FIELDS,
     PHOTO_CONTENT_PATH,
+    PHOTO_THUMB_DIR,
     createAlbumId,
     createNewsId,
     setFrontmatterFields,
@@ -19,26 +21,36 @@ import {
 // SITE_EDITS store, and handed to the site-edit workflow. That workflow
 // fetches it with its GitHub identity token, commits it together with the
 // regenerated output, and starts the deploy.
+//
+// Photos are sent one per request before the edit is saved, so no request
+// carries more than one image and the edit itself is a small JSON body.
 export const SITE_EDIT_AUDIENCE = "aaig-admin-api";
 
 const NEWS_GENERATED_PATH = "src/generated/news.generated.json";
-// Photos are resized in the browser, so a whole album fits well under this.
-export const MAX_CONTENT_BODY_BYTES = 40 * 1024 * 1024;
+const PHOTOS_GENERATED_PATH = "src/generated/photos.generated.json";
+const MAX_JSON_BODY_BYTES = 256 * 1024;
 const MAX_PHOTOS_PER_ALBUM = 60;
-// A queued edit is applied within minutes; the day only covers a workflow
-// that waited in GitHub's queue or was re-run by hand.
-const JOB_TTL_SECONDS = 24 * 60 * 60;
-// While an edit is on its way, the item it touches cannot be edited again:
-// the second edit would start from the page as it was before the first.
-const LOCK_TTL_SECONDS = 30 * 60;
+// Uploads and queued edits are applied within minutes; the day only covers
+// a workflow that waited in GitHub's queue or a form left open for a while.
+// Entries expire on their own, which costs nothing against the KV quotas.
+const STORE_TTL_SECONDS = 24 * 60 * 60;
+// How many recent site-edit runs decide what is still on its way or failed.
+const RECENT_RUNS = 30;
+const FAILURE_WINDOW_MS = 3 * 24 * 60 * 60 * 1000;
 
 const NEWS_ITEM_PATH = /^\/v1\/site\/news\/([a-z0-9-]+)$/;
 const PHOTO_ALBUM_PATH = /^\/v1\/site\/photos\/([a-z0-9-]+)$/;
-const JOB_PATH = /^\/v1\/site\/jobs\/([0-9a-f-]{36})(?:\/files\/(\d{1,3}))?$/;
+const UPLOAD_ID = /^[0-9a-f-]{36}\.(webp|jpg|png)$/;
+const JOB_PATH =
+    /^\/v1\/site\/jobs\/([0-9a-f-]{36})(?:\/uploads\/([0-9a-f-]{36}\.(?:webp|jpg|png)))?$/;
+// The workflow's run name, which is how a run is tied back to its item.
+const RUN_TITLE = /^Admin edit ((?:news|album):[a-z0-9-]+) [0-9a-f-]{36}$/;
 
 export const isSiteContentPath = (pathname) =>
     pathname === "/v1/site/news" ||
     pathname === "/v1/site/photos" ||
+    pathname === "/v1/site/uploads" ||
+    pathname === "/v1/site/status" ||
     NEWS_ITEM_PATH.test(pathname) ||
     PHOTO_ALBUM_PATH.test(pathname) ||
     JOB_PATH.test(pathname);
@@ -56,52 +68,84 @@ export const hasSiteContentConfiguration = (env) =>
 
 const text = (value) => String(value ?? "").trim();
 
-const decodeBase64 = (value) =>
-    Uint8Array.from(atob(String(value ?? "").replace(/\s+/g, "")), (char) =>
-        char.charCodeAt(0),
-    );
+const ascii = (bytes, start, end) =>
+    String.fromCharCode(...bytes.subarray(start, end));
+
+const JPEG_FRAME_MARKERS = new Set([
+    0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce,
+    0xcf,
+]);
+
+const readJpegSize = (b) => {
+    let index = 2;
+    while (index + 9 < b.length) {
+        if (b[index] !== 0xff) return null;
+        const marker = b[index + 1];
+        if (marker === 0xff) {
+            index += 1;
+            continue;
+        }
+        if (JPEG_FRAME_MARKERS.has(marker)) {
+            return {
+                height: (b[index + 5] << 8) | b[index + 6],
+                width: (b[index + 7] << 8) | b[index + 8],
+            };
+        }
+        index += 2 + ((b[index + 2] << 8) | b[index + 3]);
+    }
+    return null;
+};
+
+const readWebpSize = (b) => {
+    const chunk = ascii(b, 12, 16);
+    if (chunk === "VP8 ") {
+        return {
+            width: (b[26] | (b[27] << 8)) & 0x3fff,
+            height: (b[28] | (b[29] << 8)) & 0x3fff,
+        };
+    }
+    if (chunk === "VP8L") {
+        return {
+            width: 1 + (((b[22] & 0x3f) << 8) | b[21]),
+            height: 1 + (((b[24] & 0x0f) << 10) | (b[23] << 2) | (b[22] >> 6)),
+        };
+    }
+    if (chunk === "VP8X") {
+        return {
+            width: 1 + (b[24] | (b[25] << 8) | (b[26] << 16)),
+            height: 1 + (b[27] | (b[28] << 8) | (b[29] << 16)),
+        };
+    }
+    return null;
+};
 
 // The browser re-encodes every upload, so only these formats ever arrive.
 // The bytes are checked rather than the declared type, which the client
-// controls.
-const IMAGE_SIGNATURES = [
-    {
-        ext: "webp",
-        test: (b) => text(String.fromCharCode(...b.subarray(8, 12))) === "WEBP",
-    },
-    {
-        ext: "jpg",
-        test: (b) => b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff,
-    },
-    {
-        ext: "png",
-        test: (b) => b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e,
-    },
-];
-
-const readUpload = (upload, label, HttpError) => {
-    const data = text(upload?.data);
-    if (!data) throw new HttpError(400, `${label}: 사진 데이터가 없습니다.`);
-    let bytes;
-    try {
-        bytes = decodeBase64(data);
-    } catch {
-        throw new HttpError(400, `${label}: 사진을 읽지 못했습니다.`);
+// controls, and the size is read from the header so a small file cannot
+// decode into a huge image on a visitor's phone.
+const inspectImage = (b) => {
+    if (b.length < 30) return null;
+    let format = null;
+    if (ascii(b, 0, 4) === "RIFF" && ascii(b, 8, 12) === "WEBP") {
+        format = { ext: "webp", ...readWebpSize(b) };
+    } else if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) {
+        format = { ext: "jpg", ...readJpegSize(b) };
+    } else if (
+        [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a].every(
+            (byte, index) => b[index] === byte,
+        )
+    ) {
+        const view = new DataView(b.buffer, b.byteOffset, b.byteLength);
+        format = {
+            ext: "png",
+            width: view.getUint32(16),
+            height: view.getUint32(20),
+        };
     }
-    if (bytes.byteLength > MAX_IMAGE_BYTES) {
-        throw new HttpError(413, `${label}: 사진이 3MB보다 큽니다.`);
-    }
-    const format = IMAGE_SIGNATURES.find((signature) => signature.test(bytes));
-    if (!format) {
-        throw new HttpError(
-            400,
-            `${label}: JPEG, PNG, WebP 사진만 올릴 수 있습니다.`,
-        );
-    }
-    return { bytes, ext: format.ext };
+    return format?.width && format?.height ? format : null;
 };
 
-const uniqueSuffix = () => Date.now().toString(36);
+const shortSuffix = () => crypto.randomUUID().slice(0, 8);
 
 export const createSiteContentHandler = ({
     jsonResponse,
@@ -110,122 +154,160 @@ export const createSiteContentHandler = ({
     githubRequest,
     HttpError,
 }) => {
-    const readJson = async (request) => {
-        const body = await request.text();
-        if (body.length > MAX_CONTENT_BODY_BYTES) {
-            throw new HttpError(413, "한 번에 올리는 사진이 너무 많습니다.");
+    const assertLength = (request, max, message) => {
+        const length = Number(request.headers.get("Content-Length"));
+        if (!Number.isFinite(length) || length <= 0) {
+            throw new HttpError(411, "요청 크기를 알 수 없습니다.");
         }
+        if (length > max) throw new HttpError(413, message);
+    };
+
+    const readJson = async (request) => {
+        assertLength(request, MAX_JSON_BODY_BYTES, "요청 내용이 너무 큽니다.");
         try {
-            return JSON.parse(body || "{}");
+            return JSON.parse((await request.text()) || "{}");
         } catch {
             throw new HttpError(400, "요청 형식이 올바르지 않습니다.");
         }
     };
 
+    const uploadKey = (id) => `upload:${id}`;
+    const jobKey = (jobId) => `job:${jobId}`;
+
+    // An upload reference from the editor: the id the upload call returned.
+    const readUploadRef = (value, label) => {
+        const match = UPLOAD_ID.exec(text(value));
+        if (!match) {
+            throw new HttpError(400, `${label}: 사진을 다시 올려주세요.`);
+        }
+        return { id: match[0], ext: match[1] };
+    };
+
     const branch = (env) => encodeURIComponent(env.GITHUB_REF);
 
-    const readHead = async (env) => {
-        const ref = await githubRequest(env, `/git/ref/heads/${branch(env)}`);
-        const commit = await githubRequest(
-            env,
-            `/git/commits/${ref.object.sha}`,
-        );
-        return { sha: ref.object.sha, treeSha: commit.tree.sha };
-    };
+    const readHead = async (env) =>
+        (await githubRequest(env, `/git/ref/heads/${branch(env)}`)).object.sha;
 
     // Reads files as of one commit so every decision in an edit sees the same
     // snapshot. Missing files and folders read as null.
     const createReader = (env, sha) => {
-        const get = async (path) => {
+        const contentsPath = (path) =>
+            `/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${sha}`;
+        const readText = async (path) => {
             try {
-                return await githubRequest(
-                    env,
-                    `/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${sha}`,
-                );
+                return await githubRequest(env, contentsPath(path), {
+                    raw: true,
+                });
             } catch (error) {
                 if (error.status === 404) return null;
                 throw error;
             }
         };
         return {
-            text: async (path) => {
-                const file = await get(path);
-                if (!file || Array.isArray(file)) return null;
-                return new TextDecoder().decode(decodeBase64(file.content));
-            },
+            text: readText,
             json: async (path) => {
-                const file = await get(path);
-                if (!file || Array.isArray(file)) return null;
-                return JSON.parse(
-                    new TextDecoder().decode(decodeBase64(file.content)),
-                );
+                const body = await readText(path);
+                return body === null ? null : JSON.parse(body);
             },
             list: async (path) => {
-                const entries = await get(path);
-                return Array.isArray(entries) ? entries : [];
+                try {
+                    const entries = await githubRequest(
+                        env,
+                        contentsPath(path),
+                    );
+                    return Array.isArray(entries) ? entries : [];
+                } catch (error) {
+                    if (error.status === 404) return [];
+                    throw error;
+                }
             },
         };
     };
 
-    const lockKey = (target) => `lock:${target}`;
-    const jobKey = (jobId) => `job:${jobId}`;
-    const fileKey = (jobId, index) => `job:${jobId}:file:${index}`;
+    // What is still on its way to the site, and what did not make it, comes
+    // from the site-edit workflow's own runs: one GitHub call, no stored
+    // state that could drift from what actually happened.
+    const readEditStatus = async (env) => {
+        const { workflow_runs: runs = [] } = await githubRequest(
+            env,
+            `/actions/workflows/${encodeURIComponent(env.SITE_EDIT_WORKFLOW_ID)}/runs?event=workflow_dispatch&per_page=${RECENT_RUNS}`,
+        );
+        const pending = new Set();
+        const settled = new Set();
+        const failed = new Map();
+        // Runs come newest first, so the first finished run per item wins.
+        for (const run of runs) {
+            const target = RUN_TITLE.exec(text(run.display_title))?.[1];
+            if (!target) continue;
+            if (run.status !== "completed") {
+                pending.add(target);
+            } else if (!settled.has(target)) {
+                settled.add(target);
+                const isRecent =
+                    Date.now() - Date.parse(run.created_at) < FAILURE_WINDOW_MS;
+                if (run.conclusion !== "success" && isRecent) {
+                    failed.set(target, run.html_url);
+                }
+            }
+        }
+        pending.forEach((target) => failed.delete(target));
+        return { pending, failed };
+    };
 
-    const listPending = async (env, prefix) => {
-        const { keys } = await env.SITE_EDITS.list({
-            prefix: lockKey(prefix),
-        });
-        return keys.map((key) => key.name.slice(lockKey(prefix).length));
+    // Splits the status into the ids of one kind ("news" or "album").
+    const statusFor = (status, kind) => {
+        const prefix = `${kind}:`;
+        const ids = (targets) =>
+            [...targets]
+                .filter((target) => target.startsWith(prefix))
+                .map((target) => target.slice(prefix.length));
+        return {
+            pending: ids(status.pending),
+            failed: Object.fromEntries(
+                [...status.failed]
+                    .filter(([target]) => target.startsWith(prefix))
+                    .map(([target, url]) => [target.slice(prefix.length), url]),
+            ),
+        };
     };
 
     // `buildChanges` reads the current head and returns { message, files,
-    // overrides, result }. `files` are whole files to write ({ path, bytes }
-    // or { path, text }) or remove ({ path, delete: true }); `overrides` maps a
+    // overrides, result }. `files` are whole files to write ({ path, text } or
+    // { path, upload }) or remove ({ path, delete: true }); `overrides` maps a
     // News id to its new overrides.json entry, or null to drop it, so edits to
-    // different items never overwrite each other's entries.
+    // different items never overwrite each other's entries. The workflow
+    // refuses the edit if its item changed on main after `base`.
     const queueChanges = async (env, actor, target, buildChanges) => {
-        if (await env.SITE_EDITS.get(lockKey(target))) {
+        if ((await readEditStatus(env)).pending.has(target)) {
             throw new HttpError(
                 409,
                 "이 항목의 이전 저장이 아직 반영 중입니다. 몇 분 뒤 다시 시도해주세요.",
             );
         }
 
-        const head = await readHead(env);
+        const base = await readHead(env);
         const {
             message,
             files,
             overrides = {},
             result,
-        } = await buildChanges(createReader(env, head.sha));
+        } = await buildChanges(createReader(env, base));
 
         const jobId = crypto.randomUUID();
-        const ttl = { expirationTtl: JOB_TTL_SECONDS };
-        const manifest = await Promise.all(
-            files.map(async (file, index) => {
-                if (file.delete) return { path: file.path, delete: true };
-                const bytes = file.bytes ?? new TextEncoder().encode(file.text);
-                await env.SITE_EDITS.put(fileKey(jobId, index), bytes, ttl);
-                return { path: file.path, file: index };
-            }),
-        );
         await env.SITE_EDITS.put(
             jobKey(jobId),
             JSON.stringify({
                 id: jobId,
                 actor,
                 message,
-                base: head.sha,
-                files: manifest,
-                overrides,
+                base,
                 target,
+                files,
+                overrides,
                 createdAt: new Date().toISOString(),
             }),
-            ttl,
+            { expirationTtl: STORE_TTL_SECONDS },
         );
-        await env.SITE_EDITS.put(lockKey(target), jobId, {
-            expirationTtl: LOCK_TTL_SECONDS,
-        });
 
         try {
             await githubRequest(
@@ -235,15 +317,17 @@ export const createSiteContentHandler = ({
                     method: "POST",
                     body: JSON.stringify({
                         ref: env.GITHUB_REF,
-                        inputs: { job_id: jobId },
+                        inputs: { job_id: jobId, target },
                     }),
                 },
             );
         } catch (error) {
-            await releaseJob(env, jobId);
+            await env.SITE_EDITS.delete(jobKey(jobId));
             throw error;
         }
 
+        // The operator is recorded here, in the Worker log, and not in the
+        // public commit history.
         console.log(
             JSON.stringify({
                 event: "site_content.queued",
@@ -260,48 +344,67 @@ export const createSiteContentHandler = ({
         };
     };
 
-    const readJob = async (env, jobId) => {
-        const job = await env.SITE_EDITS.get(jobKey(jobId), "json");
-        if (!job) throw new HttpError(404, "Edit not found or expired.");
-        return job;
-    };
-
-    const releaseJob = async (env, jobId) => {
-        const job = await env.SITE_EDITS.get(jobKey(jobId), "json");
-        if (!job) return { released: false };
-        await Promise.all(
-            job.files
-                .filter((file) => !file.delete)
-                .map((file) =>
-                    env.SITE_EDITS.delete(fileKey(jobId, file.file)),
-                ),
-        );
-        // The lock may already belong to a newer edit if this one expired.
-        if ((await env.SITE_EDITS.get(lockKey(job.target))) === jobId) {
-            await env.SITE_EDITS.delete(lockKey(job.target));
+    const handleUpload = async (request, env, actor) => {
+        assertLength(request, MAX_IMAGE_BYTES, "사진이 3MB보다 큽니다.");
+        const bytes = new Uint8Array(await request.arrayBuffer());
+        if (bytes.byteLength > MAX_IMAGE_BYTES) {
+            throw new HttpError(413, "사진이 3MB보다 큽니다.");
         }
-        await env.SITE_EDITS.delete(jobKey(jobId));
-        return { released: true };
+        const image = inspectImage(bytes);
+        if (!image) {
+            throw new HttpError(
+                400,
+                "JPEG, PNG, WebP 사진만 올릴 수 있습니다.",
+            );
+        }
+        if (Math.max(image.width, image.height) > MAX_IMAGE_EDGE) {
+            throw new HttpError(
+                400,
+                `사진은 긴 변 ${MAX_IMAGE_EDGE}px 이하만 올릴 수 있습니다.`,
+            );
+        }
+        const id = `${crypto.randomUUID()}.${image.ext}`;
+        await env.SITE_EDITS.put(uploadKey(id), bytes, {
+            expirationTtl: STORE_TTL_SECONDS,
+        });
+        console.log(
+            JSON.stringify({ event: "site_content.upload", actor, id }),
+        );
+        return { id, width: image.width, height: image.height };
     };
 
-    const handleJob = async (request, env, jobId, fileIndex) => {
-        const denied = await authorizeSiteEditWorkflow(request, env);
-        if (denied) return denied;
+    const handleJob = async (request, env, jobId, uploadId) => {
+        const { failure, claims } = await authorizeSiteEditWorkflow(
+            request,
+            env,
+        );
+        if (failure) return failure;
         try {
-            if (request.method === "DELETE" && fileIndex === undefined) {
-                return jsonResponse(request, env, await releaseJob(env, jobId));
+            const job = await env.SITE_EDITS.get(jobKey(jobId), "json");
+            if (request.method === "DELETE" && !uploadId) {
+                if (job) await env.SITE_EDITS.delete(jobKey(jobId));
+                return jsonResponse(request, env, { released: Boolean(job) });
             }
             if (request.method !== "GET") {
                 throw new HttpError(405, "Method not allowed.");
             }
-            if (fileIndex === undefined) {
-                return jsonResponse(request, env, await readJob(env, jobId));
+            if (!job) throw new HttpError(404, "Edit not found or expired.");
+            // A token issued before the edit existed belongs to another run.
+            if (
+                Number(claims.iat) * 1000 <
+                Date.parse(job.createdAt) - 60_000
+            ) {
+                throw new HttpError(403, "Token predates this edit.");
+            }
+            if (!uploadId) return jsonResponse(request, env, job);
+            if (!job.files.some((file) => file.upload === uploadId)) {
+                throw new HttpError(404, "Upload is not part of this edit.");
             }
             const bytes = await env.SITE_EDITS.get(
-                fileKey(jobId, Number(fileIndex)),
+                uploadKey(uploadId),
                 "arrayBuffer",
             );
-            if (!bytes) throw new HttpError(404, "File not found or expired.");
+            if (!bytes) throw new HttpError(404, "Upload expired.");
             return new Response(bytes, {
                 headers: { "Content-Type": "application/octet-stream" },
             });
@@ -344,68 +447,67 @@ export const createSiteContentHandler = ({
         }
     };
 
+    const newsImageFile = (id, upload) =>
+        `${id.slice(0, 70)}-${shortSuffix()}.${upload.ext}`;
+
     const listNews = async (env) => {
         const head = await readHead(env);
-        const reader = createReader(env, head.sha);
-        const [generated, overrides, pending] = await Promise.all([
+        const reader = createReader(env, head);
+        const [generated, overrides, status] = await Promise.all([
             reader.json(NEWS_GENERATED_PATH),
             readOverrides(reader),
-            listPending(env, "news:"),
+            readEditStatus(env),
         ]);
         return {
-            headSha: head.sha,
-            rawBase: rawBase(env, head.sha),
+            headSha: head,
+            rawBase: rawBase(env, head),
             imagePath: NEWS_IMAGE_PATH,
             items: generated?.items ?? [],
             overrides,
-            pending,
+            ...statusFor(status, "news"),
         };
     };
 
-    const createNews = (env, actor, body) =>
-        queueChanges(
-            env,
-            actor,
-            `news:${createNewsId(text(body.fields?.date), text(body.fields?.title))}`,
-            async (reader) => {
-                const fields = pickNewsFields(body.fields);
-                const files = [];
-                if (body.image) {
-                    const upload = readUpload(body.image, "사진", HttpError);
-                    fields.image = `${createNewsId(fields.date, fields.title)}-${uniqueSuffix()}.${upload.ext}`;
-                    files.push({
-                        path: `${NEWS_IMAGE_PATH}/${fields.image}`,
-                        bytes: upload.bytes,
-                    });
-                }
-                assertValid(validateNewsFields(fields));
-
-                const id = createNewsId(fields.date, fields.title);
-                const path = `${NEWS_CONTENT_PATH}/${id}.md`;
-                if (
-                    (await reader.text(path)) !== null ||
-                    (await findNewsItem(reader, id))
-                ) {
-                    throw new HttpError(
-                        409,
-                        "같은 날짜에 같은 제목의 News가 이미 있습니다.",
-                    );
-                }
-                const markdown = setFrontmatterFields("", {
-                    id,
-                    ...fields,
-                    is_external: Boolean(fields.external_url),
-                    featured: false,
-                    internal_slug: id,
+    const createNews = (env, actor, body) => {
+        const fields = pickNewsFields(body.fields);
+        const id = createNewsId(fields.date, fields.title);
+        return queueChanges(env, actor, `news:${id}`, async (reader) => {
+            const files = [];
+            if (body.image) {
+                const upload = readUploadRef(body.image.upload, "사진");
+                fields.image = newsImageFile(id, upload);
+                files.push({
+                    path: `${NEWS_IMAGE_PATH}/${fields.image}`,
+                    upload: upload.id,
                 });
-                files.push({ path, text: markdown });
-                return {
-                    message: `News: add "${fields.title}"`,
-                    files,
-                    result: { id },
-                };
-            },
-        );
+            }
+            assertValid(validateNewsFields(fields));
+
+            const path = `${NEWS_CONTENT_PATH}/${id}.md`;
+            if (
+                (await reader.text(path)) !== null ||
+                (await findNewsItem(reader, id))
+            ) {
+                throw new HttpError(
+                    409,
+                    "같은 날짜에 같은 제목의 News가 이미 있습니다.",
+                );
+            }
+            const markdown = setFrontmatterFields("", {
+                id,
+                ...fields,
+                is_external: Boolean(fields.external_url),
+                featured: false,
+                internal_slug: id,
+            });
+            files.push({ path, text: markdown });
+            return {
+                message: `News: add "${fields.title}"`,
+                files,
+                result: { id },
+            };
+        });
+    };
 
     const updateNews = (env, actor, id, body) =>
         queueChanges(env, actor, `news:${id}`, async (reader) => {
@@ -437,11 +539,11 @@ export const createSiteContentHandler = ({
                 : text(overrides[id]?.image ?? item.image);
             let image = body.removeImage ? "" : currentImage;
             if (body.image) {
-                const upload = readUpload(body.image, "사진", HttpError);
-                image = `${id.slice(0, 70)}-${uniqueSuffix()}.${upload.ext}`;
+                const upload = readUploadRef(body.image.upload, "사진");
+                image = newsImageFile(id, upload);
                 files.push({
                     path: `${NEWS_IMAGE_PATH}/${image}`,
-                    bytes: upload.bytes,
+                    upload: upload.id,
                 });
             }
             if (currentImage && currentImage !== image) {
@@ -521,7 +623,7 @@ export const createSiteContentHandler = ({
                 }
                 if (overrides[id]) {
                     delete overrides[id];
-                    overridePatch = { [id]: overrides[id] ?? null };
+                    overridePatch = { [id]: null };
                 }
                 return {
                     message: `News: delete "${item.title}"`,
@@ -538,7 +640,7 @@ export const createSiteContentHandler = ({
                 hidden: true,
                 hidden_title: item.title,
             };
-            overridePatch = { [id]: overrides[id] ?? null };
+            overridePatch = { [id]: overrides[id] };
             return {
                 message: `News: hide "${item.title}"`,
                 files,
@@ -549,30 +651,23 @@ export const createSiteContentHandler = ({
 
     // ---------- Photos ----------
 
+    // The album list comes from the generated index rather than one read per
+    // album folder, so it stays a fixed number of GitHub calls.
     const listPhotos = async (env) => {
         const head = await readHead(env);
-        const reader = createReader(env, head.sha);
-        const folders = (await reader.list(PHOTO_CONTENT_PATH)).filter(
-            (entry) => entry.type === "dir",
-        );
-        const pending = await listPending(env, "album:");
-        const albums = await Promise.all(
-            folders.map(async (folder) => ({
-                id: folder.name,
-                ...((await reader.json(
-                    `${PHOTO_CONTENT_PATH}/${folder.name}/album.json`,
-                )) ?? {}),
-            })),
-        );
+        const reader = createReader(env, head);
+        const [index, status] = await Promise.all([
+            reader.json(PHOTOS_GENERATED_PATH),
+            readEditStatus(env),
+        ]);
         return {
-            headSha: head.sha,
-            rawBase: rawBase(env, head.sha),
+            headSha: head,
+            rawBase: rawBase(env, head),
             photoPath: PHOTO_CONTENT_PATH,
+            thumbDir: PHOTO_THUMB_DIR,
             labs: LAB_KEYS,
-            pending,
-            albums: albums.sort((left, right) =>
-                text(right.date).localeCompare(text(left.date)),
-            ),
+            albums: index?.albums ?? [],
+            ...statusFor(status, "album"),
         };
     };
 
@@ -588,7 +683,8 @@ export const createSiteContentHandler = ({
     };
 
     // Turns the editor's photo list (existing files by name, new ones as
-    // uploads) into album.json entries plus the files to write and delete.
+    // upload ids) into album.json entries plus the files to write and delete.
+    // Each photo's small copy lives at thumbs/<same name>.
     const buildAlbumFiles = (albumId, meta, photos, existingFiles) => {
         if (!Array.isArray(photos) || photos.length > MAX_PHOTOS_PER_ALBUM) {
             throw new HttpError(
@@ -598,24 +694,27 @@ export const createSiteContentHandler = ({
         }
         const folder = `${PHOTO_CONTENT_PATH}/${albumId}`;
         const files = [];
-        const suffix = uniqueSuffix();
+        const suffix = shortSuffix();
         const entries = photos.map((photo, index) => {
+            const label = `사진 ${index + 1}`;
             let file = text(photo?.file);
-            if (photo?.data) {
-                const upload = readUpload(
-                    photo,
-                    `사진 ${index + 1}`,
-                    HttpError,
-                );
+            if (photo?.upload) {
+                const upload = readUploadRef(photo.upload, label);
                 file = `${String(index + 1).padStart(2, "0")}-${suffix}.${upload.ext}`;
-                files.push({
-                    path: `${folder}/${file}`,
-                    bytes: upload.bytes,
-                });
+                files.push({ path: `${folder}/${file}`, upload: upload.id });
+                if (photo.thumb) {
+                    const thumb = readUploadRef(photo.thumb, label);
+                    if (thumb.ext === upload.ext) {
+                        files.push({
+                            path: `${folder}/${PHOTO_THUMB_DIR}/${file}`,
+                            upload: thumb.id,
+                        });
+                    }
+                }
             } else if (!existingFiles.has(file)) {
                 throw new HttpError(
                     409,
-                    `사진 ${index + 1}: 그 사이 앨범이 바뀌었습니다. 새로 불러온 뒤 다시 저장해주세요.`,
+                    `${label}: 그 사이 앨범이 바뀌었습니다. 새로 불러온 뒤 다시 저장해주세요.`,
                 );
             }
             const entry = { file, alt: text(photo?.alt) };
@@ -628,8 +727,12 @@ export const createSiteContentHandler = ({
 
         const kept = new Set(entries.map((entry) => entry.file));
         existingFiles.forEach((file) => {
-            if (!kept.has(file))
-                files.push({ path: `${folder}/${file}`, delete: true });
+            if (kept.has(file)) return;
+            files.push({ path: `${folder}/${file}`, delete: true });
+            files.push({
+                path: `${folder}/${PHOTO_THUMB_DIR}/${file}`,
+                delete: true,
+            });
         });
         files.push({
             path: `${folder}/album.json`,
@@ -648,33 +751,29 @@ export const createSiteContentHandler = ({
                 .map((entry) => entry.name),
         );
 
-    const createAlbum = (env, actor, body) =>
-        queueChanges(
-            env,
-            actor,
-            `album:${createAlbumId(text(body.album?.date), text(body.album?.title))}`,
-            async (reader) => {
-                const meta = pickAlbumMeta(body.album);
-                const albumId = createAlbumId(meta.date, meta.title);
-                if (!albumId || (await albumImageFiles(reader, albumId)).size) {
-                    throw new HttpError(
-                        409,
-                        "같은 날짜에 같은 제목의 앨범이 이미 있습니다.",
-                    );
-                }
-                const { album, files } = buildAlbumFiles(
-                    albumId,
-                    meta,
-                    body.photos,
-                    new Set(),
+    const createAlbum = (env, actor, body) => {
+        const meta = pickAlbumMeta(body.album);
+        const albumId = createAlbumId(meta.date, meta.title);
+        return queueChanges(env, actor, `album:${albumId}`, async (reader) => {
+            if (!albumId || (await albumImageFiles(reader, albumId)).size) {
+                throw new HttpError(
+                    409,
+                    "같은 날짜에 같은 제목의 앨범이 이미 있습니다.",
                 );
-                return {
-                    message: `Photos: add "${album.title}"`,
-                    files,
-                    result: { id: albumId },
-                };
-            },
-        );
+            }
+            const { album, files } = buildAlbumFiles(
+                albumId,
+                meta,
+                body.photos,
+                new Set(),
+            );
+            return {
+                message: `Photos: add "${album.title}"`,
+                files,
+                result: { id: albumId },
+            };
+        });
+    };
 
     const updateAlbum = (env, actor, albumId, body) =>
         queueChanges(env, actor, `album:${albumId}`, async (reader) => {
@@ -694,21 +793,31 @@ export const createSiteContentHandler = ({
             };
         });
 
+    // Removing album.json is enough: the workflow clears a folder that no
+    // longer has one, small copies included.
     const deleteAlbum = (env, actor, albumId) =>
         queueChanges(env, actor, `album:${albumId}`, async (reader) => {
-            const entries = await reader.list(
-                `${PHOTO_CONTENT_PATH}/${albumId}`,
-            );
-            if (!entries.length)
+            if (!(await albumImageFiles(reader, albumId)).size)
                 throw new HttpError(404, "앨범을 찾을 수 없습니다.");
             return {
                 message: `Photos: delete album ${albumId}`,
-                files: entries
-                    .filter((entry) => entry.type === "file")
-                    .map((entry) => ({ path: entry.path, delete: true })),
+                files: [
+                    {
+                        path: `${PHOTO_CONTENT_PATH}/${albumId}/album.json`,
+                        delete: true,
+                    },
+                ],
                 result: { id: albumId, deleted: true },
             };
         });
+
+    const readStatus = async (env) => {
+        const status = await readEditStatus(env);
+        return {
+            news: statusFor(status, "news"),
+            albums: statusFor(status, "album"),
+        };
+    };
 
     // ---------- Routing ----------
 
@@ -734,49 +843,66 @@ export const createSiteContentHandler = ({
         const newsId = NEWS_ITEM_PATH.exec(url.pathname)?.[1];
         const albumId = PHOTO_ALBUM_PATH.exec(url.pathname)?.[1];
         const method = request.method;
+        const route = `${method} ${newsId ? "news/:id" : albumId ? "photos/:id" : url.pathname}`;
 
         try {
             let payload;
-            if (url.pathname === "/v1/site/news" && method === "GET") {
-                payload = await listNews(env);
-            } else if (url.pathname === "/v1/site/news" && method === "POST") {
-                payload = await createNews(env, actor, await readJson(request));
-            } else if (newsId && method === "PUT") {
-                payload = await updateNews(
-                    env,
-                    actor,
-                    newsId,
-                    await readJson(request),
-                );
-            } else if (newsId && method === "DELETE") {
-                payload = await deleteNews(env, actor, newsId);
-            } else if (url.pathname === "/v1/site/photos" && method === "GET") {
-                payload = await listPhotos(env);
-            } else if (
-                url.pathname === "/v1/site/photos" &&
-                method === "POST"
-            ) {
-                payload = await createAlbum(
-                    env,
-                    actor,
-                    await readJson(request),
-                );
-            } else if (albumId && method === "PUT") {
-                payload = await updateAlbum(
-                    env,
-                    actor,
-                    albumId,
-                    await readJson(request),
-                );
-            } else if (albumId && method === "DELETE") {
-                payload = await deleteAlbum(env, actor, albumId);
-            } else {
-                return jsonResponse(
-                    request,
-                    env,
-                    { error: "허용되지 않은 요청 방식입니다." },
-                    405,
-                );
+            switch (route) {
+                case "GET /v1/site/status":
+                    payload = await readStatus(env);
+                    break;
+                case "POST /v1/site/uploads":
+                    payload = await handleUpload(request, env, actor);
+                    break;
+                case "GET /v1/site/news":
+                    payload = await listNews(env);
+                    break;
+                case "POST /v1/site/news":
+                    payload = await createNews(
+                        env,
+                        actor,
+                        await readJson(request),
+                    );
+                    break;
+                case "PUT news/:id":
+                    payload = await updateNews(
+                        env,
+                        actor,
+                        newsId,
+                        await readJson(request),
+                    );
+                    break;
+                case "DELETE news/:id":
+                    payload = await deleteNews(env, actor, newsId);
+                    break;
+                case "GET /v1/site/photos":
+                    payload = await listPhotos(env);
+                    break;
+                case "POST /v1/site/photos":
+                    payload = await createAlbum(
+                        env,
+                        actor,
+                        await readJson(request),
+                    );
+                    break;
+                case "PUT photos/:id":
+                    payload = await updateAlbum(
+                        env,
+                        actor,
+                        albumId,
+                        await readJson(request),
+                    );
+                    break;
+                case "DELETE photos/:id":
+                    payload = await deleteAlbum(env, actor, albumId);
+                    break;
+                default:
+                    return jsonResponse(
+                        request,
+                        env,
+                        { error: "허용되지 않은 요청 방식입니다." },
+                        405,
+                    );
             }
             return jsonResponse(
                 request,

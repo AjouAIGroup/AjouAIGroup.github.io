@@ -308,11 +308,13 @@ const authorize = async (request, env, pathname) => {
     };
 };
 
-// Lets only the site-edit workflow on the site's own branch read and release
-// the edits the Worker queued for it.
+// Lets only the site-edit workflow on the site's own branch, started by a
+// dispatch, read and release the edits the Worker queued for it. Returns a
+// ready response on failure, otherwise the token's claims.
 const authorizeSiteEditWorkflow = async (request, env) => {
-    const failure = (status, error) =>
-        jsonResponse(request, env, { error }, status);
+    const failure = (status, error) => ({
+        failure: jsonResponse(request, env, { error }, status),
+    });
     const credential = getBearerCredential(request);
     if (!credential) return failure(401, "Workflow token required.");
 
@@ -330,8 +332,11 @@ const authorizeSiteEditWorkflow = async (request, env) => {
         claims.iss === GITHUB_OIDC_ISSUER &&
         claims.aud === SITE_EDIT_AUDIENCE &&
         claims.repository === repository &&
-        claims.workflow_ref === workflowRef;
-    return isTrusted ? null : failure(403, "Workflow token rejected.");
+        claims.workflow_ref === workflowRef &&
+        claims.event_name === "workflow_dispatch";
+    return isTrusted
+        ? { failure: null, claims }
+        : failure(403, "Workflow token rejected.");
 };
 
 const toIsoDate = (date) => date.toISOString().slice(0, 10);
@@ -492,7 +497,9 @@ const GITHUB_API = "https://api.github.com";
 // `branch` in .github/workflows/publications-sheet-sync.yml.
 const PUBLICATION_SYNC_BRANCH = "automation/publications-sheet-sync";
 
-const githubRequest = async (env, path, init = {}) => {
+// `raw: true` returns a file's text as is. The default JSON form of the
+// contents API wraps files in base64 and stops returning them past 1 MB.
+const githubRequest = async (env, path, { raw = false, ...init } = {}) => {
     const owner = encodeURIComponent(env.GITHUB_OWNER);
     const repository = encodeURIComponent(env.GITHUB_REPO);
     const response = await fetch(
@@ -500,7 +507,9 @@ const githubRequest = async (env, path, init = {}) => {
         {
             ...init,
             headers: {
-                Accept: "application/vnd.github+json",
+                Accept: raw
+                    ? "application/vnd.github.raw+json"
+                    : "application/vnd.github+json",
                 Authorization: `Bearer ${env.GITHUB_ACTIONS_TOKEN}`,
                 "Content-Type": "application/json",
                 "User-Agent": "AAIG-Admin-Worker",
@@ -508,6 +517,7 @@ const githubRequest = async (env, path, init = {}) => {
             },
         },
     );
+    if (raw && response.ok) return response.text();
     const payload = await response.json().catch(() => ({}));
 
     if (!response.ok) {

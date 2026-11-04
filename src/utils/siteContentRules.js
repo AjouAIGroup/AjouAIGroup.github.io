@@ -28,6 +28,10 @@ export const PHOTO_CONTENT_PATH = "content/photos";
 // only catch files added by hand or a browser that could not resize.
 export const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 export const MAX_IMAGE_EDGE = 2000;
+// Album grids show photos a few hundred pixels wide, so each photo also gets
+// a small copy at <album>/thumbs/<same file name>.
+export const PHOTO_THUMB_DIR = "thumbs";
+export const MAX_THUMB_EDGE = 640;
 export const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"];
 
 export const MAX_TITLE_LENGTH = 200;
@@ -70,13 +74,32 @@ export const imageExtension = (fileName) =>
 export const isImageFileName = (fileName) =>
     IMAGE_EXTENSIONS.includes(imageExtension(fileName));
 
-// A news id doubles as its file name and page anchor, so it is built from the
-// date and title and never changes after the item is created.
-export const createNewsId = (date, title) =>
-    [text(date), slugify(title, 60)].filter(Boolean).join("-");
+// A slug keeps only ASCII letters and digits, so a Korean title would leave
+// little more than the date. Such ids get a short random tail to stay unique.
+const needsIdSuffix = (title) => /[^ -~]/.test(text(title));
+const randomSuffix = () =>
+    Math.random().toString(36).slice(2, 8).padEnd(6, "0");
 
-export const createAlbumId = (date, title) =>
-    [text(date), slugify(title, 40)].filter(Boolean).join("-");
+const createId = (date, title, maxLength) =>
+    [
+        text(date),
+        slugify(title, maxLength),
+        needsIdSuffix(title) ? randomSuffix() : "",
+    ]
+        .filter(Boolean)
+        .join("-");
+
+// A news id doubles as its file name and page anchor, so it is built from the
+// date and title once and never changes after the item is created.
+export const createNewsId = (date, title) => createId(date, title, 60);
+
+export const createAlbumId = (date, title) => createId(date, title, 40);
+
+// AAIG News centres on paper announcements. The lab-site ingestion also keeps
+// other lab updates (new interns, equipment), which stay off the page; items
+// written for this site, by hand or from the admin page, always appear.
+export const isPublishedNewsItem = (item) =>
+    item.type === "paper_accepted" || Boolean(item.source_path);
 
 const checkLength = (errors, field, value, max) => {
     if (text(value).length > max) {

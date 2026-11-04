@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { isPublishedNewsItem } from "../../utils/newsData";
 import {
     NEWS_TYPE_LABELS,
+    isPublishedNewsItem,
     validateNewsFields,
     validateNewsOverride,
 } from "../../utils/siteContentRules";
 import { prepareImageUpload } from "./adminImage";
-import { requestJson } from "./adminApi";
+import { requestJson, uploadImage } from "./adminApi";
+import { useEditStatus } from "./useEditStatus";
 
 const LIST_PAGE_SIZE = 5;
-// How often the list re-checks while an edit is on its way to the site.
-const PENDING_POLL_MS = 20 * 1000;
 const EDITABLE_TYPES = [
     "paper_accepted",
     "award",
@@ -262,21 +261,21 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
 
     // Items with an edit still on its way to the site cannot be edited again
     // until it lands; the Worker refuses that edit anyway.
-    const pending = useMemo(
-        () => new Set(state.pending ?? []),
-        [state.pending],
+    const listStatus = useMemo(
+        () =>
+            state.status === "ready"
+                ? { pending: state.pending ?? [], failed: state.failed ?? {} }
+                : null,
+        [state.status, state.pending, state.failed],
     );
-
-    // The lock lifts when the workflow finishes, so the list re-checks until
-    // nothing is pending instead of leaving the buttons disabled until reload.
-    useEffect(() => {
-        if (!pending.size) return undefined;
-        const timer = setTimeout(
-            () => setReload((count) => count + 1),
-            PENDING_POLL_MS,
-        );
-        return () => clearTimeout(timer);
-    }, [pending]);
+    const reloadList = useCallback(() => setReload((count) => count + 1), []);
+    const { pending, failed, markQueued } = useEditStatus({
+        apiUrl,
+        credential: session.credential,
+        kind: "news",
+        listStatus,
+        onLanded: reloadList,
+    });
     const items = useMemo(
         () => (state.items ?? []).filter(isPublishedNewsItem),
         [state.items],
@@ -319,15 +318,28 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
     const update = (patch) =>
         setEditing((current) => (current ? { ...current, ...patch } : current));
 
+    // Drops the form's prepared image along with its preview URL.
+    const replaceUpload = (patch) =>
+        setEditing((current) => {
+            if (current?.upload) URL.revokeObjectURL(current.upload.previewUrl);
+            return current ? { ...current, ...patch } : current;
+        });
+
+    const closeEditor = () =>
+        setEditing((current) => {
+            if (current?.upload) URL.revokeObjectURL(current.upload.previewUrl);
+            return null;
+        });
+
     const handleImage = async (file) => {
         if (!file) {
-            update({ upload: null, removeImage: true, imageError: "" });
+            replaceUpload({ upload: null, removeImage: true, imageError: "" });
             return;
         }
         update({ preparing: true, imageError: "" });
         try {
             const upload = await prepareImageUpload(file);
-            update({ upload, removeImage: false, preparing: false });
+            replaceUpload({ upload, removeImage: false, preparing: false });
         } catch (error) {
             update({ preparing: false, imageError: error.message });
         }
@@ -362,24 +374,32 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
         }
 
         update({ saving: true, errors: {}, formError: "" });
-        const body = {
-            fields: draft,
-            image: upload ? { data: upload.data } : undefined,
-            removeImage,
-        };
         try {
-            await (mode === "create"
+            const body = {
+                fields: draft,
+                image: upload
+                    ? {
+                          upload: await uploadImage(
+                              apiUrl,
+                              session.credential,
+                              upload.blob,
+                          ),
+                      }
+                    : undefined,
+                removeImage,
+            };
+            const result = await (mode === "create"
                 ? send("POST", "/v1/site/news", body)
                 : send(
                       "PUT",
                       `/v1/site/news/${encodeURIComponent(item.id)}`,
                       body,
                   ));
-            setEditing(null);
+            markQueued(result.id);
+            closeEditor();
             setNotice(
                 "저장 요청을 접수했습니다. 5분쯤 뒤 홈페이지에 반영되고, 이 목록도 그때 갱신됩니다.",
             );
-            setReload((count) => count + 1);
         } catch (error) {
             handleFailure(error);
             update({
@@ -406,7 +426,7 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                     ? "삭제 요청을 접수했습니다. 5분쯤 뒤 반영됩니다."
                     : "숨기기 요청을 접수했습니다. 5분쯤 뒤 반영됩니다.",
             );
-            setReload((count) => count + 1);
+            markQueued(item.id);
         } catch (error) {
             handleFailure(error);
             setNotice(error.message);
@@ -419,7 +439,7 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                 restore: true,
             });
             setNotice("다시 보이기 요청을 접수했습니다. 5분쯤 뒤 반영됩니다.");
-            setReload((count) => count + 1);
+            markQueued(id);
         } catch (error) {
             handleFailure(error);
             setNotice(error.message);
@@ -471,7 +491,7 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
             }
             onImage={handleImage}
             onSubmit={handleSubmit}
-            onCancel={() => setEditing(null)}
+            onCancel={closeEditor}
         />
     );
 
@@ -557,6 +577,17 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                                                     반영 중 · 끝나면 수정할 수
                                                     있어요
                                                 </span>
+                                            ) : null}
+                                            {failed[item.id] &&
+                                            !pending.has(item.id) ? (
+                                                <a
+                                                    className="admin-pill admin-pill--failure"
+                                                    href={failed[item.id]}
+                                                    target="_blank"
+                                                    rel="noreferrer">
+                                                    반영 실패 · 다시
+                                                    저장해주세요
+                                                </a>
                                             ) : null}
                                             {item.edited ? (
                                                 <span className="admin-pill admin-pill--idle">

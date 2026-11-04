@@ -186,6 +186,52 @@ Site Edit** 워크플로(`.github/workflows/admin-site-edit.yml`)를 거쳐 `mai
 커밋됩니다. Worker의 GitHub 토큰은 워크플로 실행 권한만 있으면 되고, 저장소에
 직접 쓰지 않습니다.
 
+1. 새 사진은 한 장씩 `POST /v1/site/uploads`로 먼저 올립니다. Worker는 파일
+   형식과 크기(3MB, 긴 변 2000px)를 바이트에서 직접 확인하고 KV 저장소
+   `SITE_EDITS`에 하루 동안 보관합니다. 앨범 사진은 그리드용 작은 사본(긴 변
+   640px, `<album>/thumbs/`)도 함께 올립니다.
+2. 저장하면 Worker가 입력을 검사하고 바뀔 파일 목록을 `SITE_EDITS`에 둔 뒤,
+   편집 id와 대상(`news:<id>`, `album:<id>`)을 넘겨 워크플로를 실행합니다.
+3. 워크플로는 GitHub Actions OIDC 토큰으로 Worker에서 편집 내용과 사진을
+   받아옵니다. Worker는 이 저장소의 `admin-site-edit.yml`이 `main`에서
+   `workflow_dispatch`로 실행되며 받은 토큰만 받으므로 공유 비밀값이 없습니다.
+4. 워크플로는 편집을 만든 시점 이후 그 글이나 앨범이 `main`에서 바뀌었으면
+   덮어쓰지 않고 실패로 멈춥니다. 바뀌지 않았으면 파일을 적용하고
+   `content:sync`, `validate:content`를 돌린 뒤 생성 파일과 함께 한 커밋으로
+   push하고, Deploy GitHub Pages를 실행합니다. 보통 5분쯤 뒤 반영됩니다.
+5. 관리자 화면은 워크플로 실행 기록(실행 이름에 대상이 들어 있음)으로 상태를
+   보여줍니다. 실행 중인 항목은 `반영 중`으로 잠기고, 실패한 항목에는
+   `반영 실패` 표시와 실행 기록 링크가 붙습니다. 실패한 편집은 다시 저장하면
+   됩니다.
+
+| API                               | 용도                          | 필요한 설정                  |
+| --------------------------------- | ----------------------------- | ---------------------------- |
+| `GET /v1/publications/rows`       | Sheet 행 목록                 | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `POST /v1/publications/rows`      | 새 행 추가                    | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `PUT /v1/publications/rows/{행}`  | 행 수정                       | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| `GET /v1/publications/sync`       | 최근 동기화 실행과 검토 PR    | `GITHUB_ACTIONS_TOKEN`       |
+| `POST /v1/publications/sync`      | 동기화 워크플로 실행          | `GITHUB_ACTIONS_TOKEN`       |
+| `GET /v1/publications/candidates` | Sheet에 없는 연구실 수집 항목 | 두 설정 모두                 |
+| `POST /v1/content/refresh`        | 연구실 홈페이지 수집 실행     | `GITHUB_ACTIONS_TOKEN`       |
+
+모든 API는 허용 목록의 Google 계정으로 로그인해야 쓸 수 있습니다. 서비스 계정과 GitHub 토큰 준비는
+`docs/publications/google-sheets.md` 6·7절을 따릅니다.
+
+`/health`의 `publicationEditingConfigured`, `publicationSyncConfigured`,
+`contentRefreshConfigured`가 모두 `true`이면 편집, 자동 동기화, 연구실
+홈페이지 수집이 준비된 상태입니다.
+
+로컬에서 편집 API까지 시험할 때만 `.dev.vars`에 `GOOGLE_SERVICE_ACCOUNT_KEY`와
+`GITHUB_ACTIONS_TOKEN`을 추가합니다. 서비스 계정 키는 JSON 전체를 한 줄
+문자열로 넣습니다.
+
+## 6-1. News·Photos 편집
+
+`/admin`의 News 관리와 Photos 관리는 저장할 때마다 GitHub Actions의 **Apply Admin
+Site Edit** 워크플로(`.github/workflows/admin-site-edit.yml`)를 거쳐 `main`에
+커밋됩니다. Worker의 GitHub 토큰은 워크플로 실행 권한만 있으면 되고, 저장소에
+직접 쓰지 않습니다.
+
 1. Worker가 입력을 검사한 뒤 바뀔 파일을 KV 저장소 `SITE_EDITS`에 하루 동안
    보관하고, 편집 id를 넘겨 워크플로를 실행합니다.
 2. 워크플로는 GitHub Actions OIDC 토큰으로 Worker에서 편집 내용을 받아옵니다.
@@ -208,16 +254,22 @@ Site Edit** 워크플로(`.github/workflows/admin-site-edit.yml`)를 거쳐 `mai
 | `POST /v1/site/photos`           | 앨범 만들기 (`content/photos/<id>/`)    |
 | `PUT /v1/site/photos/{album}`    | 앨범 정보·사진 순서·추가·삭제           |
 | `DELETE /v1/site/photos/{album}` | 앨범 삭제                               |
+| `POST /v1/site/uploads`          | 사진 한 장 올리기                       |
+| `GET /v1/site/status`            | 반영 중·반영 실패 항목                  |
 
 - 연구실 홈페이지에서 수집된 글과 Publication에서 자동 생성된 글은 원본이 매번
   다시 만들어지므로, 바꾼 제목·요약·사진과 숨김은
   `content/news/overrides.json`에 따로 저장되어 빌드 때 덮어씌워집니다.
 - 사진은 브라우저에서 긴 변 2000px로 줄이고 WebP(안 되면 JPEG)로 다시 저장한 뒤
-  올립니다. 이 과정에서 GPS 같은 EXIF 정보가 지워집니다. Worker는 JPEG, PNG,
-  WebP만 받고 한 장에 3MB까지 허용합니다.
-- 커밋은 `github-actions[bot]` 이름으로 생기고, 메시지에 편집한 운영자 이메일이
-  남습니다. 저장이 반영되지 않으면 Actions 탭의 Apply Admin Site Edit 실행 기록을
-  확인합니다.
+  올립니다. 이 과정에서 GPS 같은 EXIF 정보가 지워집니다.
+- 커밋은 `github-actions[bot]` 이름으로 생기고 메시지에는 "Edited on the admin
+  page."만 남습니다. 저장소가 공개라서 운영자 이메일은 커밋에 넣지 않고 Worker
+  로그(Cloudflare Observability)에만 남깁니다.
+- 연달아 저장하면 앞선 Deploy GitHub Pages 실행이 `cancelled`로 보일 수
+  있습니다. 다음 배포가 앞의 변경까지 함께 배포하므로 정상입니다.
+- KV 무료 한도(하루 쓰기 1,000회) 안에서 사진 한 장은 쓰기 2회(원본과 작은
+  사본), 저장 한 번은 1회를 씁니다. 보관한 내용은 하루 뒤 저절로 지워지며
+  삭제 횟수를 쓰지 않습니다.
 
 필요한 설정은 다음과 같습니다.
 
@@ -248,8 +300,8 @@ API 토큰과 허용 이메일 목록은 Worker 밖으로 노출되지 않으며
 뒤에만 처리하므로, 페이지 파일을 내려받아도 데이터를 바꿀 수는 없습니다.
 
 Publication 변경 이력은 Google Sheet 편집 기록, Worker 로그의 운영자 이메일,
-GitHub PR 기록으로 남습니다. News·Photos 변경은 GitHub 커밋 기록과 Actions 실행
-기록에 운영자 이메일과 함께 남습니다.
+GitHub PR 기록으로 남습니다. News·Photos 변경은 GitHub 커밋·Actions 실행 기록에
+남고, 편집한 운영자 이메일은 Worker 로그에 남습니다.
 
 ## 8. 확인 항목
 

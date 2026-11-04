@@ -1,14 +1,32 @@
 import path from "node:path";
 import { promises as fs } from "node:fs";
-import { ROOT_DIR } from "./lib.mjs";
+import { GENERATED_DIR, ROOT_DIR, pathExists, writeJsonFile } from "./lib.mjs";
 import {
     MAX_IMAGE_BYTES,
     PHOTO_CONTENT_PATH,
+    PHOTO_THUMB_DIR,
     isImageFileName,
     validateAlbumMeta,
 } from "../../src/utils/siteContentRules.js";
 
 const PHOTOS_CONTENT_DIR = path.resolve(ROOT_DIR, PHOTO_CONTENT_PATH);
+// The admin page lists albums from this one file instead of reading every
+// album folder through the GitHub API.
+const PHOTOS_GENERATED_FILE = path.resolve(
+    GENERATED_DIR,
+    "photos.generated.json",
+);
+
+const listAlbumIds = async () => {
+    try {
+        return (await fs.readdir(PHOTOS_CONTENT_DIR, { withFileTypes: true }))
+            .filter((entry) => entry.isDirectory())
+            .map((entry) => entry.name)
+            .sort();
+    } catch {
+        return [];
+    }
+};
 
 // The page reads album.json and the image files straight from these folders,
 // so a missing file or a photo without alt text has to stop the build here
@@ -52,20 +70,22 @@ const validateAlbum = async (albumId) => {
         }
     }
 
+    const thumbDir = path.resolve(albumDir, PHOTO_THUMB_DIR);
+    if (await pathExists(thumbDir)) {
+        for (const file of await fs.readdir(thumbDir)) {
+            if (isImageFileName(file) && !listed.has(file)) {
+                errors.push(
+                    `${label}/${PHOTO_THUMB_DIR}: ${file} has no photo in album.json`,
+                );
+            }
+        }
+    }
+
     return errors;
 };
 
 export const validatePhotoContent = async () => {
-    let entries = [];
-    try {
-        entries = await fs.readdir(PHOTOS_CONTENT_DIR, { withFileTypes: true });
-    } catch {
-        return;
-    }
-
-    const albumIds = entries
-        .filter((entry) => entry.isDirectory())
-        .map((entry) => entry.name);
+    const albumIds = await listAlbumIds();
     const errors = (await Promise.all(albumIds.map(validateAlbum))).flat();
 
     if (errors.length) {
@@ -73,4 +93,33 @@ export const validatePhotoContent = async () => {
             `[content] photo albums are invalid:\n- ${errors.join("\n- ")}`,
         );
     }
+};
+
+export const syncPhotoContent = async () => {
+    const albums = [];
+    for (const id of await listAlbumIds()) {
+        const albumDir = path.resolve(PHOTOS_CONTENT_DIR, id);
+        const albumPath = path.resolve(albumDir, "album.json");
+        if (!(await pathExists(albumPath))) continue;
+        const album = JSON.parse(await fs.readFile(albumPath, "utf8"));
+        const photos = [];
+        for (const photo of album.photos ?? []) {
+            photos.push({
+                ...photo,
+                thumb: await pathExists(
+                    path.resolve(albumDir, PHOTO_THUMB_DIR, photo.file),
+                ),
+            });
+        }
+        albums.push({ id, ...album, photos });
+    }
+    albums.sort(
+        (left, right) =>
+            String(right.date).localeCompare(String(left.date)) ||
+            left.id.localeCompare(right.id),
+    );
+    await writeJsonFile(PHOTOS_GENERATED_FILE, { albums });
+    console.log(
+        `[photos] synced ${albums.length} albums -> src/generated/photos.generated.json`,
+    );
 };

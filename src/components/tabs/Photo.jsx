@@ -142,7 +142,7 @@ function Photo() {
                                             }
                                             aria-label={`Open photo ${index + 1} of ${album.photos.length}: ${photo.alt}`}>
                                             <img
-                                                src={photo.src}
+                                                src={photo.thumb}
                                                 alt=""
                                                 loading="lazy"
                                                 decoding="async"

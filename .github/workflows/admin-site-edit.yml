@@ -11,8 +11,14 @@ on:
         description: Edit id issued by the admin Worker
         required: true
         type: string
+      target:
+        description: Item the edit changes, such as album:<id>
+        required: true
+        type: string
 
-run-name: Admin edit ${{ inputs.job_id }}
+# The admin Worker reads this name back to show which items are still on
+# their way to the site or failed to get there.
+run-name: Admin edit ${{ inputs.target }} ${{ inputs.job_id }}
 
 permissions:
   contents: write
@@ -35,8 +41,9 @@ jobs:
           node-version: 20
           cache: npm
 
+      # The content scripts only need the production dependencies.
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --omit=dev
 
       - name: Fetch Edit
         run: node scripts/content/admin-edit.mjs fetch "$JOB_ID" "$RUNNER_TEMP/admin-edit"
@@ -71,6 +78,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
+      # A failed edit is kept until it expires, and its run shows as failed
+      # on the admin page.
       - name: Release Edit
-        if: always()
         run: node scripts/content/admin-edit.mjs release "$JOB_ID"

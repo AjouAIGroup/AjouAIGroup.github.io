@@ -13,6 +13,13 @@ const IMAGE_URLS = import.meta.glob(
     { eager: true, query: "?url", import: "default" },
 );
 
+// Small copies for the album grid, at <album>/thumbs/<same file name>. Photos
+// added by hand may not have one, and then the grid uses the photo itself.
+const THUMB_URLS = import.meta.glob(
+    "../../content/photos/*/thumbs/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP}",
+    { eager: true, query: "?url", import: "default" },
+);
+
 const LAB_NAMES = Object.fromEntries(
     LABORATORIES.map((lab) => [lab.key, lab.shortName]),
 );
@@ -44,6 +51,9 @@ export const getPhotoAlbums = () =>
                 photos: (album.photos ?? [])
                     .map((photo) => ({
                         src: IMAGE_URLS[`${folder}${photo.file}`],
+                        thumb:
+                            THUMB_URLS[`${folder}thumbs/${photo.file}`] ??
+                            IMAGE_URLS[`${folder}${photo.file}`],
                         alt: photo.alt,
                         caption: photo.caption ?? "",
                     }))

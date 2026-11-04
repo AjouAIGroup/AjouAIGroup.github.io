@@ -2,14 +2,13 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { LABORATORIES } from "../../data/laboratories";
 import { validateAlbumMeta } from "../../utils/siteContentRules";
 import { prepareImageUpload } from "./adminImage";
-import { requestJson } from "./adminApi";
+import { requestJson, uploadImage } from "./adminApi";
+import { useEditStatus } from "./useEditStatus";
 
 const LAB_NAMES = Object.fromEntries(
     LABORATORIES.map((lab) => [lab.key, lab.shortName]),
 );
 
-// How often the list re-checks while an edit is on its way to the site.
-const PENDING_POLL_MS = 20 * 1000;
 const todayKey = () => new Date().toISOString().slice(0, 10);
 
 const blankAlbum = () => ({
@@ -27,12 +26,18 @@ const nextKey = () => {
 };
 
 // Existing photos are listed by file name; new ones carry their resized
-// upload until the album is saved.
-const photosFromAlbum = (album, folderUrl) =>
+// upload until the album is saved. Previews use the small copy when the
+// photo has one.
+const previewOf = (photo, folderUrl, thumbDir) =>
+    photo.thumb
+        ? `${folderUrl}/${thumbDir}/${photo.file}`
+        : `${folderUrl}/${photo.file}`;
+
+const photosFromAlbum = (album, folderUrl, thumbDir) =>
     (album.photos ?? []).map((photo) => ({
         key: nextKey(),
         file: photo.file,
-        previewUrl: `${folderUrl}/${photo.file}`,
+        previewUrl: previewOf(photo, folderUrl, thumbDir),
         alt: photo.alt ?? "",
         caption: photo.caption ?? "",
     }));
@@ -155,7 +160,12 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                 <ol>
                     {photos.map((photo, index) => (
                         <li key={photo.key} className="admin-photo">
-                            <img src={photo.previewUrl} alt="" />
+                            <img
+                                src={photo.previewUrl}
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                            />
                             <div className="admin-photo__fields">
                                 <div className="admin-field">
                                     <label htmlFor={`${photo.key}-alt`}>
@@ -217,14 +227,19 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                                 <button
                                     className="admin-button"
                                     type="button"
-                                    onClick={() =>
+                                    onClick={() => {
+                                        if (photo.blob) {
+                                            URL.revokeObjectURL(
+                                                photo.previewUrl,
+                                            );
+                                        }
                                         onPhotos(
                                             photos.filter(
                                                 (item) =>
                                                     item.key !== photo.key,
                                             ),
-                                        )
-                                    }
+                                        );
+                                    }}
                                     aria-label={`사진 ${index + 1} 빼기`}>
                                     빼기
                                 </button>
@@ -245,7 +260,7 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                     className="admin-button admin-button--primary"
                     type="submit"
                     disabled={saving || editing.preparing}>
-                    {saving ? "저장 중…" : "저장하고 게시"}
+                    {saving ? editing.progress || "저장 중…" : "저장하고 게시"}
                 </button>
                 <button
                     className="admin-button"
@@ -293,25 +308,37 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
 
     // Albums with an edit still on its way to the site cannot be edited again
     // until it lands; the Worker refuses that edit anyway.
-    const pending = useMemo(
-        () => new Set(state.pending ?? []),
-        [state.pending],
+    const listStatus = useMemo(
+        () =>
+            state.status === "ready"
+                ? { pending: state.pending ?? [], failed: state.failed ?? {} }
+                : null,
+        [state.status, state.pending, state.failed],
     );
-
-    // The lock lifts when the workflow finishes, so the list re-checks until
-    // nothing is pending instead of leaving the buttons disabled until reload.
-    useEffect(() => {
-        if (!pending.size) return undefined;
-        const timer = setTimeout(
-            () => setReload((count) => count + 1),
-            PENDING_POLL_MS,
-        );
-        return () => clearTimeout(timer);
-    }, [pending]);
+    const reloadList = useCallback(() => setReload((count) => count + 1), []);
+    const { pending, failed, markQueued } = useEditStatus({
+        apiUrl,
+        credential: session.credential,
+        kind: "albums",
+        listStatus,
+        onLanded: reloadList,
+    });
     const folderUrl = (id) => `${state.rawBase}/${state.photoPath}/${id}`;
 
     const update = (patch) =>
         setEditing((current) => (current ? { ...current, ...patch } : current));
+
+    // New photos hold a blob: preview URL until the form is closed.
+    const releasePreviews = (photos) =>
+        photos.forEach((photo) => {
+            if (photo.blob) URL.revokeObjectURL(photo.previewUrl);
+        });
+
+    const closeEditor = () =>
+        setEditing((current) => {
+            if (current) releasePreviews(current.photos);
+            return null;
+        });
 
     const addPhotos = async (files) => {
         if (!files.length) return;
@@ -323,7 +350,8 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                 const upload = await prepareImageUpload(file);
                 added.push({
                     key: nextKey(),
-                    data: upload.data,
+                    blob: upload.blob,
+                    thumbBlob: upload.thumbBlob,
                     previewUrl: upload.previewUrl,
                     alt: "",
                     caption: "",
@@ -358,7 +386,9 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                       description: album.description ?? "",
                   }
                 : blankAlbum(),
-            photos: album ? photosFromAlbum(album, folderUrl(album.id)) : [],
+            photos: album
+                ? photosFromAlbum(album, folderUrl(album.id), state.thumbDir)
+                : [],
             errors: {},
         });
     };
@@ -380,39 +410,55 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
         }
 
         update({ saving: true, errors: {}, formError: "" });
-        const body = JSON.stringify({
-            album,
-            photos: photos.map((photo) =>
-                photo.data
-                    ? {
-                          data: photo.data,
-                          alt: photo.alt,
-                          caption: photo.caption,
-                      }
-                    : {
-                          file: photo.file,
-                          alt: photo.alt,
-                          caption: photo.caption,
-                      },
-            ),
-        });
         try {
-            await requestJson(
+            // New photos go up one request each, so no single request comes
+            // near the Worker's memory or time limits however many there are.
+            const newCount = photos.filter((photo) => photo.blob).length;
+            let sent = 0;
+            const entries = [];
+            for (const photo of photos) {
+                const entry = { alt: photo.alt, caption: photo.caption };
+                if (photo.blob) {
+                    sent += 1;
+                    update({ progress: `사진 올리는 중 ${sent}/${newCount}` });
+                    entry.upload = await uploadImage(
+                        apiUrl,
+                        session.credential,
+                        photo.blob,
+                    );
+                    if (photo.thumbBlob) {
+                        entry.thumb = await uploadImage(
+                            apiUrl,
+                            session.credential,
+                            photo.thumbBlob,
+                        );
+                    }
+                } else {
+                    entry.file = photo.file;
+                }
+                entries.push(entry);
+            }
+            update({ progress: "저장 중…" });
+            const result = await requestJson(
                 mode === "create"
                     ? `${apiUrl}/v1/site/photos`
                     : `${apiUrl}/v1/site/photos/${encodeURIComponent(id)}`,
                 session.credential,
-                { method: mode === "create" ? "POST" : "PUT", body },
+                {
+                    method: mode === "create" ? "POST" : "PUT",
+                    body: JSON.stringify({ album, photos: entries }),
+                },
             );
-            setEditing(null);
+            markQueued(result.id);
+            closeEditor();
             setNotice(
                 "저장 요청을 접수했습니다. 5분쯤 뒤 Photos 페이지에 반영됩니다.",
             );
-            setReload((count) => count + 1);
         } catch (error) {
             handleFailure(error);
             update({
                 saving: false,
+                progress: "",
                 errors: error.payload?.fields ?? {},
                 formError: error.message,
             });
@@ -434,7 +480,7 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                 { method: "DELETE" },
             );
             setNotice("삭제 요청을 접수했습니다. 5분쯤 뒤 반영됩니다.");
-            setReload((count) => count + 1);
+            markQueued(album.id);
         } catch (error) {
             handleFailure(error);
             setNotice(error.message);
@@ -485,7 +531,7 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
             }
             onPhotos={(photos) => update({ photos })}
             onSubmit={handleSubmit}
-            onCancel={() => setEditing(null)}
+            onCancel={closeEditor}
         />
     ) : null;
 
@@ -530,8 +576,14 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                             {album.photos?.[0] ? (
                                 <img
                                     className="admin-album-thumb"
-                                    src={`${folderUrl(album.id)}/${album.photos[0].file}`}
+                                    src={previewOf(
+                                        album.photos[0],
+                                        folderUrl(album.id),
+                                        state.thumbDir,
+                                    )}
                                     alt=""
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                             ) : null}
                             <div className="admin-sheet-list__body">
@@ -544,6 +596,16 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                                         <span className="admin-pill admin-pill--active">
                                             반영 중 · 끝나면 수정할 수 있어요
                                         </span>
+                                    ) : null}
+                                    {failed[album.id] &&
+                                    !pending.has(album.id) ? (
+                                        <a
+                                            className="admin-pill admin-pill--failure"
+                                            href={failed[album.id]}
+                                            target="_blank"
+                                            rel="noreferrer">
+                                            반영 실패 · 다시 저장해주세요
+                                        </a>
                                     ) : null}
                                 </p>
                                 <h3>{album.title}</h3>

@@ -1,4 +1,5 @@
 import NEWS_DATA from "../generated/news.generated.json";
+import { isPublishedNewsItem } from "./siteContentRules";
 
 // News photos are uploaded from the admin page into content/news/images and
 // referenced by file name; Vite bundles them and returns each hashed URL.
@@ -191,12 +192,6 @@ const getAllNewsItems = () =>
             delete normalizedItem._parsedDate;
             return normalizedItem;
         });
-
-// AAIG News centres on paper announcements. The lab-site ingestion also keeps
-// other lab updates (new interns, equipment), which stay off the page; items
-// written for this site, by hand or from the admin page, always appear.
-export const isPublishedNewsItem = (item) =>
-    item.type === "paper_accepted" || Boolean(item.source_path);
 
 export const getPublicationNewsItems = () =>
     getAllNewsItems().filter(isPublishedNewsItem);

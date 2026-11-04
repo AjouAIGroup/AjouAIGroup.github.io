@@ -4,6 +4,7 @@ import {
     getAllPublications,
     PUBLICATION_DATA_META,
 } from "../../utils/publicationData";
+import AnalyticsChart from "./AnalyticsChart";
 import { loadGoogleIdentity, readIdentityClaims } from "./googleIdentity";
 import NewsEditor from "./NewsEditor";
 import PhotoAlbumEditor from "./PhotoAlbumEditor";
@@ -275,11 +276,6 @@ function AdminDashboard() {
         loadAnalytics();
         return () => controller.abort();
     }, [days, retryRequest, session]);
-
-    const maxSeriesValue = Math.max(
-        1,
-        ...(analytics?.series ?? []).map((item) => item.pageViews),
-    );
 
     const handleSignOut = () => {
         // Without this Google would silently sign the same account back in,
@@ -615,41 +611,10 @@ function AdminDashboard() {
                             />
                         </div>
 
-                        <div className="admin-chart" aria-hidden="true">
-                            {(analytics.series ?? []).map((item) => (
-                                <div
-                                    className="admin-chart__day"
-                                    key={item.date}>
-                                    <span
-                                        className="admin-chart__bar"
-                                        style={{
-                                            "--bar-height": `${Math.max(4, (item.pageViews / maxSeriesValue) * 100)}%`,
-                                        }}
-                                        title={`${item.date}: ${formatNumber(item.pageViews)} 페이지뷰`}
-                                    />
-                                    <small>{item.date.slice(5)}</small>
-                                </div>
-                            ))}
-                        </div>
-                        <table className="admin-series-table">
-                            <caption>{days}일 페이지뷰 추이 상세</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col">날짜</th>
-                                    <th scope="col">페이지뷰</th>
-                                    <th scope="col">방문</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(analytics.series ?? []).map((item) => (
-                                    <tr key={item.date}>
-                                        <th scope="row">{item.date}</th>
-                                        <td>{formatNumber(item.pageViews)}</td>
-                                        <td>{formatNumber(item.visits)}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <AnalyticsChart
+                            series={analytics.series ?? []}
+                            days={days}
+                        />
 
                         <div className="admin-breakdowns">
                             <article>

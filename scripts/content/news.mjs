@@ -1,6 +1,7 @@
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import {
+    CONTENT_DIR,
     NEWS_CONTENT_DIR,
     EXTERNAL_NEWS_FILE,
     NEWS_GENERATED_FILE,
@@ -48,6 +49,55 @@ const AUTO_PUBLICATION_SOURCE = "publications-auto";
 const MIN_ANNOUNCED_TITLE_LENGTH = 20;
 
 const normalizeText = (value) => String(value ?? "").trim();
+
+const DEADLINE_VENUES_FILE = path.resolve(CONTENT_DIR, "deadlines/venues.json");
+const YEAR_ONLY_DATE = /^\d{4}-01-01$/;
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Acceptance dates of the conference editions the calendar tracks, keyed by
+// "EMNLP 2026". The edition's year is the year it is held, as on the calendar.
+const loadAcceptanceDates = async () => {
+    const data = JSON.parse(await fs.readFile(DEADLINE_VENUES_FILE, "utf8"));
+    return (data.venues ?? []).flatMap((venue) => {
+        const years = String(venue.event?.dates ?? "").match(/20\d{2}/g);
+        const notification = (venue.milestones ?? [])
+            .filter((milestone) => milestone.kind === "notification")
+            .map((milestone) => milestone.deadline_at.slice(0, 10))
+            .sort()[0];
+        const name = String(venue.name ?? "").replace(/\s+20\d{2}$/, "");
+        return years && notification && name
+            ? [{ name, year: years.at(-1), date: notification }]
+            : [];
+    });
+};
+
+// Lab sites and the Sheet usually give a paper only its year, stored as
+// January 1, which would file every acceptance at the very bottom of its
+// year. The news date is therefore, in order: a real publication date; the
+// venue's acceptance notification (main track and Findings, not workshops);
+// the day the paper was added to the site, if that is in the paper's own
+// year; and only then the year-only date. Nothing here reads the clock, so
+// the generated file stays the same whenever it is rebuilt.
+const resolvePaperNewsDate = (publicationItem, acceptanceDates) => {
+    const publishedDate = normalizeText(
+        publicationItem.research_meta?.published_date,
+    );
+    if (!YEAR_ONLY_DATE.test(publishedDate)) return publishedDate;
+
+    const year = publishedDate.slice(0, 4);
+    const venue = normalizeText(publicationItem.research_meta?.published_place);
+    if (!/workshop/i.test(venue)) {
+        const acceptance = acceptanceDates.find(
+            (entry) =>
+                entry.year === year &&
+                new RegExp(`\\b${escapeRegExp(entry.name)}\\b`).test(venue),
+        );
+        if (acceptance) return acceptance.date;
+    }
+
+    const addedDate = normalizeText(publicationItem.added_at).slice(0, 10);
+    return addedDate.startsWith(year) ? addedDate : publishedDate;
+};
 
 const isGenericPaperAcceptedTitle = (value) =>
     /^paper\s+accepted\b/i.test(normalizeText(value));
@@ -193,13 +243,11 @@ const loadExternalNewsItems = async () => {
     return data.items.map(parseExternalNewsItem);
 };
 
-const createAutoPublicationNewsItem = (publicationItem) => {
+const createAutoPublicationNewsItem = (publicationItem, newsDate) => {
     const publicationId = normalizeText(publicationItem.id);
     const publicationTitle = normalizeText(publicationItem.title);
     const publicationSummary = normalizeText(publicationItem.summary);
-    const publicationDate = normalizeText(
-        publicationItem.research_meta?.published_date,
-    );
+    const publicationDate = normalizeText(newsDate);
     const publicationVenue = normalizeText(
         publicationItem.research_meta?.published_place,
     );
@@ -237,7 +285,11 @@ const createAutoPublicationNewsItem = (publicationItem) => {
     };
 };
 
-const mergePublicationNewsItems = (manualItems, publicationItems) => {
+const mergePublicationNewsItems = (
+    manualItems,
+    publicationItems,
+    acceptanceDates,
+) => {
     const mergedItems = [...manualItems];
     const seenIds = new Set(manualItems.map((item) => item.id));
     const manualPublicationIds = new Set(
@@ -273,7 +325,10 @@ const mergePublicationNewsItems = (manualItems, publicationItems) => {
     publicationItems
         .filter((item) => normalizeText(item.status) === "published")
         .forEach((publicationItem) => {
-            const autoNews = createAutoPublicationNewsItem(publicationItem);
+            const autoNews = createAutoPublicationNewsItem(
+                publicationItem,
+                resolvePaperNewsDate(publicationItem, acceptanceDates),
+            );
             const paperKey = normalizePaperKey(
                 autoNews.date,
                 autoNews.publication_title || autoNews.title,
@@ -416,7 +471,11 @@ export const syncNewsContent = async ({
         : await syncPublicationContent({ validateOnly: true });
 
     const mergedItems = attachPublicationIds(
-        mergePublicationNewsItems(items, resolvedPublicationItems),
+        mergePublicationNewsItems(
+            items,
+            resolvedPublicationItems,
+            await loadAcceptanceDates(),
+        ),
         resolvedPublicationItems,
     );
 

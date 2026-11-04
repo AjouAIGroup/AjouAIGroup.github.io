@@ -18,6 +18,90 @@
   },
   "items": [
     {
+      "id": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "type": "paper_accepted",
+      "title": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "summary": "Sci Rep 2026 publication from MMAI Lab.",
+      "date": "2026-11-02",
+      "year": 2026,
+      "related_person": "Seunghun Kang, Sungeun Kim, Hyun Woong Roh, Chang Hyung Hong, Sang Joon Son, Jongbin Ryu",
+      "venue": "Sci Rep 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
+      "publication_title": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "publication_query": "Efficient Alzheimer’s disease classification with robust rank pooling",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling"
+      ]
+    },
+    {
+      "id": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "type": "paper_accepted",
+      "title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "summary": "NeurIPS Workshop 2026 publication from HEI Lab.",
+      "date": "2026-10-19",
+      "year": 2026,
+      "related_person": "SeongJun Jeong, ChungWoo Lee, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+      "venue": "NeurIPS Workshop 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
+      "publication_title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "publication_query": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning"
+      ]
+    },
+    {
+      "id": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "type": "paper_accepted",
+      "title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "summary": "NeurIPS 2026 publication from iKnow Lab.",
+      "date": "2026-09-24",
+      "year": 2026,
+      "related_person": "Taehoon Kim, Wonjun Hwang, Hyunsouk Cho",
+      "venue": "NeurIPS 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
+      "publication_title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "publication_query": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation"
+      ]
+    },
+    {
+      "id": "publication-sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
+      "type": "paper_accepted",
+      "title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
+      "summary": "NeurIPS 2026 publication from SAIL.",
+      "date": "2026-09-24",
+      "year": 2026,
+      "related_person": "S.H. Lee and H.Y. Choi",
+      "venue": "NeurIPS 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
+      "publication_title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
+      "publication_query": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning"
+      ]
+    },
+    {
       "id": "cvl-news-two-papers-have-been-accepted-at-neurips-2026-2026-09-23",
       "type": "paper_accepted",
       "title": "Two papers have been accepted at NeurIPS 2026",
@@ -58,6 +142,27 @@
       "generated_from": "cvl-news",
       "publication_ids": [
         "sheet-flowvla-enabling-world-dynamics-understanding-through-pluggable-3d-flow-learning"
+      ]
+    },
+    {
+      "id": "publication-hei-2026-latent-lookahead",
+      "type": "paper_accepted",
+      "title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
+      "summary": "Predicting domain-invariant latent lookahead to separate spurious correlations in vision-language-action models.",
+      "date": "2026-09-04",
+      "year": 2026,
+      "related_person": "Junghyun Kim*, Ngseo Kim*, ChungWoo Lee, Seoyeon Lee, Woo-Jeong Baek, Adam Zhou, Chip Huyen, Jun-Ki Lee†, Gi-Cheon Kang†, Byoung-Tak Zhang†",
+      "venue": "CoRL 2026",
+      "external_url": "",
+      "internal_slug": "publication-hei-2026-latent-lookahead",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "hei-2026-latent-lookahead",
+      "publication_title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
+      "publication_query": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "hei-2026-latent-lookahead"
       ]
     },
     {
@@ -124,6 +229,48 @@
       ]
     },
     {
+      "id": "publication-iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
+      "type": "paper_accepted",
+      "title": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
+      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
+      "date": "2026-08-20",
+      "year": 2026,
+      "related_person": "Soyeon Hong, Heegyu Kim, Ji Hoon Hong, Jindong Hwang, Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
+      "venue": "Findings of EMNLP 2026",
+      "external_url": "",
+      "internal_slug": "publication-iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
+      "publication_title": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
+      "publication_query": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges"
+      ]
+    },
+    {
+      "id": "publication-iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
+      "type": "paper_accepted",
+      "title": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
+      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
+      "date": "2026-08-20",
+      "year": 2026,
+      "related_person": "Jooyeong Na, Wansik Jo, Hyunsouk Cho",
+      "venue": "Findings of EMNLP 2026",
+      "external_url": "",
+      "internal_slug": "publication-iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
+      "publication_title": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
+      "publication_query": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping"
+      ]
+    },
+    {
       "id": "cvl-news-new-interns-joined-the-lab-in-july-2026-2026-07-22",
       "type": "general",
       "title": "New interns joined the lab in July 2026",
@@ -141,6 +288,27 @@
       "publication_query": "",
       "generated_from": "cvl-news",
       "publication_ids": []
+    },
+    {
+      "id": "publication-iknow-2026-learning-sample-wise",
+      "type": "paper_accepted",
+      "title": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
+      "summary": "Rank-aware interpolation for composed visual data retrieval.",
+      "date": "2026-06-17",
+      "year": 2026,
+      "related_person": "Boseung Jeong, Taegyu Park, Donghyeon Kwon, Hyunsouk Cho, Suha Kwak",
+      "venue": "ECCV 2026",
+      "external_url": "",
+      "internal_slug": "publication-iknow-2026-learning-sample-wise",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "iknow-2026-learning-sample-wise",
+      "publication_title": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
+      "publication_query": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "iknow-2026-learning-sample-wise"
+      ]
     },
     {
       "id": "2026-sail-brl-selected",
@@ -237,6 +405,48 @@
       "publication_title": "",
       "publication_query": "SAIL paper accepted to ICML 2026",
       "generated_from": "",
+      "publication_ids": [
+        "sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models"
+      ]
+    },
+    {
+      "id": "publication-iknow-2026-textme",
+      "type": "paper_accepted",
+      "title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
+      "summary": "Text-guided representations that bridge unseen modalities.",
+      "date": "2026-04-30",
+      "year": 2026,
+      "related_person": "Soyeon Hong, Jinchan Kim, Jaegook You, Seungtaek Choi, Suha Kwak, Hyunsouk Cho",
+      "venue": "ICML 2026",
+      "external_url": "",
+      "internal_slug": "publication-iknow-2026-textme",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "iknow-2026-textme",
+      "publication_title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
+      "publication_query": "TextME: Bridging Unseen Modalities Through Text Descriptions",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "iknow-2026-textme"
+      ]
+    },
+    {
+      "id": "publication-sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models",
+      "type": "paper_accepted",
+      "title": "ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models",
+      "summary": "ICML 2026 publication from SAIL.",
+      "date": "2026-04-30",
+      "year": 2026,
+      "related_person": "S.-H. Lee and H.-Y. Choi",
+      "venue": "ICML 2026",
+      "external_url": "",
+      "internal_slug": "publication-sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models",
+      "publication_title": "ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models",
+      "publication_query": "ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models",
+      "generated_from": "publications-auto",
       "publication_ids": [
         "sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models"
       ]
@@ -375,27 +585,6 @@
       "publication_ids": []
     },
     {
-      "id": "publication-hei-2026-latent-lookahead",
-      "type": "paper_accepted",
-      "title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
-      "summary": "Predicting domain-invariant latent lookahead to separate spurious correlations in vision-language-action models.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Junghyun Kim*, Ngseo Kim*, ChungWoo Lee, Seoyeon Lee, Woo-Jeong Baek, Adam Zhou, Chip Huyen, Jun-Ki Lee†, Gi-Cheon Kang†, Byoung-Tak Zhang†",
-      "venue": "CoRL 2026",
-      "external_url": "",
-      "internal_slug": "publication-hei-2026-latent-lookahead",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "hei-2026-latent-lookahead",
-      "publication_title": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
-      "publication_query": "Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "hei-2026-latent-lookahead"
-      ]
-    },
-    {
       "id": "publication-hei-2026-microvla",
       "type": "paper_accepted",
       "title": "MicroVLA: Edge-Deployable Vision Language Action at 10M Parameters",
@@ -438,48 +627,6 @@
       ]
     },
     {
-      "id": "publication-iknow-2026-learning-sample-wise",
-      "type": "paper_accepted",
-      "title": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
-      "summary": "Rank-aware interpolation for composed visual data retrieval.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Boseung Jeong, Taegyu Park, Donghyeon Kwon, Hyunsouk Cho, Suha Kwak",
-      "venue": "ECCV 2026",
-      "external_url": "",
-      "internal_slug": "publication-iknow-2026-learning-sample-wise",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "iknow-2026-learning-sample-wise",
-      "publication_title": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
-      "publication_query": "Learning Sample-wise Rank-Aware Interpolation Weights for Composed Visual Data Retrieval",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "iknow-2026-learning-sample-wise"
-      ]
-    },
-    {
-      "id": "publication-iknow-2026-textme",
-      "type": "paper_accepted",
-      "title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
-      "summary": "Text-guided representations that bridge unseen modalities.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Soyeon Hong, Jinchan Kim, Jaegook You, Seungtaek Choi, Suha Kwak, Hyunsouk Cho",
-      "venue": "ICML 2026",
-      "external_url": "",
-      "internal_slug": "publication-iknow-2026-textme",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "iknow-2026-textme",
-      "publication_title": "TextME: Bridging Unseen Modalities Through Text Descriptions",
-      "publication_query": "TextME: Bridging Unseen Modalities Through Text Descriptions",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "iknow-2026-textme"
-      ]
-    },
-    {
       "id": "publication-iknow-publications-ai-driven-quantitative-review-of-mobility-stability-trade-off-in-oxide-semiconductors",
       "type": "paper_accepted",
       "title": "AI-Driven Quantitative Review of Mobility–Stability Trade-off in Oxide Semiconductors",
@@ -498,27 +645,6 @@
       "generated_from": "publications-auto",
       "publication_ids": [
         "iknow-publications-ai-driven-quantitative-review-of-mobility-stability-trade-off-in-oxide-semiconductors"
-      ]
-    },
-    {
-      "id": "publication-iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
-      "type": "paper_accepted",
-      "title": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
-      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Soyeon Hong, Heegyu Kim, Ji Hoon Hong, Jindong Hwang, Juhyeon Ha, SungBeom Cho, Hyunsouk Cho",
-      "venue": "Findings of EMNLP 2026",
-      "external_url": "",
-      "internal_slug": "publication-iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges",
-      "publication_title": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
-      "publication_query": "ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "iknow-publications-assay-reconciling-stability-and-validity-in-reference-free-scientific-llm-judges"
       ]
     },
     {
@@ -582,27 +708,6 @@
       "generated_from": "publications-auto",
       "publication_ids": [
         "iknow-publications-collaborative-adaptation-without-forgetting-in-source-free-domain-adaptation"
-      ]
-    },
-    {
-      "id": "publication-iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
-      "type": "paper_accepted",
-      "title": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
-      "summary": "Findings of EMNLP 2026 publication from iKnow Lab.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Jooyeong Na, Wansik Jo, Hyunsouk Cho",
-      "venue": "Findings of EMNLP 2026",
-      "external_url": "",
-      "internal_slug": "publication-iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping",
-      "publication_title": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
-      "publication_query": "Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "iknow-publications-filter-by-quality-stop-by-difficulty-confidence-aware-self-consistency-with-adaptive-early-stopping"
       ]
     },
     {
@@ -708,111 +813,6 @@
       "generated_from": "publications-auto",
       "publication_ids": [
         "sail-publications-hierarchical-representation-alignment-learning-of-diffusion-transformers-for-neural-audio-codec"
-      ]
-    },
-    {
-      "id": "publication-sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models",
-      "type": "paper_accepted",
-      "title": "ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models",
-      "summary": "ICML 2026 publication from SAIL.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "S.-H. Lee and H.-Y. Choi",
-      "venue": "ICML 2026",
-      "external_url": "",
-      "internal_slug": "publication-sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models",
-      "publication_title": "ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models",
-      "publication_query": "ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models"
-      ]
-    },
-    {
-      "id": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
-      "type": "paper_accepted",
-      "title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
-      "summary": "NeurIPS 2026 publication from iKnow Lab.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Taehoon Kim, Wonjun Hwang, Hyunsouk Cho",
-      "venue": "NeurIPS 2026",
-      "external_url": "",
-      "internal_slug": "publication-sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation",
-      "publication_title": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
-      "publication_query": "Bridging CLIP with DINO: Cross-Modal Information Maximization for Online Test-Time Adaptation",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "sheet-bridging-clip-with-dino-cross-modal-information-maximization-for-online-test-time-adaptation"
-      ]
-    },
-    {
-      "id": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
-      "type": "paper_accepted",
-      "title": "Efficient Alzheimer’s disease classification with robust rank pooling",
-      "summary": "Sci Rep 2026 publication from MMAI Lab.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "Seunghun Kang, Sungeun Kim, Hyun Woong Roh, Chang Hyung Hong, Sang Joon Son, Jongbin Ryu",
-      "venue": "Sci Rep 2026",
-      "external_url": "",
-      "internal_slug": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
-      "publication_title": "Efficient Alzheimer’s disease classification with robust rank pooling",
-      "publication_query": "Efficient Alzheimer’s disease classification with robust rank pooling",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling"
-      ]
-    },
-    {
-      "id": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
-      "type": "paper_accepted",
-      "title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
-      "summary": "NeurIPS Workshop 2026 publication from HEI Lab.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "SeongJun Jeong, ChungWoo Lee, Gi-Cheon Kang†, Byoung-Tak Zhang†",
-      "venue": "NeurIPS Workshop 2026",
-      "external_url": "",
-      "internal_slug": "publication-sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",
-      "publication_title": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
-      "publication_query": "SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning"
-      ]
-    },
-    {
-      "id": "publication-sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
-      "type": "paper_accepted",
-      "title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
-      "summary": "NeurIPS 2026 publication from SAIL.",
-      "date": "2026-01-01",
-      "year": 2026,
-      "related_person": "S.H. Lee and H.Y. Choi",
-      "venue": "NeurIPS 2026",
-      "external_url": "",
-      "internal_slug": "publication-sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
-      "is_external": false,
-      "featured": false,
-      "publication_id": "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning",
-      "publication_title": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
-      "publication_query": "WaveGen: Truly End-to-End Waveform Generation via Internal Spectral Trajectory Learning",
-      "generated_from": "publications-auto",
-      "publication_ids": [
-        "sheet-wavegen-truly-end-to-end-waveform-generation-via-internal-spectral-trajectory-learning"
       ]
     },
     {

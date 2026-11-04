@@ -225,9 +225,12 @@ export const getPublicationYears = () =>
 
 // Newly added publications lead, most recent first; the rest follow in
 // publication-date order. Many lab sites list only a year, so the date alone
-// cannot tell which paper is new.
-export const getLatestPublications = (limit = 3) => {
-    const publications = getAllPublications();
+// cannot tell which paper is new. With a year, only that year's papers count:
+// an old paper added to the archive today is not news.
+export const getLatestPublications = (limit = 3, { year } = {}) => {
+    const publications = getAllPublications().filter(
+        (item) => !year || getPublicationYear(item) === String(year),
+    );
     const added = publications
         .filter((item) => normalizeText(item.added_at))
         .sort((a, b) => b.added_at.localeCompare(a.added_at));

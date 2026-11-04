@@ -73,7 +73,10 @@ function Home() {
     const newsItems = useMemo(() => getLatestNewsItems(8), []);
     const orderedResearchAreas = useShuffledOrder(HOME_RESEARCH_AREAS);
     const publicationSnapshot = useMemo(() => getPublicationYearSnapshot(), []);
-    const latestPublications = useMemo(() => getLatestPublications(8), []);
+    const latestPublications = useMemo(
+        () => getLatestPublications(8, { year: publicationSnapshot.year }),
+        [publicationSnapshot.year],
+    );
 
     const moveRail = (targetRef, direction) => {
         const rail = targetRef.current;

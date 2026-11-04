@@ -8,7 +8,7 @@ import {
 import { prepareImageUpload } from "./adminImage";
 import { requestJson } from "./adminApi";
 
-const LIST_PREVIEW_COUNT = 30;
+const LIST_PAGE_SIZE = 5;
 const EDITABLE_TYPES = [
     "paper_accepted",
     "award",
@@ -227,7 +227,8 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
     const [state, setState] = useState({ status: "loading", error: "" });
     const [reload, setReload] = useState(0);
     const [query, setQuery] = useState("");
-    const [showAll, setShowAll] = useState(false);
+    const [listOpen, setListOpen] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(LIST_PAGE_SIZE);
     const [editing, setEditing] = useState(null);
     const [notice, setNotice] = useState("");
 
@@ -281,10 +282,7 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
               )
             : items;
     }, [items, query]);
-    const visible =
-        showAll || query.trim()
-            ? matching
-            : matching.slice(0, LIST_PREVIEW_COUNT);
+    const visible = query.trim() ? matching : matching.slice(0, visibleCount);
     const imageBase = `${state.rawBase}/${state.imagePath}`;
 
     const open = (item) => {
@@ -466,102 +464,130 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
                 </p>
             ) : null}
 
-            <div className="admin-sheet-toolbar">
-                <div className="admin-publication-search">
-                    <label htmlFor="admin-news-search">News 검색</label>
-                    <input
-                        id="admin-news-search"
-                        type="search"
-                        placeholder="제목, 요약, 학회, 연구실"
-                        value={query}
-                        onChange={(event) => setQuery(event.target.value)}
-                    />
+            <button
+                className="admin-button admin-sheet-editor__toggle"
+                type="button"
+                aria-expanded={listOpen}
+                aria-controls="admin-news-rows"
+                onClick={() => {
+                    setListOpen((current) => !current);
+                    setVisibleCount(LIST_PAGE_SIZE);
+                }}
+                disabled={Boolean(editing) && listOpen}>
+                {listOpen ? "News 목록 접기" : "News 목록 펼치기"}
+                <span>{items.length}건</span>
+            </button>
+
+            {listOpen ? (
+                <div id="admin-news-rows" className="admin-sheet-editor__rows">
+                    <div className="admin-sheet-toolbar">
+                        <div className="admin-publication-search">
+                            <label htmlFor="admin-news-search">News 검색</label>
+                            <input
+                                id="admin-news-search"
+                                type="search"
+                                placeholder="제목, 요약, 학회, 연구실"
+                                value={query}
+                                onChange={(event) =>
+                                    setQuery(event.target.value)
+                                }
+                            />
+                        </div>
+                        <div className="admin-sheet-toolbar__actions">
+                            <button
+                                className="admin-button admin-button--primary"
+                                type="button"
+                                onClick={() => open(null)}
+                                disabled={Boolean(editing)}>
+                                새 News 작성
+                            </button>
+                            <button
+                                className="admin-button"
+                                type="button"
+                                onClick={() => setReload((count) => count + 1)}
+                                disabled={Boolean(editing)}>
+                                새로 불러오기
+                            </button>
+                        </div>
+                    </div>
+
+                    <p className="admin-sheet-editor__summary">
+                        홈페이지 News {items.length}건
+                        {query.trim()
+                            ? ` · 검색 결과 ${matching.length}건`
+                            : ""}
+                    </p>
+
+                    {editing?.mode === "create" ? form : null}
+
+                    <ul className="admin-sheet-list">
+                        {visible.map((item) =>
+                            editing?.item?.id === item.id ? (
+                                <li key={item.id}>{form}</li>
+                            ) : (
+                                <li key={item.id}>
+                                    <div className="admin-sheet-list__body">
+                                        <p className="admin-sheet-list__meta">
+                                            <span>{item.date}</span>
+                                            <span>{describeSource(item)}</span>
+                                            {item.image ? (
+                                                <span>사진</span>
+                                            ) : null}
+                                            {item.edited ? (
+                                                <span className="admin-pill admin-pill--idle">
+                                                    수정됨
+                                                </span>
+                                            ) : null}
+                                        </p>
+                                        <h3>{item.title}</h3>
+                                        <p className="admin-sheet-list__authors">
+                                            {item.summary}
+                                        </p>
+                                    </div>
+                                    <div className="admin-sheet-list__actions">
+                                        <button
+                                            className="admin-button"
+                                            type="button"
+                                            onClick={() => open(item)}
+                                            disabled={Boolean(editing)}
+                                            aria-label={`${item.title} 수정`}>
+                                            수정
+                                        </button>
+                                        <button
+                                            className="admin-button"
+                                            type="button"
+                                            onClick={() => handleDelete(item)}
+                                            disabled={Boolean(editing)}
+                                            aria-label={`${item.title} ${item.source_path ? "삭제" : "숨기기"}`}>
+                                            {item.source_path
+                                                ? "삭제"
+                                                : "숨기기"}
+                                        </button>
+                                    </div>
+                                </li>
+                            ),
+                        )}
+                    </ul>
+
+                    {visible.length === 0 ? (
+                        <p className="admin-publication-list__empty">
+                            검색 결과가 없습니다.
+                        </p>
+                    ) : null}
+
+                    {!query.trim() && matching.length > visibleCount ? (
+                        <button
+                            className="admin-button admin-sheet-list__more"
+                            type="button"
+                            onClick={() =>
+                                setVisibleCount(
+                                    (count) => count + LIST_PAGE_SIZE,
+                                )
+                            }>
+                            더보기 ({visible.length}/{matching.length})
+                        </button>
+                    ) : null}
                 </div>
-                <div className="admin-sheet-toolbar__actions">
-                    <button
-                        className="admin-button admin-button--primary"
-                        type="button"
-                        onClick={() => open(null)}
-                        disabled={Boolean(editing)}>
-                        새 News 작성
-                    </button>
-                    <button
-                        className="admin-button"
-                        type="button"
-                        onClick={() => setReload((count) => count + 1)}
-                        disabled={Boolean(editing)}>
-                        새로 불러오기
-                    </button>
-                </div>
-            </div>
-
-            <p className="admin-sheet-editor__summary">
-                홈페이지 News {items.length}건
-                {query.trim() ? ` · 검색 결과 ${matching.length}건` : ""}
-            </p>
-
-            {editing?.mode === "create" ? form : null}
-
-            <ul className="admin-sheet-list">
-                {visible.map((item) =>
-                    editing?.item?.id === item.id ? (
-                        <li key={item.id}>{form}</li>
-                    ) : (
-                        <li key={item.id}>
-                            <div className="admin-sheet-list__body">
-                                <p className="admin-sheet-list__meta">
-                                    <span>{item.date}</span>
-                                    <span>{describeSource(item)}</span>
-                                    {item.image ? <span>사진</span> : null}
-                                    {item.edited ? (
-                                        <span className="admin-pill admin-pill--idle">
-                                            수정됨
-                                        </span>
-                                    ) : null}
-                                </p>
-                                <h3>{item.title}</h3>
-                                <p className="admin-sheet-list__authors">
-                                    {item.summary}
-                                </p>
-                            </div>
-                            <div className="admin-sheet-list__actions">
-                                <button
-                                    className="admin-button"
-                                    type="button"
-                                    onClick={() => open(item)}
-                                    disabled={Boolean(editing)}
-                                    aria-label={`${item.title} 수정`}>
-                                    수정
-                                </button>
-                                <button
-                                    className="admin-button"
-                                    type="button"
-                                    onClick={() => handleDelete(item)}
-                                    disabled={Boolean(editing)}
-                                    aria-label={`${item.title} ${item.source_path ? "삭제" : "숨기기"}`}>
-                                    {item.source_path ? "삭제" : "숨기기"}
-                                </button>
-                            </div>
-                        </li>
-                    ),
-                )}
-            </ul>
-
-            {visible.length === 0 ? (
-                <p className="admin-publication-list__empty">
-                    검색 결과가 없습니다.
-                </p>
-            ) : null}
-
-            {!showAll &&
-            !query.trim() &&
-            matching.length > LIST_PREVIEW_COUNT ? (
-                <button
-                    className="admin-button admin-sheet-list__more"
-                    type="button"
-                    onClick={() => setShowAll(true)}>
-                    전체 {matching.length}건 보기
-                </button>
             ) : null}
 
             {hiddenItems.length ? (

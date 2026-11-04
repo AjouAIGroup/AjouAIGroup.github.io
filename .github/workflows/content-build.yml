@@ -5,6 +5,9 @@ on:
     branches: ["main"]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   content-build:
     runs-on: ubuntu-latest
@@ -36,7 +39,34 @@ jobs:
       - name: Sync Content
         run: npm run content:sync
 
+      # Admin page edits (News, Photos) are committed by the admin Worker,
+      # which cannot run the content pipeline, so their regenerated output is
+      # committed here instead of being required up front. The deploy already
+      # synced content itself, so this push does not need to trigger another.
+      - name: Commit Regenerated Output For Admin Edits
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[admin-edit]')
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898208+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            npm run content:sync --silent
+            if git diff --quiet -- src/generated; then
+              echo "Generated output already matches."
+              exit 0
+            fi
+            git add src/generated
+            git commit -m "content: regenerate after admin edit"
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+
       - name: Check Generated Output Is Committed
+        if: ${{ !(github.event_name == 'push' && contains(github.event.head_commit.message, '[admin-edit]')) }}
         run: node scripts/content/check.mjs
 
       - name: Validate Content

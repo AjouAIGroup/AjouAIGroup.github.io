@@ -1,5 +1,9 @@
 # Photos
 
+Albums are normally created on the admin page (`/admin` → Photos 관리), which
+resizes the photos and commits them here. The steps below are for adding an
+album by hand.
+
 Each folder here is one album on the `/photo` page: photos from joint AAIG
 activities such as workshops, seminars, retreats, and shared events.
 

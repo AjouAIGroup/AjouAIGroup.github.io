@@ -144,6 +144,7 @@ function Home() {
                                 }>
                                 <img
                                     src={
+                                        item.image ||
                                         NEWS_IMAGES[index % NEWS_IMAGES.length]
                                     }
                                     alt=""

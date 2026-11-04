@@ -5,6 +5,8 @@ import {
     PUBLICATION_DATA_META,
 } from "../../utils/publicationData";
 import { loadGoogleIdentity, readIdentityClaims } from "./googleIdentity";
+import NewsEditor from "./NewsEditor";
+import PhotoAlbumEditor from "./PhotoAlbumEditor";
 import PublicationSheetEditor from "./PublicationSheetEditor";
 import "./AdminDashboard.css";
 
@@ -313,7 +315,7 @@ function AdminDashboard() {
                     <p className="admin-header__label">Private workspace</p>
                     <h1>AAIG 관리자</h1>
                     <p>
-                        홈페이지 통계와 publication 운영 상태를 한곳에서
+                        Publication, News, Photos를 관리하고 홈페이지 통계를
                         확인합니다.
                     </p>
                 </div>
@@ -323,35 +325,14 @@ function AdminDashboard() {
             </header>
 
             <section
-                className="admin-section"
-                aria-labelledby="analytics-title">
+                className="admin-section admin-section--session"
+                aria-labelledby="session-title">
                 <div className="admin-section__head">
                     <div>
-                        <h2 id="analytics-title">접속 통계</h2>
-                        <p>Cloudflare Web Analytics의 집계 데이터입니다.</p>
+                        <h2 id="session-title">운영자 로그인</h2>
+                        <p>등록된 운영자 Google 계정으로 로그인합니다.</p>
                     </div>
-                    {["ready", "loading"].includes(analyticsStatus) &&
-                    analytics ? (
-                        <div
-                            className="admin-period"
-                            role="group"
-                            aria-label="통계 기간">
-                            {[7, 30].map((period) => (
-                                <button
-                                    key={period}
-                                    type="button"
-                                    className={
-                                        days === period ? "is-active" : ""
-                                    }
-                                    disabled={analyticsStatus === "loading"}
-                                    onClick={() => setDays(period)}>
-                                    {period}일
-                                </button>
-                            ))}
-                        </div>
-                    ) : null}
                 </div>
-
                 {analyticsStatus === "unconfigured" ? (
                     <div className="admin-state admin-state--setup">
                         <strong>Cloudflare 연결 설정이 필요합니다.</strong>
@@ -362,14 +343,13 @@ function AdminDashboard() {
                         </p>
                     </div>
                 ) : null}
-
                 {analyticsStatus === "signed-out" ? (
                     <div className="admin-signin">
                         <div className="admin-signin__intro">
                             <strong>관리자 로그인</strong>
                             <p>
-                                등록된 운영자 Google 계정으로만 통계를 볼 수
-                                있습니다. 로그인은 1시간 동안 유지되며 이
+                                등록된 운영자 Google 계정으로만 관리 기능을 쓸
+                                수 있습니다. 로그인은 1시간 동안 유지되며 이
                                 브라우저에 저장되지 않습니다.
                             </p>
                         </div>
@@ -402,7 +382,6 @@ function AdminDashboard() {
                         ) : null}
                     </div>
                 ) : null}
-
                 {analyticsStatus === "denied" ? (
                     <div
                         className="admin-state admin-state--error"
@@ -421,6 +400,174 @@ function AdminDashboard() {
                         </div>
                     </div>
                 ) : null}
+                {isAuthorized ? (
+                    <div className="admin-session">
+                        <p>
+                            {session?.email
+                                ? `${session.email} 계정으로 확인 중입니다.`
+                                : "운영자 계정으로 확인 중입니다."}
+                        </p>
+                        <button
+                            className="admin-lock"
+                            type="button"
+                            onClick={handleSignOut}>
+                            로그아웃
+                        </button>
+                    </div>
+                ) : null}
+            </section>
+
+            {isAuthorized ? (
+                <section
+                    className="admin-section"
+                    aria-labelledby="publication-admin-title">
+                    <div className="admin-section__head">
+                        <div>
+                            <h2 id="publication-admin-title">
+                                Publication 관리
+                            </h2>
+                            <p>
+                                Google Sheet 원본을 바로 수정합니다. 저장한
+                                내용은 동기화와 검토 PR 병합을 거쳐 홈페이지에
+                                반영됩니다.
+                            </p>
+                        </div>
+                        <a
+                            className="admin-primary-link"
+                            href={
+                                PUBLICATIONS_SHEET_URL ||
+                                PUBLICATION_DIRECTORY_URL
+                            }
+                            target="_blank"
+                            rel="noreferrer">
+                            {PUBLICATIONS_SHEET_URL
+                                ? "Google Sheet 열기"
+                                : "GitHub 스냅샷 열기"}
+                        </a>
+                    </div>
+
+                    <div className="admin-metrics admin-metrics--publications">
+                        <AdminMetric
+                            label="전체 Publication"
+                            value={formatNumber(publicationSummary.total)}
+                            detail="현재 생성 데이터 기준"
+                        />
+                        <AdminMetric
+                            label="참여 연구실"
+                            value={formatNumber(publicationSummary.labs)}
+                            detail="등록된 연구실 태그"
+                        />
+                        <AdminMetric
+                            label="수록 연도"
+                            value={formatNumber(publicationSummary.years)}
+                            detail="연도별 아카이브 범위"
+                        />
+                    </div>
+
+                    <PublicationSheetEditor
+                        apiUrl={ADMIN_API_URL}
+                        session={session}
+                        onSessionExpired={handleSessionExpired}
+                    />
+                </section>
+            ) : (
+                <section
+                    className="admin-section"
+                    aria-labelledby="publication-admin-title">
+                    <div className="admin-section__head">
+                        <div>
+                            <h2 id="publication-admin-title">
+                                Publication 관리
+                            </h2>
+                            <p>운영자로 로그인하면 열립니다.</p>
+                        </div>
+                    </div>
+
+                    <div className="admin-state">
+                        <strong>운영자 확인이 필요합니다.</strong>
+                        <p>
+                            위에서 로그인하면 Publication 운영 현황과 편집이
+                            함께 열립니다.
+                        </p>
+                    </div>
+                </section>
+            )}
+            {isAuthorized ? (
+                <>
+                    <section
+                        className="admin-section"
+                        aria-labelledby="news-admin-title">
+                        <div className="admin-section__head">
+                            <div>
+                                <h2 id="news-admin-title">News 관리</h2>
+                                <p>
+                                    News를 새로 쓰거나 고치고 사진을 붙입니다.
+                                    저장하면 바로 게시되어 3~5분 뒤 홈페이지에
+                                    반영됩니다.
+                                </p>
+                            </div>
+                        </div>
+                        <NewsEditor
+                            apiUrl={ADMIN_API_URL}
+                            session={session}
+                            onSessionExpired={handleSessionExpired}
+                        />
+                    </section>
+
+                    <section
+                        className="admin-section"
+                        aria-labelledby="photos-admin-title">
+                        <div className="admin-section__head">
+                            <div>
+                                <h2 id="photos-admin-title">Photos 관리</h2>
+                                <p>
+                                    연합 활동 앨범을 만들고 사진을 올립니다.
+                                    저장하면 3~5분 뒤 Photos 페이지에
+                                    반영됩니다.
+                                </p>
+                            </div>
+                            <Link className="admin-primary-link" to="/photo">
+                                Photos 페이지 열기
+                            </Link>
+                        </div>
+                        <PhotoAlbumEditor
+                            apiUrl={ADMIN_API_URL}
+                            session={session}
+                            onSessionExpired={handleSessionExpired}
+                        />
+                    </section>
+                </>
+            ) : null}
+
+            <section
+                className="admin-section"
+                aria-labelledby="analytics-title">
+                <div className="admin-section__head">
+                    <div>
+                        <h2 id="analytics-title">접속 통계</h2>
+                        <p>Cloudflare Web Analytics의 집계 데이터입니다.</p>
+                    </div>
+                    {["ready", "loading"].includes(analyticsStatus) &&
+                    analytics ? (
+                        <div
+                            className="admin-period"
+                            role="group"
+                            aria-label="통계 기간">
+                            {[7, 30].map((period) => (
+                                <button
+                                    key={period}
+                                    type="button"
+                                    className={
+                                        days === period ? "is-active" : ""
+                                    }
+                                    disabled={analyticsStatus === "loading"}
+                                    onClick={() => setDays(period)}>
+                                    {period}일
+                                </button>
+                            ))}
+                        </div>
+                    ) : null}
+                </div>
 
                 {analyticsStatus === "loading" && !analytics ? (
                     <AnalyticsSkeleton />
@@ -574,98 +721,9 @@ function AdminDashboard() {
                                 )}
                             </article>
                         </div>
-                        <div className="admin-session">
-                            <p>
-                                {session?.email
-                                    ? `${session.email} 계정으로 확인 중입니다.`
-                                    : "운영자 계정으로 확인 중입니다."}
-                            </p>
-                            <button
-                                className="admin-lock"
-                                type="button"
-                                onClick={handleSignOut}>
-                                로그아웃
-                            </button>
-                        </div>
                     </div>
                 ) : null}
             </section>
-
-            {isAuthorized ? (
-                <section
-                    className="admin-section"
-                    aria-labelledby="publication-admin-title">
-                    <div className="admin-section__head">
-                        <div>
-                            <h2 id="publication-admin-title">
-                                Publication 관리
-                            </h2>
-                            <p>
-                                Google Sheet 원본을 바로 수정합니다. 저장한
-                                내용은 동기화와 검토 PR 병합을 거쳐 홈페이지에
-                                반영됩니다.
-                            </p>
-                        </div>
-                        <a
-                            className="admin-primary-link"
-                            href={
-                                PUBLICATIONS_SHEET_URL ||
-                                PUBLICATION_DIRECTORY_URL
-                            }
-                            target="_blank"
-                            rel="noreferrer">
-                            {PUBLICATIONS_SHEET_URL
-                                ? "Google Sheet 열기"
-                                : "GitHub 스냅샷 열기"}
-                        </a>
-                    </div>
-
-                    <div className="admin-metrics admin-metrics--publications">
-                        <AdminMetric
-                            label="전체 Publication"
-                            value={formatNumber(publicationSummary.total)}
-                            detail="현재 생성 데이터 기준"
-                        />
-                        <AdminMetric
-                            label="참여 연구실"
-                            value={formatNumber(publicationSummary.labs)}
-                            detail="등록된 연구실 태그"
-                        />
-                        <AdminMetric
-                            label="수록 연도"
-                            value={formatNumber(publicationSummary.years)}
-                            detail="연도별 아카이브 범위"
-                        />
-                    </div>
-
-                    <PublicationSheetEditor
-                        apiUrl={ADMIN_API_URL}
-                        session={session}
-                        onSessionExpired={handleSessionExpired}
-                    />
-                </section>
-            ) : (
-                <section
-                    className="admin-section"
-                    aria-labelledby="publication-admin-title">
-                    <div className="admin-section__head">
-                        <div>
-                            <h2 id="publication-admin-title">
-                                Publication 관리
-                            </h2>
-                            <p>운영자로 로그인하면 열립니다.</p>
-                        </div>
-                    </div>
-
-                    <div className="admin-state">
-                        <strong>운영자 확인이 필요합니다.</strong>
-                        <p>
-                            위에서 로그인하면 Publication 운영 현황과 편집이
-                            함께 열립니다.
-                        </p>
-                    </div>
-                </section>
-            )}
         </div>
     );
 }

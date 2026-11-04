@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import {
     CONTENT_DIR,
     NEWS_CONTENT_DIR,
+    ROOT_DIR,
     EXTERNAL_NEWS_FILE,
     NEWS_GENERATED_FILE,
     isIsoDate,
@@ -15,32 +16,19 @@ import {
     writeJsonFile,
 } from "./lib.mjs";
 import { syncPublicationContent } from "./publications.mjs";
+import {
+    MAX_IMAGE_BYTES,
+    NEWS_IMAGE_PATH,
+    NEWS_OVERRIDES_PATH,
+    NEWS_OVERRIDE_FIELDS,
+    NEWS_TYPE_LABELS,
+    NEWS_TYPES as SHARED_NEWS_TYPES,
+    isImageFileName,
+    validateNewsOverride,
+} from "../../src/utils/siteContentRules.js";
 
-const NEWS_TYPES = new Set([
-    "paper_accepted",
-    "notice",
-    "equipment",
-    "new_member",
-    "graduation",
-    "seminar",
-    "award",
-    "visit",
-    "workshop",
-    "general",
-]);
-
-const TYPE_LABELS = {
-    paper_accepted: "Paper Accepted",
-    notice: "Notice",
-    equipment: "Equipment",
-    new_member: "New Member",
-    graduation: "Graduation",
-    seminar: "Seminar / Talk",
-    award: "Award",
-    visit: "Visit / Collaboration",
-    workshop: "Workshop",
-    general: "General Update",
-};
+const NEWS_TYPES = new Set(SHARED_NEWS_TYPES);
+const TYPE_LABELS = NEWS_TYPE_LABELS;
 
 const PAPER_ACCEPTED_TYPE = "paper_accepted";
 const AUTO_PUBLICATION_SOURCE = "publications-auto";
@@ -140,6 +128,8 @@ const parseNewsFile = async (filePath) => {
     const featured = data.featured === true;
     const publicationId = normalizeText(data.publication_id);
     const publicationTitle = normalizeText(data.publication_title);
+    const image = normalizeText(data.image);
+    const imageAlt = normalizeText(data.image_alt);
     const publicationQueryInput = normalizeText(data.publication_query);
     const publicationQuery =
         publicationQueryInput ||
@@ -170,6 +160,12 @@ const parseNewsFile = async (filePath) => {
             `[news] ${relativeFromRoot(filePath)}: external item requires a valid "external_url"`,
         );
     }
+    if (image) {
+        await assertNewsImage(image, relativeFromRoot(filePath));
+        if (!imageAlt) {
+            throw new Error(requiredError(filePath, "image_alt", "is required with an image"));
+        }
+    }
 
     return {
         id,
@@ -188,8 +184,70 @@ const parseNewsFile = async (filePath) => {
         publication_title: publicationTitle,
         publication_query: publicationQuery,
         generated_from: "",
+        image,
+        image_alt: imageAlt,
+        // Lets the admin editor find the file behind an item it was asked to
+        // change; items from other sources have no file of their own.
+        source_path: relativeFromRoot(filePath),
     };
 };
+
+const NEWS_IMAGE_DIR = path.resolve(ROOT_DIR, NEWS_IMAGE_PATH);
+const NEWS_OVERRIDES_FILE = path.resolve(ROOT_DIR, NEWS_OVERRIDES_PATH);
+
+const assertNewsImage = async (fileName, label) => {
+    if (!isImageFileName(fileName) || fileName.includes("/")) {
+        throw new Error(`[news] ${label}: image "${fileName}" must be a file name in ${NEWS_IMAGE_PATH}`);
+    }
+    let size;
+    try {
+        ({ size } = await fs.stat(path.resolve(NEWS_IMAGE_DIR, fileName)));
+    } catch {
+        throw new Error(`[news] ${label}: image ${NEWS_IMAGE_PATH}/${fileName} does not exist`);
+    }
+    if (size > MAX_IMAGE_BYTES) {
+        throw new Error(`[news] ${label}: image ${fileName} is larger than 3 MB`);
+    }
+};
+
+// Operators can retitle, re-summarize, illustrate, or hide any News item from
+// the admin page, including ones pulled from lab sites and generated from
+// publications. Those sources are rebuilt on every refresh, so the edits live
+// here and are applied on top each time. An entry whose item has disappeared
+// from its source is ignored rather than failing the build.
+const loadNewsOverrides = async () => {
+    let data;
+    try {
+        data = JSON.parse(await fs.readFile(NEWS_OVERRIDES_FILE, "utf8"));
+    } catch (error) {
+        if (error?.code === "ENOENT") return {};
+        throw new Error(`[news] Cannot read ${NEWS_OVERRIDES_PATH}: ${error.message}`);
+    }
+    const items = data?.items ?? {};
+    for (const [id, override] of Object.entries(items)) {
+        const errors = Object.values(validateNewsOverride(override));
+        if (errors.length) {
+            throw new Error(`[news] ${NEWS_OVERRIDES_PATH} "${id}": ${errors.join(" ")}`);
+        }
+        if (override.image) {
+            await assertNewsImage(override.image, `${NEWS_OVERRIDES_PATH} "${id}"`);
+        }
+    }
+    return items;
+};
+
+const applyNewsOverrides = (newsItems, overrides) =>
+    newsItems.flatMap((item) => {
+        const override = overrides[item.id];
+        if (!override) return [item];
+        if (override.hidden === true) return [];
+        const changes = Object.fromEntries(
+            NEWS_OVERRIDE_FIELDS.filter((field) => field in override).map(
+                (field) => [field, normalizeText(override[field])],
+            ),
+        );
+        return [{ ...item, ...changes, edited: true }];
+    });
 
 const parseExternalNewsItem = (rawItem) => {
     const id = normalizeText(rawItem?.id);
@@ -470,6 +528,7 @@ export const syncNewsContent = async ({
         ? publicationItems
         : await syncPublicationContent({ validateOnly: true });
 
+    const overrides = await loadNewsOverrides();
     const mergedItems = attachPublicationIds(
         mergePublicationNewsItems(
             items,
@@ -478,8 +537,9 @@ export const syncNewsContent = async ({
         ),
         resolvedPublicationItems,
     );
+    const visibleItems = applyNewsOverrides(mergedItems, overrides);
 
-    mergedItems.sort((a, b) => {
+    visibleItems.sort((a, b) => {
         if (a.date === b.date) {
             return a.id.localeCompare(b.id);
         }
@@ -487,8 +547,8 @@ export const syncNewsContent = async ({
     });
 
     if (validateOnly) {
-        console.log(`[news] validated ${mergedItems.length} entries`);
-        return mergedItems;
+        console.log(`[news] validated ${visibleItems.length} entries`);
+        return visibleItems;
     }
 
     await writeJsonFile(NEWS_GENERATED_FILE, {
@@ -498,14 +558,14 @@ export const syncNewsContent = async ({
             source: "content/news + publications(published)",
             type_labels: TYPE_LABELS,
         },
-        items: mergedItems,
+        items: visibleItems,
     });
 
     console.log(
-        `[news] synced ${mergedItems.length} entries -> ${relativeFromRoot(NEWS_GENERATED_FILE)}`,
+        `[news] synced ${visibleItems.length} entries -> ${relativeFromRoot(NEWS_GENERATED_FILE)}`,
     );
 
-    return mergedItems;
+    return visibleItems;
 };
 
 if (import.meta.url === `file://${process.argv[1]}`) {

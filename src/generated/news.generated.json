@@ -327,6 +327,9 @@
       "publication_title": "",
       "publication_query": "",
       "generated_from": "",
+      "image": "",
+      "image_alt": "",
+      "source_path": "content/news/2026-sail-brl-selected.md",
       "publication_ids": []
     },
     {
@@ -346,6 +349,9 @@
       "publication_title": "",
       "publication_query": "SAIL paper accepted to Interspeech 2026",
       "generated_from": "",
+      "image": "",
+      "image_alt": "",
+      "source_path": "content/news/2026-sail-interspeech.md",
       "publication_ids": [
         "sail-publications-accentdrift-real-time-streaming-accent-conversion-via-sparse-speech-tokenization"
       ]
@@ -367,6 +373,9 @@
       "publication_title": "",
       "publication_query": "",
       "generated_from": "",
+      "image": "",
+      "image_alt": "",
+      "source_path": "content/news/2026-sail-kcc-award.md",
       "publication_ids": []
     },
     {
@@ -405,6 +414,9 @@
       "publication_title": "",
       "publication_query": "SAIL paper accepted to ICML 2026",
       "generated_from": "",
+      "image": "",
+      "image_alt": "",
+      "source_path": "content/news/2026-sail-icml.md",
       "publication_ids": [
         "sail-publications-regen-hierarchical-multi-prompt-representation-generation-for-efficient-waveform-diffusion-models"
       ]
@@ -468,6 +480,9 @@
       "publication_title": "",
       "publication_query": "SAIL paper accepted to Findings of ACL 2026",
       "generated_from": "",
+      "image": "",
+      "image_alt": "",
+      "source_path": "content/news/2026-sail-acl-findings.md",
       "publication_ids": []
     },
     {

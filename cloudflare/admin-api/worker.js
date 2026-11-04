@@ -9,6 +9,11 @@ import {
     publicationItemToSheetValues,
     validateSheetRowForSave,
 } from "../../src/utils/publicationSheetRules.js";
+import {
+    createSiteContentHandler,
+    hasSiteContentConfiguration,
+    isSiteContentPath,
+} from "./siteContent.js";
 
 const CLOUDFLARE_GRAPHQL_ENDPOINT =
     "https://api.cloudflare.com/client/v4/graphql";
@@ -31,7 +36,7 @@ const jsonResponse = (request, env, payload, status = 200) => {
     const headers = {
         "Access-Control-Allow-Headers": "Authorization, Content-Type",
         "Access-Control-Max-Age": "86400",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Cache-Control": "no-store",
         "Content-Type": "application/json; charset=utf-8",
         Vary: "Origin",
@@ -1167,6 +1172,13 @@ const handlePublicationRows = async (request, env, url) => {
     }
 };
 
+const handleSiteContent = createSiteContentHandler({
+    jsonResponse,
+    authorize,
+    githubRequest,
+    HttpError,
+});
+
 export default {
     async fetch(request, env) {
         if (!isAllowedOrigin(request, env)) {
@@ -1191,6 +1203,9 @@ export default {
                 publicationEditingConfigured:
                     hasPublicationEditConfiguration(env),
                 contentRefreshConfigured: hasContentRefreshConfiguration(env),
+                siteContentConfigured:
+                    hasSiteContentConfiguration(env) &&
+                    hasGoogleConfiguration(env),
                 googleSignInConfigured: hasGoogleConfiguration(env),
             });
         }
@@ -1322,6 +1337,10 @@ export default {
                     502,
                 );
             }
+        }
+
+        if (isSiteContentPath(url.pathname)) {
+            return handleSiteContent(request, env, url);
         }
 
         return jsonResponse(

@@ -959,6 +959,160 @@
     }
 }
 
+/* News and Photos editors */
+.admin-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+label.admin-button:has(.admin-visually-hidden:focus-visible) {
+    outline: 2px solid var(--accent-ui-800);
+    outline-offset: 2px;
+}
+
+.admin-sheet-list__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.admin-sheet-list li:has(> .admin-album-thumb) {
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+}
+
+.admin-album-thumb {
+    width: 4.5rem;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-sm, 0.35rem);
+    object-fit: cover;
+    background: var(--surface-2);
+}
+
+.admin-sheet-list .admin-sheet-list__authors {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.admin-image-field {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.admin-image-field__label {
+    font-weight: 700;
+}
+
+.admin-image-field__preview {
+    width: min(100%, 22rem);
+    max-height: 16rem;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    background: var(--surface-2);
+}
+
+.admin-image-field__actions,
+.admin-photo__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.admin-photo-list {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.admin-photo-list__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.admin-photo-list__head h4 {
+    margin: 0;
+}
+
+.admin-photo-list ol {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.admin-photo {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 1rem;
+    padding: 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+.admin-photo img {
+    width: 8rem;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-sm, 0.35rem);
+    object-fit: cover;
+    background: var(--surface-2);
+}
+
+.admin-photo__fields {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.admin-hidden-news {
+    margin-top: 1rem;
+}
+
+.admin-hidden-news summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.admin-hidden-news ul {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.admin-hidden-news li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+@media (max-width: 40rem) {
+    .admin-photo {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .admin-photo img {
+        width: 100%;
+    }
+
+    .admin-sheet-list li:has(> .admin-album-thumb) {
+        grid-template-columns: 4.5rem minmax(0, 1fr);
+    }
+
+    .admin-sheet-list li:has(> .admin-album-thumb) .admin-sheet-list__actions {
+        grid-column: 1 / -1;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .admin-analytics-skeleton div {
         animation: none;

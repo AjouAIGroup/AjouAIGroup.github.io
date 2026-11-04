@@ -42,7 +42,8 @@ function News() {
             <div data-reveal className="tab-header page-head page-head--news">
                 <h1>News</h1>
                 <p className="page-head__summary">
-                    Publication announcements from the five AAIG laboratories.
+                    Publication announcements and updates from the five AAIG
+                    laboratories.
                 </p>
             </div>
 
@@ -112,6 +113,15 @@ function News() {
                                                 <p className="news-page__details">
                                                     {details}
                                                 </p>
+                                            ) : null}
+                                            {item.image ? (
+                                                <img
+                                                    className="news-page__image"
+                                                    src={item.image}
+                                                    alt={item.image_alt}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                />
                                             ) : null}
                                         </div>
                                         <div className="news-page__action">

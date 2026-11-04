@@ -35,7 +35,7 @@ export const ROUTE_DEFINITIONS = [
         tabKey: "news",
         title: "News",
         description:
-            "Publication announcements from the five Ajou Artificial Intelligence Group laboratories.",
+            "Publication announcements and updates from the five Ajou Artificial Intelligence Group laboratories.",
     },
     {
         path: "/research",

@@ -1,5 +1,16 @@
 import NEWS_DATA from "../generated/news.generated.json";
 
+// News photos are uploaded from the admin page into content/news/images and
+// referenced by file name; Vite bundles them and returns each hashed URL.
+const NEWS_IMAGE_URLS = Object.fromEntries(
+    Object.entries(
+        import.meta.glob(
+            "../../content/news/images/*.{jpg,jpeg,png,webp,avif}",
+            { eager: true, query: "?url", import: "default" },
+        ),
+    ).map(([filePath, url]) => [filePath.split("/").pop(), url]),
+);
+
 const DEFAULT_NEWS_TYPE_META = {
     all: { label: "All" },
     paper_accepted: { label: "Paper accepted" },
@@ -133,6 +144,9 @@ const normalizeStructuredNewsItems = (items) =>
                 ? item.publication_ids.map(normalizeText).filter(Boolean)
                 : [],
             generated_from: normalizeText(item?.generated_from),
+            source_path: normalizeText(item?.source_path),
+            image: NEWS_IMAGE_URLS[normalizeText(item?.image)] ?? "",
+            image_alt: normalizeText(item?.image_alt),
             _parsedDate: parsedDate,
         };
     });
@@ -178,10 +192,14 @@ const getAllNewsItems = () =>
             return normalizedItem;
         });
 
-// AAIG News is a publication archive. The ingestion pipeline may retain other
-// lab updates for future use, but only paper announcements are published here.
+// AAIG News centres on paper announcements. The lab-site ingestion also keeps
+// other lab updates (new interns, equipment), which stay off the page; items
+// written for this site, by hand or from the admin page, always appear.
+export const isPublishedNewsItem = (item) =>
+    item.type === "paper_accepted" || Boolean(item.source_path);
+
 export const getPublicationNewsItems = () =>
-    getAllNewsItems().filter((item) => item.type === "paper_accepted");
+    getAllNewsItems().filter(isPublishedNewsItem);
 
 export const getLatestNewsItems = (limit = 5) =>
     getPublicationNewsItems().slice(0, limit);

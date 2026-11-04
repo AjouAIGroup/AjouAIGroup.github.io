@@ -22,7 +22,7 @@ const STATUS_LABELS = {
     working: "진행 중인 연구",
     project: "프로젝트",
 };
-const LIST_PREVIEW_COUNT = 20;
+const LIST_PAGE_SIZE = 5;
 const SYNC_POLL_INTERVAL_MS = 15_000;
 const SYNC_POLL_LIMIT = 40;
 // An unsaved edit survives a session timeout or reload in this tab only. It
@@ -391,7 +391,8 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
     });
     const [reloadRequest, setReloadRequest] = useState(0);
     const [query, setQuery] = useState("");
-    const [showAll, setShowAll] = useState(false);
+    const [listOpen, setListOpen] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(LIST_PAGE_SIZE);
     const [editing, setEditing] = useState(null);
     const [notice, setNotice] = useState(null);
     const [sync, setSync] = useState({ status: "loading" });
@@ -560,10 +561,9 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
         );
     }, [query, sortedRows]);
 
-    const visibleRows =
-        showAll || query.trim()
-            ? matchingRows
-            : matchingRows.slice(0, LIST_PREVIEW_COUNT);
+    const visibleRows = query.trim()
+        ? matchingRows
+        : matchingRows.slice(0, visibleCount);
     const hiddenCount = rowsState.rows.filter(
         (row) => !isRowVisible(row.values),
     ).length;
@@ -578,6 +578,9 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
             ? `admin-row-edit-${row.rowNumber}`
             : "admin-publication-add";
         setNotice(null);
+        // A candidate review opens its form inside the list, so the list has
+        // to be open for the form to show.
+        setListOpen(true);
         const original = row
             ? { ...EMPTY_ROW, ...row.values }
             : createBlankRow();
@@ -895,7 +898,26 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
             ) : null}
 
             {rowsState.rows.length > 0 || rowsState.status === "ready" ? (
-                <>
+                <button
+                    className="admin-button admin-sheet-editor__toggle"
+                    type="button"
+                    aria-expanded={listOpen}
+                    aria-controls="admin-sheet-rows"
+                    onClick={() => {
+                        setListOpen((open) => !open);
+                        setVisibleCount(LIST_PAGE_SIZE);
+                    }}
+                    disabled={isDirty && listOpen}>
+                    {listOpen
+                        ? "Publication 목록 접기"
+                        : "Publication 목록 펼치기"}
+                    <span>{rowsState.rows.length}행</span>
+                </button>
+            ) : null}
+
+            {listOpen &&
+            (rowsState.rows.length > 0 || rowsState.status === "ready") ? (
+                <div id="admin-sheet-rows" className="admin-sheet-editor__rows">
                     <div className="admin-sheet-toolbar">
                         <div className="admin-publication-search">
                             <label htmlFor="admin-publication-search">
@@ -1014,17 +1036,19 @@ function PublicationSheetEditor({ apiUrl, session, onSessionExpired }) {
                         </p>
                     ) : null}
 
-                    {!showAll &&
-                    !query.trim() &&
-                    matchingRows.length > LIST_PREVIEW_COUNT ? (
+                    {!query.trim() && matchingRows.length > visibleCount ? (
                         <button
                             className="admin-button admin-sheet-list__more"
                             type="button"
-                            onClick={() => setShowAll(true)}>
-                            전체 {matchingRows.length}행 보기
+                            onClick={() =>
+                                setVisibleCount(
+                                    (count) => count + LIST_PAGE_SIZE,
+                                )
+                            }>
+                            더보기 ({visibleRows.length}/{matchingRows.length})
                         </button>
                     ) : null}
-                </>
+                </div>
             ) : null}
         </div>
     );

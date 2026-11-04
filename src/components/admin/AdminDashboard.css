@@ -670,6 +670,23 @@
     justify-self: start;
 }
 
+.admin-sheet-editor__toggle {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-sheet-editor__toggle span {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.admin-sheet-editor__rows {
+    display: grid;
+    gap: inherit;
+}
+
 .admin-candidates {
     padding: 1rem;
     border: 1px solid var(--line);

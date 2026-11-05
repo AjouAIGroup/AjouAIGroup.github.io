@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { LABORATORIES } from "../../data/laboratories";
 import {
     MAX_CAPTION_LENGTH,
+    MAX_TEXT_LENGTH,
     validateAlbumMeta,
 } from "../../utils/siteContentRules";
 import { prepareImageUpload } from "./adminImage";
@@ -64,7 +65,13 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
         onPhotos(next);
     };
 
-    const input = (name, label, { type = "text", wide, rows, hint } = {}) => (
+    // A field with `max` shows a running count so the limit is visible
+    // before saving.
+    const input = (
+        name,
+        label,
+        { type = "text", wide, rows, hint, max } = {},
+    ) => (
         <div className={`admin-field${wide ? " admin-field--wide" : ""}`}>
             <label htmlFor={field(name)}>{label}</label>
             {rows ? (
@@ -73,6 +80,8 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                     rows={rows}
                     value={album[name]}
                     onChange={(event) => onChange(name, event.target.value)}
+                    aria-invalid={errors[name] ? "true" : undefined}
+                    aria-describedby={max ? field(`${name}-count`) : undefined}
                 />
             ) : (
                 <input
@@ -85,6 +94,13 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                 />
             )}
             {hint ? <p className="admin-field__hint">{hint}</p> : null}
+            {max ? (
+                <p
+                    id={field(`${name}-count`)}
+                    className={`admin-field__hint${album[name].length > max ? " admin-field__hint--over" : ""}`}>
+                    {album[name].length}/{max}자
+                </p>
+            ) : null}
             {errors[name] ? (
                 <p className="admin-field__error">{errors[name]}</p>
             ) : null}
@@ -134,7 +150,11 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                         다섯 연구실이 모두 참여했다면 비워두세요.
                     </p>
                 </fieldset>
-                {input("description", "설명", { wide: true, rows: 3 })}
+                {input("description", `설명 (${MAX_TEXT_LENGTH}자까지)`, {
+                    wide: true,
+                    rows: 3,
+                    max: MAX_TEXT_LENGTH,
+                })}
             </div>
 
             <div className="admin-photo-list">
@@ -155,6 +175,10 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                         />
                     </label>
                 </div>
+                <p className="admin-field__hint">
+                    사진을 추가하면 장마다 설명(필수)과 캡션(선택,{" "}
+                    {MAX_CAPTION_LENGTH}자까지)을 적는 칸이 생깁니다.
+                </p>
                 {errors.photos ? (
                     <p className="admin-field__error">{errors.photos}</p>
                 ) : null}

@@ -1,0 +1,13 @@
+{
+    "title": "Test",
+    "date": "2026-11-05",
+    "location": "testtest",
+    "description": "test",
+    "photos": [
+        {
+            "file": "01-906bd482.webp",
+            "alt": "adsf",
+            "caption": "asdf"
+        }
+    ]
+}

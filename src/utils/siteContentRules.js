@@ -36,6 +36,7 @@ export const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"];
 
 export const MAX_TITLE_LENGTH = 200;
 export const MAX_TEXT_LENGTH = 2000;
+export const MAX_CAPTION_LENGTH = 500;
 
 // Fields an operator may change on a News item that the site did not author
 // itself (lab-site announcements and generated paper news). The original stays
@@ -101,9 +102,9 @@ export const createAlbumId = (date, title) => createId(date, title, 40);
 export const isPublishedNewsItem = (item) =>
     item.type === "paper_accepted" || Boolean(item.source_path);
 
-const checkLength = (errors, field, value, max) => {
+const checkLength = (errors, field, value, max, label = "") => {
     if (text(value).length > max) {
-        errors[field] = `${max}자 이하로 입력하세요.`;
+        errors[field] = `${label}${max}자 이하로 입력하세요.`;
     }
 };
 
@@ -123,16 +124,23 @@ export const validateNewsFields = (fields = {}) => {
     if (text(fields.image) && !text(fields.image_alt)) {
         errors.image_alt = "사진 설명을 입력하세요.";
     }
-    checkLength(errors, "title", fields.title, MAX_TITLE_LENGTH);
-    checkLength(errors, "summary", fields.summary, MAX_TEXT_LENGTH);
-    checkLength(errors, "venue", fields.venue, MAX_TITLE_LENGTH);
+    checkLength(errors, "title", fields.title, MAX_TITLE_LENGTH, "제목은 ");
+    checkLength(errors, "summary", fields.summary, MAX_TEXT_LENGTH, "요약은 ");
+    checkLength(errors, "venue", fields.venue, MAX_TITLE_LENGTH, "학회는 ");
     checkLength(
         errors,
         "related_person",
         fields.related_person,
         MAX_TITLE_LENGTH,
+        "관련 연구실·인물은 ",
     );
-    checkLength(errors, "image_alt", fields.image_alt, MAX_TITLE_LENGTH);
+    checkLength(
+        errors,
+        "image_alt",
+        fields.image_alt,
+        MAX_TITLE_LENGTH,
+        "사진 설명은 ",
+    );
     return errors;
 };
 
@@ -148,9 +156,21 @@ export const validateNewsOverride = (override = {}) => {
     if (text(override.image) && !text(override.image_alt)) {
         errors.image_alt = "사진 설명을 입력하세요.";
     }
-    checkLength(errors, "title", override.title, MAX_TITLE_LENGTH);
-    checkLength(errors, "summary", override.summary, MAX_TEXT_LENGTH);
-    checkLength(errors, "image_alt", override.image_alt, MAX_TITLE_LENGTH);
+    checkLength(errors, "title", override.title, MAX_TITLE_LENGTH, "제목은 ");
+    checkLength(
+        errors,
+        "summary",
+        override.summary,
+        MAX_TEXT_LENGTH,
+        "요약은 ",
+    );
+    checkLength(
+        errors,
+        "image_alt",
+        override.image_alt,
+        MAX_TITLE_LENGTH,
+        "사진 설명은 ",
+    );
     return errors;
 };
 
@@ -164,9 +184,21 @@ export const validateAlbumMeta = (album = {}) => {
         (lab) => !LAB_KEYS.includes(lab),
     );
     if (unknownLab) errors.labs = `알 수 없는 연구실: ${unknownLab}`;
-    checkLength(errors, "title", album.title, MAX_TITLE_LENGTH);
-    checkLength(errors, "location", album.location, MAX_TITLE_LENGTH);
-    checkLength(errors, "description", album.description, MAX_TEXT_LENGTH);
+    checkLength(errors, "title", album.title, MAX_TITLE_LENGTH, "제목은 ");
+    checkLength(
+        errors,
+        "location",
+        album.location,
+        MAX_TITLE_LENGTH,
+        "장소는 ",
+    );
+    checkLength(
+        errors,
+        "description",
+        album.description,
+        MAX_TEXT_LENGTH,
+        "설명은 ",
+    );
 
     const photos = Array.isArray(album.photos) ? album.photos : [];
     if (!photos.length) errors.photos = "사진을 한 장 이상 올리세요.";
@@ -189,12 +221,14 @@ export const validateAlbumMeta = (album = {}) => {
             `photos.${index}.alt`,
             photo?.alt,
             MAX_TITLE_LENGTH,
+            `${label} 설명은 `,
         );
         checkLength(
             errors,
             `photos.${index}.caption`,
             photo?.caption,
-            MAX_TITLE_LENGTH,
+            MAX_CAPTION_LENGTH,
+            `${label} 캡션은 `,
         );
     });
     return errors;

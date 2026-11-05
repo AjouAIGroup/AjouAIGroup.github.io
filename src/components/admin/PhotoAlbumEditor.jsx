@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LABORATORIES } from "../../data/laboratories";
-import { validateAlbumMeta } from "../../utils/siteContentRules";
+import {
+    MAX_CAPTION_LENGTH,
+    validateAlbumMeta,
+} from "../../utils/siteContentRules";
 import { prepareImageUpload } from "./adminImage";
 import { requestJson, uploadImage } from "./adminApi";
 import { useEditStatus } from "./useEditStatus";
+import FormErrors from "./FormErrors";
 
 const LAB_NAMES = Object.fromEntries(
     LABORATORIES.map((lab) => [lab.key, lab.shortName]),
@@ -194,7 +198,7 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                                 </div>
                                 <div className="admin-field">
                                     <label htmlFor={`${photo.key}-caption`}>
-                                        캡션 (선택)
+                                        캡션 (선택, {MAX_CAPTION_LENGTH}자까지)
                                     </label>
                                     <input
                                         id={`${photo.key}-caption`}
@@ -204,7 +208,24 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
                                                 caption: event.target.value,
                                             })
                                         }
+                                        aria-describedby={`${photo.key}-caption-count`}
+                                        aria-invalid={
+                                            errors[`photos.${index}.caption`]
+                                                ? "true"
+                                                : undefined
+                                        }
                                     />
+                                    <p
+                                        id={`${photo.key}-caption-count`}
+                                        className={`admin-field__hint${photo.caption.length > MAX_CAPTION_LENGTH ? " admin-field__hint--over" : ""}`}>
+                                        {photo.caption.length}/
+                                        {MAX_CAPTION_LENGTH}자
+                                    </p>
+                                    {errors[`photos.${index}.caption`] ? (
+                                        <p className="admin-field__error">
+                                            {errors[`photos.${index}.caption`]}
+                                        </p>
+                                    ) : null}
                                 </div>
                             </div>
                             <div className="admin-photo__actions">
@@ -250,9 +271,7 @@ function AlbumForm({ editing, onChange, onPhotos, onSubmit, onCancel }) {
             </div>
 
             {formError ? (
-                <div className="admin-editor__alert" role="alert">
-                    <p>{formError}</p>
-                </div>
+                <FormErrors message={formError} errors={errors} />
             ) : null}
 
             <div className="admin-editor__actions">
@@ -460,7 +479,9 @@ function PhotoAlbumEditor({ apiUrl, session, onSessionExpired }) {
                 saving: false,
                 progress: "",
                 errors: error.payload?.fields ?? {},
-                formError: error.message,
+                formError: error.payload?.fields
+                    ? "입력 내용을 확인해주세요."
+                    : error.message,
             });
         }
     };

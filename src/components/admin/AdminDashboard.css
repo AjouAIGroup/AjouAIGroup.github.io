@@ -1052,6 +1052,19 @@
     color: var(--text-muted);
 }
 
+.admin-field__hint--over {
+    color: var(--red-800);
+    font-weight: 700;
+}
+
+.admin-editor__alert-list {
+    flex-basis: 100%;
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.2rem;
+}
+
 .admin-field__error {
     color: var(--red-800);
     font-weight: 600;

@@ -8,6 +8,7 @@ import {
 import { prepareImageUpload } from "./adminImage";
 import { requestJson, uploadImage } from "./adminApi";
 import { useEditStatus } from "./useEditStatus";
+import FormErrors from "./FormErrors";
 
 const LIST_PAGE_SIZE = 5;
 const EDITABLE_TYPES = [
@@ -196,9 +197,7 @@ function NewsForm({
             </div>
 
             {formError ? (
-                <div className="admin-editor__alert" role="alert">
-                    <p>{formError}</p>
-                </div>
+                <FormErrors message={formError} errors={errors} />
             ) : null}
 
             <div className="admin-editor__actions">
@@ -405,7 +404,9 @@ function NewsEditor({ apiUrl, session, onSessionExpired }) {
             update({
                 saving: false,
                 errors: error.payload?.fields ?? {},
-                formError: error.message,
+                formError: error.payload?.fields
+                    ? "입력 내용을 확인해주세요."
+                    : error.message,
             });
         }
     };

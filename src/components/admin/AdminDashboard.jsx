@@ -100,13 +100,46 @@ function AnalyticsSkeleton() {
     );
 }
 
+// The Google credential is kept in this tab's sessionStorage until it
+// expires, so reloading the page does not ask for a new sign-in. It is gone
+// once the tab closes, and the Worker still checks it on every request.
+const SESSION_STORAGE_KEY = "aaig-admin-session";
+// A credential this close to expiring is not worth restoring.
+const MIN_RESTORE_MS = 60 * 1000;
+
+const readStoredSession = () => {
+    try {
+        const stored = JSON.parse(
+            window.sessionStorage.getItem(SESSION_STORAGE_KEY) || "null",
+        );
+        return stored?.credential &&
+            stored.expiresAt - Date.now() > MIN_RESTORE_MS
+            ? stored
+            : null;
+    } catch {
+        return null;
+    }
+};
+
+const storeSession = (session) => {
+    try {
+        if (session) {
+            window.sessionStorage.setItem(
+                SESSION_STORAGE_KEY,
+                JSON.stringify(session),
+            );
+        } else {
+            window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
+        }
+    } catch {
+        // Without storage the session simply lasts until the next reload.
+    }
+};
+
 function AdminDashboard() {
     const publicationSummary = useMemo(summarizePublications, []);
     const [days, setDays] = useState(30);
-    // The credential is kept in memory only. Closing or reloading the tab ends
-    // the session; Google re-issues it silently for an already-consented
-    // account, so nothing has to be stored to stay convenient.
-    const [session, setSession] = useState(null);
+    const [session, setSession] = useState(readStoredSession);
     const [signInStatus, setSignInStatus] = useState("idle");
     const [analytics, setAnalytics] = useState(null);
     const [analyticsStatus, setAnalyticsStatus] = useState(
@@ -173,6 +206,9 @@ function AdminDashboard() {
                     shape: "rectangular",
                     locale: "ko",
                 });
+                // With auto_select, an account that signed in here before is
+                // signed back in without a click once its credential expires.
+                identity.prompt();
                 setSignInStatus("ready");
             })
             .catch(() => {
@@ -183,6 +219,10 @@ function AdminDashboard() {
             cancelled = true;
         };
     }, [handleCredential, session]);
+
+    useEffect(() => {
+        storeSession(session);
+    }, [session]);
 
     // Google ID tokens last an hour. Locking the screen exactly when the token
     // dies keeps the UI honest instead of waiting for the next failed request.

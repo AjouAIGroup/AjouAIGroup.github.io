@@ -1,0 +1,58 @@
+{
+    "title": "Ajou AI Group Researchers at EMNLP 2026",
+    "date": "2026-10-26",
+    "location": "Budapest, Hungary",
+    "labs": [
+        "cvl",
+        "iknow",
+        "lamda"
+    ],
+    "description": "Research teams led by Professors Kyung-Ah Sohn, Jongbin Ryu, and Hyunsouk Cho presented a total of six papers at EMNLP 2026 (Conference on Empirical Methods in Natural Language Processing), one of the world's leading academic conferences in natural language processing.",
+    "photos": [
+        {
+            "file": "01-3fd34869.webp",
+            "alt": "Group Photo of Conference Attendees",
+            "caption": "From left: Donggeon Lee (student), JuHeon Ha (student), Byounghan Lee (student), Soyeon Hong (student), Hyunsouk Cho (professor), Seungmin Oh (student), Dooyeon Na (student), and EunJu Shin (student)."
+        },
+        {
+            "file": "02-3fd34869.webp",
+            "alt": "Group Photo at the Lab Dinner",
+            "caption": "From left: Jieun Han (researcher), Byounghan Lee (student), EunJu Shin (student), Seungmin Oh (student), Dooyeon Na (student), Donggeon Lee (student), JuHeon Ha (student), and Soyeon Hong (student)."
+        },
+        {
+            "file": "03-3fd34869.webp",
+            "alt": "JuHeon Ha Giving a Presentation",
+            "caption": "Presentation of the paper \"Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs,\" co-authored by Professor Kyung-Ah Sohn and students JuHeon Ha, Byounghan Lee, and Yunseo Choi."
+        },
+        {
+            "file": "04-3fd34869.webp",
+            "alt": "Seungmin Oh Giving a Presentation",
+            "caption": "Presentation of the paper \"Train Overcomplete, Deploy Compact: Scaling Recovery Capacity for Structured LLM Pruning,\" co-authored by Professor Jongbin Ryu and students Seungmin Oh and Donggeon Lee."
+        },
+        {
+            "file": "05-3fd34869.webp",
+            "alt": "Donggeon Lee Giving a Presentation",
+            "caption": "Presentation of the paper \"Layer-wise Curriculum Learning for Efficient LLM Compression,\" co-authored by Professor Jongbin Ryu and students Donggeon Lee, Dooyeon Na, and Seungmin Oh."
+        },
+        {
+            "file": "06-3fd34869.webp",
+            "alt": "Dooyeon Na Giving a Presentation",
+            "caption": "Presentation of the paper \"Layer-wise Curriculum Learning for Efficient LLM Compression,\" co-authored by Professor Jongbin Ryu and students Donggeon Lee, Dooyeon Na, and Seungmin Oh."
+        },
+        {
+            "file": "07-3fd34869.webp",
+            "alt": "EunJu Shin Giving a Presentation",
+            "caption": "Presentation of the paper \"Colla-Q: Toward Collaborative Experts in MoE Quantization via Minimax Precision Balancing,\" co-authored by Professor Jongbin Ryu and student EunJu Shin."
+        },
+        {
+            "file": "08-3fd34869.webp",
+            "alt": "Soyeon Hong Giving a Presentation",
+            "caption": "Presentation of the paper \"ASSAY: Reconciling Stability and Validity in Reference-Free Scientific LLM Judges,\" co-authored by Professor Hyunsouk Cho and students Soyeon Hong and Heegyu Kim."
+        },
+        {
+            "file": "09-3fd34869.webp",
+            "alt": "Soyeon Hong Giving a Presentation",
+            "caption": "Presentation of the paper \"Filter by Quality, Stop by Difficulty: Confidence-Aware Self-Consistency with Adaptive Early Stopping,\" co-authored by Professor Hyunsouk Cho and students Jooyeong Na and Wansik Jo."
+        }
+    ]
+}

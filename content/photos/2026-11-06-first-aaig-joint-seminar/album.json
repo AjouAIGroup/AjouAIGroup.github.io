@@ -1,0 +1,33 @@
+{
+    "title": "First AAIG Joint Seminar",
+    "date": "2026-11-06",
+    "location": "Wonchon Hall 509, Ajou University",
+    "description": "The five AAIG laboratories held their first joint seminar, where each lab presented the research it is currently working on. Talks ranged from LLM empathy and multimodal alignment to voice-controlled robots, making it an informative afternoon of sharing ideas across the labs.",
+    "photos": [
+        {
+            "file": "01-seminar.webp",
+            "alt": "Researchers from the AAIG labs filling the seminar room during a talk",
+            "caption": "Members of the five labs listening to a research talk"
+        },
+        {
+            "file": "02-seminar.webp",
+            "alt": "A presenter showing persona results from an LLM empathy study",
+            "caption": "Results from “Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs”"
+        },
+        {
+            "file": "03-seminar.webp",
+            "alt": "A presenter explaining multimodal embedding alignment",
+            "caption": "A talk on closing the gap between text and image embeddings in multimodal alignment"
+        },
+        {
+            "file": "04-seminar.webp",
+            "alt": "A presenter showing a voice-command robot control demo",
+            "caption": "A demo of voice-command–based robot control in a simulated city"
+        },
+        {
+            "file": "05-seminar.webp",
+            "alt": "Group photo of the seminar participants in front of the lecture podium",
+            "caption": "Participants of the first AAIG joint seminar"
+        }
+    ]
+}

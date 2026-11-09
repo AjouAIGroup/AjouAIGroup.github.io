@@ -18,6 +18,28 @@
   },
   "items": [
     {
+      "id": "2026-11-06-first-aaig-joint-seminar",
+      "type": "seminar",
+      "title": "AAIG holds its first joint seminar",
+      "summary": "The five AAIG laboratories gathered at Wonchon Hall 509 for the first AAIG joint seminar, where each lab presented the research it is currently working on. It was an informative session for sharing ideas and progress across the labs.",
+      "date": "2026-11-06",
+      "year": 2026,
+      "related_person": "",
+      "venue": "Wonchon Hall 509, Ajou University",
+      "external_url": "",
+      "internal_slug": "2026-11-06-first-aaig-joint-seminar",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "",
+      "publication_title": "",
+      "publication_query": "",
+      "generated_from": "",
+      "image": "2026-11-06-first-aaig-joint-seminar.webp",
+      "image_alt": "Group photo of the first AAIG joint seminar participants",
+      "source_path": "content/news/2026-11-06-first-aaig-joint-seminar.md",
+      "publication_ids": []
+    },
+    {
       "id": "publication-sheet-efficient-alzheimer-s-disease-classification-with-robust-rank-pooling",
       "type": "paper_accepted",
       "title": "Efficient Alzheimer’s disease classification with robust rank pooling",

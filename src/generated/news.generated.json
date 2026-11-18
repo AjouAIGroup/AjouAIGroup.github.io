@@ -18,6 +18,27 @@
   },
   "items": [
     {
+      "id": "publication-sheet-knowledge-distillation-with-lightweight-peer-branches-for-learning-diverse-representations",
+      "type": "paper_accepted",
+      "title": "Knowledge distillation with lightweight peer branches for learning diverse representations",
+      "summary": "Sci Rep 2026 publication from MMAI Lab.",
+      "date": "2026-11-18",
+      "year": 2026,
+      "related_person": "Dongkyu Kim, Soohyun Pyo, Junhyeong Go and Jongbin Ryu",
+      "venue": "Sci Rep 2026",
+      "external_url": "",
+      "internal_slug": "publication-sheet-knowledge-distillation-with-lightweight-peer-branches-for-learning-diverse-representations",
+      "is_external": false,
+      "featured": false,
+      "publication_id": "sheet-knowledge-distillation-with-lightweight-peer-branches-for-learning-diverse-representations",
+      "publication_title": "Knowledge distillation with lightweight peer branches for learning diverse representations",
+      "publication_query": "Knowledge distillation with lightweight peer branches for learning diverse representations",
+      "generated_from": "publications-auto",
+      "publication_ids": [
+        "sheet-knowledge-distillation-with-lightweight-peer-branches-for-learning-diverse-representations"
+      ]
+    },
+    {
       "id": "2026-11-06-first-aaig-joint-seminar",
       "type": "seminar",
       "title": "AAIG holds its first joint seminar",

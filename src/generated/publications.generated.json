@@ -3,7 +3,7 @@
     "schema_version": "1.1",
     "source": "google-sheets snapshot",
     "source_url": "https://docs.google.com/spreadsheets/d/1PRm4WZoLHfLwasA2GI3XbuZhO-Qnm8HNAfeRhdZzwCE/edit?usp=sharing",
-    "source_synced_at": "2026-11-02T11:22:12.351Z",
+    "source_synced_at": "2026-11-18T12:04:49.052Z",
     "categories": [
       "efficient_learning_for_llms",
       "computer_vision_and_learning_algorithms",
@@ -820,6 +820,36 @@
         "expermental_result": ""
       },
       "added_at": "2026-09-29T07:47:55.163Z"
+    },
+    {
+      "id": "sheet-knowledge-distillation-with-lightweight-peer-branches-for-learning-diverse-representations",
+      "key": "sheet-knowledge-distillation-with-lightweight-peer-branches-for-learning-diverse-representations",
+      "category": "industrial_and_medical_ai",
+      "status": "published",
+      "title": "Knowledge distillation with lightweight peer branches for learning diverse representations",
+      "summary": "Sci Rep 2026 publication from MMAI Lab.",
+      "featured": false,
+      "research_meta": {
+        "author": "Dongkyu Kim, Soohyun Pyo, Junhyeong Go and Jongbin Ryu",
+        "published_place": "Sci Rep 2026",
+        "published_date": "2026-01-01",
+        "keywords": [],
+        "labs": [
+          "MMAI Lab"
+        ],
+        "pdf_link": "",
+        "arxiv_link": "",
+        "github_link": "",
+        "project_link": "https://www.nature.com/articles/s41598-026-79466-2",
+        "source_code_link": "",
+        "paper_link": "https://www.nature.com/articles/s41598-026-79466-2"
+      },
+      "content": {
+        "problem": "",
+        "solve": "",
+        "expermental_result": ""
+      },
+      "added_at": "2026-11-18T12:04:49.047Z"
     },
     {
       "id": "sheet-saram-sparse-adapter-allocation-with-reuse-and-merging-for-lifelong-robot-learning",

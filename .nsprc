@@ -3,5 +3,10 @@
         "active": true,
         "notes": "minimatch glob DoS (GHSA-g3hv-75wg-m249). Reached only through eslint and eslint-plugin-react, which still pin minimatch 3 with no patched release; 11.0.1 is a breaking major. Lint runs on our own globs and nothing ships to the site. Remove once eslint moves off minimatch 3.",
         "expiry": "2027-02-01"
+    },
+    "1247710": {
+        "active": true,
+        "notes": "picomatch extglob ReDoS (GHSA-fc5q-39xc-vjpf). No patched release yet (all versions through 4.0.7 affected). Reached only through vite and tinyglobby at build time, matching our own globs; nothing ships to the site. Remove once a fixed picomatch is released and vite picks it up.",
+        "expiry": "2027-01-15"
     }
 }

@@ -11,12 +11,6 @@
       "description": "Students Junhyeong Go and Mingyu Jung of the MMAI Lab presented their paper \"FlowVLA: Enabling World Dynamics Understanding through Pluggable 3D Flow Learning\" at CoRL 2026 (Conference on Robot Learning) in Austin, Texas, and met Professor Gi-Cheon Kang at the poster session.",
       "photos": [
         {
-          "file": "01-corl.webp",
-          "alt": "Junhyeong Go and Mingyu Jung Standing by Their FlowVLA Poster",
-          "caption": "From left: Junhyeong Go (student) and Mingyu Jung (student) with the poster \"FlowVLA: Enabling World Dynamics Understanding through Pluggable 3D Flow Learning,\" co-authored with Woobin Im (Samsung Electronics) and Professor Jongbin Ryu.",
-          "thumb": true
-        },
-        {
           "file": "02-corl.webp",
           "alt": "Gi-Cheon Kang, Junhyeong Go, and Mingyu Jung in Front of the FlowVLA Poster",
           "caption": "From left: Gi-Cheon Kang (professor), Junhyeong Go (student), and Mingyu Jung (student) at the FlowVLA poster.",
